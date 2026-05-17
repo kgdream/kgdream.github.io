@@ -21,7 +21,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif;
+            font-family: 'YouYuan', Arial, sans-serif;
             padding: 20px;
             flex-direction: column;
         }
@@ -73,7 +73,7 @@
         .search-box {
             padding: 12px 95px 12px 55px;
             font-size: 14px;
-            font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif;
+            font-family: 'YouYuan', Arial, sans-serif;
             border: none;
             border-radius: 34px;
             outline: none;
@@ -84,28 +84,7 @@
             transition: transform 0.3s ease;
         }
 
-        .search-box.dynamic-island {
-            animation: dynamicIsland 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
 
-        @keyframes dynamicIsland {
-            0% {
-                transform: scale(1);
-            }
-            40% {
-                transform: scale(0.92);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        #favTabBtn.dynamic-island,
-        #kgTabBtn.dynamic-island,
-        #engineTabBtn.dynamic-island,
-        #settingsTabBtn.dynamic-island {
-            animation: dynamicIsland 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
 
         /* Override for search buttons to preserve their positioning */
         .search-button.rotate {
@@ -140,6 +119,7 @@
             height: 44px;
             background-color: transparent;
             border: none;
+            border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -149,8 +129,18 @@
             top: 50%;
             transform: translateY(-50%);
             padding: 0;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, opacity 0.3s ease;
             opacity: 1;
+            z-index: 10;
+            pointer-events: auto;
+        }
+
+        .search-button:hover {
+            opacity: 0.7;
+        }
+
+        .search-button:active {
+            opacity: 0.5;
         }
 
         .search-button.rotate,
@@ -192,7 +182,7 @@
             font-size: 14px;
             font-weight: normal;
             color: #000000;
-            font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif;
+            font-family: 'YouYuan', Arial, sans-serif;
             opacity: 0;
             transform: scale(0.5);
             animation: favBtnEntry 0.8s ease-out 0.3s forwards;
@@ -349,7 +339,7 @@
             box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;
             font-size: 13px;
             line-height: 1.6;
-            font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif;
+            font-family: 'YouYuan', Arial, sans-serif;
         }
 
         /* Tab content transition */
@@ -382,158 +372,476 @@
         }
 
         /* Dark mode styles - Neumorphism Style */
-        body.dark-mode {
-            background-color: #222;
+        body[data-theme="dark"] {
+            background-color: #343434;
         }
 
-        body.dark-mode .search-box {
-            background: #2c2c2c;
-            box-shadow: 20px 20px 62px #1a1a1a, -20px -20px 62px #3e3e3e;
+        body[data-theme="dark"] .search-box {
+            background: #3a3a3a;
+            box-shadow: 20px 20px 62px #2a2a2a, -20px -20px 62px #4a4a4a;
             color: #e0e0e0;
         }
 
-        body.dark-mode .search-button svg {
+        body[data-theme="dark"] .search-button svg {
             stroke: #e0e0e0;
         }
 
-        body.dark-mode .engine-item {
-            background: #2c2c2c;
-            box-shadow: 20px 20px 62px #1a1a1a, -20px -20px 62px #3e3e3e;
+        body[data-theme="dark"] .engine-item {
+            background: #3a3a3a;
+            box-shadow: 20px 20px 62px #2a2a2a, -20px -20px 62px #4a4a4a;
             color: #e0e0e0;
         }
 
-        body.dark-mode .engine-item:hover,
-        body.dark-mode .engine-item.active {
-            background: #222;
+        body[data-theme="dark"] .engine-item:hover,
+        body[data-theme="dark"] .engine-item.active {
+            background: #343434;
             color: #ffffff;
-            box-shadow: inset 5px 5px 10px #1a1a1a, inset -5px -5px 10px #3e3e3e;
+            box-shadow: inset 5px 5px 10px #2a2a2a, inset -5px -5px 10px #4a4a4a;
         }
 
-        body.dark-mode .suggestions,
-        body.dark-mode .search-history {
-            background: #2c2c2c;
-            box-shadow: 20px 20px 62px #1a1a1a, -20px -20px 62px #3e3e3e;
+        body[data-theme="dark"] .suggestions,
+        body[data-theme="dark"] .search-history {
+            background: #3a3a3a;
+            box-shadow: 20px 20px 62px #2a2a2a, -20px -20px 62px #4a4a4a;
             color: #e0e0e0;
         }
 
-        body.dark-mode .suggestion-item,
-        body.dark-mode .history-item {
+        body[data-theme="dark"] .suggestion-item,
+        body[data-theme="dark"] .history-item {
             color: #e0e0e0;
         }
 
-        body.dark-mode .suggestion-item:hover,
-        body.dark-mode .history-item:hover {
-            background: #222;
+        body[data-theme="dark"] .suggestion-item:hover,
+        body[data-theme="dark"] .history-item:hover {
+            background: #343434;
             color: #ffffff;
         }
 
-        body.dark-mode .bottom-btn {
+        body[data-theme="dark"] .suggestions li:hover,
+        body[data-theme="dark"] .search-history li:hover {
+            background-color: #343434 !important;
+        }
+
+        body[data-theme="dark"] .bottom-btn {
             color: #e0e0e0;
         }
 
-        body.dark-mode .modal-content {
-            background: #2c2c2c;
-            box-shadow: 20px 20px 62px #1a1a1a, -20px -20px 62px #3e3e3e;
+        body[data-theme="dark"] .modal-content {
+            background: #3a3a3a;
+            box-shadow: 20px 20px 62px #2a2a2a, -20px -20px 62px #4a4a4a;
         }
 
-        body.dark-mode .modal-header h2,
-        body.dark-mode .settings-section h3 {
+        body[data-theme="dark"] .modal-header h2,
+        body[data-theme="dark"] .settings-section h3 {
             color: #e0e0e0;
-            background: #2c2c2c;
-            box-shadow: 20px 20px 62px #1a1a1a, -20px -20px 62px #3e3e3e;
+            background: #3a3a3a;
+            box-shadow: 20px 20px 62px #2a2a2a, -20px -20px 62px #4a4a4a;
         }
 
-        body.dark-mode label {
-            color: #e0e0e0;
-        }
-
-        body.dark-mode input[type="text"],
-        body.dark-mode input[type="password"] {
-            background: #2c2c2c;
-            box-shadow: inset 5px 5px 10px #1a1a1a, inset -5px -5px 10px #3e3e3e;
+        body[data-theme="dark"] label {
             color: #e0e0e0;
         }
 
-        body.dark-mode input::placeholder {
+        body[data-theme="dark"] input[type="text"],
+        body[data-theme="dark"] input[type="password"] {
+            background: #3a3a3a;
+            box-shadow: inset 5px 5px 10px #2a2a2a, inset -5px -5px 10px #4a4a4a;
+            color: #e0e0e0;
+        }
+
+        body[data-theme="dark"] input::placeholder {
             color: rgba(224, 224, 224, 0.5);
         }
 
-        body.dark-mode button {
+        body[data-theme="dark"] button {
             color: #e0e0e0;
         }
 
-        body.dark-mode .tab-btn {
-            background: #2c2c2c;
-            box-shadow: 20px 20px 62px #1a1a1a, -20px -20px 62px #3e3e3e;
+        body[data-theme="dark"] .tab-btn {
+            background: #3a3a3a;
+            box-shadow: 20px 20px 62px #2a2a2a, -20px -20px 62px #4a4a4a;
             color: #e0e0e0;
         }
 
-        body.dark-mode .tab-btn:hover {
-            background: #282828;
+        body[data-theme="dark"] .tab-btn:hover {
+            background: #363636;
         }
 
-        body.dark-mode .tab-btn.active {
-            background: #222;
+        body[data-theme="dark"] .tab-btn.active {
+            background: #343434;
             color: #ffffff;
-            box-shadow: inset 5px 5px 10px #1a1a1a, inset -5px -5px 10px #3e3e3e;
+            box-shadow: inset 5px 5px 10px #2a2a2a, inset -5px -5px 10px #4a4a4a;
             font-weight: bold;
         }
 
-        body.dark-mode .favorite-item {
-            background: #2c2c2c;
-            box-shadow: 20px 20px 62px #1a1a1a, -20px -20px 62px #3e3e3e;
+        body[data-theme="dark"] .favorite-item {
+            background: #3a3a3a;
+            box-shadow: 20px 20px 62px #2a2a2a, -20px -20px 62px #4a4a4a;
             color: #e0e0e0;
         }
 
-        body.dark-mode .favorite-item:hover {
-            background: #282828;
+        body[data-theme="dark"] .favorite-item:hover {
+            background: #363636;
         }
 
-        body.dark-mode .kg-content {
-            background: #2c2c2c;
-            box-shadow: 20px 20px 62px #1a1a1a, -20px -20px 62px #3e3e3e;
+        body[data-theme="dark"] .kg-content {
+            background: #3a3a3a;
+            box-shadow: 20px 20px 62px #2a2a2a, -20px -20px 62px #4a4a4a;
             color: #e0e0e0;
         }
 
-        body.dark-mode .kg-content p,
-        body.dark-mode .kg-content h4 {
+        body[data-theme="dark"] .kg-content p,
+        body[data-theme="dark"] .kg-content h4 {
             color: #e0e0e0;
         }
 
-        body.dark-mode .hot-news-container {
-            background: #2c2c2c;
-            box-shadow: 20px 20px 62px #1a1a1a, -20px -20px 62px #3e3e3e;
+        body[data-theme="dark"] .hot-news-container {
+            background: #3a3a3a;
+            box-shadow: 20px 20px 62px #2a2a2a, -20px -20px 62px #4a4a4a;
         }
 
-        body.dark-mode .news-title {
+        body[data-theme="dark"] .news-title {
             color: #e0e0e0;
         }
 
-        body.dark-mode .news-item {
-            border-bottom: 1px solid #3e3e3e;
+        body[data-theme="dark"] .news-item {
+            border-bottom: 1px solid #4a4a4a;
         }
 
-        body.dark-mode .news-item a {
+        body[data-theme="dark"] .news-item a {
             color: #e0e0e0;
         }
 
-        body.dark-mode .news-item:hover {
-            background: #222;
+        body[data-theme="dark"] .news-item:hover {
+            background: #343434;
         }
 
-        body.dark-mode #engineHintInSearchBox span {
+        body[data-theme="dark"] #engineHintInSearchBox span {
             color: rgba(224, 224, 224, 0.5);
         }
 
-        body.dark-mode .delete-btn {
+        body[data-theme="dark"] .delete-btn {
             color: #ff6b6b;
         }
 
-        body.dark-mode .search-hint {
-            background: #2c2c2c;
-            box-shadow: 20px 20px 62px #1a1a1a, -20px -20px 62px #3e3e3e;
+        body[data-theme="dark"] .search-hint {
+            background: #3a3a3a;
+            box-shadow: 20px 20px 62px #2a2a2a, -20px -20px 62px #4a4a4a;
             color: #e0e0e0;
         }
+
+        /* Override inline styles for dark mode */
+        body[data-theme="dark"] #favoritesModal {
+            background-color: #343434 !important;
+        }
+
+        body[data-theme="dark"] .tab-btn,
+        body[data-theme="dark"] #favTabBtn,
+        body[data-theme="dark"] #kgTabBtn,
+        body[data-theme="dark"] #engineTabBtn,
+        body[data-theme="dark"] #settingsTabBtn {
+            background: #3a3a3a !important;
+            box-shadow: 20px 20px 62px #2a2a2a, -20px -20px 62px #4a4a4a !important;
+            color: #e0e0e0 !important;
+        }
+
+        body[data-theme="dark"] .fav-search-input,
+        body[data-theme="dark"] #favSearchInput {
+            background: #3a3a3a !important;
+            color: #e0e0e0 !important;
+        }
+
+        body[data-theme="dark"] .fav-add-btn,
+        body[data-theme="dark"] #addFavBtn {
+            background: #3a3a3a !important;
+            color: #e0e0e0 !important;
+        }
+
+        body[data-theme="dark"] .ui {
+            background: #3a3a3a !important;
+            box-shadow: 20px 20px 62px #2a2a2a, -20px -20px 62px #4a4a4a !important;
+        }
+
+        body[data-theme="dark"] .bottom-btn {
+            background-color: #3a3a3a !important;
+            color: #e0e0e0 !important;
+        }
+
+        body[data-theme="dark"] #kgSearchInput {
+            background: #3a3a3a !important;
+            color: #e0e0e0 !important;
+        }
+
+        body[data-theme="dark"] .settings-section h3 {
+            background: #3a3a3a !important;
+            box-shadow: 20px 20px 62px #2a2a2a, -20px -20px 62px #4a4a4a !important;
+            color: #e0e0e0 !important;
+        }
+
+        body[data-theme="dark"] select {
+            background: #3a3a3a !important;
+            color: #e0e0e0 !important;
+        }
+
+        /* Generic dark mode overrides for inline styles */
+        body[data-theme="dark"] [style*="#F0F0F0"],
+        body[data-theme="dark"] [style*="#f0f0f0"] {
+            background: #3a3a3a !important;
+            background-color: #3a3a3a !important;
+        }
+
+        body[data-theme="dark"] [style*="#cccccc"] {
+            box-shadow: 20px 20px 62px #2a2a2a, -20px -20px 62px #4a4a4a !important;
+        }
+
+        body[data-theme="dark"] [style*="#000000"],
+        body[data-theme="dark"] [style*="color: #000"] {
+            color: #e0e0e0 !important;
+        }
+
+        /* Outline mode styles - removes neumorphism shadows */
+        body[data-button-style="outline"] button,
+        body[data-button-style="outline"] input,
+        body[data-button-style="outline"] select,
+        body[data-button-style="outline"] .search-box,
+        body[data-button-style="outline"] .search-button,
+        body[data-button-style="outline"] .tab-btn,
+        body[data-button-style="outline"] .modal-content,
+        body[data-button-style="outline"] .settings-section h3,
+        body[data-button-style="outline"] .favorite-item,
+        body[data-button-style="outline"] .kg-content,
+        body[data-button-style="outline"] .hot-news-container,
+        body[data-button-style="outline"] .search-hint,
+        body[data-button-style="outline"] .suggestions,
+        body[data-button-style="outline"] .search-history,
+        body[data-button-style="outline"] .engine-item,
+        body[data-button-style="outline"] #favoritesModal,
+        body[data-button-style="outline"] #settingsTabBtn,
+        body[data-button-style="outline"] #favSearchInput,
+        body[data-button-style="outline"] #addFavBtn,
+        body[data-button-style="outline"] .ui,
+        body[data-button-style="outline"] #kgSearchInput,
+        body[data-button-style="outline"] .bottom-btn,
+        body[data-button-style="outline"] #dropdownMenu,
+        body[data-button-style="outline"] .modal-close-btn,
+        body[data-button-style="outline"] .text-result-modal,
+        body[data-button-style="outline"] .fav-add-btn,
+        body[data-button-style="outline"] .history-item,
+        body[data-button-style="outline"] .news-item,
+        body[data-button-style="outline"] [class*="btn"],
+        body[data-button-style="outline"] [id*="Btn"],
+        body[data-button-style="outline"] div[style*="box-shadow"] {
+            box-shadow: none !important;
+            border: 2px solid #000000 !important;
+            border-radius: 34px !important;
+            background: transparent !important;
+        }
+
+        body[data-button-style="outline"] button:hover,
+        body[data-button-style="outline"] .search-button:hover,
+        body[data-button-style="outline"] .tab-btn:hover {
+            background: rgba(0, 0, 0, 0.05) !important;
+        }
+
+        body[data-button-style="outline"] .tab-btn.active {
+            background: #000000 !important;
+            color: #ffffff !important;
+        }
+
+        /* Keep poem button and body background styled normally in outline mode */
+        body[data-button-style="outline"] #favBtn {
+            border: none !important;
+            background: transparent !important;
+        }
+
+        /* Keep search buttons (left dropdown + right search) transparent without border */
+        body[data-button-style="outline"] #dropdownMenuBtn,
+        body[data-button-style="outline"] #searchBtn {
+            border: none !important;
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+
+        body[data-button-style="outline"] #dropdownMenuBtn:hover,
+        body[data-button-style="outline"] #searchBtn:hover {
+            opacity: 0.5 !important;
+        }
+
+        body[data-button-style="outline"] body {
+            background: #F0F0F0 !important;
+        }
+
+        /* Ensure containers keep their background to prevent stacking collapse */
+        body[data-button-style="outline"] #favoritesModal,
+        body[data-button-style="outline"] .search-container,
+        body[data-button-style="outline"] .bottom-buttons-container,
+        body[data-button-style="outline"] .poem-container {
+            background: #F0F0F0 !important;
+        }
+
+        /* Force stacking contexts on key containers */
+        body[data-button-style="outline"] .search-container {
+            isolation: isolate;
+        }
+        body[data-button-style="outline"] .bottom-buttons-container {
+            isolation: isolate;
+        }
+        body[data-button-style="outline"] .poem-container {
+            isolation: isolate;
+        }
+
+        /* Bing wallpaper mode */
+        body[data-button-style="bing"] {
+            background-color: #000000 !important;
+        }
+
+        /* Bing wallpaper overlay - fades in via JS */
+        #bingWallpaperOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+            pointer-events: none;
+        }
+        #bingWallpaperOverlay.visible {
+            opacity: 1;
+        }
+
+        body[data-button-style="bing"] .search-container {
+            position: relative;
+            z-index: 100;
+            margin-top: -50vh;
+            transition: margin-top 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body:not([data-button-style="bing"]) .search-container {
+            transition: margin-top 0.6s ease;
+        }
+
+        body[data-button-style="bing"] .search-box {
+            background: rgba(240, 240, 240, 0.7) !important;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: none !important;
+            box-shadow: 20px 20px 62px rgba(0,0,0,0.3), -20px -20px 62px rgba(255,255,255,0.1) !important;
+            color: #000000;
+        }
+
+        body[data-button-style="bing"] .search-box::placeholder {
+            color: #333333;
+        }
+
+        /* Search buttons: transparent, no wrapper */
+        body[data-button-style="bing"] #dropdownMenuBtn,
+        body[data-button-style="bing"] #searchBtn {
+            border: none !important;
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+
+        body[data-button-style="bing"] #dropdownMenuBtn:hover,
+        body[data-button-style="bing"] #searchBtn:hover {
+            opacity: 0.7 !important;
+        }
+
+        body[data-button-style="bing"] #dropdownMenuBtn svg,
+        body[data-button-style="bing"] #searchBtn img {
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+        }
+
+        /* Bottom buttons: transparent */
+        body[data-button-style="bing"] #favBtn {
+            border: none !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            color: #ffffff !important;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        /* Poem: white text with shadow */
+        body[data-button-style="bing"] .poem-container {
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+        body[data-button-style="bing"] .poem-content,
+        body[data-button-style="bing"] .poem-title,
+        body[data-button-style="bing"] .poem-author {
+            color: #ffffff !important;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        /* Time display: white text */
+        body[data-button-style="bing"] #timeDisplay {
+            color: #ffffff !important;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        /* Engine hint: dark text */
+        body[data-button-style="bing"] #engineHintInSearchBox span {
+            color: #333333 !important;
+        }
+
+        /* Modal: neumorphic with blur */
+        body[data-button-style="bing"] #favoritesModal {
+            background: rgba(240, 240, 240, 0.95) !important;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* All buttons inside modal: neumorphic (keep shadows) */
+        body[data-button-style="bing"] #favoritesModal button,
+        body[data-button-style="bing"] #favoritesModal input,
+        body[data-button-style="bing"] #favoritesModal select,
+        body[data-button-style="bing"] .tab-btn,
+        body[data-button-style="bing"] .modal-content,
+        body[data-button-style="bing"] .settings-section h3,
+        body[data-button-style="bing"] .favorite-item,
+        body[data-button-style="bing"] .kg-content,
+        body[data-button-style="bing"] .hot-news-container,
+        body[data-button-style="bing"] .search-hint,
+        body[data-button-style="bing"] .suggestions,
+        body[data-button-style="bing"] .search-history,
+        body[data-button-style="bing"] .engine-item,
+        body[data-button-style="bing"] #favSearchInput,
+        body[data-button-style="bing"] #addFavBtn,
+        body[data-button-style="bing"] #kgSearchInput,
+        body[data-button-style="bing"] .bottom-btn,
+        body[data-button-style="bing"] #dropdownMenu {
+            box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff !important;
+            border: none !important;
+            background: #F0F0F0 !important;
+            color: #000000;
+        }
+
+        body[data-button-style="bing"] .tab-btn.active {
+            background: #e0e0e0 !important;
+        }
+
+        body[data-button-style="bing"] .modal-close-btn {
+            color: #000000 !important;
+        }
+
+        /* Search history/suggestions */
+        body[data-button-style="bing"] .search-history,
+        body[data-button-style="bing"] .suggestions {
+            background: rgba(240, 240, 240, 0.95) !important;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 20px 20px 62px rgba(0,0,0,0.2) !important;
+            border: none !important;
+        }
+        body[data-button-style="bing"] .search-history li,
+        body[data-button-style="bing"] .suggestions li {
+            color: #000000;
+        }
+
 
         .search-hint-title {
             font-weight: bold;
@@ -573,7 +881,7 @@
             padding: 10px 15px;
             cursor: pointer;
             font-size: 14px;
-            font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif;
+            font-family: 'YouYuan', Arial, sans-serif;
             transition: none;
         }
 
@@ -693,7 +1001,7 @@
             transition: none;
             background-color: #F0F0F0;
             font-size: 20px;
-            font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif;
+            font-family: 'YouYuan', Arial, sans-serif;
         }
 
         .engine-item:hover {
@@ -753,32 +1061,39 @@
 </head>
 <body>
     <div class="search-container" style="position: relative; background: transparent;">
-        <!-- Scan QR code button -->
-        <button class="search-button" id="scanBtn" onclick="openScanner()" style="left: 7px;">
+        <!-- Dropdown menu button (replaces scan + engine toggle) -->
+        <button class="search-button" id="dropdownMenuBtn" style="left: 7px;">
             <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 7V5a2 2 0 0 1 2-2h2"></path>
-                <path d="M17 3h2a2 2 0 0 1 2 2v2"></path>
-                <path d="M21 17v2a2 2 0 0 1-2 2h-2"></path>
-                <path d="M7 21H5a2 2 0 0 1-2-2v-2"></path>
-                <rect x="7" y="7" width="10" height="10" rx="1"></rect>
+                <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
         </button>
-        <input type="text" class="search-box" id="searchInput" placeholder=" " autocomplete="off" style="background: #F0F0F0;">
-            <div id="engineHintInSearchBox" style="position: absolute; left: 50px; right: 100px; top: 50%; transform: translateY(-50%); pointer-events: none; display: flex; justify-content: center; align-items: center; font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif;">
-                <span id="engineHintText" style="font-size: 14px; color: rgba(0, 0, 0, 0.4);">使用百度搜索</span>
+        <!-- Dropdown menu -->
+        <div id="dropdownMenu" style="display: none; position: absolute; left: 7px; top: 50px; background: #F0F0F0; border-radius: 20px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; z-index: 100; overflow: hidden; min-width: 130px;">
+            <div id="dropdownScanOption" onclick="openScanner(); closeDropdownMenu();" style="display: flex; align-items: center; padding: 12px 18px; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; color: #000; gap: 10px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
+                    <path d="M3 7V5a2 2 0 0 1 2-2h2"></path>
+                    <path d="M17 3h2a2 2 0 0 1 2 2v2"></path>
+                    <path d="M21 17v2a2 2 0 0 1-2 2h-2"></path>
+                    <path d="M7 21H5a2 2 0 0 1-2-2v-2"></path>
+                    <rect x="7" y="7" width="10" height="10" rx="1"></rect>
+                </svg>
+                扫一扫
             </div>
-        </input>
-        <!-- Engine toggle button (left of search button) -->
-        <button class="search-button" id="engineToggleBtn" style="right: 42px;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-        </button>
-        <button class="search-button" onclick="performSearch()" style="right: 8px;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.35-4.35"></path>
-            </svg>
+            <div style="height: 1px; background: #e0e0e0; margin: 0 12px;"></div>
+            <div id="dropdownEngineOption" onclick="openEngineSelectorFromDropdown(); closeDropdownMenu();" style="display: flex; align-items: center; padding: 12px 18px; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; color: #000; gap: 10px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                切换搜索引擎
+            </div>
+        </div>
+        <input type="text" class="search-box" id="searchInput" placeholder=" " autocomplete="off" style="background: #F0F0F0;">
+        <div id="engineHintInSearchBox" style="position: absolute; left: 50px; right: 100px; top: 50%; transform: translateY(-50%); pointer-events: none; display: flex; justify-content: center; align-items: center; font-family: 'YouYuan', Arial, sans-serif;">
+            <span id="engineHintText" style="font-size: 14px; color: rgba(0, 0, 0, 0.4);">使用百度搜索</span>
+        </div>
+        <button class="search-button" id="searchBtn" onclick="performSearch()" style="right: 8px;">
+            <img id="searchBtnIcon" src="https://cn.bing.com/favicon.ico" alt="搜索" style="width: 24px; height: 24px; object-fit: contain;">
         </button>
         <!-- Search history container -->
         <ul id="searchHistory" class="search-history" style="display: none;"></ul>
@@ -857,8 +1172,8 @@
         <!-- Favorites Content -->
         <div id="favoritesContent" style="display: block;">
             <div class="favorites-header" style="padding: 20px 20px 0 20px; display: flex; gap: 10px; align-items: center;">
-                <input type="text" id="favSearchInput" placeholder="搜索收藏网页..." class="fav-search-input" style="flex: 1; padding: 10px 15px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; font-size: 14px; outline: none; background: #F0F0F0; font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif;">
-                <button id="addFavBtn" class="fav-add-btn" style="padding: 10px 20px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-weight: bold; white-space: nowrap; font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif;">
+                <input type="text" id="favSearchInput" placeholder="搜索收藏网页..." class="fav-search-input" style="flex: 1; padding: 10px 15px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; font-size: 14px; outline: none; background: #F0F0F0; font-family: 'YouYuan', Arial, sans-serif;">
+                <button id="addFavBtn" class="fav-add-btn" style="padding: 10px 20px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-weight: bold; white-space: nowrap; font-family: 'YouYuan', Arial, sans-serif;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; display: inline-block; vertical-align: middle; margin-right: 5px;">
                         <line x1="12" y1="5" x2="12" y2="19"></line>
                         <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -872,7 +1187,7 @@
         <!-- KG Content -->
         <div id="kgContent" style="display: none;">
             <div style="padding: 20px 20px 0 20px;">
-                <input type="text" id="kgSearchInput" placeholder="搜索 KG 软件..." style="width: 100%; padding: 10px 15px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; font-size: 14px; outline: none; background: #F0F0F0; font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif;">
+                <input type="text" id="kgSearchInput" placeholder="搜索 KG 软件..." style="width: 100%; padding: 10px 15px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; font-size: 14px; outline: none; background: #F0F0F0; font-family: 'YouYuan', Arial, sans-serif;">
             </div>
             <div id="kgList" style="padding: 20px;"></div>
         </div>
@@ -931,50 +1246,100 @@
         
         <!-- Settings Content -->
         <div id="settingsContent" style="display: none; padding: 20px; overflow-y: auto; max-height: calc(100vh - 100px);">
-            <h2 style="font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif; font-size: 24px; margin-bottom: 20px;">设置</h2>
+            <h2 style="font-family: 'YouYuan', Arial, sans-serif; font-size: 24px; margin-bottom: 20px;">设置</h2>
             
-            <!-- 搜索设置 -->
+            <!-- 外观设置 -->
             <div style="margin-bottom: 30px;">
-                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">一、搜索设置</h3>
+                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">一、外观设置</h3>
                 
                 <div style="margin-bottom: 15px;">
-                    <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-                        <input type="checkbox" id="saveSearchHistory" checked style="margin-right: 10px; width: 18px; height: 18px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        保存搜索历史
+                    <label style="display: block; font-family: 'YouYuan'; font-size: 14px; margin-bottom: 10px; font-weight: bold;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px; vertical-align: middle;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                        主题模式：
                     </label>
+                    <div style="margin-bottom: 10px;">
+                        <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
+                            <input type="radio" name="themeMode" value="light" checked onchange="setThemeMode('light')" style="margin-right: 8px; width: 18px; height: 18px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                            浅色模式
+                        </label>
+                        <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
+                            <input type="radio" name="themeMode" value="dark" onchange="setThemeMode('dark')" style="margin-right: 8px; width: 18px; height: 18px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                            深色模式
+                        </label>
+                        <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
+                            <input type="radio" name="themeMode" value="auto" onchange="setThemeMode('auto')" style="margin-right: 8px; width: 18px; height: 18px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                            跟随系统
+                        </label>
+                        <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
+                            <input type="radio" name="themeMode" value="custom" onchange="setThemeMode('custom')" style="margin-right: 8px; width: 18px; height: 18px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle></svg>
+                            自定义颜色
+                            <input type="color" id="themeColorPicker" value="#F0F0F0" onchange="changeThemeColor(this.value)" style="margin-left: 10px; width: 40px; height: 30px; border: none; border-radius: 5px; cursor: pointer;">
+                        </label>
+                    </div>
                 </div>
-                
+
                 <div style="margin-bottom: 15px;">
-                    <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-                        <input type="checkbox" id="showSearchSuggestions" checked style="margin-right: 10px; width: 18px; height: 18px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        显示搜索建议
+                    <label style="display: block; font-family: 'YouYuan'; font-size: 14px; margin-bottom: 10px; font-weight: bold;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px; vertical-align: middle;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                        按钮样式：
                     </label>
+                    <div style="margin-bottom: 10px;">
+                        <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
+                            <input type="radio" name="buttonStyle" value="neumorphism" checked onchange="setButtonStyle('neumorphism')" style="margin-right: 8px; width: 18px; height: 18px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+                            拟物模式
+                        </label>
+                        <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
+                            <input type="radio" name="buttonStyle" value="outline" onchange="setButtonStyle('outline')" style="margin-right: 8px; width: 18px; height: 18px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+                            线框模式
+                        </label>
+                        <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
+                            <input type="radio" name="buttonStyle" value="bing" onchange="setButtonStyle('bing')" style="margin-right: 8px; width: 18px; height: 18px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                            必应壁纸模式
+                        </label>
+                    </div>
                 </div>
-                
+
                 <div style="margin-bottom: 15px;">
                     <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-                        <input type="checkbox" id="cacheSuggestions" checked style="margin-right: 10px; width: 18px; height: 18px;">
+                        <input type="checkbox" id="showTimeToggle" onchange="toggleTimeDisplay()" style="margin-right: 10px; width: 18px; height: 18px;" checked>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                        缓存搜索建议
+                        显示时间
                     </label>
-                    <select id="cacheDuration" style="margin-left: 30px; padding: 8px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; font-family: 'YouYuan'; font-size: 13px; background: #F0F0F0;">
-                        <option value="300">5 分钟</option>
-                        <option value="3600" selected>1 小时</option>
-                        <option value="86400">1 天</option>
-                    </select>
                 </div>
                 
                 <div style="margin-bottom: 15px;">
                     <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-                        <input type="checkbox" id="privacyMode" style="margin-right: 10px; width: 18px; height: 18px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        临时隐私模式（本次会话不保存历史）
+                        <input type="checkbox" id="showPoemToggle" onchange="togglePoemDisplay()" style="margin-right: 10px; width: 18px; height: 18px;" checked>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                        显示古诗
                     </label>
                 </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
+                        <input type="checkbox" id="showScannerToggle" onchange="toggleScannerDisplay()" style="margin-right: 10px; width: 18px; height: 18px;" checked>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path></svg>
+                        显示扫一扫
+                    </label>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
+                        <input type="checkbox" id="highContrastMode" onchange="toggleHighContrast()" style="margin-right: 10px; width: 18px; height: 18px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                        高对比度模式
+                    </label>
+                </div>
+                
             </div>
-            
+
             <!-- 收藏设置 -->
             <div style="margin-bottom: 30px;">
                 <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">二、收藏设置</h3>
@@ -1020,55 +1385,44 @@
                 <input type="file" id="allDataImportFile" accept=".json" style="display: none;">
             </div>
             
-            <!-- 外观设置 -->
+            <!-- 搜索设置 -->
             <div style="margin-bottom: 30px;">
-                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">三、外观设置</h3>
+                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">三、搜索设置</h3>
                 
                 <div style="margin-bottom: 15px;">
                     <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-                        <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()" style="margin-right: 10px; width: 18px; height: 18px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                        深色模式
+                        <input type="checkbox" id="saveSearchHistory" checked style="margin-right: 10px; width: 18px; height: 18px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        保存搜索历史
                     </label>
                 </div>
                 
                 <div style="margin-bottom: 15px;">
                     <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-                        <input type="checkbox" id="showTimeToggle" onchange="toggleTimeDisplay()" style="margin-right: 10px; width: 18px; height: 18px;" checked>
+                        <input type="checkbox" id="showSearchSuggestions" checked style="margin-right: 10px; width: 18px; height: 18px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        显示搜索建议
+                    </label>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
+                        <input type="checkbox" id="cacheSuggestions" checked style="margin-right: 10px; width: 18px; height: 18px;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                        显示时间
+                        缓存搜索建议
                     </label>
+                    <select id="cacheDuration" style="margin-left: 30px; padding: 8px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; font-family: 'YouYuan'; font-size: 13px; background: #F0F0F0;">
+                        <option value="300">5 分钟</option>
+                        <option value="3600" selected>1 小时</option>
+                        <option value="86400">1 天</option>
+                    </select>
                 </div>
                 
                 <div style="margin-bottom: 15px;">
                     <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-                        <input type="checkbox" id="showPoemToggle" onchange="togglePoemDisplay()" style="margin-right: 10px; width: 18px; height: 18px;" checked>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-                        显示古诗
-                    </label>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-                        <input type="checkbox" id="showScannerToggle" onchange="toggleScannerDisplay()" style="margin-right: 10px; width: 18px; height: 18px;" checked>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path></svg>
-                        显示扫一扫
-                    </label>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-                        <input type="checkbox" id="highContrastMode" onchange="toggleHighContrast()" style="margin-right: 10px; width: 18px; height: 18px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                        高对比度模式
-                    </label>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle></svg>
-                        主题背景色
-                        <input type="color" id="themeColorPicker" value="#F0F0F0" onchange="changeThemeColor(this.value)" style="margin-left: 10px; width: 40px; height: 30px; border: none; border-radius: 5px; cursor: pointer;">
+                        <input type="checkbox" id="privacyMode" style="margin-right: 10px; width: 18px; height: 18px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        临时隐私模式（本次会话不保存历史）
                     </label>
                 </div>
             </div>
@@ -1106,21 +1460,13 @@
                 </div>
                 
                 <div style="display: flex; gap: 15px; margin-top: 15px;">
-                    <button id="backupAllBtn" onclick="backupAllData()" style="flex: 1; padding: 10px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                        全量数据备份
-                    </button>
-                    <button id="restoreAllBtn" onclick="document.getElementById('restoreFile').click()" style="flex: 1; padding: 10px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                        全量数据恢复
-                    </button>
-                </div>
-                <input type="file" id="restoreFile" accept=".json" style="display: none;" onchange="restoreAllData(this)">
-                
-                <div style="margin-top: 15px;">
-                    <button id="resetSettingsBtn" onclick="resetSettings()" style="width: 100%; padding: 10px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; color: #000000; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <button id="resetSettingsBtn" onclick="resetSettings()" style="flex: 1; padding: 10px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; color: #000000; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
                         重置所有设置（保留收藏）
+                    </button>
+                    <button onclick="location.reload()" style="flex: 1; padding: 10px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; color: #000000; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                        刷新网页
                     </button>
                 </div>
             </div>
@@ -1145,10 +1491,10 @@
     <!-- Custom Confirm Dialog -->
     <div id="customConfirm" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); z-index: 20000; opacity: 0; transition: opacity 0.3s ease;">
         <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #F0F0F0; border: none; border-radius: 34px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); padding: 30px; min-width: 300px; max-width: 90%;">
-            <div id="customConfirmMessage" style="font-size: 16px; margin-bottom: 25px; text-align: center; line-height: 1.5; font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif;"></div>
+            <div id="customConfirmMessage" style="font-size: 16px; margin-bottom: 25px; text-align: center; line-height: 1.5; font-family: 'YouYuan', Arial, sans-serif;"></div>
             <div style="display: flex; gap: 15px; justify-content: center;">
-                <button id="customConfirmCancel" style="flex: 1; padding: 10px 20px; border: none; border-radius: 34px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); background: #F0F0F0; cursor: pointer; font-size: 14px; font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif;">取消</button>
-                <button id="customConfirmOk" style="flex: 1; padding: 10px 20px; border: none; border-radius: 34px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); background: #F0F0F0; color: #000000; cursor: pointer; font-size: 14px; font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif;">确定</button>
+                <button id="customConfirmCancel" style="flex: 1; padding: 10px 20px; border: none; border-radius: 34px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); background: #F0F0F0; cursor: pointer; font-size: 14px; font-family: 'YouYuan', Arial, sans-serif;">取消</button>
+                <button id="customConfirmOk" style="flex: 1; padding: 10px 20px; border: none; border-radius: 34px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); background: #F0F0F0; color: #000000; cursor: pointer; font-size: 14px; font-family: 'YouYuan', Arial, sans-serif;">确定</button>
             </div>
         </div>
     </div>
@@ -1156,11 +1502,11 @@
     <!-- Custom Prompt Dialog -->
     <div id="customPrompt" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); z-index: 20000; opacity: 0; transition: opacity 0.3s ease;">
         <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #F0F0F0; border: none; border-radius: 34px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); padding: 30px; min-width: 350px; max-width: 90%;">
-            <div id="customPromptMessage" style="font-size: 16px; margin-bottom: 15px; text-align: center; line-height: 1.5; font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif;"></div>
-            <input type="text" id="customPromptInput" style="width: 100%; padding: 10px; border: none; border-radius: 34px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); font-size: 14px; outline: none; margin-bottom: 20px; box-sizing: border-box; font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif; background: #F0F0F0;">
+            <div id="customPromptMessage" style="font-size: 16px; margin-bottom: 15px; text-align: center; line-height: 1.5; font-family: 'YouYuan', Arial, sans-serif;"></div>
+            <input type="text" id="customPromptInput" style="width: 100%; padding: 10px; border: none; border-radius: 34px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); font-size: 14px; outline: none; margin-bottom: 20px; box-sizing: border-box; font-family: 'YouYuan', Arial, sans-serif; background: #F0F0F0;">
             <div style="display: flex; gap: 15px; justify-content: center;">
-                <button id="customPromptCancel" style="flex: 1; padding: 10px 20px; border: none; border-radius: 34px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); background: #F0F0F0; cursor: pointer; font-size: 14px; font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif;">取消</button>
-                <button id="customPromptOk" style="flex: 1; padding: 10px 20px; border: none; border-radius: 34px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); background: #F0F0F0; color: #000000; cursor: pointer; font-size: 14px; font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif;">确定</button>
+                <button id="customPromptCancel" style="flex: 1; padding: 10px 20px; border: none; border-radius: 34px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); background: #F0F0F0; cursor: pointer; font-size: 14px; font-family: 'YouYuan', Arial, sans-serif;">取消</button>
+                <button id="customPromptOk" style="flex: 1; padding: 10px 20px; border: none; border-radius: 34px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); background: #F0F0F0; color: #000000; cursor: pointer; font-size: 14px; font-family: 'YouYuan', Arial, sans-serif;">确定</button>
             </div>
         </div>
     </div>
@@ -1210,47 +1556,11 @@
                     }
                 }, 300);
                 
-                // Get all buttons and engine hint
-                const searchButtons = document.querySelectorAll('.search-container .search-button');
-                const engineHint = document.getElementById('engineHintInSearchBox');
-                
-                // Hide buttons and engine hint
-                searchButtons.forEach(btn => {
-                    btn.style.opacity = '0';
-                    btn.style.pointerEvents = 'none';
-                });
-                if (engineHint) {
-                    engineHint.style.opacity = '0';
+                // Show search history if input is empty
+                const keyword = this.value.trim();
+                if (!keyword) {
+                    showSearchHistory();
                 }
-                
-                // Remove existing dynamic-island class
-                this.classList.remove('dynamic-island');
-                
-                // Force reflow
-                void this.offsetWidth;
-                
-                // Add dynamic-island class for iPhone-like animation
-                this.classList.add('dynamic-island');
-                
-                // After animation completes, show search history and restore buttons
-                setTimeout(() => {
-                    this.classList.remove('dynamic-island');
-                    
-                    // Show search history if input is empty
-                    const keyword = this.value.trim();
-                    if (!keyword) {
-                        showSearchHistory();
-                    }
-                    
-                    // Restore buttons and engine hint
-                    searchButtons.forEach(btn => {
-                        btn.style.opacity = '1';
-                        btn.style.pointerEvents = 'auto';
-                    });
-                    if (engineHint) {
-                        engineHint.style.opacity = '1';
-                    }
-                }, 500);
             });
         }
         
@@ -1435,6 +1745,7 @@
         
         // Toggle poem display
         function togglePoemDisplay() {
+            settingsModified = true;
             const checkbox = document.getElementById('showPoemToggle');
             const favBtn = document.getElementById('favBtn');
             const showPoem = checkbox.checked;
@@ -1449,17 +1760,63 @@
         
         // Toggle scanner display
         function toggleScannerDisplay() {
+            settingsModified = true;
             const checkbox = document.getElementById('showScannerToggle');
-            const scanBtn = document.getElementById('scanBtn');
+            const dropdownBtn = document.getElementById('dropdownMenuBtn');
+            const dropdownScanOption = document.getElementById('dropdownScanOption');
             const showScanner = checkbox.checked;
             
-            if (scanBtn) {
-                scanBtn.style.display = showScanner ? 'flex' : 'none';
+            if (dropdownScanOption) {
+                dropdownScanOption.style.display = showScanner ? 'flex' : 'none';
+            }
+            // Hide entire dropdown button if both options hidden
+            if (dropdownBtn) {
+                dropdownBtn.style.display = 'flex';
             }
             
             // Save to localStorage
             localStorage.setItem('showScanner', showScanner);
         }
+        
+        // Dropdown menu logic
+        function toggleDropdownMenu() {
+            const menu = document.getElementById('dropdownMenu');
+            if (menu.style.display === 'none' || !menu.style.display) {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
+        }
+        
+        function closeDropdownMenu() {
+            const menu = document.getElementById('dropdownMenu');
+            if (menu) menu.style.display = 'none';
+        }
+        
+        function openEngineSelectorFromDropdown() {
+            showModalWithFade('favoritesModal');
+            switchToEngineTab();
+        }
+        
+        // Dropdown menu button click
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownBtn = document.getElementById('dropdownMenuBtn');
+            if (dropdownBtn) {
+                dropdownBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggleDropdownMenu();
+                });
+            }
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                const menu = document.getElementById('dropdownMenu');
+                const btn = document.getElementById('dropdownMenuBtn');
+                if (menu && !menu.contains(e.target) && !btn.contains(e.target)) {
+                    closeDropdownMenu();
+                }
+            });
+        });
         
         // Load saved settings from localStorage
         function loadDisplaySettings() {
@@ -1496,8 +1853,13 @@
         
         // Change theme color
         function changeThemeColor(color) {
+            settingsModified = true;
             applyThemeColor(color);
             localStorage.setItem('themeColor', color);
+            // If in custom mode, apply immediately
+            if (currentThemeMode === 'custom') {
+                applyTheme();
+            }
         }
         
         // Apply theme color to all elements
@@ -1567,6 +1929,23 @@
         
         // Initialize engine hint
         updateEngineHint();
+        
+        // Initialize search button icon to match current engine
+        (function() {
+            const engineItems = document.querySelectorAll('.engine-item');
+            engineItems.forEach(item => {
+                if (item.getAttribute('data-url') === currentEngineUrl) {
+                    const engineName = item.getAttribute('data-engine');
+                    const searchBtnIcon = document.getElementById('searchBtnIcon');
+                    if (searchBtnIcon) {
+                        const img = item.querySelector('img');
+                        if (img) {
+                            searchBtnIcon.src = img.src;
+                        }
+                    }
+                }
+            });
+        })();
         
         // Load display settings from cookies
         loadDisplaySettings();
@@ -1685,7 +2064,7 @@
                     }
                 }
                 
-                return `<li style="font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif; animation-delay: ${index * 0.05}s">${iconHtml}${item}</li>`;
+                return `<li style="font-family: 'YouYuan', Arial, sans-serif; animation-delay: ${index * 0.05}s">${iconHtml}${item}</li>`;
             }).join('');
             suggestionsList.classList.add('visible');
             
@@ -1853,7 +2232,7 @@
                 toast.style.fontSize = '14px';
                 toast.style.zIndex = '10000';
                 toast.style.transition = 'opacity 0.3s ease';
-                toast.style.fontFamily = "'KaiTi', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif";
+                toast.style.fontFamily = "'YouYuan', Arial, sans-serif";
                 document.body.appendChild(toast);
                 
                 setTimeout(() => {
@@ -1954,15 +2333,6 @@
         // Search engine selector functionality
         const engineItems = document.querySelectorAll('.engine-item');
         const engineSelector = document.getElementById('engineSelector');
-        const engineToggleBtn = document.getElementById('engineToggleBtn');
-        
-        // Toggle engine selector visibility - now switches to engine tab
-        engineToggleBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            // Open the favorites modal first with fade effect
-            showModalWithFade('favoritesModal');
-            switchToEngineTab();
-        });
         
         // Engine item click handler
         engineItems.forEach(item => {
@@ -2000,9 +2370,8 @@
             }
         });
         
-        // Function to update engine toggle button icon
+        // Function to update engine tab icon after engine change
         function updateEngineToggleIcon(engineName) {
-            const engineToggleBtn = document.getElementById('engineToggleBtn');
             const engineTabIcon = document.getElementById('engineTabIcon');
             const engineTabText = document.getElementById('engineTabText');
             
@@ -2024,24 +2393,24 @@
             
             const faviconUrl = engineFavicons[engineName];
             
-            if (engineToggleBtn && faviconUrl) {
-                // Update main toggle button with favicon
-                engineToggleBtn.innerHTML = `<img src="${faviconUrl}" alt="${engineName}" style="width: 24px; height: 24px; object-fit: contain;">`;
-                
-                // Update engine tab icon/text
-                if (engineTabIcon) {
-                    // Show the image icon, hide text
-                    engineTabIcon.src = faviconUrl;
-                    engineTabIcon.style.display = 'block';
-                    if (engineTabText) {
-                        engineTabText.style.display = 'none';
-                    }
-                    // Remove any SVG that was added
-                    let tabSvg = engineTabIcon.nextElementSibling;
-                    if (tabSvg && tabSvg.classList.contains('engine-tab-svg')) {
-                        tabSvg.remove();
-                    }
+            if (engineTabIcon && faviconUrl) {
+                // Update engine tab icon
+                engineTabIcon.src = faviconUrl;
+                engineTabIcon.style.display = 'block';
+                if (engineTabText) {
+                    engineTabText.style.display = 'none';
                 }
+                // Remove any SVG that was added
+                let tabSvg = engineTabIcon.nextElementSibling;
+                if (tabSvg && tabSvg.classList.contains('engine-tab-svg')) {
+                    tabSvg.remove();
+                }
+            }
+            
+            // Update search button icon
+            const searchBtnIcon = document.getElementById('searchBtnIcon');
+            if (searchBtnIcon && faviconUrl) {
+                searchBtnIcon.src = faviconUrl;
             }
         }
         
@@ -2060,6 +2429,7 @@
         
         // Settings functions
         function toggleHighContrast() {
+            settingsModified = true;
             const isHighContrast = document.getElementById('highContrastMode').checked;
             if (isHighContrast) {
                 document.body.style.filter = 'contrast(1.5)';
@@ -2069,6 +2439,7 @@
         }
         
         function toggleTimeDisplay() {
+            settingsModified = true;
             const showTime = document.getElementById('showTimeToggle').checked;
             const timeDisplay = document.getElementById('timeDisplay');
             if (timeDisplay) {
@@ -2098,19 +2469,20 @@
                 favorites: favorites,
                 searchHistory: JSON.parse(localStorage.getItem('searchHistory') || '[]'),
                 settings: {
-                    saveSearchHistory: true,
-                    showSearchSuggestions: true,
-                    cacheSuggestions: true,
-                    cacheDuration: 3600,
-                    privacyMode: false,
-                    showFavCreateTime: false,
-                    autoSortFavorites: true,
-                    darkMode: localStorage.getItem('darkMode') === 'true',
+                    saveSearchHistory: document.getElementById('saveSearchHistory') ? document.getElementById('saveSearchHistory').checked : true,
+                    showSearchSuggestions: document.getElementById('showSearchSuggestions') ? document.getElementById('showSearchSuggestions').checked : true,
+                    cacheSuggestions: document.getElementById('cacheSuggestions') ? document.getElementById('cacheSuggestions').checked : true,
+                    cacheDuration: document.getElementById('cacheDuration') ? document.getElementById('cacheDuration').value : 3600,
+                    privacyMode: document.getElementById('privacyMode') ? document.getElementById('privacyMode').checked : false,
+                    showFavCreateTime: document.getElementById('showFavCreateTime') ? document.getElementById('showFavCreateTime').checked : false,
+                    autoSortFavorites: document.getElementById('autoSortFavorites') ? document.getElementById('autoSortFavorites').checked : true,
+                    themeMode: localStorage.getItem('themeMode') || 'light',
                     showTimeDisplay: localStorage.getItem('showTimeDisplay') !== 'false',
                     showPoem: localStorage.getItem('showPoem') !== 'false',
                     showScanner: localStorage.getItem('showScanner') !== 'false',
-                    highContrast: document.getElementById('highContrastMode').checked,
-                    themeColor: localStorage.getItem('themeColor') || '#F0F0F0'
+                    highContrast: document.getElementById('highContrastMode') ? document.getElementById('highContrastMode').checked : false,
+                    themeColor: localStorage.getItem('themeColor') || '#F0F0F0',
+                    buttonStyle: localStorage.getItem('buttonStyle') || 'neumorphism'
                 },
                 searchEngine: localStorage.getItem('searchEngine') || 'https://cn.bing.com/search?q='
             };
@@ -2150,15 +2522,30 @@
                     }
                     
                     if (allData.settings) {
-                        localStorage.setItem('darkMode', allData.settings.darkMode);
+                        // Handle both old darkMode and new themeMode for backward compatibility
+                        if (allData.settings.themeMode) {
+                            localStorage.setItem('themeMode', allData.settings.themeMode);
+                        } else if (allData.settings.darkMode !== undefined) {
+                            // Convert old darkMode to new themeMode
+                            localStorage.setItem('themeMode', allData.settings.darkMode ? 'dark' : 'light');
+                        }
+                        
                         localStorage.setItem('showTimeDisplay', allData.settings.showTimeDisplay);
                         localStorage.setItem('showPoem', allData.settings.showPoem);
                         localStorage.setItem('showScanner', allData.settings.showScanner);
                         
-                        // Apply settings
-                        if (allData.settings.darkMode) {
-                            document.body.classList.add('dark-mode');
-                            document.getElementById('darkModeToggle').checked = true;
+                        // Apply theme mode
+                        const savedThemeMode = localStorage.getItem('themeMode');
+                        if (savedThemeMode) {
+                            currentThemeMode = savedThemeMode;
+                            // Set the correct radio button
+                            const radioButtons = document.querySelectorAll('input[name="themeMode"]');
+                            radioButtons.forEach(radio => {
+                                if (radio.value === currentThemeMode) {
+                                    radio.checked = true;
+                                }
+                            });
+                            applyTheme();
                         }
                         
                         const showTime = allData.settings.showTimeDisplay !== false;
@@ -2175,6 +2562,61 @@
                             if (colorPicker) {
                                 colorPicker.value = allData.settings.themeColor;
                             }
+                        }
+                        
+                        // Apply button style
+                        if (allData.settings.buttonStyle) {
+                            localStorage.setItem('buttonStyle', allData.settings.buttonStyle);
+                            currentButtonStyle = allData.settings.buttonStyle;
+                            const radioButtons = document.querySelectorAll('input[name="buttonStyle"]');
+                            radioButtons.forEach(radio => {
+                                if (radio.value === currentButtonStyle) {
+                                    radio.checked = true;
+                                }
+                            });
+                            applyButtonStyle();
+                        }
+                        
+                        // Restore checkbox settings
+                        if (allData.settings.saveSearchHistory !== undefined) {
+                            const el = document.getElementById('saveSearchHistory');
+                            if (el) el.checked = allData.settings.saveSearchHistory;
+                        }
+                        if (allData.settings.showSearchSuggestions !== undefined) {
+                            const el = document.getElementById('showSearchSuggestions');
+                            if (el) el.checked = allData.settings.showSearchSuggestions;
+                        }
+                        if (allData.settings.cacheSuggestions !== undefined) {
+                            const el = document.getElementById('cacheSuggestions');
+                            if (el) el.checked = allData.settings.cacheSuggestions;
+                        }
+                        if (allData.settings.cacheDuration !== undefined) {
+                            const el = document.getElementById('cacheDuration');
+                            if (el) el.value = allData.settings.cacheDuration;
+                        }
+                        if (allData.settings.privacyMode !== undefined) {
+                            const el = document.getElementById('privacyMode');
+                            if (el) el.checked = allData.settings.privacyMode;
+                        }
+                        if (allData.settings.showFavCreateTime !== undefined) {
+                            const el = document.getElementById('showFavCreateTime');
+                            if (el) el.checked = allData.settings.showFavCreateTime;
+                        }
+                        if (allData.settings.autoSortFavorites !== undefined) {
+                            const el = document.getElementById('autoSortFavorites');
+                            if (el) el.checked = allData.settings.autoSortFavorites;
+                        }
+                        if (allData.settings.highContrast !== undefined) {
+                            const el = document.getElementById('highContrastMode');
+                            if (el) el.checked = allData.settings.highContrast;
+                        }
+                        if (allData.settings.showPoem !== undefined) {
+                            const el = document.getElementById('showPoemToggle');
+                            if (el) el.checked = allData.settings.showPoem;
+                        }
+                        if (allData.settings.showScanner !== undefined) {
+                            const el = document.getElementById('showScannerToggle');
+                            if (el) el.checked = allData.settings.showScanner;
                         }
                     }
                     
@@ -2219,71 +2661,6 @@
             });
             
             alert('清理完成！');
-        }
-        
-        function backupAllData() {
-            const allData = {
-                favorites: favorites,
-                searchHistory: getSearchHistory(),
-                settings: {
-                    saveSearchHistory: document.getElementById('saveSearchHistory').checked,
-                    showSearchSuggestions: document.getElementById('showSearchSuggestions').checked,
-                    cacheSuggestions: document.getElementById('cacheSuggestions').checked,
-                    cacheDuration: document.getElementById('cacheDuration').value,
-                    privacyMode: document.getElementById('privacyMode').checked,
-                    showFavCreateTime: document.getElementById('showFavCreateTime').checked,
-                    autoSortFavorites: document.getElementById('autoSortFavorites').checked,
-                    highContrast: document.getElementById('highContrastMode').checked
-                }
-            };
-            
-            const dataStr = JSON.stringify(allData, null, 2);
-            const blob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'hellokgsearch_backup_' + new Date().toISOString().split('T')[0] + '.json';
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-        
-        function restoreAllData(input) {
-            const file = input.files[0];
-            if (!file) return;
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const allData = JSON.parse(e.target.result);
-                    
-                    if (allData.favorites) {
-                        favorites = allData.favorites;
-                        saveFavorites();
-                    }
-                    
-                    if (allData.searchHistory) {
-                        localStorage.setItem('searchHistory', JSON.stringify(allData.searchHistory));
-                    }
-                    
-                    if (allData.settings) {
-                        document.getElementById('saveSearchHistory').checked = allData.settings.saveSearchHistory;
-                        document.getElementById('showSearchSuggestions').checked = allData.settings.showSearchSuggestions;
-                        document.getElementById('cacheSuggestions').checked = allData.settings.cacheSuggestions;
-                        document.getElementById('cacheDuration').value = allData.settings.cacheDuration;
-                        document.getElementById('privacyMode').checked = allData.settings.privacyMode;
-                        document.getElementById('showFavCreateTime').checked = allData.settings.showFavCreateTime;
-                        document.getElementById('autoSortFavorites').checked = allData.settings.autoSortFavorites;
-                        document.getElementById('highContrastMode').checked = allData.settings.highContrast;
-                        toggleHighContrast();
-                    }
-                    
-                    alert('数据恢复成功！');
-                } catch (err) {
-                    alert('恢复失败：文件格式错误');
-                    console.error(err);
-                }
-            };
-            reader.readAsText(file);
         }
         
         function resetSettings() {
@@ -2424,7 +2801,7 @@
             );
             
             if (filtered.length === 0) {
-                list.innerHTML = '<div style="text-align: center; color: #999; padding: 40px; font-family: \'KaiTi\', \'STKaiti\', \'楷体\', \'Microsoft YaHei\', Arial, sans-serif;">暂无收藏</div>';
+                list.innerHTML = '<div style="text-align: center; color: #999; padding: 40px; font-family: \'YouYuan\', Arial, sans-serif;">暂无收藏</div>';
                 return;
             }
             
@@ -2435,7 +2812,7 @@
                 const faviconUrl = getFavicon(fav.url);
                 const initials = getInitials(fav.name);
                 
-                html += `<div onclick="openFavoriteUrl('${fav.url.replace(/'/g, "\\'")}')" style="display: flex; align-items: center; padding: 12px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; margin-bottom: 10px; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif;">
+                html += `<div onclick="openFavoriteUrl('${fav.url.replace(/'/g, "\\'")}')" style="display: flex; align-items: center; padding: 12px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; margin-bottom: 10px; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif;">
                     <div style="width: 32px; height: 32px; margin-right: 12px; flex-shrink: 0; position: relative;">
                         <img src="${faviconUrl}" onload="this.style.display='block'; this.nextElementSibling.style.display='none'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" style="width: 100%; height: 100%; object-fit: contain; display: none;" alt="">
                         <div style="width: 100%; height: 100%; background: #000000; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px; position: absolute; top: 0; left: 0;">${initials}</div>
@@ -2462,6 +2839,10 @@
             });
             
             list.innerHTML = html;
+            // Apply outline mode to dynamically generated content
+            if (currentButtonStyle === 'outline') {
+                applyOutlineToAll();
+            }
         }
         
         function openFavorites() {
@@ -2469,6 +2850,12 @@
             switchToFavoritesTab();  // Switch to favorites tab
             loadFavorites();
         }
+        
+        // Track if settings were modified
+        let settingsModified = false;
+        
+        // Mark settings as modified when any setting changes
+        const originalSetThemeMode = typeof setThemeMode === 'function' ? setThemeMode : null;
         
         function closeFavorites() {
             // First hide the modal
@@ -2496,6 +2883,12 @@
                             btn.style.opacity = '1';
                             btn.style.transform = 'scale(1)';
                         });
+                    }
+                    
+                    // Reload page if settings were modified
+                    if (settingsModified) {
+                        settingsModified = false;
+                        location.reload();
                     }
                 }, 300);
             }
@@ -2619,9 +3012,7 @@
         
         // KG data - fixed websites
         const kgWebsites = [
-            { name: 'Kg官方网站国内', url: 'https://image.cursorhub.org/user-upload/1776481358104-464350dc-e6fb-4732-b851-4e53bf93cea9.html', color: '#FAFAD2', initial: 'K' },
             { name: '（Windows）Kg 收银系统', url: 'https://wwbpg.lanzouu.com/iGuw43ibdxgf', color: '#FF6B8A', initial: '银' },
-            { name: '（Android）Kg快计', url: 'https://wwbpg.lanzouu.com/iaBHq3nhwimb', color: '#FG1234', initial: '快' },
             { name: '（Windows）Kg bing 壁纸', url: 'https://wwbpg.lanzouu.com/i1r813l8pwdi', color: '#4ECDC4', initial: '壁' },
             { name: '（Windows）KgWinNas', url: 'https://wwbpg.lanzouu.com/iQysW3ibdxpe', color: '#45B7D1', initial: '盘' },
             { name: '（Windows）Kg跃点网络优先切换', url: 'https://wwbpg.lanzouu.com/iZbiG3n2mk2d', color: '#323154', initial: '网' }
@@ -2635,13 +3026,13 @@
             );
             
             if (filtered.length === 0) {
-                list.innerHTML = '<div style="text-align: center; color: #999; padding: 40px; font-family: \'KaiTi\', \'STKaiti\', \'楷体\', \'Microsoft YaHei\', Arial, sans-serif;">暂无内容</div>';
+                list.innerHTML = '<div style="text-align: center; color: #999; padding: 40px; font-family: \'YouYuan\', Arial, sans-serif;">暂无内容</div>';
                 return;
             }
             
             let html = '';
             filtered.forEach((kg) => {
-                html += `<div onclick="openFavoriteUrl('${kg.url.replace(/'/g, "\\'")}')" style="display: flex; align-items: center; padding: 12px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; margin-bottom: 10px; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif;">
+                html += `<div onclick="openFavoriteUrl('${kg.url.replace(/'/g, "\\'")}')" style="display: flex; align-items: center; padding: 12px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; margin-bottom: 10px; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif;">
                     <div style="width: 32px; height: 32px; margin-right: 12px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: ${kg.color}; color: white; border-radius: 50%; font-weight: bold; font-size: 16px;">
                         ${kg.initial}
                     </div>
@@ -2652,18 +3043,14 @@
             });
             
             list.innerHTML = html;
+            // Apply outline mode to dynamically generated content
+            if (currentButtonStyle === 'outline') {
+                applyOutlineToAll();
+            }
         }
         
         // Tab switching functions with smooth transition
         function switchToFavoritesTab() {
-            // Add dynamic island animation to button
-            const btn = document.getElementById('favTabBtn');
-            if (btn) {
-                btn.classList.remove('dynamic-island');
-                void btn.offsetWidth;
-                btn.classList.add('dynamic-island');
-                setTimeout(() => btn.classList.remove('dynamic-island'), 500);
-            }
             
             const contents = ['favoritesContent', 'kgContent', 'engineContent', 'settingsContent'];
             const buttons = ['favTabBtn', 'kgTabBtn', 'engineTabBtn', 'settingsTabBtn'];
@@ -2717,14 +3104,6 @@
         }
         
         function switchToKGTab() {
-            // Add dynamic island animation to button
-            const btn = document.getElementById('kgTabBtn');
-            if (btn) {
-                btn.classList.remove('dynamic-island');
-                void btn.offsetWidth;
-                btn.classList.add('dynamic-island');
-                setTimeout(() => btn.classList.remove('dynamic-island'), 500);
-            }
             
             const contents = ['favoritesContent', 'kgContent', 'engineContent', 'settingsContent'];
             const buttons = ['favTabBtn', 'kgTabBtn', 'engineTabBtn', 'settingsTabBtn'];
@@ -2828,14 +3207,6 @@
         }
         
         function switchToEngineTab() {
-            // Add dynamic island animation to button
-            const btn = document.getElementById('engineTabBtn');
-            if (btn) {
-                btn.classList.remove('dynamic-island');
-                void btn.offsetWidth;
-                btn.classList.add('dynamic-island');
-                setTimeout(() => btn.classList.remove('dynamic-island'), 500);
-            }
             
             const contents = ['favoritesContent', 'kgContent', 'engineContent', 'settingsContent'];
             const buttons = ['favTabBtn', 'kgTabBtn', 'engineTabBtn', 'settingsTabBtn'];
@@ -2887,14 +3258,6 @@
         }
         
         function switchToSettingsTab() {
-            // Add dynamic island animation to button
-            const btn = document.getElementById('settingsTabBtn');
-            if (btn) {
-                btn.classList.remove('dynamic-island');
-                void btn.offsetWidth;
-                btn.classList.add('dynamic-island');
-                setTimeout(() => btn.classList.remove('dynamic-island'), 500);
-            }
             
             const contents = ['favoritesContent', 'kgContent', 'engineContent', 'settingsContent'];
             const buttons = ['favTabBtn', 'kgTabBtn', 'engineTabBtn', 'settingsTabBtn'];
@@ -3148,23 +3511,177 @@
         }
         
         // Toggle dark mode function
-        function toggleDarkMode() {
-            const isDarkMode = document.getElementById('darkModeToggle').checked;
-            if (isDarkMode) {
-                document.body.classList.add('dark-mode');
-                localStorage.setItem('darkMode', 'true');
+        // Theme mode management
+        let currentThemeMode = 'light'; // Default to light mode
+        
+        function setThemeMode(mode) {
+            settingsModified = true;
+            currentThemeMode = mode;
+            localStorage.setItem('themeMode', mode);
+            applyTheme();
+        }
+        
+        function applyTheme() {
+            const THEME_LIGHT = '#F0F0F0';
+            const THEME_DARK = '#343434';
+            
+            if (currentThemeMode === 'auto') {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                applyThemeColor(prefersDark ? THEME_DARK : THEME_LIGHT);
+            } else if (currentThemeMode === 'dark') {
+                applyThemeColor(THEME_DARK);
+            } else if (currentThemeMode === 'custom') {
+                const customColor = document.getElementById('themeColorPicker').value;
+                applyThemeColor(customColor);
             } else {
-                document.body.classList.remove('dark-mode');
-                localStorage.setItem('darkMode', 'false');
+                // light mode
+                applyThemeColor(THEME_LIGHT);
             }
         }
-
-        // Load dark mode preference
-        const darkModePreference = localStorage.getItem('darkMode');
-        if (darkModePreference === 'true') {
-            document.body.classList.add('dark-mode');
-            document.getElementById('darkModeToggle').checked = true;
+        
+        // Listen for system theme changes
+        if (window.matchMedia) {
+            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            mediaQuery.addEventListener('change', function(e) {
+                if (currentThemeMode === 'auto') {
+                    applyTheme();
+                }
+            });
         }
+        
+        // Load theme mode preference
+        const savedThemeMode = localStorage.getItem('themeMode');
+        if (savedThemeMode) {
+            currentThemeMode = savedThemeMode;
+            // Set the correct radio button
+            const radioButtons = document.querySelectorAll('input[name="themeMode"]');
+            radioButtons.forEach(radio => {
+                if (radio.value === currentThemeMode) {
+                    radio.checked = true;
+                }
+            });
+            applyTheme();
+        } else {
+            // Default to light mode
+            applyTheme();
+        }
+        
+        // Load custom theme color if in custom mode
+        if (currentThemeMode === 'custom') {
+            const savedColor = localStorage.getItem('themeColor');
+            if (savedColor) {
+                document.getElementById('themeColorPicker').value = savedColor;
+            }
+        }
+        
+        // Button style management
+        let currentButtonStyle = localStorage.getItem('buttonStyle') || 'neumorphism';
+        
+        function setButtonStyle(style) {
+            settingsModified = true;
+            const prevStyle = currentButtonStyle;
+            currentButtonStyle = style;
+            localStorage.setItem('buttonStyle', style);
+            
+            // Restore original styles when leaving outline or bing mode
+            if (prevStyle === 'outline' || prevStyle === 'bing') {
+                restoreNeumorphism();
+            }
+            
+            applyButtonStyle();
+        }
+        
+        function applyButtonStyle() {
+            document.body.setAttribute('data-button-style', currentButtonStyle);
+            
+            if (currentButtonStyle === 'outline') {
+                applyOutlineToAll();
+            }
+            
+            if (currentButtonStyle === 'bing') {
+                // Create wallpaper overlay with fade-in
+                let overlay = document.getElementById('bingWallpaperOverlay');
+                if (!overlay) {
+                    overlay = document.createElement('div');
+                    overlay.id = 'bingWallpaperOverlay';
+                    document.body.appendChild(overlay);
+                }
+                // Preload image then fade in
+                const img = new Image();
+                img.onload = function() {
+                    overlay.style.backgroundImage = `url('${img.src}')`;
+                    // Small delay to ensure background-color transition starts first
+                    setTimeout(() => {
+                        overlay.classList.add('visible');
+                    }, 300);
+                };
+                img.onerror = function() {
+                    // Fallback: show overlay anyway with URL
+                    overlay.style.backgroundImage = "url('https://bing.img.run/1920x1080.php')";
+                    setTimeout(() => {
+                        overlay.classList.add('visible');
+                    }, 300);
+                };
+                img.src = 'https://bing.img.run/1920x1080.php';
+            } else {
+                // Remove wallpaper overlay with fade-out
+                const overlay = document.getElementById('bingWallpaperOverlay');
+                if (overlay) {
+                    overlay.classList.remove('visible');
+                    setTimeout(() => {
+                        overlay.remove();
+                    }, 1200);
+                }
+            }
+        }
+        
+        function applyOutlineToAll() {
+            // Remove inline box-shadow from elements that have it
+            // Skip containers and structural elements to avoid stacking issues
+            const skipIds = ['favoritesModal', 'searchContainer', 'dropdownMenu', 'scannerContainer', 'scannerVideo', 'textResultModal'];
+            const skipClasses = ['search-container', 'bottom-buttons-container', 'poem-container', 'modal-overlay'];
+            const allElements = document.querySelectorAll('*');
+            allElements.forEach(el => {
+                // Skip structural containers
+                if (skipIds.includes(el.id)) return;
+                if (skipClasses.some(c => el.classList.contains(c))) return;
+                // Skip the search box itself (it has its own CSS rule)
+                if (el.classList.contains('search-box')) return;
+                
+                const style = el.getAttribute('style');
+                if (style && style.includes('box-shadow')) {
+                    el.setAttribute('data-original-style', style);
+                    el.style.boxShadow = 'none';
+                    el.style.border = '2px solid #000000';
+                    el.style.borderRadius = '34px';
+                    el.style.background = 'transparent';
+                }
+            });
+        }
+        
+        function restoreNeumorphism() {
+            const allElements = document.querySelectorAll('[data-original-style]');
+            allElements.forEach(el => {
+                const original = el.getAttribute('data-original-style');
+                if (original) {
+                    el.setAttribute('style', original);
+                    el.removeAttribute('data-original-style');
+                }
+            });
+        }
+        
+        // Load button style preference
+        const savedButtonStyle = localStorage.getItem('buttonStyle');
+        if (savedButtonStyle) {
+            currentButtonStyle = savedButtonStyle;
+            const radioButtons = document.querySelectorAll('input[name="buttonStyle"]');
+            radioButtons.forEach(radio => {
+                if (radio.value === currentButtonStyle) {
+                    radio.checked = true;
+                }
+            });
+        }
+        applyButtonStyle();
         
         // Load time display preference
         const showTimePreference = localStorage.getItem('showTimeDisplay');
@@ -3327,10 +3844,6 @@
             // Hide modal after fade out
             setTimeout(() => {
                 modal.style.display = 'none';
-                
-                // Reset result display
-                document.getElementById('scanResult').style.display = 'none';
-                currentScanResult = '';
             }, 300);
         }
         
@@ -3366,29 +3879,75 @@
         
         function showScanResult(result) {
             currentScanResult = result;
-            const resultDiv = document.getElementById('scanResult');
-            const resultText = document.getElementById('scanResultText');
             
-            resultText.textContent = result;
-            resultDiv.style.display = 'block';
-            
-            // Stop scanning after successful scan
-            if (scannerInterval) {
-                clearInterval(scannerInterval);
-                scannerInterval = null;
+            // Check if it's a URL
+            if (result.startsWith('http://') || result.startsWith('https://')) {
+                // Directly open URL
+                window.open(result, '_blank');
+                // Close scanner
+                closeScanner();
+            } else {
+                // Show text result modal
+                closeScanner();
+                showScanTextModal(result);
             }
         }
         
-        function openScanResult() {
-            if (currentScanResult) {
-                // Check if it's a URL
-                if (currentScanResult.startsWith('http://') || currentScanResult.startsWith('https://')) {
-                    window.open(currentScanResult, '_blank');
-                } else {
-                    // Try to open as URL
-                    window.open('https://' + currentScanResult, '_blank');
-                }
+        function showScanTextModal(text) {
+            const modal = document.getElementById('scanTextModal');
+            const content = document.getElementById('scanTextContent');
+            
+            content.textContent = text;
+            modal.style.display = 'block';
+            
+            // Force reflow
+            void modal.offsetWidth;
+            
+            // Fade in
+            modal.style.opacity = '1';
+        }
+        
+        function closeScanTextModal() {
+            const modal = document.getElementById('scanTextModal');
+            modal.style.opacity = '0';
+            
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+        
+        function copyScanText() {
+            const content = document.getElementById('scanTextContent').textContent;
+            
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(content).then(() => {
+                    showToast('已复制到剪贴板');
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                    fallbackCopyText(content);
+                });
+            } else {
+                fallbackCopyText(content);
             }
+        }
+        
+        function fallbackCopyText(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-9999px';
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showToast('已复制到剪贴板');
+            } catch (err) {
+                console.error('Failed to copy:', err);
+                showToast('复制失败');
+            }
+            
+            document.body.removeChild(textArea);
         }
         
         function closeDrawingCanvas() {
@@ -3416,7 +3975,7 @@
         <button onclick="closeScanner()" style="position: absolute; top: 20px; right: 20px; width: 50px; height: 50px; border: none; border-radius: 50%; background: #F0F0F0; color: #000000; font-size: 28px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 100001; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;">×</button>
         
         <!-- Title -->
-        <div style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); color: #000000; font-size: 20px; font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif; z-index: 100001; font-weight: bold;">
+        <div style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); color: #000000; font-size: 20px; font-family: 'YouYuan', Arial, sans-serif; z-index: 100001; font-weight: bold;">
             扫一扫
         </div>
         
@@ -3438,20 +3997,31 @@
         <!-- Scan Line Animation -->
         <div id="scanLine" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 250px; height: 2px; background: linear-gradient(to right, transparent, #000000, transparent); animation: scanAnimation 2s linear infinite; pointer-events: none;"></div>
         
-        <!-- Result Display -->
-        <div id="scanResult" style="position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%); background: #F0F0F0; padding: 15px 25px; border-radius: 34px; max-width: 80%; text-align: center; display: none; z-index: 100001; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;">
-            <div style="font-size: 14px; color: #666; margin-bottom: 10px;">扫描结果：</div>
-            <div id="scanResultText" style="font-size: 16px; color: #000; word-break: break-all;"></div>
-            <button onclick="openScanResult()" style="margin-top: 10px; padding: 8px 20px; background: #F0F0F0; color: #000; border: none; border-radius: 34px; cursor: pointer; font-size: 14px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;">打开链接</button>
-        </div>
-        
         <!-- Instructions -->
-        <div style="position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: #000000; font-size: 14px; text-align: center; font-family: 'YouYuan', 'STKaiti', '楷体', 'Microsoft YaHei', Arial, sans-serif; z-index: 100001;">
+        <div style="position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: #000000; font-size: 14px; text-align: center; font-family: 'YouYuan', Arial, sans-serif; z-index: 100001;">
             将二维码/条形码放入框内，即可自动扫描
         </div>
     </div>
     
-    <!-- Easter Egg: Drawing Canvas -->
+    <!-- Scan Text Result Modal -->
+    <div id="scanTextModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); z-index: 100002; opacity: 0; transition: opacity 0.3s ease;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #F0F0F0; border: none; border-radius: 34px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); padding: 30px; min-width: 350px; max-width: 90%; max-height: 80vh; overflow-y: auto;">
+            <!-- Close Button -->
+            <button onclick="closeScanTextModal()" style="position: absolute; top: 15px; right: 15px; width: 36px; height: 36px; border: none; border-radius: 50%; background: #F0F0F0; color: #000000; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;">×</button>
+            
+            <!-- Title -->
+            <div style="font-size: 20px; font-weight: bold; margin-bottom: 20px; text-align: center; font-family: 'YouYuan', Arial, sans-serif;">扫描结果</div>
+            
+            <!-- Text Content -->
+            <div id="scanTextContent" style="font-size: 16px; line-height: 1.6; word-break: break-all; margin-bottom: 25px; padding: 15px; background: #F0F0F0; border-radius: 15px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; max-height: 40vh; overflow-y: auto; font-family: 'YouYuan', Arial, sans-serif;"></div>
+            
+            <!-- Copy Button -->
+            <button onclick="copyScanText()" style="width: 100%; padding: 12px 20px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-size: 16px; font-weight: bold; font-family: 'YouYuan', Arial, sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                复制文本
+            </button>
+        </div>
+    </div>
     <div id="drawingCanvas" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 99999;">
         <!-- KG Text in Center -->
         <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 120px; font-weight: bold; color: #000000; font-family: Arial, sans-serif; pointer-events: none; user-select: none; opacity: 0.1;">
@@ -3466,3 +4036,4 @@
     </div>
 </body>
 </html>
+1
