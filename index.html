@@ -295,19 +295,23 @@
             #favTabBtn,
             #kgTabBtn,
             #engineTabBtn,
-            #settingsTabBtn {
+            #settingsTabBtn,
+            #hotNewsTabBtn {
                 max-width: none !important;
-                padding: 6px 8px !important; /* 50% smaller */
-                font-size: 12px !important; /* 50% smaller */
-                width: calc(25% - 8px) !important;
+                padding: 6px 8px !important;
+                font-size: 12px !important;
+                width: calc(20% - 8px) !important;
+                border-radius: 50% !important;
+                aspect-ratio: 1 / 1 !important;
             }
-            
+
             #favTabBtn svg,
             #kgTabBtn svg,
             #engineTabBtn svg,
-            #settingsTabBtn svg {
-                width: 18px !important; /* 50% smaller from 24px */
-                height: 18px !important; /* 50% smaller from 24px */
+            #settingsTabBtn svg,
+            #hotNewsTabBtn svg {
+                width: 18px !important;
+                height: 18px !important;
             }
             
             .favorites-header {
@@ -1500,6 +1504,40 @@
             width: 166px;
             height: 166px;
         }
+
+        /* Elder mode - remove all effects */
+        body[data-elder-mode="true"] *,
+        body[data-elder-mode="true"] *::before,
+        body[data-elder-mode="true"] *::after {
+            box-shadow: none !important;
+            animation: none !important;
+            transition: none !important;
+            border-radius: 0 !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            text-shadow: none !important;
+            filter: none !important;
+            transform: none !important;
+            opacity: 1 !important;
+        }
+
+        body[data-elder-mode="true"] {
+            background-color: #ffffff !important;
+            background-image: none !important;
+        }
+
+        body[data-elder-mode="true"] button,
+        body[data-elder-mode="true"] input,
+        body[data-elder-mode="true"] select,
+        body[data-elder-mode="true"] .search-box {
+            border: 1px solid #ccc !important;
+            background: #f5f5f5 !important;
+        }
+
+        body[data-elder-mode="true"] .modal-overlay,
+        body[data-elder-mode="true"] #favoritesModal {
+            background: #ffffff !important;
+        }
     </style>
     <!-- jsQR Library for QR Code scanning -->
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
@@ -1657,12 +1695,12 @@
         <div style="display: flex; justify-content: center; align-items: center; position: relative; padding: 20px 20px 0 20px;">
             <!-- Tab Navigation (centered) -->
             <div style="display: flex; gap: 10px;">
-                <button id="favTabBtn" onclick="switchToFavoritesTab()" style="display: flex; align-items: center; justify-content: center; width: 80px; padding: 12px 20px; border: none; border-radius: 34px; background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
+                <button id="favTabBtn" onclick="switchToFavoritesTab()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: 34px; background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;">
                         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                     </svg>
                 </button>
-                <button id="kgTabBtn" onclick="switchToKGTab()" style="display: flex; align-items: center; justify-content: center; width: 80px; padding: 12px 20px; border: none; border-radius: 34px; background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
+                <button id="kgTabBtn" onclick="switchToKGTab()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: 34px; background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;">
                         <rect x="3" y="3" width="7" height="7"></rect>
                         <rect x="14" y="3" width="7" height="7"></rect>
@@ -1670,18 +1708,18 @@
                         <rect x="3" y="14" width="7" height="7"></rect>
                     </svg>
                 </button>
-                <button id="engineTabBtn" onclick="switchToEngineTab()" style="display: flex; align-items: center; justify-content: center; width: 80px; padding: 12px 20px; border: none; border-radius: 34px; background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
+                <button id="engineTabBtn" onclick="switchToEngineTab()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: 34px; background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
                     <img id="engineTabIcon" src="" style="width: 24px; height: 24px; object-fit: contain; display: none;" alt="引擎">
                     <span id="engineTabText" style="font-size: 20px; font-weight: bold;">引</span>
                 </button>
-                <button id="hotNewsTabBtn" onclick="switchToHotNewsTab()" style="display: flex; align-items: center; justify-content: center; width: 80px; padding: 12px 20px; border: none; border-radius: 34px; background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
+                <button id="hotNewsTabBtn" onclick="switchToHotNewsTab()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: 34px; background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;">
                         <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
                         <polyline points="2 17 12 22 22 17"></polyline>
                         <polyline points="2 12 12 17 22 12"></polyline>
                     </svg>
                 </button>
-                <button id="settingsTabBtn" onclick="handleSettingsClick()" style="display: flex; align-items: center; justify-content: center; width: 80px; padding: 12px 20px; border: none; border-radius: 34px; background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
+                <button id="settingsTabBtn" onclick="handleSettingsClick()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: 34px; background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;">
                         <circle cx="12" cy="12" r="3"></circle>
                         <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
@@ -1885,6 +1923,10 @@
                     热点新闻
                 </h2>
                 <div style="display: flex; gap: 10px; align-items: center;">
+                    <label style="display: flex; align-items: center; font-family: 'YouYuan', Arial, sans-serif; font-size: 13px; cursor: pointer; white-space: nowrap;">
+                        <input type="checkbox" id="preloadHotNews" onchange="localStorage.setItem('preloadHotNews', this.checked)" style="margin-right: 5px; width: 16px; height: 16px;">
+                        启动时预加载
+                    </label>
                     <select id="hotNewsPlatformTab" onchange="loadHotNewsTab()" style="padding: 10px 15px; border: none; border-radius: 20px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; outline: none; cursor: pointer;">
                         <option value="baidu">百度</option>
                         <option value="shaoshupai">少数派</option>
@@ -2007,6 +2049,11 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 0 20" fill="currentColor" opacity="0.3"></path></svg>
                             白色透明
                         </label>
+                        <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-top: 8px;">
+                            <input type="radio" name="buttonStyle" value="elder" onchange="setButtonStyle('elder')" style="margin-right: 8px; width: 18px; height: 18px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            老年模式（简化界面，去除所有特效）
+                        </label>
                     </div>
                 </div>
 
@@ -2063,7 +2110,15 @@
                         自动排序收藏（新添加的排首位）
                     </label>
                 </div>
-                
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
+                        <input type="checkbox" id="noFavIcons" onchange="localStorage.setItem('noFavIcons', this.checked)" style="margin-right: 10px; width: 18px; height: 18px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
+                        不加载收藏图标
+                    </label>
+                </div>
+
                 <div style="display: flex; gap: 15px; margin-top: 15px;">
                     <button id="importFavBtn" onclick="importFavorites()" style="flex: 1; padding: 10px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
@@ -2129,6 +2184,18 @@
                         临时隐私模式（本次会话不保存历史）
                     </label>
                 </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
+                        <input type="checkbox" id="cleanSearchMode" onchange="localStorage.setItem('cleanSearchMode', this.checked)" style="margin-right: 10px; width: 18px; height: 18px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        无广清净模式（搜索自动过滤广告）
+                    </label>
+                    <div style="margin-left: 30px;">
+                        <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">过滤词（前面会自动加空格和-）：</label>
+                        <input type="text" id="cleanSearchKeyword" value="李彦宏" onchange="localStorage.setItem('cleanSearchKeyword', this.value)" style="width: calc(100% - 30px); padding: 8px 12px; border: none; border-radius: 15px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
+                    </div>
+                </div>
             </div>
             
             <!-- 隐私与数据管理 -->
@@ -2186,50 +2253,53 @@
                         启用调试模式
                     </label>
                 </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-                        <input type="checkbox" id="demoModeToggle" style="margin-right: 10px; width: 18px; height: 18px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-                        演示模式
-                    </label>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-                        <input type="checkbox" id="squareModeToggle" onchange="toggleSquareMode()" style="margin-right: 10px; width: 18px; height: 18px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><rect x="3" y="3" width="18" height="18" rx="0" ry="0"></rect></svg>
-                        方框模式
-                    </label>
-                </div>
-                
-                <!-- API Configuration -->
-                <div style="margin-bottom: 15px; padding: 15px; border-radius: 20px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0;">
-                    <div style="font-family: 'YouYuan'; font-size: 14px; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 5px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                        API 地址配置
+
+                <!-- Debug mode content - hidden when debug mode is off -->
+                <div id="debugModeContent" style="display: none;">
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
+                            <input type="checkbox" id="demoModeToggle" style="margin-right: 10px; width: 18px; height: 18px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                            演示模式
+                        </label>
                     </div>
-                    <div style="margin-bottom: 10px;">
-                        <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">热点新闻 API：</label>
-                        <input type="text" id="hotNewsApiUrlInput" value="https://orz.ai/api/v1/dailynews/" style="width: 100%; padding: 8px 12px; border: none; border-radius: 15px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
+                            <input type="checkbox" id="squareModeToggle" onchange="toggleSquareMode()" style="margin-right: 10px; width: 18px; height: 18px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><rect x="3" y="3" width="18" height="18" rx="0" ry="0"></rect></svg>
+                            方框模式
+                        </label>
                     </div>
-                    <div style="margin-bottom: 10px;">
-                        <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">搜索建议 API（百度）：</label>
-                        <input type="text" id="suggestionApiUrlInput" value="https://suggestion.baidu.com/su" style="width: 100%; padding: 8px 12px; border: none; border-radius: 15px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
+
+                    <!-- API Configuration -->
+                    <div style="margin-bottom: 15px; padding: 15px; border-radius: 20px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0;">
+                        <div style="font-family: 'YouYuan'; font-size: 14px; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 5px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                            API 地址配置
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">热点新闻 API：</label>
+                            <input type="text" id="hotNewsApiUrlInput" value="https://orz.ai/api/v1/dailynews/" style="width: 100%; padding: 8px 12px; border: none; border-radius: 15px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">搜索建议 API（百度）：</label>
+                            <input type="text" id="suggestionApiUrlInput" value="https://suggestion.baidu.com/su" style="width: 100%; padding: 8px 12px; border: none; border-radius: 15px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">今日诗词 API：</label>
+                            <input type="text" id="poemApiUrlInput" value="https://v1.jinrishici.com/all.json" style="width: 100%; padding: 8px 12px; border: none; border-radius: 15px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">Bing 壁纸 API：</label>
+                            <input type="text" id="bingWallpaperApiUrlInput" value="https://bing.img.run/1920x1080.php" style="width: 100%; padding: 8px 12px; border: none; border-radius: 15px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">网站元信息 API：</label>
+                            <input type="text" id="websiteMetaApiUrlInput" value="https://orz.ai/api/v1/tools/website-meta/" style="width: 100%; padding: 8px 12px; border: none; border-radius: 15px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
+                        </div>
+                        <button onclick="saveAllApiUrls()" style="padding: 8px 15px; border: none; border-radius: 15px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 13px;">保存所有 API 配置</button>
                     </div>
-                    <div style="margin-bottom: 10px;">
-                        <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">今日诗词 API：</label>
-                        <input type="text" id="poemApiUrlInput" value="https://v1.jinrishici.com/all.json" style="width: 100%; padding: 8px 12px; border: none; border-radius: 15px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
-                    </div>
-                    <div style="margin-bottom: 10px;">
-                        <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">Bing 壁纸 API：</label>
-                        <input type="text" id="bingWallpaperApiUrlInput" value="https://bing.img.run/1920x1080.php" style="width: 100%; padding: 8px 12px; border: none; border-radius: 15px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
-                    </div>
-                    <div style="margin-bottom: 10px;">
-                        <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">网站元信息 API：</label>
-                        <input type="text" id="websiteMetaApiUrlInput" value="https://orz.ai/api/v1/tools/website-meta/" style="width: 100%; padding: 8px 12px; border: none; border-radius: 15px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
-                    </div>
-                    <button onclick="saveAllApiUrls()" style="padding: 8px 15px; border: none; border-radius: 15px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 13px;">保存所有 API 配置</button>
                 </div>
             </div>
             
@@ -2548,7 +2618,7 @@
             history.forEach((item, index) => {
                 // Check if first item is a URL and add favicon
                 let iconHtml = '';
-                if (index === 0 && checkIfUrl(item)) {
+                if (index === 0 && checkIfUrl(item) && localStorage.getItem('noFavIcons') !== 'true') {
                     console.log('First item is URL:', item);
                     // Extract domain for favicon
                     let domain = item;
@@ -2706,6 +2776,24 @@
                     colorPicker.value = themeColor;
                 }
             }
+
+            // Load clean search mode
+            const cleanSearch = localStorage.getItem('cleanSearchMode');
+            if (cleanSearch !== null) {
+                const cleanCheckbox = document.getElementById('cleanSearchMode');
+                if (cleanCheckbox) {
+                    cleanCheckbox.checked = cleanSearch === 'true';
+                }
+            }
+
+            // Load clean search keyword
+            const cleanKeyword = localStorage.getItem('cleanSearchKeyword');
+            if (cleanKeyword !== null) {
+                const keywordInput = document.getElementById('cleanSearchKeyword');
+                if (keywordInput) {
+                    keywordInput.value = cleanKeyword;
+                }
+            }
         }
         
         // Change theme color
@@ -2814,11 +2902,21 @@
         // Search functionality using current engine
         function performSearch() {
             let query = input.value.trim();
-            
+
             if (!query) return;
-            
-            // Add to search history
+
+            // 先记录用户原始输入到搜索历史
             addToHistory(query);
+
+            // 无广清净模式：自动加过滤词（仅用于搜索，不影响历史）
+            const cleanMode = document.getElementById('cleanSearchMode');
+            if (cleanMode && cleanMode.checked) {
+                const keywordInput = document.getElementById('cleanSearchKeyword');
+                const keyword = keywordInput ? keywordInput.value.trim() : '李彦宏';
+                if (keyword) {
+                    query = query + ' -' + keyword;
+                }
+            }
             
             // Hide suggestions and search history
             hideSuggestions();
@@ -2839,10 +2937,7 @@
             const isUrl = checkIfUrl(query);
             
             if (isUrl) {
-                // Ensure https protocol
-                if (!query.startsWith('http://') && !query.startsWith('https://')) {
-                    query = 'https://' + query;
-                }
+                // Open URL directly without adding https
                 window.open(query, '_blank');
             } else {
                 // Use current search engine for normal queries
@@ -2864,8 +2959,10 @@
                 return true;
             }
             
-            // Rule 3: Contains dot and not pure numbers -> likely URL/domain
-            if (input.includes('.') && !/^\d+$/.test(input)) {
+            // Rule 3: Looks like a domain (contains dot, has valid domain structure)
+            // Valid domain: xxx.xxx format, no spaces, no Chinese characters
+            const domainPattern = /^[a-zA-Z0-9_-]+\.[a-zA-Z0-9_.-]+$/;
+            if (domainPattern.test(input) && !input.includes(' ')) {
                 return true;
             }
             
@@ -2908,7 +3005,7 @@
             suggestionsList.innerHTML = data.s.map((item, index) => {
                 // Check if first item is a URL and add favicon
                 let iconHtml = '';
-                if (index === 0 && checkIfUrl(item)) {
+                if (index === 0 && checkIfUrl(item) && localStorage.getItem('noFavIcons') !== 'true') {
                     console.log('First suggestion is URL:', item);
                     // Extract domain for favicon
                     let domain = item;
@@ -3409,8 +3506,12 @@
                     cacheSuggestions: document.getElementById('cacheSuggestions') ? document.getElementById('cacheSuggestions').checked : true,
                     cacheDuration: document.getElementById('cacheDuration') ? document.getElementById('cacheDuration').value : 3600,
                     privacyMode: document.getElementById('privacyMode') ? document.getElementById('privacyMode').checked : false,
+                    cleanSearchMode: document.getElementById('cleanSearchMode') ? document.getElementById('cleanSearchMode').checked : false,
+                    cleanSearchKeyword: localStorage.getItem('cleanSearchKeyword') || '李彦宏',
+                    preloadHotNews: document.getElementById('preloadHotNews') ? document.getElementById('preloadHotNews').checked : false,
                     showFavCreateTime: document.getElementById('showFavCreateTime') ? document.getElementById('showFavCreateTime').checked : false,
                     autoSortFavorites: document.getElementById('autoSortFavorites') ? document.getElementById('autoSortFavorites').checked : true,
+                    noFavIcons: document.getElementById('noFavIcons') ? document.getElementById('noFavIcons').checked : false,
                     themeMode: localStorage.getItem('themeMode') || 'light',
                     showTimeDisplay: localStorage.getItem('showTimeDisplay') !== 'false',
                     showPoem: localStorage.getItem('showPoem') !== 'false',
@@ -3425,6 +3526,7 @@
                     squareMode: localStorage.getItem('squareMode') === 'true',
                     loadForeignIcons: localStorage.getItem('loadForeignIcons') === 'true'
                 },
+                apiUrls: apiUrls,
                 searchEngine: localStorage.getItem('searchEngine') || 'https://cn.bing.com/search?q='
             };
             
@@ -3545,6 +3647,24 @@
                             const el = document.getElementById('privacyMode');
                             if (el) el.checked = allData.settings.privacyMode;
                         }
+                        if (allData.settings.cleanSearchMode !== undefined) {
+                            const el = document.getElementById('cleanSearchMode');
+                            if (el) el.checked = allData.settings.cleanSearchMode;
+                        }
+                        if (allData.settings.cleanSearchKeyword !== undefined) {
+                            const el = document.getElementById('cleanSearchKeyword');
+                            if (el) {
+                                el.value = allData.settings.cleanSearchKeyword;
+                                localStorage.setItem('cleanSearchKeyword', allData.settings.cleanSearchKeyword);
+                            }
+                        }
+                        if (allData.settings.preloadHotNews !== undefined) {
+                            const el = document.getElementById('preloadHotNews');
+                            if (el) {
+                                el.checked = allData.settings.preloadHotNews;
+                                localStorage.setItem('preloadHotNews', allData.settings.preloadHotNews);
+                            }
+                        }
                         if (allData.settings.showFavCreateTime !== undefined) {
                             const el = document.getElementById('showFavCreateTime');
                             if (el) el.checked = allData.settings.showFavCreateTime;
@@ -3552,6 +3672,13 @@
                         if (allData.settings.autoSortFavorites !== undefined) {
                             const el = document.getElementById('autoSortFavorites');
                             if (el) el.checked = allData.settings.autoSortFavorites;
+                        }
+                        if (allData.settings.noFavIcons !== undefined) {
+                            const el = document.getElementById('noFavIcons');
+                            if (el) {
+                                el.checked = allData.settings.noFavIcons;
+                                localStorage.setItem('noFavIcons', allData.settings.noFavIcons);
+                            }
                         }
                         if (allData.settings.highContrast !== undefined) {
                             const el = document.getElementById('highContrastMode');
@@ -3630,7 +3757,16 @@
                     if (allData.searchEngine) {
                         localStorage.setItem('searchEngine', allData.searchEngine);
                     }
-                    
+
+                    // Restore API URLs
+                    if (allData.apiUrls) {
+                        Object.keys(allData.apiUrls).forEach(function(key) {
+                            apiUrls[key] = allData.apiUrls[key];
+                            localStorage.setItem('apiUrl_' + key, allData.apiUrls[key]);
+                        });
+                        hotNewsApiUrl = apiUrls.hotNews;
+                    }
+
                     await customAlert('全量数据恢复成功！');
                     location.reload();
                 } catch (err) {
@@ -3694,13 +3830,19 @@
         function toggleDebugMode() {
             const checkbox = document.getElementById('debugModeToggle');
             debugModeActive = checkbox.checked;
-            
+
+            // Show/hide debug mode content
+            const debugContent = document.getElementById('debugModeContent');
+            if (debugContent) {
+                debugContent.style.display = debugModeActive ? 'block' : 'none';
+            }
+
             if (debugModeActive) {
                 showDebugRefreshButton();
             } else {
                 hideDebugRefreshButton();
             }
-            
+
             // Save debug mode state
             localStorage.setItem('debugMode', debugModeActive);
         }
@@ -3817,13 +3959,19 @@
         // Load debug mode state on page load
         function loadDebugModeState() {
             const savedDebugMode = localStorage.getItem('debugMode');
+            const debugContent = document.getElementById('debugModeContent');
             if (savedDebugMode === 'true') {
                 debugModeActive = true;
                 const checkbox = document.getElementById('debugModeToggle');
                 if (checkbox) checkbox.checked = true;
                 showDebugRefreshButton();
+                // Show debug content
+                if (debugContent) debugContent.style.display = 'block';
+            } else {
+                // Hide debug content
+                if (debugContent) debugContent.style.display = 'none';
             }
-            
+
             // Load square mode state
             const savedSquareMode = localStorage.getItem('squareMode');
             if (savedSquareMode === 'true') {
@@ -3837,7 +3985,7 @@
         function toggleSquareMode() {
             const checkbox = document.getElementById('squareModeToggle');
             const isSquare = checkbox.checked;
-            
+
             if (isSquare) {
                 document.body.setAttribute('data-square-mode', 'true');
                 localStorage.setItem('squareMode', 'true');
@@ -3846,7 +3994,7 @@
                 localStorage.setItem('squareMode', 'false');
             }
         }
-        
+
         // Foreign icons toggle
         function toggleForeignIcons() {
             const checkbox = document.getElementById('loadForeignIconsToggle');
@@ -4145,6 +4293,10 @@
         }
         
         function getFavicon(url) {
+            // Check if user disabled favicon loading
+            if (localStorage.getItem('noFavIcons') === 'true') {
+                return '';
+            }
             try {
                 const urlObj = new URL(url);
                 return `https://${urlObj.hostname}/favicon.ico`;
@@ -4276,10 +4428,13 @@
                         });
                     }
                     
-                    // Reload page if settings were modified
+                    // Reload page if settings were modified and debug mode is OFF
                     if (settingsModified) {
                         settingsModified = false;
-                        location.reload();
+                        // Only reload if debug mode is not active
+                        if (!debugModeActive) {
+                            location.reload();
+                        }
                     }
                 }, 300);
             }
@@ -5120,16 +5275,20 @@
         function applyButtonStyle() {
             // Remove all button style attributes first
             document.body.removeAttribute('data-button-style');
-            
+            document.body.removeAttribute('data-elder-mode');
+
             // Force reflow to ensure clean state
             void document.body.offsetHeight;
-            
+
             // Apply new style
             document.body.setAttribute('data-button-style', currentButtonStyle);
-            
+
             if (currentButtonStyle === 'outline') {
                 // Small delay to ensure CSS transitions complete
                 setTimeout(() => applyOutlineToAll(), 50);
+            } else if (currentButtonStyle === 'elder') {
+                // Elder mode: remove all effects
+                document.body.setAttribute('data-elder-mode', 'true');
             }
         }
         
@@ -5265,10 +5424,24 @@
         
         // Load debug mode state
         loadDebugModeState();
-        
+
+        // Preload hot news if enabled
+        if (localStorage.getItem('preloadHotNews') === 'true') {
+            const preloadCheckbox = document.getElementById('preloadHotNews');
+            if (preloadCheckbox) preloadCheckbox.checked = true;
+            loadHotNewsTab();
+        }
+
         // Load foreign icons state
         loadForeignIconsState();
-        
+
+        // Load no favicons preference
+        const noFavIcons = localStorage.getItem('noFavIcons');
+        if (noFavIcons === 'true') {
+            const el = document.getElementById('noFavIcons');
+            if (el) el.checked = true;
+        }
+
         // Load time display preference
         const showTimePreference = localStorage.getItem('showTimeDisplay');
         if (showTimePreference !== null) {
