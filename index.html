@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="千克之梦(HelloKG) - 一款精美的个性化浏览器起始页，集成必应搜索、每日诗词、热点新闻、收藏管理等功能。支持拟物化、玻璃态等多种主题风格，可自定义壁纸、圆角、配色，打造专属搜索主页。">
     <meta name="keywords" content="千克之梦, HelloKG, 搜索主页, 浏览器起始页, 必应搜索, 个性化主页, 拟物化, 新标签页">
-    <title>kgdream-千克之梦QOQ</title>
+    <title>KgDream-千克之梦-你的搜索网站WAW</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <style>
         :root {
@@ -2769,7 +2769,7 @@
 
                 <div style="margin-bottom: 15px;">
                     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-<label class="toggle-switch"><input type="checkbox" id="showFavCreateTime" checked onchange="localStorage.setItem('showFavCreateTime', this.checked); renderFavorites();"><span class="toggle-slider"></span></label>
+<label class="toggle-switch"><input type="checkbox" id="showFavCreateTime" onchange="localStorage.setItem('showFavCreateTime', this.checked); renderFavorites();"><span class="toggle-slider"></span></label>
 <span style="font-family: 'YouYuan'; font-size: 14px;">显示收藏创建时间</span>
 </div>
                 </div>
@@ -5506,14 +5506,7 @@
                         });
                     }
                     
-                    // Reload page if settings were modified and debug mode is OFF
-                    if (settingsModified) {
-                        settingsModified = false;
-                        // Only reload if debug mode is not active
-                        if (!debugModeActive) {
-                            location.reload();
-                        }
-                    }
+                    // Note: removed auto-reload on close to prevent unwanted page refreshes
                 }, 300);
             }
         }
@@ -5953,8 +5946,7 @@
                     btn.style.boxShadow = '20px 20px 62px #cccccc, -20px -20px 62px #ffffff';
                 }
             });
-            
-            renderKG();
+            // KG content is static HTML, no need to render
         }
         
         function switchToOfficialTab() {
@@ -6008,13 +6000,6 @@
         }
         
         function switchToEngineTab() {
-            // Reload if settings were modified
-            if (settingsModified && !debugModeActive) {
-                settingsModified = false;
-                location.reload();
-                return;
-            }
-            
             const contents = ['favoritesContent', 'kgContent', 'engineContent', 'settingsContent', 'hotNewsContent'];
             const buttons = ['favTabBtn', 'engineTabBtn', 'settingsTabBtn', 'hotNewsTabBtn'];
             
@@ -6116,12 +6101,6 @@
         }
         
         function switchToHotNewsTab() {
-            // Reload if settings were modified
-            if (settingsModified && !debugModeActive) {
-                settingsModified = false;
-                location.reload();
-                return;
-            }
             const contents = ['favoritesContent', 'kgContent', 'engineContent', 'settingsContent', 'hotNewsContent'];
             const buttons = ['favTabBtn', 'engineTabBtn', 'settingsTabBtn', 'hotNewsTabBtn'];
             
