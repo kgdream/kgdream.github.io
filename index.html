@@ -10,6 +10,52 @@
     <style>
         :root {
             --global-radius: 34px;
+            --toggle-bg-off: #ccc;
+            --toggle-bg-on: #2196F3;
+            --toggle-knob: #fff;
+        }
+
+        /* Android-style Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--toggle-bg-off);
+            transition: .3s;
+            border-radius: 24px;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: var(--toggle-knob);
+            transition: .3s;
+            border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: var(--toggle-bg-on);
+        }
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(20px);
         }
 
         * {
@@ -2346,7 +2392,7 @@
                     <!-- 加载国外搜索引擎图标开关 -->
                     <div style="margin-bottom: 15px; padding: 10px; background: rgba(240,240,240,0.5); border-radius: var(--global-radius);">
                         <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-                            <input type="checkbox" id="loadForeignIconsToggle" onchange="toggleForeignIcons()" style="margin-right: 10px; width: 18px; height: 18px;">
+                            <label class="toggle-switch"><input type="checkbox" id="loadForeignIconsToggle" onchange="toggleForeignIcons()"><span class="toggle-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                             加载国外搜索引擎图标
                         </label>
@@ -2501,7 +2547,7 @@
                 </h2>
                 <div style="display: flex; gap: 10px; align-items: center;">
                     <label style="display: flex; align-items: center; font-family: 'YouYuan', Arial, sans-serif; font-size: 13px; cursor: pointer; white-space: nowrap;">
-                        <input type="checkbox" id="preloadHotNews" checked onchange="localStorage.setItem('preloadHotNews', this.checked)" style="margin-right: 5px; width: 16px; height: 16px;">
+                        <label class="toggle-switch"><input type="checkbox" id="preloadHotNews" checked onchange="localStorage.setItem('preloadHotNews', this.checked)"><span class="toggle-slider"></span></label>
                         启动时预加载
                     </label>
                     <select id="hotNewsPlatformTab" onchange="loadHotNewsTab(true)" style="padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; outline: none; cursor: pointer;">
@@ -2674,51 +2720,45 @@
                 </div>
 
                 <div style="margin-bottom: 15px;">
-                    <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" id="showTimeToggle" onchange="toggleTimeDisplay()" style="margin-right: 10px; width: 18px; height: 18px;" checked>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                        显示时间
-                    </label>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" id="showTimeToggle" checked onchange="toggleTimeDisplay()"><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">显示时间</span>
+</div>
                 </div>
                 
                 <div style="margin-bottom: 15px;">
-                    <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" id="showPoemToggle" onchange="togglePoemDisplay()" style="margin-right: 10px; width: 18px; height: 18px;" checked>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-                        显示古诗
-                    </label>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" id="showPoemToggle" checked onchange="togglePoemDisplay()"><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">显示古诗</span>
+</div>
                 </div>
                 
                 <div style="margin-bottom: 15px;">
-                    <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" id="showScannerToggle" onchange="toggleScannerDisplay()" style="margin-right: 10px; width: 18px; height: 18px;" checked>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path></svg>
-                        显示扫一扫
-                    </label>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" id="showScannerToggle" checked onchange="toggleScannerDisplay()"><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">显示扫一扫</span>
+</div>
                 </div>
                 
                 <div style="margin-bottom: 15px;">
-                    <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" id="highContrastMode" onchange="toggleHighContrast()" style="margin-right: 10px; width: 18px; height: 18px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                        高对比度模式
-                    </label>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" id="highContrastMode" onchange="toggleHighContrast()"><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">高对比度模式</span>
+</div>
                 </div>
                 
                 <div style="margin-bottom: 15px;">
-                    <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" id="enableLaunchAnim" checked onchange="localStorage.setItem('enableLaunchAnim', this.checked)" style="margin-right: 10px; width: 18px; height: 18px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
-                        启用应用启动动画
-                    </label>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" id="enableLaunchAnim" checked onchange="localStorage.setItem('enableLaunchAnim', this.checked)"><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">启用应用启动动画</span>
+</div>
                 </div>
 
                 <div style="margin-bottom: 15px;">
-                    <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" id="disableAllAnim" onchange="toggleDisableAllAnim()" style="margin-right: 10px; width: 18px; height: 18px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon><line x1="2" y1="2" x2="22" y2="22"></line></svg>
-                        禁止所有动画
-                    </label>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" id="disableAllAnim" onchange="toggleDisableAllAnim()"><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">禁止所有动画</span>
+</div>
                 </div>
                 
             </div>
@@ -2728,27 +2768,24 @@
                 <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">二、收藏设置</h3>
 
                 <div style="margin-bottom: 15px;">
-                    <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" id="showFavCreateTime" onchange="localStorage.setItem('showFavCreateTime', this.checked); renderFavorites();" style="margin-right: 10px; width: 18px; height: 18px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                        显示收藏创建时间
-                    </label>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" id="showFavCreateTime" checked onchange="localStorage.setItem('showFavCreateTime', this.checked); renderFavorites();"><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">显示收藏创建时间</span>
+</div>
                 </div>
 
                 <div style="margin-bottom: 15px;">
-                    <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" id="autoSortFavorites" checked style="margin-right: 10px; width: 18px; height: 18px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                        自动排序收藏（新添加的排首位）
-                    </label>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" id="autoSortFavorites" checked><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">自动排序收藏（新添加的排首位）</span>
+</div>
                 </div>
 
                 <div style="margin-bottom: 15px;">
-                    <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" id="noFavIcons" onchange="localStorage.setItem('noFavIcons', this.checked)" style="margin-right: 10px; width: 18px; height: 18px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
-                        不加载收藏图标
-                    </label>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" id="noFavIcons" checked onchange="localStorage.setItem('noFavIcons', this.checked)"><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">不加载收藏图标</span>
+</div>
                 </div>
 
                 <div style="display: flex; gap: 15px; margin-top: 15px;">
@@ -2787,27 +2824,24 @@
                 <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">三、搜索设置</h3>
 
                 <div style="margin-bottom: 15px;">
-                    <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" id="saveSearchHistory" checked style="margin-right: 10px; width: 18px; height: 18px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        保存搜索历史
-                    </label>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" id="saveSearchHistory" checked><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">保存搜索历史</span>
+</div>
                 </div>
 
                 <div style="margin-bottom: 15px;">
-                    <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" id="showSearchSuggestions" checked style="margin-right: 10px; width: 18px; height: 18px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        显示搜索建议
-                    </label>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" id="showSearchSuggestions" checked><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">显示搜索建议</span>
+</div>
                 </div>
 
                 <div style="margin-bottom: 15px;">
-                    <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" id="cacheSuggestions" checked style="margin-right: 10px; width: 18px; height: 18px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                        缓存搜索建议
-                    </label>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" id="cacheSuggestions" checked><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">缓存搜索建议</span>
+</div>
                     <select id="cacheDuration" style="margin-left: 30px; padding: 8px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; font-family: 'YouYuan'; font-size: 13px; background: #F0F0F0;">
                         <option value="300">5 分钟</option>
                         <option value="3600" selected>1 小时</option>
@@ -2816,19 +2850,17 @@
                 </div>
 
                 <div style="margin-bottom: 15px;">
-                    <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" id="privacyMode" style="margin-right: 10px; width: 18px; height: 18px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        临时隐私模式（本次会话不保存历史）
-                    </label>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" id="privacyMode"><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">临时隐私模式（本次会话不保存历史）</span>
+</div>
                 </div>
 
                 <div style="margin-bottom: 15px;">
-                    <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
-<input type="checkbox" id="cleanSearchMode" onchange="localStorage.setItem('cleanSearchMode', this.checked)" style="margin-right: 10px; width: 18px; height: 18px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                        无广清净模式（搜索自动过滤广告）
-                    </label>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" id="cleanSearchMode" checked onchange="localStorage.setItem('cleanSearchMode', this.checked)"><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">无广清净模式（搜索自动过滤广告）</span>
+</div>
                     <div style="margin-left: 30px;">
                         <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">过滤词（前面会自动加空格和-）：</label>
                         <input type="text" id="cleanSearchKeyword" value="李彦宏" onchange="localStorage.setItem('cleanSearchKeyword', this.value)" style="width: calc(100% - 30px); padding: 8px 12px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
@@ -2846,41 +2878,34 @@
                         一键清理数据：
                     </label>
                     <div style="margin-bottom: 10px;">
-                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" class="clearOption" value="history" style="margin-right: 8px; width: 18px; height: 18px;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                            搜索历史
-                        </label>
-                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" class="clearOption" value="favorites" style="margin-right: 8px; width: 18px; height: 18px;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-                            收藏数据
-                        </label>
-                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" class="clearOption" value="cache" style="margin-right: 8px; width: 18px; height: 18px;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                            页面缓存
-                        </label>
-                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" class="clearOption" value="settings" style="margin-right: 8px; width: 18px; height: 18px;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                            主题与样式设置
-                        </label>
-                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" class="clearOption" value="apiUrls" style="margin-right: 8px; width: 18px; height: 18px;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-                            API 地址配置
-                        </label>
-                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" class="clearOption" value="engine" style="margin-right: 8px; width: 18px; height: 18px;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                            搜索引擎选择
-                        </label>
-                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" class="clearOption" value="cookies" style="margin-right: 8px; width: 18px; height: 18px;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                            Cookie 数据
-                        </label>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" class="clearOption"><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">搜索历史</span>
+</div>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" class="clearOption"><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">收藏数据</span>
+</div>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" class="clearOption"><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">页面缓存</span>
+</div>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" class="clearOption"><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">主题与样式设置</span>
+</div>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" class="clearOption"><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">API 地址配置</span>
+</div>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" class="clearOption"><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">搜索引擎选择</span>
+</div>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" class="clearOption"><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">Cookie 数据</span>
+</div>
                     </div>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                         <button id="clearDataBtn" class="settings-btn" onclick="clearSelectedData()" style="padding: 10px 20px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; color: #000000; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; gap: 8px;">
@@ -2957,21 +2982,19 @@
                 </div>
 
                 <div style="margin-bottom: 15px;">
-                    <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" id="debugModeToggle" onchange="toggleDebugMode()" style="margin-right: 10px; width: 18px; height: 18px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                        启用调试模式
-                    </label>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" id="debugModeToggle" onchange="toggleDebugMode()"><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">启用调试模式</span>
+</div>
                 </div>
 
                 <!-- Debug mode content - hidden when debug mode is off -->
                 <div id="debugModeContent" style="display: none;">
                     <div style="margin-bottom: 15px;">
-                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="checkbox" id="demoModeToggle" style="margin-right: 10px; width: 18px; height: 18px;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-                            演示模式
-                        </label>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" id="demoModeToggle"><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">演示模式</span>
+</div>
                     </div>
                 </div>
             </div>
@@ -3334,7 +3357,7 @@
                 
                 html += `<li onclick="selectHistory('${item.replace(/'/g, "\\'")}')"  style="animation-delay: ${index * 0.05}s">
                             ${iconHtml}${item}
-                            <span class="delete-btn" onclick="event.stopPropagation(); deleteHistoryItem(${index})">?</span>
+                            <span class="delete-btn" onclick="event.stopPropagation(); deleteHistoryItem(${index})">✕</span>
                         </li>`;
             });
             
@@ -4053,7 +4076,7 @@
                 
                 // Show toast notification
                 const toast = document.createElement('div');
-                toast.textContent = emojiEnabled ? 'Emoji 已开启 ?' : 'Emoji 已关闭 ?';
+                toast.textContent = emojiEnabled ? 'Emoji 已开启 ✓' : 'Emoji 已关闭 ✗';
                 toast.style.position = 'fixed';
                 toast.style.bottom = '50px';
                 toast.style.left = '50%';
@@ -5848,12 +5871,7 @@
 
         // Tab switching functions with smooth transition
         function switchToFavoritesTab() {
-            // Reload if settings were modified
-            if (settingsModified && !debugModeActive) {
-                settingsModified = false;
-                location.reload();
-                return;
-            }
+            // Note: settings reload logic removed to prevent unwanted page refreshes when switching tabs
             
             const contents = ['favoritesContent', 'kgContent', 'engineContent', 'settingsContent', 'hotNewsContent'];
             const buttons = ['favTabBtn', 'engineTabBtn', 'settingsTabBtn', 'hotNewsTabBtn'];
@@ -6182,7 +6200,7 @@
                             <div style="flex: 1;">
                                 <div style="font-size: 15px; font-weight: bold; line-height: 1.4; margin-bottom: 4px;">${item.title}</div>
                                 ${item.desc ? `<div style="font-size: 12px; color: #666; line-height: 1.4;">${item.desc}</div>` : ''}
-                                ${item.score ? `<div style="font-size: 11px; color: #999; margin-top: 4px;">?? ${Number(item.score).toLocaleString()}</div>` : ''}
+                                ${item.score ? `<div style="font-size: 11px; color: #999; margin-top: 4px;">🔥 ${Number(item.score).toLocaleString()}</div>` : ''}
                             </div>
                         </div>`;
                     });
