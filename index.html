@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HelloKG</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwMDAwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgPHBhdGggZD0iTTEwIDRWMjAiLz4KICA8cGF0aCBkPSJNMjAgNEwxMCAxMiIvPgogIDxwYXRoIGQ9Ik0yMCAyMEwxMCAxMiIvPgo8L3N2Zz4K">
+    <meta name="description" content="千克之梦(HelloKG) - 一款精美的个性化浏览器起始页，集成必应搜索、每日诗词、热点新闻、收藏管理等功能。支持拟物化、玻璃态等多种主题风格，可自定义壁纸、圆角、配色，打造专属搜索主页。">
+    <meta name="keywords" content="千克之梦, HelloKG, 搜索主页, 浏览器起始页, 必应搜索, 个性化主页, 拟物化, 新标签页">
+    <title>kgdream-千克之梦QOQ</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <style>
+        :root {
+            --global-radius: 34px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -75,7 +81,7 @@
             font-size: 14px;
             font-family: 'YouYuan', Arial, sans-serif;
             border: none;
-            border-radius: 34px;
+            border-radius: var(--global-radius);
             outline: none;
             width: 500px;
             max-width: 100%;
@@ -415,7 +421,7 @@
                 background: #F0F0F0;
                 border: none;
                 outline: none;
-                border-radius: 34px;
+                border-radius: var(--global-radius);
                 box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;
             }
 
@@ -493,7 +499,7 @@
             margin-top: 15px;
             padding: 10px 15px;
             border: none;
-            border-radius: 34px;
+            border-radius: var(--global-radius);
             background-color: #F0F0F0;
             box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;
             font-size: 13px;
@@ -800,7 +806,7 @@
         body[data-button-style="outline"] .news-item {
             box-shadow: none !important;
             border: 2px solid currentColor !important;
-            border-radius: 34px !important;
+            border-radius: var(--global-radius) !important;
             background: transparent !important;
         }
 
@@ -808,7 +814,7 @@
         body[data-button-style="outline"] .search-box {
             box-shadow: none !important;
             border: 2px solid currentColor !important;
-            border-radius: 34px !important;
+            border-radius: var(--global-radius) !important;
             background: transparent !important;
         }
         
@@ -892,7 +898,7 @@
         body[data-button-style="rounded"] .fav-add-btn {
             box-shadow: none !important;
             border: none !important;
-            border-radius: 34px !important;
+            border-radius: var(--global-radius) !important;
             background: rgba(200, 200, 200, 0.3) !important;
         }
 
@@ -942,7 +948,7 @@
                 0 8px 32px rgba(0, 0, 0, 0.12),
                 0 2px 8px rgba(0, 0, 0, 0.08) !important;
             border: none !important;
-            border-radius: 34px !important;
+            border-radius: var(--global-radius) !important;
             background: linear-gradient(
                 135deg,
                 rgba(255, 255, 255, 0.4) 0%,
@@ -1089,7 +1095,7 @@
         body[data-button-style="transparent"] div[style*="box-shadow"] {
             box-shadow: none !important;
             border: none !important;
-            border-radius: 34px !important;
+            border-radius: var(--global-radius) !important;
             background: rgba(255, 255, 255, 0.6) !important;
         }
 
@@ -1150,7 +1156,7 @@
 
         /* Border radius control via CSS variable */
         :root {
-            --border-radius: 34px;
+            --border-radius: var(--global-radius);
         }
 
         /* Wallpaper background mode - simplified, no overlay used */
@@ -1247,7 +1253,7 @@
             margin-top: 15px;
             background: #F0F0F0;
             border: none;
-            border-radius: 34px;
+            border-radius: var(--global-radius);
             list-style: none;
             max-height: 160px;
             overflow-y: auto;
@@ -1284,7 +1290,7 @@
             margin-top: 15px;
             background: #F0F0F0;
             border: none;
-            border-radius: 34px;
+            border-radius: var(--global-radius);
             list-style: none;
             overflow-y: auto;
             z-index: 99;
@@ -1359,7 +1365,7 @@
             margin-top: 10px;
             padding: 10px 15px;
             border: none;
-            border-radius: 34px;
+            border-radius: var(--global-radius);
             background-color: #F0F0F0;
             box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;
             max-width: 100%;
@@ -1383,7 +1389,7 @@
         .engine-item {
             padding: 14px 12px;
             border: none;
-            border-radius: 34px;
+            border-radius: var(--global-radius);
             box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;
             cursor: pointer;
             transition: none;
@@ -1413,7 +1419,7 @@
             align-items: center;
             padding: 14px 8px;
             border: none;
-            border-radius: 20px;
+            border-radius: var(--global-radius);
             box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;
             background: #F0F0F0;
             cursor: pointer;
@@ -1433,7 +1439,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 14px;
+            border-radius: var(--global-radius);
             font-weight: bold;
             font-size: 20px;
             color: white;
@@ -1475,7 +1481,7 @@
             bottom: 0;
             background-color: #ccc;
             transition: .4s;
-            border-radius: 26px;
+            border-radius: var(--global-radius);
             box-shadow: inset 2px 2px 5px #999, inset -2px -2px 5px #fff;
         }
         .kg-slider:before {
@@ -1517,7 +1523,7 @@
             flex-direction: column;
             align-items: center;
             padding: 10px;
-            border-radius: 14px;
+            border-radius: var(--global-radius);
             cursor: pointer;
             transition: all 0.2s;
         }
@@ -1527,7 +1533,7 @@
         .kg-app-icon {
             width: 48px;
             height: 48px;
-            border-radius: 12px;
+            border-radius: var(--global-radius);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1558,7 +1564,7 @@
             align-items: center;
             padding: 14px 8px;
             border: none;
-            border-radius: 20px;
+            border-radius: var(--global-radius);
             box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;
             background: #F0F0F0;
             cursor: pointer;
@@ -1587,7 +1593,7 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            border-radius: 14px;
+            border-radius: var(--global-radius);
         }
 
         #favoritesList .fav-icon .fav-initial,
@@ -1596,7 +1602,7 @@
             height: 100%;
             background: #000000;
             color: white;
-            border-radius: 14px;
+            border-radius: var(--global-radius);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1695,7 +1701,7 @@
             #kgList .kg-icon,
             #favoritesList .fav-icon .fav-initial {
                 font-size: 16px;
-                border-radius: 12px;
+                border-radius: var(--global-radius);
             }
             #kgList .kg-name,
             #favoritesList .fav-name {
@@ -1755,7 +1761,7 @@
 
         /* Neumorphic UI class */
         .ui {
-            border-radius: 34px;
+            border-radius: var(--global-radius);
             background: #F0F0F0;
             box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;
             width: 166px;
@@ -2003,6 +2009,60 @@
             box-shadow: 20px 20px 62px #2a2a2a, -20px -20px 62px #4a4a4a !important;
             color: #e0e0e0 !important;
         }
+
+        /* ========== iOS / 澎湃OS Style App Launch Animation ========== */
+        #appLaunchOverlay {
+            position: fixed;
+            z-index: 99999;
+            border-radius: var(--global-radius);
+            pointer-events: none;
+            opacity: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #appLaunchOverlay .launch-bg {
+            position: absolute;
+            inset: 0;
+            background: #ffffff;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        body[data-theme="dark"] #appLaunchOverlay .launch-bg {
+            background: #000000;
+        }
+
+        #appLaunchOverlay .launch-icon-wrap {
+            position: relative;
+            z-index: 2;
+            transform: scale(1);
+            transition: transform 0.5s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.3s ease;
+        }
+
+        #appLaunchOverlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #appLaunchOverlay.active .launch-bg {
+            opacity: 1;
+        }
+
+        #appLaunchOverlay.active .launch-icon-wrap {
+            transform: scale(0.6);
+            opacity: 0;
+        }
+
+        /* ========== 禁止所有动画 ========== */
+        .no-animations * {
+            animation: none !important;
+            animation-duration: 0s !important;
+            transition: none !important;
+            transition-duration: 0s !important;
+        }
     </style>
     <!-- jsQR Library for QR Code scanning -->
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
@@ -2016,12 +2076,8 @@
     </svg>
     <!-- KG Logo - top left corner -->
     <button type="button" id="kgLogoBtn" onclick="switchToKGTab()" style="position: fixed; top: 20px; left: 20px; display: flex; align-items: center; gap: 8px; cursor: pointer; z-index: 9999; user-select: none; border: none; background: transparent; padding: 0; font-family: inherit;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 28px; height: 28px;">
-            <path d="M10 4V20"/>
-            <path d="M20 4L10 12"/>
-            <path d="M20 20L10 12"/>
-        </svg>
-        <span style="font-family: 'YouYuan', Arial, sans-serif; font-size: 18px; font-weight: bold; color: #333; letter-spacing: 2px;">千克之梦</span>
+        <img src="favicon.png" alt="KG" style="width: 28px; height: 28px; object-fit: cover; border-radius: 50%;">
+        <span id="kgLogoText" style="font-family: 'YouYuan', Arial, sans-serif; font-size: 18px; font-weight: bold; color: #333; letter-spacing: 2px;">千克之梦</span>
     </button>
 
     <div class="search-container" style="position: relative; background: transparent;">
@@ -2032,7 +2088,7 @@
             </svg>
         </button>
         <!-- Dropdown menu -->
-        <div id="dropdownMenu" style="display: none; position: absolute; right: 7px; top: 58px; background: #F0F0F0; border-radius: 20px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; z-index: 100; overflow: hidden; min-width: 130px; opacity: 0; transform: translateY(-8px) scale(0.95); transition: opacity 0.25s ease, transform 0.25s ease;">
+        <div id="dropdownMenu" style="display: none; position: absolute; right: 7px; top: 58px; background: #F0F0F0; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; z-index: 100; overflow: hidden; min-width: 130px; opacity: 0; transform: translateY(-8px) scale(0.95); transition: opacity 0.25s ease, transform 0.25s ease;">
             <div id="dropdownScanOption" onclick="openScanner(); closeDropdownMenu();" style="display: flex; align-items: center; padding: 12px 18px; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; color: #000; gap: 10px;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
                     <path d="M3 7V5a2 2 0 0 1 2-2h2"></path>
@@ -2163,7 +2219,7 @@
     
     <!-- KG Download Modal -->
     <div id="kgDownloadModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 10001; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease;">
-        <div style="background: #F0F0F0; border-radius: 20px; padding: 20px; width: 90%; max-width: 400px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; position: relative;">
+        <div style="background: #F0F0F0; border-radius: var(--global-radius); padding: 20px; width: 90%; max-width: 400px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; position: relative;">
             <button onclick="closeKgDownloadModal()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; cursor: pointer; font-size: 24px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%;">×</button>
             <div id="kgDownloadTitle" style="font-family: 'YouYuan'; font-size: 18px; font-weight: bold; margin-bottom: 15px; padding-right: 40px;"></div>
             <div id="kgDownloadLinks" style="display: flex; flex-direction: column; gap: 10px;"></div>
@@ -2176,23 +2232,23 @@
         <div style="display: flex; justify-content: center; align-items: center; position: relative; padding: 20px 20px 0 20px;">
             <!-- Tab Navigation (centered) -->
             <div style="display: flex; gap: 10px;">
-                <button id="favTabBtn" onclick="switchToFavoritesTab()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: 34px; background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
+                <button id="favTabBtn" onclick="switchToFavoritesTab()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;">
                         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                     </svg>
                 </button>
-                <button id="engineTabBtn" onclick="switchToEngineTab()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: 34px; background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
+                <button id="engineTabBtn" onclick="switchToEngineTab()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
                     <img id="engineTabIcon" src="" style="width: 24px; height: 24px; object-fit: contain; display: none;" alt="引擎">
                     <span id="engineTabText" style="font-size: 20px; font-weight: bold;">引</span>
                 </button>
-                <button id="hotNewsTabBtn" onclick="switchToHotNewsTab()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: 34px; background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
+                <button id="hotNewsTabBtn" onclick="switchToHotNewsTab()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;">
                         <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
                         <polyline points="2 17 12 22 22 17"></polyline>
                         <polyline points="2 12 12 17 22 12"></polyline>
                     </svg>
                 </button>
-                <button id="settingsTabBtn" onclick="handleSettingsClick()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: 34px; background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
+                <button id="settingsTabBtn" onclick="handleSettingsClick()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;">
                         <circle cx="12" cy="12" r="3"></circle>
                         <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
@@ -2207,9 +2263,9 @@
         <!-- Favorites Content -->
         <div id="favoritesContent" style="display: block;">
             <div class="favorites-header" style="padding: 20px 20px 0 20px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                <input type="text" id="favSearchInput" placeholder="搜索收藏网页..." class="fav-search-input" style="flex: 1; min-width: 150px; padding: 10px 15px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; font-size: 14px; outline: none; background: #F0F0F0; font-family: 'YouYuan', Arial, sans-serif;">
+                <input type="text" id="favSearchInput" placeholder="搜索收藏网页..." class="fav-search-input" style="flex: 1; min-width: 150px; padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; font-size: 14px; outline: none; background: #F0F0F0; font-family: 'YouYuan', Arial, sans-serif;">
                 <div style="display: flex; gap: 8px;">
-                    <button id="createFolderBtn" class="fav-add-btn" style="padding: 10px 15px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-weight: bold; white-space: nowrap; font-family: 'YouYuan', Arial, sans-serif; display: flex; align-items: center; gap: 5px;">
+                    <button id="createFolderBtn" class="fav-add-btn" style="padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-weight: bold; white-space: nowrap; font-family: 'YouYuan', Arial, sans-serif; display: flex; align-items: center; gap: 5px;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
                             <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
                             <line x1="12" y1="11" x2="12" y2="17"></line>
@@ -2217,7 +2273,7 @@
                         </svg>
                         <span>新建文件夹</span>
                     </button>
-                    <button id="addFavBtn" class="fav-add-btn" style="padding: 10px 20px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-weight: bold; white-space: nowrap; font-family: 'YouYuan', Arial, sans-serif; display: flex; align-items: center; gap: 5px;">
+                    <button id="addFavBtn" class="fav-add-btn" style="padding: 10px 20px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-weight: bold; white-space: nowrap; font-family: 'YouYuan', Arial, sans-serif; display: flex; align-items: center; gap: 5px;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
                             <line x1="12" y1="5" x2="12" y2="19"></line>
                             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -2234,7 +2290,7 @@
             <!-- KG搜索框 -->
             <div style="padding: 20px 20px 0 20px;">
                 <div style="position: relative; max-width: 500px; margin: 0 auto;">
-                    <input type="text" id="kgSearchInput" placeholder="搜索软件..." style="width: 100%; padding: 12px 20px; border: none; border-radius: 34px; background: #F0F0F0; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; font-family: 'YouYuan'; font-size: 14px; outline: none; box-sizing: border-box;">
+                    <input type="text" id="kgSearchInput" placeholder="搜索软件..." style="width: 100%; padding: 12px 20px; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; font-family: 'YouYuan'; font-size: 14px; outline: none; box-sizing: border-box;">
                 </div>
             </div>
             <!-- 固定4个软件 - 手机桌面风格 -->
@@ -2242,34 +2298,34 @@
                 <div id="kgAppGrid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px;">
                     <!-- Kg 收银系统 -->
                     <div class="kg-app-item" onclick="showKgDownloadModal('Kg 收银系统', 'https://wwbpg.lanzouu.com/iGuw43ibdxgf', '#FF6B8A', '银')" style="display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s ease;">
-                        <div class="kg-app-icon" style="width: 56px; height: 56px; border-radius: 14px; background: #FF6B8A; display: flex; align-items: center; justify-content: center; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                        <div class="kg-app-icon" style="width: 56px; height: 56px; border-radius: var(--global-radius); background: #FF6B8A; display: flex; align-items: center; justify-content: center; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; transition: transform 0.2s ease, box-shadow 0.2s ease;">
                             <span style="color: white; font-family: 'YouYuan'; font-size: 22px; font-weight: bold;">银</span>
                         </div>
                         <span style="font-family: 'YouYuan'; font-size: 12px; color: #333; text-align: center; line-height: 1.3;">Kg收银</span>
                     </div>
                     <!-- Kg bing 壁纸 -->
                     <div class="kg-app-item" onclick="showKgDownloadModal('Kg bing 壁纸', 'https://github.com/kgdream/kgbing-wallpaper-simple/', '#4ECDC4', '壁')" style="display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s ease;">
-                        <div class="kg-app-icon" style="width: 56px; height: 56px; border-radius: 14px; background: #4ECDC4; display: flex; align-items: center; justify-content: center; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                        <div class="kg-app-icon" style="width: 56px; height: 56px; border-radius: var(--global-radius); background: #4ECDC4; display: flex; align-items: center; justify-content: center; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; transition: transform 0.2s ease, box-shadow 0.2s ease;">
                             <span style="color: white; font-family: 'YouYuan'; font-size: 22px; font-weight: bold;">壁</span>
                         </div>
                         <span style="font-family: 'YouYuan'; font-size: 12px; color: #333; text-align: center; line-height: 1.3;">Kg壁纸</span>
                     </div>
                     <!-- KgWinNas -->
                     <div class="kg-app-item" onclick="showKgDownloadModal('KgWinNas', 'https://github.com/kgdream/kgpan-', '#45B7D1', '盘')" style="display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s ease;">
-                        <div class="kg-app-icon" style="width: 56px; height: 56px; border-radius: 14px; background: #45B7D1; display: flex; align-items: center; justify-content: center; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                        <div class="kg-app-icon" style="width: 56px; height: 56px; border-radius: var(--global-radius); background: #45B7D1; display: flex; align-items: center; justify-content: center; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; transition: transform 0.2s ease, box-shadow 0.2s ease;">
                             <span style="color: white; font-family: 'YouYuan'; font-size: 22px; font-weight: bold;">盘</span>
                         </div>
                         <span style="font-family: 'YouYuan'; font-size: 12px; color: #333; text-align: center; line-height: 1.3;">KgNas</span>
                     </div>
                     <!-- 跃点网络切换 -->
                     <div class="kg-app-item" onclick="showKgDownloadModal('跃点网络切换', 'https://github.com/kgdream/-KG-NetworkManager', '#323154', '网')" style="display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s ease;">
-                        <div class="kg-app-icon" style="width: 56px; height: 56px; border-radius: 14px; background: #323154; display: flex; align-items: center; justify-content: center; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                        <div class="kg-app-icon" style="width: 56px; height: 56px; border-radius: var(--global-radius); background: #323154; display: flex; align-items: center; justify-content: center; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; transition: transform 0.2s ease, box-shadow 0.2s ease;">
                             <span style="color: white; font-family: 'YouYuan'; font-size: 22px; font-weight: bold;">网</span>
                         </div>
                         <span style="font-family: 'YouYuan'; font-size: 12px; color: #333; text-align: center; line-height: 1.3;">网络切换</span>
                     </div>
-                    <div class="kg-app-item" onclick="window.open('https://1823501963.share.123865.com/123pan/jE4Fjv-1djihKG', '_blank')" style="display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s ease;">
-                        <div class="kg-app-icon" style="width: 56px; height: 56px; border-radius: 14px; background: #6C5CE7; display: flex; align-items: center; justify-content: center; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                    <div class="kg-app-item" onclick="launchApp(this, 'https://1823501963.share.123865.com/123pan/jE4Fjv-1djihKG', '#6C5CE7', '仿MacOS')" style="display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s ease;">
+                        <div class="kg-app-icon" style="width: 56px; height: 56px; border-radius: var(--global-radius); background: #6C5CE7; display: flex; align-items: center; justify-content: center; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; transition: transform 0.2s ease, box-shadow 0.2s ease;">
                             <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width: 28px; height: 28px;">
                                 <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
                                 <line x1="8" y1="21" x2="16" y2="21"></line>
@@ -2288,7 +2344,7 @@
             <div style="padding: 20px 20px 0 20px;">
                 <div class="search-engine-selector" id="engineSelectorInTab" style="display: block; position: static; width: 100%; max-width: 600px; margin: 0 auto; border: none; box-shadow: none; background: transparent; opacity: 1; transform: none;">
                     <!-- 加载国外搜索引擎图标开关 -->
-                    <div style="margin-bottom: 15px; padding: 10px; background: rgba(240,240,240,0.5); border-radius: 10px;">
+                    <div style="margin-bottom: 15px; padding: 10px; background: rgba(240,240,240,0.5); border-radius: var(--global-radius);">
                         <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
                             <input type="checkbox" id="loadForeignIconsToggle" onchange="toggleForeignIcons()" style="margin-right: 10px; width: 18px; height: 18px;">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
@@ -2403,12 +2459,12 @@
         
         <!-- Folder Modal -->
         <div id="folderModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); z-index: 10001; opacity: 0; transition: opacity 0.3s ease;">
-            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #F0F0F0; border: none; border-radius: 34px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto;">
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #F0F0F0; border: none; border-radius: var(--global-radius); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto;">
                 <!-- Folder Header -->
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid #e0e0e0;">
                     <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
                         <h3 id="folderTitle" style="font-family: 'YouYuan', Arial, sans-serif; font-size: 18px; margin: 0; font-weight: bold;">文件夹</h3>
-                        <button onclick="renameCurrentFolder()" style="padding: 4px 8px; border: none; border-radius: 20px; background: #F0F0F0; box-shadow: 5px 5px 10px #cccccc, -5px -5px 10px #ffffff; cursor: pointer; font-size: 12px;">
+                        <button onclick="renameCurrentFolder()" style="padding: 4px 8px; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 5px 5px 10px #cccccc, -5px -5px 10px #ffffff; cursor: pointer; font-size: 12px;">
                             重命名
                         </button>
                     </div>
@@ -2417,8 +2473,8 @@
                 
                 <!-- Folder Search and Add -->
                 <div style="padding: 15px 20px; display: flex; gap: 10px; align-items: center;">
-                    <input type="text" id="folderSearchInput" placeholder="搜索文件夹内..." style="flex: 1; padding: 10px 15px; border: none; border-radius: 34px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; font-size: 14px; outline: none; background: #F0F0F0; font-family: 'YouYuan', Arial, sans-serif;">
-                    <button onclick="addToCurrentFolder()" style="padding: 10px 15px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-weight: bold; font-family: 'YouYuan', Arial, sans-serif; white-space: nowrap;">
+                    <input type="text" id="folderSearchInput" placeholder="搜索文件夹内..." style="flex: 1; padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; font-size: 14px; outline: none; background: #F0F0F0; font-family: 'YouYuan', Arial, sans-serif;">
+                    <button onclick="addToCurrentFolder()" style="padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-weight: bold; font-family: 'YouYuan', Arial, sans-serif; white-space: nowrap;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-right: 5px;">
                             <line x1="12" y1="5" x2="12" y2="19"></line>
                             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -2448,7 +2504,7 @@
                         <input type="checkbox" id="preloadHotNews" checked onchange="localStorage.setItem('preloadHotNews', this.checked)" style="margin-right: 5px; width: 16px; height: 16px;">
                         启动时预加载
                     </label>
-                    <select id="hotNewsPlatformTab" onchange="loadHotNewsTab(true)" style="padding: 10px 15px; border: none; border-radius: 20px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; outline: none; cursor: pointer;">
+                    <select id="hotNewsPlatformTab" onchange="loadHotNewsTab(true)" style="padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; outline: none; cursor: pointer;">
                         <option value="baidu">百度</option>
                         <option value="shaoshupai">少数派</option>
                         <option value="weibo">微博</option>
@@ -2462,7 +2518,7 @@
                         <option value="juejin">掘金</option>
                         <option value="github">GitHub</option>
                     </select>
-                    <button onclick="loadHotNewsTab()" style="padding: 10px 15px; border: none; border-radius: 20px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; display: flex; align-items: center; gap: 5px;">
+                    <button onclick="loadHotNewsTab()" style="padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; display: flex; align-items: center; gap: 5px;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
                             <polyline points="23 4 23 10 17 10"></polyline>
                             <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
@@ -2482,16 +2538,27 @@
             
             <!-- 外观设置 -->
             <div class="settings-section" style="margin-bottom: 30px;">
-                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">一、外观设置</h3>
+                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">一、外观设置</h3>
 
                 <div style="margin-bottom: 15px;">
-                    <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-                        <input type="checkbox" id="showKgLogo" checked onchange="toggleKgLogo()" style="margin-right: 10px; width: 18px; height: 18px;">
-                        <svg viewBox="0 0 88 88" style="width: 16px; height: 16px; margin-right: 5px;">
-                            <path fill="#0078D4" d="M0 12.5l36-4.9v34.8H0M40 7.2L87.3 0v41.7H40M0 45.8h36v34.8l-36-4.9M40 45.8h47.3V88L40 80.8"/>
-                        </svg>
-                        显示左上角 千克之梦 标识
+                    <label class="settings-label" style="display: block; font-family: 'YouYuan'; font-size: 14px; margin-bottom: 10px; font-weight: bold;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px; vertical-align: middle;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                        显示左上角 千克之梦 标识：
                     </label>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 13px; cursor: pointer; gap: 4px;">
+                            <input type="radio" name="kgLogoMode" value="show" checked onchange="setKgLogoMode('show')" style="width: 16px; height: 16px;">
+                            打开
+                        </label>
+                        <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 13px; cursor: pointer; gap: 4px;">
+                            <input type="radio" name="kgLogoMode" value="iconOnly" onchange="setKgLogoMode('iconOnly')" style="width: 16px; height: 16px;">
+                            隐藏文字
+                        </label>
+                        <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 13px; cursor: pointer; gap: 4px;">
+                            <input type="radio" name="kgLogoMode" value="hide" onchange="setKgLogoMode('hide')" style="width: 16px; height: 16px;">
+                            关闭
+                        </label>
+                    </div>
                 </div>
 
                 <div style="margin-bottom: 15px;">
@@ -2548,14 +2615,22 @@
                             <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
                                 <div id="colorPreview" style="width: 30px; height: 30px; border-radius: 50%; border: 2px solid #ccc;"></div>
                                 <span style="font-family: 'YouYuan'; font-size: 14px;">#</span>
-                                <input type="text" id="colorCodeInput" value="F0F0F0" maxlength="6" style="width: 80px; padding: 4px 8px; border: none; border-radius: 8px; background: #F0F0F0; box-shadow: inset 3px 3px 6px #cccccc, inset -3px -3px 6px #ffffff; font-family: monospace; font-size: 14px; text-transform: uppercase;">
+                                <input type="text" id="colorCodeInput" value="F0F0F0" maxlength="6" style="width: 80px; padding: 4px 8px; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: inset 3px 3px 6px #cccccc, inset -3px -3px 6px #ffffff; font-family: monospace; font-size: 14px; text-transform: uppercase;">
                             </div>
                         </div>
-                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-                            <input type="radio" name="bgMode" value="wallpaper" onchange="setBgMode('wallpaper')" style="margin-right: 8px; width: 18px; height: 18px;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                            必应壁纸
-                        </label>
+                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                            <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
+                                <input type="radio" name="bgMode" value="wallpaper" onchange="setBgMode('wallpaper')" style="margin-right: 8px; width: 18px; height: 18px;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                必应壁纸
+                            </label>
+                            <div id="wallpaperControls" style="display: none; margin-left: 10px; align-items: center; gap: 10px; flex-wrap: wrap;">
+                                <label style="font-family: 'YouYuan'; font-size: 12px;">模糊：</label>
+                                <input type="range" id="wallpaperBlurSlider" min="0" max="20" value="0" style="width: 100px; vertical-align: middle;" oninput="updateWallpaperBlur(this.value)">
+                                <label style="font-family: 'YouYuan'; font-size: 12px; margin-left: 5px;">亮度：</label>
+                                <input type="range" id="wallpaperBrightnessSlider" min="20" max="100" value="100" style="width: 100px; vertical-align: middle;" oninput="updateWallpaperBrightness(this.value)">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -2630,11 +2705,27 @@
                     </label>
                 </div>
                 
+                <div style="margin-bottom: 15px;">
+                    <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
+<input type="checkbox" id="enableLaunchAnim" checked onchange="localStorage.setItem('enableLaunchAnim', this.checked)" style="margin-right: 10px; width: 18px; height: 18px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                        启用应用启动动画
+                    </label>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
+<input type="checkbox" id="disableAllAnim" onchange="toggleDisableAllAnim()" style="margin-right: 10px; width: 18px; height: 18px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon><line x1="2" y1="2" x2="22" y2="22"></line></svg>
+                        禁止所有动画
+                    </label>
+                </div>
+                
             </div>
 
             <!-- 收藏设置 -->
             <div class="settings-section" style="margin-bottom: 30px;">
-                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">二、收藏设置</h3>
+                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">二、收藏设置</h3>
 
                 <div style="margin-bottom: 15px;">
                     <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
@@ -2661,28 +2752,28 @@
                 </div>
 
                 <div style="display: flex; gap: 15px; margin-top: 15px;">
-                    <button id="importFavBtn" class="settings-btn" onclick="importFavorites()" style="flex: 1; padding: 10px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <button id="importFavBtn" class="settings-btn" onclick="importFavorites()" style="flex: 1; padding: 10px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                         收藏数据导入
                     </button>
-                    <button id="exportFavBtn" class="settings-btn" onclick="exportFavorites()" style="flex: 1; padding: 10px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <button id="exportFavBtn" class="settings-btn" onclick="exportFavorites()" style="flex: 1; padding: 10px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 5 17 10"></polyline><line x1="12" y1="5" x2="12" y2="15"></line></svg>
                         收藏数据导出
                     </button>
                 </div>
                 
                 <div style="display: flex; gap: 15px; margin-top: 15px;">
-                    <button class="settings-btn" onclick="exportSelectedData()" style="flex: 1; padding: 10px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <button class="settings-btn" onclick="exportSelectedData()" style="flex: 1; padding: 10px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 5 17 10"></polyline><line x1="12" y1="5" x2="12" y2="15"></line></svg>
                         选择性导出
                     </button>
-                    <button class="settings-btn" onclick="exportAllData()" style="flex: 1; padding: 10px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <button class="settings-btn" onclick="exportAllData()" style="flex: 1; padding: 10px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 5 17 10"></polyline><line x1="12" y1="5" x2="12" y2="15"></line></svg>
                         全量数据导出
                     </button>
                 </div>
                 <div style="display: flex; gap: 15px; margin-top: 15px;">
-                    <button class="settings-btn" onclick="importAllData()" style="flex: 1; padding: 10px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <button class="settings-btn" onclick="importAllData()" style="flex: 1; padding: 10px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                         全量数据导入
                     </button>
@@ -2693,7 +2784,7 @@
             
             <!-- 搜索设置 -->
             <div class="settings-section" style="margin-bottom: 30px;">
-                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">三、搜索设置</h3>
+                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">三、搜索设置</h3>
 
                 <div style="margin-bottom: 15px;">
                     <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
@@ -2717,7 +2808,7 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                         缓存搜索建议
                     </label>
-                    <select id="cacheDuration" style="margin-left: 30px; padding: 8px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; font-family: 'YouYuan'; font-size: 13px; background: #F0F0F0;">
+                    <select id="cacheDuration" style="margin-left: 30px; padding: 8px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; font-family: 'YouYuan'; font-size: 13px; background: #F0F0F0;">
                         <option value="300">5 分钟</option>
                         <option value="3600" selected>1 小时</option>
                         <option value="86400">1 天</option>
@@ -2740,14 +2831,14 @@
                     </label>
                     <div style="margin-left: 30px;">
                         <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">过滤词（前面会自动加空格和-）：</label>
-                        <input type="text" id="cleanSearchKeyword" value="李彦宏" onchange="localStorage.setItem('cleanSearchKeyword', this.value)" style="width: calc(100% - 30px); padding: 8px 12px; border: none; border-radius: 15px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
+                        <input type="text" id="cleanSearchKeyword" value="李彦宏" onchange="localStorage.setItem('cleanSearchKeyword', this.value)" style="width: calc(100% - 30px); padding: 8px 12px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
                     </div>
                 </div>
             </div>
             
             <!-- 隐私与数据管理 -->
             <div class="settings-section" style="margin-bottom: 30px;">
-                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">四、隐私与数据管理</h3>
+                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">四、隐私与数据管理</h3>
                 
                 <div style="margin-bottom: 15px;">
                     <label class="settings-label" style="display: block; font-family: 'YouYuan'; font-size: 14px; margin-bottom: 10px; font-weight: bold;">
@@ -2792,11 +2883,11 @@
                         </label>
                     </div>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button id="clearDataBtn" class="settings-btn" onclick="clearSelectedData()" style="padding: 10px 20px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; color: #000000; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; gap: 8px;">
+                        <button id="clearDataBtn" class="settings-btn" onclick="clearSelectedData()" style="padding: 10px 20px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; color: #000000; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; gap: 8px;">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                             清理选中数据
                         </button>
-                        <button class="settings-btn" onclick="selectAllClearOptions()" style="padding: 10px 20px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; color: #000000; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; gap: 8px;">
+                        <button class="settings-btn" onclick="selectAllClearOptions()" style="padding: 10px 20px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; color: #000000; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; gap: 8px;">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
                             全选
                         </button>
@@ -2804,11 +2895,11 @@
                 </div>
                 
                 <div style="display: flex; gap: 15px; margin-top: 15px;">
-                    <button id="resetSettingsBtn" class="settings-btn" onclick="resetSettings()" style="flex: 1; padding: 10px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; color: #000000; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <button id="resetSettingsBtn" class="settings-btn" onclick="resetSettings()" style="flex: 1; padding: 10px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; color: #000000; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
                         重置所有设置（保留收藏）
                     </button>
-                    <button class="settings-btn" onclick="clearAllData()" style="flex: 1; padding: 10px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; color: #ff0000; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <button class="settings-btn" onclick="clearAllData()" style="flex: 1; padding: 10px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; color: #ff0000; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                         清空所有数据
                     </button>
@@ -2817,14 +2908,14 @@
             
             <!-- 界面样式 -->
             <div class="settings-section" style="margin-bottom: 30px;">
-                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">五、界面样式</h3>
+                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">五、界面样式</h3>
                 
                 <div style="margin-bottom: 15px;">
                     <label style="display: block; font-family: 'YouYuan'; font-size: 14px; margin-bottom: 8px;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px; vertical-align: middle;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
                         圆角调节：
                     </label>
-                    <div style="display: flex; align-items: center; gap: 10px; padding: 10px 15px; border-radius: 34px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0;">
+                    <div style="display: flex; align-items: center; gap: 10px; padding: 10px 15px; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0;">
                         <span style="font-family: 'YouYuan'; font-size: 12px; color: #666;">方</span>
                         <input type="range" id="borderRadiusSlider" min="0" max="9" value="9" oninput="updateBorderRadius(this.value)" style="flex: 1; cursor: pointer;">
                         <span style="font-family: 'YouYuan'; font-size: 12px; color: #666;">圆</span>
@@ -2834,35 +2925,35 @@
 
             <!-- 高级设置 -->
             <div class="settings-section" style="margin-bottom: 30px;">
-                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">六、高级设置</h3>
+                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">六、高级设置</h3>
                 
                 <!-- API Configuration -->
-                <div style="margin-bottom: 15px; padding: 15px; border-radius: 20px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0;">
+                <div style="margin-bottom: 15px; padding: 15px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0;">
                     <div style="font-family: 'YouYuan'; font-size: 14px; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 5px;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                         API 地址配置
                     </div>
                     <div style="margin-bottom: 10px;">
                         <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">热点新闻 API：</label>
-                        <input type="text" id="hotNewsApiUrlInput" value="https://orz.ai/api/v1/dailynews/" style="width: 100%; padding: 8px 12px; border: none; border-radius: 15px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
+                        <input type="text" id="hotNewsApiUrlInput" value="https://orz.ai/api/v1/dailynews/" style="width: 100%; padding: 8px 12px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
                     </div>
                     <div style="margin-bottom: 10px;">
                         <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">搜索建议 API（百度）：</label>
-                        <input type="text" id="suggestionApiUrlInput" value="https://suggestion.baidu.com/su" style="width: 100%; padding: 8px 12px; border: none; border-radius: 15px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
+                        <input type="text" id="suggestionApiUrlInput" value="https://suggestion.baidu.com/su" style="width: 100%; padding: 8px 12px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
                     </div>
                     <div style="margin-bottom: 10px;">
                         <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">今日诗词 API：</label>
-                        <input type="text" id="poemApiUrlInput" value="https://v1.jinrishici.com/all.json" style="width: 100%; padding: 8px 12px; border: none; border-radius: 15px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
+                        <input type="text" id="poemApiUrlInput" value="https://v1.jinrishici.com/all.json" style="width: 100%; padding: 8px 12px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
                     </div>
                     <div style="margin-bottom: 10px;">
                         <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">Bing 壁纸 API：</label>
-                        <input type="text" id="bingWallpaperApiUrlInput" value="https://bing.img.run/1920x1080.php" style="width: 100%; padding: 8px 12px; border: none; border-radius: 15px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
+                        <input type="text" id="bingWallpaperApiUrlInput" value="https://bing.img.run/1920x1080.php" style="width: 100%; padding: 8px 12px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
                     </div>
                     <div style="margin-bottom: 10px;">
                         <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">网站元信息 API：</label>
-                        <input type="text" id="websiteMetaApiUrlInput" value="https://orz.ai/api/v1/tools/website-meta/" style="width: 100%; padding: 8px 12px; border: none; border-radius: 15px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
+                        <input type="text" id="websiteMetaApiUrlInput" value="https://orz.ai/api/v1/tools/website-meta/" style="width: 100%; padding: 8px 12px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
                     </div>
-                    <button class="settings-btn" onclick="saveAllApiUrls()" style="padding: 8px 15px; border: none; border-radius: 15px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 13px;">保存所有 API 配置</button>
+                    <button class="settings-btn" onclick="saveAllApiUrls()" style="padding: 8px 15px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 13px;">保存所有 API 配置</button>
                 </div>
 
                 <div style="margin-bottom: 15px;">
@@ -2887,10 +2978,10 @@
             
             <!-- 快速操作 -->
             <div class="settings-section" style="margin-bottom: 30px;">
-                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">七、快速操作</h3>
+                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">七、快速操作</h3>
                 
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <button class="settings-btn" onclick="location.reload()" style="flex: 1; min-width: 120px; padding: 10px 15px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <button class="settings-btn" onclick="location.reload()" style="flex: 1; min-width: 120px; padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
                         刷新网页
                     </button>
@@ -2899,12 +2990,12 @@
             
             <!-- 关于与帮助 -->
             <div class="settings-section" style="margin-bottom: 30px;">
-                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">八、关于与帮助</h3>
+                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">八、关于与帮助</h3>
                 
                 <div style="font-family: 'YouYuan'; font-size: 14px; line-height: 1.8;">
-                    <p><strong>产品名称：</strong>HelloKgSearch</p>
-                    <p><strong>版本号：</strong>v1.0.0</p>
-                    <p><strong>使用帮助：</strong></p>
+                    <p><strong>产品名称：</strong>千克之梦 (HelloKG)</p>
+                    <p><strong>版本号：</strong>v3.0.0</p>
+                    <p><strong>联系方式：</strong></p>
                     <ul style="margin: 10px 0; padding-left: 20px;">
                         <li>抖音：42187852565</li>
                         <li>邮箱：kuang45@outlook.com</li>
@@ -2916,23 +3007,23 @@
 
     <!-- Custom Confirm Dialog -->
     <div id="customConfirm" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); z-index: 20000; opacity: 0; transition: opacity 0.3s ease;">
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #F0F0F0; border: none; border-radius: 34px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); padding: 30px; min-width: 300px; max-width: 90%;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #F0F0F0; border: none; border-radius: var(--global-radius); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); padding: 30px; min-width: 300px; max-width: 90%;">
             <div id="customConfirmMessage" style="font-size: 16px; margin-bottom: 25px; text-align: center; line-height: 1.5; font-family: 'YouYuan', Arial, sans-serif;"></div>
             <div style="display: flex; gap: 15px; justify-content: center;">
-                <button id="customConfirmCancel" style="flex: 1; padding: 10px 20px; border: none; border-radius: 34px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); background: #F0F0F0; cursor: pointer; font-size: 14px; font-family: 'YouYuan', Arial, sans-serif;">取消</button>
-                <button id="customConfirmOk" style="flex: 1; padding: 10px 20px; border: none; border-radius: 34px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); background: #F0F0F0; color: #000000; cursor: pointer; font-size: 14px; font-family: 'YouYuan', Arial, sans-serif;">确定</button>
+                <button id="customConfirmCancel" style="flex: 1; padding: 10px 20px; border: none; border-radius: var(--global-radius); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); background: #F0F0F0; cursor: pointer; font-size: 14px; font-family: 'YouYuan', Arial, sans-serif;">取消</button>
+                <button id="customConfirmOk" style="flex: 1; padding: 10px 20px; border: none; border-radius: var(--global-radius); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); background: #F0F0F0; color: #000000; cursor: pointer; font-size: 14px; font-family: 'YouYuan', Arial, sans-serif;">确定</button>
             </div>
         </div>
     </div>
 
     <!-- Custom Prompt Dialog -->
     <div id="customPrompt" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); z-index: 20000; opacity: 0; transition: opacity 0.3s ease;">
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #F0F0F0; border: none; border-radius: 34px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); padding: 30px; min-width: 350px; max-width: 90%;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #F0F0F0; border: none; border-radius: var(--global-radius); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); padding: 30px; min-width: 350px; max-width: 90%;">
             <div id="customPromptMessage" style="font-size: 16px; margin-bottom: 15px; text-align: center; line-height: 1.5; font-family: 'YouYuan', Arial, sans-serif;"></div>
-            <input type="text" id="customPromptInput" style="width: 100%; padding: 10px; border: none; border-radius: 34px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); font-size: 14px; outline: none; margin-bottom: 20px; box-sizing: border-box; font-family: 'YouYuan', Arial, sans-serif; background: #F0F0F0;">
+            <input type="text" id="customPromptInput" style="width: 100%; padding: 10px; border: none; border-radius: var(--global-radius); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); font-size: 14px; outline: none; margin-bottom: 20px; box-sizing: border-box; font-family: 'YouYuan', Arial, sans-serif; background: #F0F0F0;">
             <div style="display: flex; gap: 15px; justify-content: center;">
-                <button id="customPromptCancel" style="flex: 1; padding: 10px 20px; border: none; border-radius: 34px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); background: #F0F0F0; cursor: pointer; font-size: 14px; font-family: 'YouYuan', Arial, sans-serif;">取消</button>
-                <button id="customPromptOk" style="flex: 1; padding: 10px 20px; border: none; border-radius: 34px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); background: #F0F0F0; color: #000000; cursor: pointer; font-size: 14px; font-family: 'YouYuan', Arial, sans-serif;">确定</button>
+                <button id="customPromptCancel" style="flex: 1; padding: 10px 20px; border: none; border-radius: var(--global-radius); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); background: #F0F0F0; cursor: pointer; font-size: 14px; font-family: 'YouYuan', Arial, sans-serif;">取消</button>
+                <button id="customPromptOk" style="flex: 1; padding: 10px 20px; border: none; border-radius: var(--global-radius); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); background: #F0F0F0; color: #000000; cursor: pointer; font-size: 14px; font-family: 'YouYuan', Arial, sans-serif;">确定</button>
             </div>
         </div>
     </div>
@@ -3243,7 +3334,7 @@
                 
                 html += `<li onclick="selectHistory('${item.replace(/'/g, "\\'")}')"  style="animation-delay: ${index * 0.05}s">
                             ${iconHtml}${item}
-                            <span class="delete-btn" onclick="event.stopPropagation(); deleteHistoryItem(${index})">✕</span>
+                            <span class="delete-btn" onclick="event.stopPropagation(); deleteHistoryItem(${index})">?</span>
                         </li>`;
             });
             
@@ -3280,6 +3371,9 @@
             return null;
         }
         
+        // Track if settings were modified (must be declared before any function uses it)
+        let settingsModified = false;
+
         // Toggle poem display
         function togglePoemDisplay() {
             settingsModified = true;
@@ -3346,6 +3440,18 @@
         
         // Dropdown menu button click
         document.addEventListener('DOMContentLoaded', function() {
+            // Restore "disable all animations" setting
+            if (localStorage.getItem('disableAllAnim') === 'true') {
+                document.documentElement.classList.add('no-animations');
+                const disableAllAnimCb = document.getElementById('disableAllAnim');
+                if (disableAllAnimCb) disableAllAnimCb.checked = true;
+            }
+            // Restore "enable launch animation" setting
+            if (localStorage.getItem('enableLaunchAnim') === 'false') {
+                const enableLaunchAnimCb = document.getElementById('enableLaunchAnim');
+                if (enableLaunchAnimCb) enableLaunchAnimCb.checked = false;
+            }
+
             const dropdownBtn = document.getElementById('dropdownMenuBtn');
             if (dropdownBtn) {
                 dropdownBtn.addEventListener('click', function(e) {
@@ -3369,7 +3475,7 @@
             if (kgSearchInput && kgAppGrid) {
                 kgSearchInput.addEventListener('input', function(e) {
                     const keyword = e.target.value.trim().toLowerCase();
-                    const apps = kgAppGrid.querySelectorAll('div[onclick*="showKgDownloadModal"]');
+                    const apps = kgAppGrid.querySelectorAll('.kg-app-item');
                     apps.forEach(function(app) {
                         const appName = app.querySelector('span')?.textContent?.toLowerCase() || '';
                         if (!keyword || appName.includes(keyword)) {
@@ -3433,13 +3539,10 @@
             }
             
             // Load KG Logo display setting
-            const showKgLogo = localStorage.getItem('showKgLogo');
-            if (showKgLogo !== null) {
-                const logoCheckbox = document.getElementById('showKgLogo');
-                const logo = document.getElementById('kgLogoBtn');
-                if (logoCheckbox) logoCheckbox.checked = showKgLogo === 'true';
-                if (logo) logo.style.display = showKgLogo === 'true' ? 'flex' : 'none';
-            }
+            const kgLogoMode = localStorage.getItem('kgLogoMode') || 'show';
+            const logoRadio = document.querySelector('input[name="kgLogoMode"][value="' + kgLogoMode + '"]');
+            if (logoRadio) logoRadio.checked = true;
+            setKgLogoMode(kgLogoMode);
         }
         
         // Change theme color
@@ -3950,7 +4053,7 @@
                 
                 // Show toast notification
                 const toast = document.createElement('div');
-                toast.textContent = emojiEnabled ? 'Emoji 已开启 ✓' : 'Emoji 已关闭 ✗';
+                toast.textContent = emojiEnabled ? 'Emoji 已开启 ?' : 'Emoji 已关闭 ?';
                 toast.style.position = 'fixed';
                 toast.style.bottom = '50px';
                 toast.style.left = '50%';
@@ -4240,6 +4343,19 @@
             // Re-apply theme to inline styles after contrast change
             applyThemeToInlineStyles();
         }
+
+        function toggleDisableAllAnim() {
+            settingsModified = true;
+            const disableAllAnim = document.getElementById('disableAllAnim');
+            const isDisabled = disableAllAnim ? disableAllAnim.checked : false;
+            localStorage.setItem('disableAllAnim', isDisabled);
+            if (isDisabled) {
+                // Add a global CSS class to disable ALL animations and transitions
+                document.documentElement.classList.add('no-animations');
+            } else {
+                document.documentElement.classList.remove('no-animations');
+            }
+        }
         
         function toggleTimeDisplay() {
             settingsModified = true;
@@ -4311,7 +4427,8 @@
                         demoMode: localStorage.getItem('demoMode') === 'true',
                         borderRadius: localStorage.getItem('borderRadius') || '34',
                         loadForeignIcons: localStorage.getItem('loadForeignIcons') === 'true',
-                        showKgLogo: localStorage.getItem('showKgLogo') !== 'false'
+                        showKgLogo: localStorage.getItem('showKgLogo') !== 'false',
+                        kgLogoMode: localStorage.getItem('kgLogoMode') || 'show'
                     };
                 } else if (cb.value === 'apiUrls') {
                     selectedData.apiUrls = apiUrls;
@@ -4362,7 +4479,8 @@
                     demoMode: localStorage.getItem('demoMode') === 'true',
                     borderRadius: localStorage.getItem('borderRadius') || '34',
                     loadForeignIcons: localStorage.getItem('loadForeignIcons') === 'true',
-                    showKgLogo: localStorage.getItem('showKgLogo') !== 'false'
+                    showKgLogo: localStorage.getItem('showKgLogo') !== 'false',
+                    kgLogoMode: localStorage.getItem('kgLogoMode') || 'show'
                 },
                 apiUrls: apiUrls,
                 searchEngine: localStorage.getItem('searchEngine') || 'https://cn.bing.com/search?q='
@@ -4650,7 +4768,7 @@
                     localStorage.removeItem('cachedSuggestions');
                     localStorage.removeItem('cachedHotNews');
                 } else if (cb.value === 'settings') {
-                    ['themeMode','themeColor','buttonStyle','bgMode','bgColor','showTimeDisplay','showPoem','showScanner','highContrastMode','borderRadius','debugMode','demoMode','loadForeignIcons','showKgLogo','cleanSearchMode','cleanSearchKeyword','privacyMode','showFavCreateTime','autoSortFavorites','noFavIcons','saveSearchHistory','showSearchSuggestions','cacheSuggestions','cacheDuration','preloadHotNews'].forEach(key => localStorage.removeItem(key));
+                    ['themeMode','themeColor','buttonStyle','bgMode','bgColor','showTimeDisplay','showPoem','showScanner','highContrastMode','borderRadius','debugMode','demoMode','loadForeignIcons','showKgLogo','kgLogoMode','cleanSearchMode','cleanSearchKeyword','privacyMode','showFavCreateTime','autoSortFavorites','noFavIcons','saveSearchHistory','showSearchSuggestions','cacheSuggestions','cacheDuration','preloadHotNews'].forEach(key => localStorage.removeItem(key));
                     location.reload();
                 } else if (cb.value === 'apiUrls') {
                     localStorage.removeItem('apiUrls');
@@ -4875,36 +4993,32 @@
         }
         
         // Square mode toggle
-        function toggleKgLogo() {
-            const checkbox = document.getElementById('showKgLogo');
+        function setKgLogoMode(mode) {
+            settingsModified = true;
             const logo = document.getElementById('kgLogoBtn');
-            if (checkbox.checked) {
+            const logoText = document.getElementById('kgLogoText');
+            localStorage.setItem('kgLogoMode', mode);
+            
+            if (mode === 'show') {
+                // 打开：显示图标+文字
                 if (logo) logo.style.display = 'flex';
-                localStorage.setItem('showKgLogo', 'true');
+                if (logoText) logoText.style.display = 'inline';
+            } else if (mode === 'iconOnly') {
+                // 隐藏文字：只显示图标
+                if (logo) logo.style.display = 'flex';
+                if (logoText) logoText.style.display = 'none';
             } else {
+                // 关闭：全部隐藏
                 if (logo) logo.style.display = 'none';
-                localStorage.setItem('showKgLogo', 'false');
             }
         }
 
         function updateBorderRadius(value) {
             const radiusValues = ['0', '4', '8', '12', '16', '20', '24', '28', '34', '34'];
             const radius = radiusValues[value] || '34';
-            document.body.setAttribute('data-border-radius', radius);
+            document.documentElement.style.setProperty('--global-radius', radius + 'px');
             localStorage.setItem('borderRadius', radius);
             settingsModified = true;
-
-            // Apply border radius to all elements via JS, excluding circles and already-square elements
-            const allElements = document.querySelectorAll('*');
-            allElements.forEach(el => {
-                const computedStyle = window.getComputedStyle(el);
-                const currentRadius = computedStyle.borderRadius;
-                // Skip elements with border-radius: 50% (circles) or 0px (already square)
-                if (currentRadius === '50%' || currentRadius === '0px') return;
-                // Skip elements without border-radius
-                if (!currentRadius || currentRadius === '0px') return;
-                el.style.borderRadius = radius + 'px';
-            });
         }
 
         // Apply saved border radius on page load
@@ -4917,16 +5031,7 @@
                 if (slider && index !== -1) {
                     slider.value = index;
                 }
-                document.body.setAttribute('data-border-radius', savedRadius);
-                // Apply to elements
-                const allElements = document.querySelectorAll('*');
-                allElements.forEach(el => {
-                    const computedStyle = window.getComputedStyle(el);
-                    const currentRadius = computedStyle.borderRadius;
-                    if (currentRadius === '50%' || currentRadius === '0px') return;
-                    if (!currentRadius || currentRadius === '0px') return;
-                    el.style.borderRadius = savedRadius + 'px';
-                });
+                document.documentElement.style.setProperty('--global-radius', savedRadius + 'px');
             }
         }
 
@@ -5121,7 +5226,7 @@
                 const faviconUrl = getFavicon(item.url);
                 const initials = getInitials(item.name);
                 
-                html += `<div class="fav-item" onclick="openFavoriteUrl('${item.url.replace(/'/g, "\\'")}')">
+                html += `<div class="fav-item" onclick="openFavoriteUrl('${item.url.replace(/'/g, "\\'")}', this)">
                     <div class="fav-actions">
                         <button onclick="event.stopPropagation(); editFolderItem(${index})" title="编辑">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
@@ -5274,7 +5379,7 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="fav-icon" style="background: #FFD700; border-radius: 14px;">
+                    <div class="fav-icon" style="background: #FFD700; border-radius: var(--global-radius);">
                         <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 28px; height: 28px;">
                             <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
                         </svg>
@@ -5305,7 +5410,7 @@
                 }
                 
                 const safeUrl = fav.url.replace(/'/g, '\\\'');
-                html += `<div class="fav-item" draggable="false" data-index="${originalIndex}" onclick="openFavoriteUrl('${safeUrl}')">
+                html += `<div class="fav-item" draggable="false" data-index="${originalIndex}" onclick="openFavoriteUrl('${safeUrl}', this)">
                     <div class="fav-actions">
                         <button onclick="event.stopPropagation(); editFavorite(${originalIndex})" title="编辑">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -5346,9 +5451,6 @@
             switchToFavoritesTab();  // Switch to favorites tab
             loadFavorites();
         }
-        
-        // Track if settings were modified
-        let settingsModified = false;
         
         // Mark settings as modified when any setting changes
         const originalSetThemeMode = typeof setThemeMode === 'function' ? setThemeMode : null;
@@ -5393,8 +5495,17 @@
             }
         }
         
-        function openFavoriteUrl(url) {
-            // Open in new tab
+        function openFavoriteUrl(url, element) {
+            // Play launch animation first, then open URL after animation completes
+            if (element) {
+                const iconEl = element.querySelector('.fav-icon');
+                if (iconEl) {
+                    playLaunchAnimation(iconEl, '#F0F0F0', function() {
+                        window.open(url, '_blank');
+                    });
+                    return;
+                }
+            }
             window.open(url, '_blank');
         }
         
@@ -5412,7 +5523,7 @@
             if (keypressHandler) input.removeEventListener('keypress', keypressHandler);
             
             // Create a custom UI with two inputs
-            messageEl.innerHTML = '<div style="margin-bottom: 10px;">请输入网站名称:</div><input id="favNameInput" type="text" style="width: 100%; padding: 10px; border: none; border-radius: 34px; box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff; font-size: 14px; outline: none; margin-bottom: 15px; box-sizing: border-box; background: #ffffff; color: #000;"><div style="margin-bottom: 10px;">请输入网址（自动添加 https://）:</div><input id="favUrlInput" type="text" value="https://" style="width: 100%; padding: 10px; border: none; border-radius: 34px; box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff; font-size: 14px; outline: none; box-sizing: border-box; background: #ffffff; color: #000;">';
+            messageEl.innerHTML = '<div style="margin-bottom: 10px;">请输入网站名称:</div><input id="favNameInput" type="text" style="width: 100%; padding: 10px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff; font-size: 14px; outline: none; margin-bottom: 15px; box-sizing: border-box; background: #ffffff; color: #000;"><div style="margin-bottom: 10px;">请输入网址（自动添加 https://）:</div><input id="favUrlInput" type="text" value="https://" style="width: 100%; padding: 10px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff; font-size: 14px; outline: none; box-sizing: border-box; background: #ffffff; color: #000;">';
             
             // Hide the original input
             input.style.display = 'none';
@@ -5549,6 +5660,27 @@
 
         // Show KG Download Modal - like a folder with download links for each platform
         function showKgDownloadModal(appName, windowsUrl, color, initial) {
+            // Find the clicked app icon for animation
+            const apps = document.querySelectorAll('.kg-app-item');
+            let clickedApp = null;
+            apps.forEach(function(app) {
+                if (app.getAttribute('onclick') && app.getAttribute('onclick').includes(appName)) {
+                    clickedApp = app;
+                }
+            });
+
+            if (clickedApp) {
+                const iconEl = clickedApp.querySelector('.kg-app-icon');
+                playLaunchAnimation(iconEl, color, function() {
+                    // After animation completes, show the download modal
+                    showDownloadModalContent(appName, windowsUrl);
+                });
+            } else {
+                showDownloadModalContent(appName, windowsUrl);
+            }
+        }
+
+        function showDownloadModalContent(appName, windowsUrl) {
             const modal = document.getElementById('kgDownloadModal');
             const title = document.getElementById('kgDownloadTitle');
             const links = document.getElementById('kgDownloadLinks');
@@ -5559,26 +5691,22 @@
             let html = '';
             
             // Windows (has real URL)
-            html += `<div class="kg-download-option" onclick="openFavoriteUrl('${windowsUrl.replace(/'/g, "\\'")}'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: 14px; background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                <svg viewBox="0 0 88 88" style="width: 24px; height: 24px;"><path fill="#0078D4" d="M0 12.5l36-4.9v34.8H0M40 7.2L87.3 0v41.7H40M0 45.8h36v34.8l-36-4.9M40 45.8h47.3V88L40 80.8"/></svg>
+            html += `<div class="kg-download-option" onclick="launchAppUrl('${windowsUrl.replace(/'/g, "\\'")}'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
                 <span style="font-family: 'YouYuan'; font-size: 14px;">Windows 下载</span>
             </div>`;
 
             // Android
-            html += `<div class="kg-download-option" onclick="openFavoriteUrl('https://www.baidu.com'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: 14px; background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                <svg viewBox="0 0 24 24" style="width: 24px; height: 24px;"><path fill="#3DDC84" d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.68-.04-.84.26l-1.88 3.24c-2.56-1.1-5.46-1.1-8.02 0L6.56 5.71c-.16-.3-.55-.41-.84-.26-.3.16-.42.54-.26.85L7.4 9.48C4.28 11.24 2.2 14.44 2 18h20c-.2-3.56-2.28-6.76-5.4-8.52zM7 15.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm10 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>
+            html += `<div class="kg-download-option" onclick="launchAppUrl('https://www.baidu.com'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
                 <span style="font-family: 'YouYuan'; font-size: 14px;">安卓下载</span>
             </div>`;
 
             // Apple
-            html += `<div class="kg-download-option" onclick="openFavoriteUrl('https://www.baidu.com'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: 14px; background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                <svg viewBox="0 0 24 24" style="width: 24px; height: 24px;"><path fill="#000" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            html += `<div class="kg-download-option" onclick="launchAppUrl('https://www.baidu.com'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
                 <span style="font-family: 'YouYuan'; font-size: 14px;">苹果下载</span>
             </div>`;
 
             // Linux
-            html += `<div class="kg-download-option" onclick="openFavoriteUrl('https://www.baidu.com'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: 14px; background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                <svg viewBox="0 0 24 24" style="width: 24px; height: 24px;"><path fill="#FCC624" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><ellipse fill="#333" cx="9" cy="10" rx="1.5" ry="2"/><ellipse fill="#333" cx="15" cy="10" rx="1.5" ry="2"/><path fill="#FCC624" d="M12 16c-2.21 0-4-1.34-4-3h8c0 1.66-1.79 3-4 3z"/><path fill="#333" d="M8 7c0-1.1.9-2 2-2s2 .9 2 2H8zm4 0c0-1.1.9-2 2-2s2 .9 2 2h-4z"/></svg>
+            html += `<div class="kg-download-option" onclick="launchAppUrl('https://www.baidu.com'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
                 <span style="font-family: 'YouYuan'; font-size: 14px;">Linux下载</span>
             </div>`;
             
@@ -5598,7 +5726,126 @@
                 }, 300);
             }
         }
-        
+
+        /* ========== iOS / 澎湃OS Style App Launch Animation ========== */
+        function playLaunchAnimation(iconEl, bgColor, callback) {
+            // Check if launch animation is enabled
+            const enableLaunchAnim = localStorage.getItem('enableLaunchAnim');
+            if (enableLaunchAnim === 'false') {
+                if (callback) callback();
+                return;
+            }
+            // Check if all animations are disabled
+            const disableAllAnim = localStorage.getItem('disableAllAnim');
+            if (disableAllAnim === 'true') {
+                if (callback) callback();
+                return;
+            }
+
+            const overlay = document.getElementById('appLaunchOverlay');
+            const iconWrap = overlay.querySelector('.launch-icon-wrap');
+            const rect = iconEl.getBoundingClientRect();
+
+            // Clone the icon content into overlay
+            iconWrap.innerHTML = iconEl.innerHTML;
+            iconWrap.style.cssText = '';
+            iconWrap.style.width = rect.width + 'px';
+            iconWrap.style.height = rect.height + 'px';
+            iconWrap.style.borderRadius = window.getComputedStyle(iconEl).borderRadius;
+            iconWrap.style.background = bgColor;
+            iconWrap.style.display = 'flex';
+            iconWrap.style.alignItems = 'center';
+            iconWrap.style.justifyContent = 'center';
+            iconWrap.style.boxShadow = window.getComputedStyle(iconEl).boxShadow;
+
+            // Position overlay exactly over the icon
+            overlay.style.top = rect.top + 'px';
+            overlay.style.left = rect.left + 'px';
+            overlay.style.width = rect.width + 'px';
+            overlay.style.height = rect.height + 'px';
+            overlay.style.transition = 'none';
+            overlay.classList.remove('active');
+
+            // Force reflow
+            void overlay.offsetWidth;
+
+            // Start expand animation
+            requestAnimationFrame(function() {
+                overlay.style.transition = 'top 0.5s cubic-bezier(0.32, 0.72, 0, 1), left 0.5s cubic-bezier(0.32, 0.72, 0, 1), width 0.5s cubic-bezier(0.32, 0.72, 0, 1), height 0.5s cubic-bezier(0.32, 0.72, 0, 1), border-radius 0.4s ease';
+                overlay.classList.add('active');
+                overlay.style.top = '0px';
+                overlay.style.left = '0px';
+                overlay.style.width = '100vw';
+                overlay.style.height = '100vh';
+                overlay.style.borderRadius = '0px';
+            });
+
+            // When animation fills full screen (500ms), open URL immediately, then fade out
+            setTimeout(function() {
+                if (callback) callback();
+                // Then fade out
+                overlay.classList.remove('active');
+                overlay.style.transition = 'opacity 0.3s ease';
+                overlay.style.opacity = '0';
+                setTimeout(function() {
+                    overlay.style.transition = 'none';
+                    overlay.style.opacity = '';
+                    overlay.style.top = '0px';
+                    overlay.style.left = '0px';
+                    overlay.style.width = '0px';
+                    overlay.style.height = '0px';
+                    iconWrap.innerHTML = '';
+                }, 300);
+            }, 500);
+        }
+
+        function launchApp(element, url, bgColor, iconText) {
+            // Play animation first, then open URL after animation
+            const iconEl = element.querySelector('.kg-app-icon');
+            playLaunchAnimation(iconEl, bgColor, function() {
+                window.open(url, '_blank');
+            });
+        }
+
+        function launchAppUrl(url) {
+            // Check animation settings
+            const enableLaunchAnim = localStorage.getItem('enableLaunchAnim');
+            const disableAllAnim = localStorage.getItem('disableAllAnim');
+            if (enableLaunchAnim === 'false' || disableAllAnim === 'true') {
+                window.open(url, '_blank');
+                return;
+            }
+            // Play full screen flash animation first, then open URL
+            const overlay = document.getElementById('appLaunchOverlay');
+            const iconWrap = overlay.querySelector('.launch-icon-wrap');
+            iconWrap.innerHTML = '';
+            iconWrap.style.cssText = '';
+
+            overlay.style.top = '0px';
+            overlay.style.left = '0px';
+            overlay.style.width = '100vw';
+            overlay.style.height = '100vh';
+            overlay.style.borderRadius = '0px';
+            overlay.style.transition = 'none';
+            overlay.classList.add('active');
+
+            void overlay.offsetWidth;
+
+            overlay.style.transition = 'opacity 0.3s ease';
+            
+            setTimeout(function() {
+                window.open(url, '_blank');
+                overlay.classList.remove('active');
+                overlay.style.opacity = '0';
+                setTimeout(function() {
+                    overlay.style.transition = 'none';
+                    overlay.style.opacity = '';
+                    overlay.style.width = '0px';
+                    overlay.style.height = '0px';
+                }, 300);
+            }, 350);
+        }
+
         // Tab switching functions with smooth transition
         function switchToFavoritesTab() {
             // Reload if settings were modified
@@ -5930,12 +6177,12 @@
                     data.data.forEach((item, index) => {
                         const rank = index + 1;
                         const rankColor = rank <= 3 ? '#FF6B6B' : '#999';
-                        html += `<div onclick="window.open('${item.url}', '_blank')" style="display: flex; align-items: flex-start; padding: 12px 15px; margin-bottom: 10px; border: none; border-radius: 20px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; transition: transform 0.2s ease;">
+                        html += `<div onclick="window.open('${item.url}', '_blank')" style="display: flex; align-items: flex-start; padding: 12px 15px; margin-bottom: 10px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; transition: transform 0.2s ease;">
                             <span style="color: ${rankColor}; font-weight: bold; font-size: 18px; margin-right: 12px; min-width: 24px; text-align: center;">${rank}</span>
                             <div style="flex: 1;">
                                 <div style="font-size: 15px; font-weight: bold; line-height: 1.4; margin-bottom: 4px;">${item.title}</div>
                                 ${item.desc ? `<div style="font-size: 12px; color: #666; line-height: 1.4;">${item.desc}</div>` : ''}
-                                ${item.score ? `<div style="font-size: 11px; color: #999; margin-top: 4px;">🔥 ${Number(item.score).toLocaleString()}</div>` : ''}
+                                ${item.score ? `<div style="font-size: 11px; color: #999; margin-top: 4px;">?? ${Number(item.score).toLocaleString()}</div>` : ''}
                             </div>
                         </div>`;
                     });
@@ -6319,6 +6566,26 @@
             }
         }
         
+        function updateWallpaperBlur(value) {
+            const filterOverlay = document.getElementById('wallpaperFilterOverlay');
+            if (filterOverlay) {
+                const brightness = localStorage.getItem('wallpaperBrightness') || '100';
+                filterOverlay.style.filter = 'blur(' + value + 'px) brightness(' + brightness + '%)';
+            }
+            localStorage.setItem('wallpaperBlur', value);
+            settingsModified = true;
+        }
+
+        function updateWallpaperBrightness(value) {
+            const filterOverlay = document.getElementById('wallpaperFilterOverlay');
+            if (filterOverlay) {
+                const blur = localStorage.getItem('wallpaperBlur') || '0';
+                filterOverlay.style.filter = 'blur(' + blur + 'px) brightness(' + value + '%)';
+            }
+            localStorage.setItem('wallpaperBrightness', value);
+            settingsModified = true;
+        }
+
         function applyBgMode() {
             document.body.setAttribute('data-bg-mode', currentBgMode);
             
@@ -6335,16 +6602,47 @@
                 document.body.style.backgroundSize = '';
                 document.body.style.backgroundPosition = '';
                 document.body.style.backgroundRepeat = '';
+                document.body.style.filter = '';
+                // Hide wallpaper controls and remove overlay
+                const wc1 = document.getElementById('wallpaperControls');
+                if (wc1) wc1.style.display = 'none';
+                const fo1 = document.getElementById('wallpaperFilterOverlay');
+                if (fo1) fo1.remove();
             } else if (currentBgMode === 'wallpaper') {
-                // Set wallpaper directly on body for better performance
                 document.body.style.backgroundColor = '#000000';
-                document.body.style.backgroundImage = "url('" + apiUrls.bingWallpaper + "')";
-                document.body.style.backgroundSize = 'cover';
-                document.body.style.backgroundPosition = 'center';
-                document.body.style.backgroundRepeat = 'no-repeat';
-                // Set favoritesModal wallpaper dynamically
-                var favModal = document.getElementById('favoritesModal');
-                if (favModal) favModal.style.backgroundImage = "url('" + apiUrls.bingWallpaper + "')";
+                document.body.style.backgroundImage = 'none';
+                document.body.style.backgroundSize = '';
+                document.body.style.backgroundPosition = '';
+                document.body.style.backgroundRepeat = '';
+                document.body.style.filter = '';
+
+                let filterOverlay = document.getElementById('wallpaperFilterOverlay');
+                if (!filterOverlay) {
+                    filterOverlay = document.createElement('div');
+                    filterOverlay.id = 'wallpaperFilterOverlay';
+                    filterOverlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background-size: cover; background-position: center; background-repeat: no-repeat;';
+                    document.body.prepend(filterOverlay);
+                }
+
+                const blur = localStorage.getItem('wallpaperBlur') || '0';
+                const brightness = localStorage.getItem('wallpaperBrightness') || '100';
+                filterOverlay.style.filter = 'blur(' + blur + 'px) brightness(' + brightness + '%)';
+
+                const img = new Image();
+                img.onload = function() {
+                    filterOverlay.style.backgroundImage = "url('" + img.src + "')";
+                };
+                img.src = apiUrls.bingWallpaper;
+
+                // Show wallpaper controls
+                const controls = document.getElementById('wallpaperControls');
+                if (controls) controls.style.display = 'flex';
+
+                // Set slider values
+                const blurSlider = document.getElementById('wallpaperBlurSlider');
+                const brightnessSlider = document.getElementById('wallpaperBrightnessSlider');
+                if (blurSlider) blurSlider.value = blur;
+                if (brightnessSlider) brightnessSlider.value = brightness;
             } else {
                 // none - restore default
                 document.body.style.backgroundColor = '';
@@ -6352,6 +6650,12 @@
                 document.body.style.backgroundSize = '';
                 document.body.style.backgroundPosition = '';
                 document.body.style.backgroundRepeat = '';
+                document.body.style.filter = '';
+                // Hide wallpaper controls and remove overlay
+                const wc2 = document.getElementById('wallpaperControls');
+                if (wc2) wc2.style.display = 'none';
+                const fo2 = document.getElementById('wallpaperFilterOverlay');
+                if (fo2) fo2.remove();
             }
         }
         
@@ -6525,7 +6829,7 @@
                 const dy = clientY - cy;
                 const dist = Math.min(Math.sqrt(dx * dx + dy * dy), rect.width / 2);
                 const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-                const hue = (angle + 360) % 360;
+                const hue = (angle + 90 + 360) % 360;
                 const sat = (dist / (rect.width / 2)) * 100;
                 customPickerHue = hue;
                 customPickerSat = sat;
@@ -6594,7 +6898,7 @@
                     brightnessSlider.value = Math.round(customPickerVal);
                     // Update cursor position on wheel
                     const rect = colorWheel.getBoundingClientRect();
-                    const angle = h * Math.PI / 180;
+                    const angle = (h - 90) * Math.PI / 180;
                     const dist = (customPickerSat / 100) * (rect.width / 2);
                     const cursorX = rect.width / 2 + Math.cos(angle) * dist;
                     const cursorY = rect.height / 2 + Math.sin(angle) * dist;
@@ -6936,7 +7240,7 @@
         <canvas id="scannerCanvas" style="display: none;"></canvas>
         
         <!-- Scanning Frame Overlay -->
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 250px; height: 250px; border: 3px solid #000000; border-radius: 20px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff, 0 0 0 9999px rgba(240, 240, 240, 0.7); pointer-events: none;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 250px; height: 250px; border: 3px solid #000000; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff, 0 0 0 9999px rgba(240, 240, 240, 0.7); pointer-events: none;">
             <!-- Corner markers -->
             <div style="position: absolute; top: -3px; left: -3px; width: 30px; height: 30px; border-top: 5px solid #000000; border-left: 5px solid #000000;"></div>
             <div style="position: absolute; top: -3px; right: -3px; width: 30px; height: 30px; border-top: 5px solid #000000; border-right: 5px solid #000000;"></div>
@@ -6955,7 +7259,7 @@
     
     <!-- Scan Text Result Modal -->
     <div id="scanTextModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); z-index: 100002; opacity: 0; transition: opacity 0.3s ease;">
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #F0F0F0; border: none; border-radius: 34px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); padding: 30px; min-width: 350px; max-width: 90%; max-height: 80vh; overflow-y: auto;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #F0F0F0; border: none; border-radius: var(--global-radius); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); padding: 30px; min-width: 350px; max-width: 90%; max-height: 80vh; overflow-y: auto;">
             <!-- Close Button -->
             <button onclick="closeScanTextModal()" style="position: absolute; top: 15px; right: 15px; width: 36px; height: 36px; border: none; border-radius: 50%; background: #F0F0F0; color: #000000; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;">×</button>
             
@@ -6963,16 +7267,22 @@
             <div style="font-size: 20px; font-weight: bold; margin-bottom: 20px; text-align: center; font-family: 'YouYuan', Arial, sans-serif;">扫描结果</div>
             
             <!-- Text Content -->
-            <div id="scanTextContent" style="font-size: 16px; line-height: 1.6; word-break: break-all; margin-bottom: 25px; padding: 15px; background: #F0F0F0; border-radius: 15px; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; max-height: 40vh; overflow-y: auto; font-family: 'YouYuan', Arial, sans-serif;"></div>
+            <div id="scanTextContent" style="font-size: 16px; line-height: 1.6; word-break: break-all; margin-bottom: 25px; padding: 15px; background: #F0F0F0; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; max-height: 40vh; overflow-y: auto; font-family: 'YouYuan', Arial, sans-serif;"></div>
             
             <!-- Copy Button -->
-            <button onclick="copyScanText()" style="width: 100%; padding: 12px 20px; border: none; border-radius: 34px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-size: 16px; font-weight: bold; font-family: 'YouYuan', Arial, sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <button onclick="copyScanText()" style="width: 100%; padding: 12px 20px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-size: 16px; font-weight: bold; font-family: 'YouYuan', Arial, sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 复制文本
             </button>
         </div>
     </div>
     
+    <!-- App Launch Overlay (iOS / 澎湃OS style) -->
+    <div id="appLaunchOverlay">
+        <div class="launch-bg"></div>
+        <div class="launch-icon-wrap"></div>
+    </div>
+
     <div id="drawingCanvas" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 99999;">
         <!-- KG Text in Center -->
         <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 120px; font-weight: bold; color: #000000; font-family: Arial, sans-serif; pointer-events: none; user-select: none; opacity: 0.1;">
