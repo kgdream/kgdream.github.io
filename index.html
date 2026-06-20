@@ -58,6 +58,50 @@
             transform: translateX(20px);
         }
 
+        /* Custom Radio Button */
+        .radio-switch {
+            position: relative;
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+        .radio-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .radio-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #fff;
+            border: 2px solid #bbb;
+            border-radius: 50%;
+            transition: .2s;
+        }
+        .radio-slider:before {
+            position: absolute;
+            content: "";
+            height: 10px;
+            width: 10px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background-color: #2196F3;
+            border-radius: 50%;
+            transition: .2s;
+        }
+        .radio-switch input:checked + .radio-slider {
+            border-color: #2196F3;
+        }
+        .radio-switch input:checked + .radio-slider:before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -2284,7 +2328,7 @@
                     </svg>
                 </button>
                 <button id="engineTabBtn" onclick="switchToEngineTab()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
-                    <img id="engineTabIcon" src="" style="width: 24px; height: 24px; object-fit: contain; display: none;" alt="引擎">
+                    <img id="engineTabIcon" src="index.html" style="width: 24px; height: 24px; object-fit: contain; display: none;" alt="引擎">
                     <span id="engineTabText" style="font-size: 20px; font-weight: bold;">引</span>
                 </button>
                 <button id="hotNewsTabBtn" onclick="switchToHotNewsTab()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
@@ -2380,6 +2424,16 @@
                         </div>
                         <span style="font-family: 'YouYuan'; font-size: 12px; color: #333; text-align: center; line-height: 1.3;">仿MacOS</span>
                     </div>
+                    <!-- Kg 门铃 -->
+                    <div class="kg-app-item" onclick="showDoorbellDownloadModal()" style="display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s ease;">
+                        <div class="kg-app-icon" style="width: 56px; height: 56px; border-radius: var(--global-radius); background: #E17055; display: flex; align-items: center; justify-content: center; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width: 28px; height: 28px;">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                            </svg>
+                        </div>
+                        <span style="font-family: 'YouYuan'; font-size: 12px; color: #333; text-align: center; line-height: 1.3;">Kg门铃</span>
+                    </div>
                 </div>
             </div>
             
@@ -2392,7 +2446,7 @@
                     <!-- 加载国外搜索引擎图标开关 -->
                     <div style="margin-bottom: 15px; padding: 10px; background: rgba(240,240,240,0.5); border-radius: var(--global-radius);">
                         <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-                            <label class="toggle-switch"><input type="checkbox" id="loadForeignIconsToggle" onchange="toggleForeignIcons()"><span class="toggle-slider"></span></label>
+                            <label class="toggle-switch"><input type="checkbox" id="loadForeignIconsToggle" checked onchange="toggleForeignIcons()"><span class="toggle-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                             加载国外搜索引擎图标
                         </label>
@@ -2593,15 +2647,15 @@
                     </label>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                         <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 13px; cursor: pointer; gap: 4px;">
-                            <input type="radio" name="kgLogoMode" value="show" checked onchange="setKgLogoMode('show')" style="width: 16px; height: 16px;">
+                            <label class="radio-switch"><input type="radio" name="kgLogoMode" value="show" checked onchange="setKgLogoMode('show')"><span class="radio-slider"></span></label>
                             打开
                         </label>
                         <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 13px; cursor: pointer; gap: 4px;">
-                            <input type="radio" name="kgLogoMode" value="iconOnly" onchange="setKgLogoMode('iconOnly')" style="width: 16px; height: 16px;">
+                            <label class="radio-switch"><input type="radio" name="kgLogoMode" value="iconOnly" onchange="setKgLogoMode('iconOnly')"><span class="radio-slider"></span></label>
                             隐藏文字
                         </label>
                         <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 13px; cursor: pointer; gap: 4px;">
-                            <input type="radio" name="kgLogoMode" value="hide" onchange="setKgLogoMode('hide')" style="width: 16px; height: 16px;">
+                            <label class="radio-switch"><input type="radio" name="kgLogoMode" value="hide" onchange="setKgLogoMode('hide')"><span class="radio-slider"></span></label>
                             关闭
                         </label>
                     </div>
@@ -2614,17 +2668,17 @@
                     </label>
                     <div style="margin-bottom: 10px;">
                         <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
-                            <input type="radio" name="themeMode" value="light" checked onchange="setThemeMode('light')" style="margin-right: 8px; width: 18px; height: 18px;">
+                            <label class="radio-switch"><input type="radio" name="themeMode" value="light" checked onchange="setThemeMode('light')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
                             浅色模式
                         </label>
                         <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
-                            <input type="radio" name="themeMode" value="dark" onchange="setThemeMode('dark')" style="margin-right: 8px; width: 18px; height: 18px;">
+                            <label class="radio-switch"><input type="radio" name="themeMode" value="dark" onchange="setThemeMode('dark')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                             深色模式
                         </label>
                         <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-                            <input type="radio" name="themeMode" value="auto" onchange="setThemeMode('auto')" style="margin-right: 8px; width: 18px; height: 18px;">
+                            <label class="radio-switch"><input type="radio" name="themeMode" value="auto" onchange="setThemeMode('auto')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                             跟随系统
                         </label>
@@ -2638,12 +2692,12 @@
                     </label>
                     <div style="margin-bottom: 10px;">
                         <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
-                            <input type="radio" name="bgMode" value="none" checked onchange="setBgMode('none')" style="margin-right: 8px; width: 18px; height: 18px;">
+                            <label class="radio-switch"><input type="radio" name="bgMode" value="none" checked onchange="setBgMode('none')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="3" x2="21" y2="21"></line></svg>
                             无
                         </label>
                         <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
-                            <input type="radio" name="bgMode" value="solid" onchange="setBgMode('solid')" style="margin-right: 8px; width: 18px; height: 18px;">
+                            <label class="radio-switch"><input type="radio" name="bgMode" value="solid" onchange="setBgMode('solid')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle></svg>
                             纯色
                         </label>
@@ -2666,7 +2720,7 @@
                         </div>
                         <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                             <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-                                <input type="radio" name="bgMode" value="wallpaper" onchange="setBgMode('wallpaper')" style="margin-right: 8px; width: 18px; height: 18px;">
+                                <label class="radio-switch"><input type="radio" name="bgMode" value="wallpaper" onchange="setBgMode('wallpaper')"><span class="radio-slider"></span></label>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                                 必应壁纸
                             </label>
@@ -2687,32 +2741,32 @@
                     </label>
                     <div style="margin-bottom: 10px;">
                         <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
-                            <input type="radio" name="buttonStyle" value="neumorphism" checked onchange="setButtonStyle('neumorphism')" style="margin-right: 8px; width: 18px; height: 18px;">
+                            <label class="radio-switch"><input type="radio" name="buttonStyle" value="neumorphism" checked onchange="setButtonStyle('neumorphism')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
                             拟物模式
                         </label>
                         <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
-<input type="radio" name="buttonStyle" value="outline" onchange="setButtonStyle('outline')" style="margin-right: 8px; width: 18px; height: 18px;">
+<label class="radio-switch"><input type="radio" name="buttonStyle" value="outline" onchange="setButtonStyle('outline')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
                             线框模式
                         </label>
                         <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
-<input type="radio" name="buttonStyle" value="glass" onchange="setButtonStyle('glass')" style="margin-right: 8px; width: 18px; height: 18px;">
+<label class="radio-switch"><input type="radio" name="buttonStyle" value="glass" onchange="setButtonStyle('glass')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
                             液态玻璃
                         </label>
                         <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
-<input type="radio" name="buttonStyle" value="rounded" onchange="setButtonStyle('rounded')" style="margin-right: 8px; width: 18px; height: 18px;">
+<label class="radio-switch"><input type="radio" name="buttonStyle" value="rounded" onchange="setButtonStyle('rounded')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><rect x="3" y="3" width="18" height="18" rx="6" ry="6"></rect></svg>
                             普通圆角
                         </label>
                         <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<input type="radio" name="buttonStyle" value="transparent" onchange="setButtonStyle('transparent')" style="margin-right: 8px; width: 18px; height: 18px;">
+<label class="radio-switch"><input type="radio" name="buttonStyle" value="transparent" onchange="setButtonStyle('transparent')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 0 20" fill="currentColor" opacity="0.3"></path></svg>
                             白色透明
                         </label>
                         <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-top: 8px;">
-<input type="radio" name="buttonStyle" value="elder" onchange="setButtonStyle('elder')" style="margin-right: 8px; width: 18px; height: 18px;">
+<label class="radio-switch"><input type="radio" name="buttonStyle" value="elder" onchange="setButtonStyle('elder')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                             老年模式（简化界面，去除所有特效）
                         </label>
@@ -3348,7 +3402,7 @@
                         const urlObj = new URL(domain);
                         const faviconUrl = `${urlObj.protocol}//${urlObj.hostname}/favicon.ico`;
                         console.log('Favicon URL:', faviconUrl);
-                        iconHtml = `<img src="${faviconUrl}" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle; object-fit: contain;" onerror="console.log('Failed to load favicon:', '${faviconUrl}'); this.style.display='none'">`;
+                        iconHtml = `<img src="https://kgdream.github.io/${faviconUrl}" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle; object-fit: contain;" onerror="console.log('Failed to load favicon:', '${faviconUrl}'); this.style.display='none'">`;
                     } catch(e) {
                         console.log('Invalid URL:', e);
                         // Invalid URL, no icon
@@ -3863,7 +3917,7 @@
                         const urlObj = new URL(domain);
                         const faviconUrl = `${urlObj.protocol}//${urlObj.hostname}/favicon.ico`;
                         console.log('Suggestion Favicon URL:', faviconUrl);
-                        iconHtml = `<img src="${faviconUrl}" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle; object-fit: contain;" onerror="console.log('Failed to load suggestion favicon:', '${faviconUrl}'); this.style.display='none'">`;
+                        iconHtml = `<img src="https://kgdream.github.io/${faviconUrl}" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle; object-fit: contain;" onerror="console.log('Failed to load suggestion favicon:', '${faviconUrl}'); this.style.display='none'">`;
                     } catch(e) {
                         console.log('Invalid suggestion URL:', e);
                     }
@@ -5084,8 +5138,12 @@
             const savedLoadForeignIcons = localStorage.getItem('loadForeignIcons');
             const checkbox = document.getElementById('loadForeignIconsToggle');
             
-            if (savedLoadForeignIcons === 'true') {
+            // Default to loading foreign icons if not explicitly set
+            const shouldLoad = savedLoadForeignIcons !== 'false';
+            
+            if (shouldLoad) {
                 if (checkbox) checkbox.checked = true;
+                localStorage.setItem('loadForeignIcons', 'true');
                 // Load icons
                 const foreignIcons = document.querySelectorAll('.foreign-icon');
                 foreignIcons.forEach(icon => {
@@ -5265,7 +5323,7 @@
                         </button>
                     </div>
                     <div class="fav-icon">
-                        <img src="${faviconUrl}" onload="this.style.display='block'; this.nextElementSibling.style.display='none'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" style="display: none;" alt="">
+                        <img src="https://kgdream.github.io/${faviconUrl}" onload="this.style.display='block'; this.nextElementSibling.style.display='none'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" style="display: none;" alt="">
                         <div class="fav-initial">${initials}</div>
                     </div>
                     <div class="fav-name">${item.name}</div>
@@ -5449,7 +5507,7 @@
                         </button>
                     </div>
                     <div class="fav-icon">
-                        <img src="${faviconUrl}" onload="this.style.display='block'; this.nextElementSibling.style.display='none'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" style="display: none;" alt="">
+                        <img src="https://kgdream.github.io/${faviconUrl}" onload="this.style.display='block'; this.nextElementSibling.style.display='none'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" style="display: none;" alt="">
                         <div class="fav-initial">${initials}</div>
                     </div>
                     <div class="fav-name">${fav.name}</div>
@@ -5706,29 +5764,67 @@
             // Build download links for all platforms
             let html = '';
             
+            // Check if URL is from GitHub
+            const isGitHub = windowsUrl.includes('github.com');
+            const downloadLabel = isGitHub ? 'GitHub Windows 下载' : 'Windows 下载';
+            
             // Windows (has real URL)
             html += `<div class="kg-download-option" onclick="launchAppUrl('${windowsUrl.replace(/'/g, "\\'")}'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                <span style="font-family: 'YouYuan'; font-size: 14px;">Windows 下载</span>
-            </div>`;
-
-            // Android
-            html += `<div class="kg-download-option" onclick="launchAppUrl('https://www.baidu.com'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                <span style="font-family: 'YouYuan'; font-size: 14px;">安卓下载</span>
-            </div>`;
-
-            // Apple
-            html += `<div class="kg-download-option" onclick="launchAppUrl('https://www.baidu.com'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                <span style="font-family: 'YouYuan'; font-size: 14px;">苹果下载</span>
-            </div>`;
-
-            // Linux
-            html += `<div class="kg-download-option" onclick="launchAppUrl('https://www.baidu.com'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                <span style="font-family: 'YouYuan'; font-size: 14px;">Linux下载</span>
+                <span style="font-family: 'YouYuan'; font-size: 14px;">${downloadLabel}</span>
             </div>`;
             
             links.innerHTML = html;
             modal.style.display = 'flex';
             // Trigger reflow for transition
+            void modal.offsetWidth;
+            modal.style.opacity = '1';
+        }
+        
+        // Doorbell download modal with multiple links
+        function showDoorbellDownloadModal() {
+            const apps = document.querySelectorAll('.kg-app-item');
+            let clickedApp = null;
+            apps.forEach(function(app) {
+                if (app.getAttribute('onclick') && app.getAttribute('onclick').includes('showDoorbellDownloadModal')) {
+                    clickedApp = app;
+                }
+            });
+            if (clickedApp) {
+                const iconEl = clickedApp.querySelector('.kg-app-icon');
+                playLaunchAnimation(iconEl, '#E17055', function() {
+                    showDoorbellModalContent();
+                });
+            } else {
+                showDoorbellModalContent();
+            }
+        }
+        
+        function showDoorbellModalContent() {
+            const modal = document.getElementById('kgDownloadModal');
+            const title = document.getElementById('kgDownloadTitle');
+            const links = document.getElementById('kgDownloadLinks');
+            
+            title.textContent = 'Kg 门铃 - 选择下载';
+            
+            let html = '';
+            
+            // Android GitHub
+            html += `<div class="kg-download-option" onclick="launchAppUrl('https://github.com/kgdream/kg-doorbell'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                <span style="font-family: 'YouYuan'; font-size: 14px;">Android GitHub 下载</span>
+            </div>`;
+            
+            // 123云盘
+            html += `<div class="kg-download-option" onclick="launchAppUrl('https://1823501963.share.123865.com/123pan/jE4Fjv-VTMih'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                <span style="font-family: 'YouYuan'; font-size: 14px;">123云盘下载（含源代码和软件）</span>
+            </div>`;
+            
+            // 蓝奏云
+            html += `<div class="kg-download-option" onclick="launchAppUrl('https://wwbpg.lanzouu.com/iuk953sfbzad'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                <span style="font-family: 'YouYuan'; font-size: 14px;">蓝奏云下载（不含源代码）密码: 2bbo</span>
+            </div>`;
+            
+            links.innerHTML = html;
+            modal.style.display = 'flex';
             void modal.offsetWidth;
             modal.style.opacity = '1';
         }
