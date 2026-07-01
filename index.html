@@ -173,13 +173,31 @@
             border: none;
             border-radius: var(--global-radius);
             outline: none;
-            width: 500px;
+            width: var(--search-box-width, 500px);
             max-width: 100%;
+            height: var(--search-box-height, auto);
             background: #F0F0F0;
             box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;
             transition: transform 0.3s ease, color 0.4s ease, padding 0.3s ease;
             color: transparent;
             caret-color: #000000;
+        }
+
+        .settings-radio-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .settings-radio-grid > label {
+            margin-bottom: 0 !important;
+            margin-top: 0 !important;
+        }
+        @media (min-width: 768px) {
+            .settings-radio-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 4px;
+            }
         }
 
         .search-box.has-text {
@@ -513,6 +531,7 @@
                 outline: none;
                 border-radius: var(--global-radius);
                 box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;
+                height: auto;
             }
 
             .search-button {
@@ -1340,6 +1359,8 @@
         .suggestions {
             position: absolute;
             top: 100%;
+            left: 0;
+            width: 100%;
             margin-top: 15px;
             background: #F0F0F0;
             border: none;
@@ -1493,6 +1514,14 @@
         }
 
         .engine-item.active {
+            background-color: #d0d0d0;
+            box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff;
+            color: #333;
+        }
+
+        .engine-name {
+            color: inherit;
+            font-family: 'YouYuan', Arial, sans-serif;
         }
 
         /* KG Grid View - Responsive */
@@ -2178,7 +2207,7 @@
             </svg>
         </button>
         <!-- Dropdown menu -->
-        <div id="dropdownMenu" style="display: none; position: absolute; right: 7px; top: 58px; background: #F0F0F0; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; z-index: 100; overflow: hidden; min-width: 130px; opacity: 0; transform: translateY(-8px) scale(0.95); transition: opacity 0.25s ease, transform 0.25s ease;">
+        <div id="dropdownMenu" style="display: none; position: absolute; right: 7px; top: 58px; background: #F0F0F0; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; z-index: 100; overflow: hidden; min-width: 180px; opacity: 0; transform: translateY(-8px) scale(0.95); transition: opacity 0.25s ease, transform 0.25s ease;">
             <div id="dropdownScanOption" onclick="openScanner(); closeDropdownMenu();" style="display: flex; align-items: center; padding: 12px 18px; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; color: #000; gap: 10px;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
                     <path d="M3 7V5a2 2 0 0 1 2-2h2"></path>
@@ -2189,8 +2218,13 @@
                 </svg>
                 扫一扫
             </div>
-            <div style="height: 1px; background: #e0e0e0; margin: 0 12px;"></div>
-            <div onclick="openFavorites(); setTimeout(() => switchToHotNewsTab(), 100); closeDropdownMenu();" style="display: flex; align-items: center; padding: 12px 18px; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; color: #000; gap: 10px;">
+            <div onclick="openFavorites(); closeDropdownMenu();" style="display: flex; align-items: center; padding: 12px 18px; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; color: #000; gap: 10px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+                收藏
+            </div>
+            <div onclick="openHotNewsFromDropdown(); closeDropdownMenu();" style="display: flex; align-items: center; padding: 12px 18px; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; color: #000; gap: 10px;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
                     <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
                     <polyline points="2 17 12 22 22 17"></polyline>
@@ -2198,7 +2232,13 @@
                 </svg>
                 热点新闻
             </div>
-            <div style="height: 1px; background: #e0e0e0; margin: 0 12px;"></div>
+            <div onclick="openSettingsFromDropdown(); closeDropdownMenu();" style="display: flex; align-items: center; padding: 12px 18px; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; color: #000; gap: 10px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+                设置
+            </div>
             <div id="dropdownEngineOption" onclick="openEngineSelectorFromDropdown(); closeDropdownMenu();" style="display: flex; align-items: center; padding: 12px 18px; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; color: #000; gap: 10px;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
                     <circle cx="12" cy="12" r="10"></circle>
@@ -2206,10 +2246,27 @@
                 </svg>
                 切换搜索引擎
             </div>
+            <div style="padding: 10px 18px; font-family: 'YouYuan', Arial, sans-serif; font-size: 13px; color: #000;">
+                <div style="margin-bottom: 6px; font-size: 14px;">搜索框网址访问</div>
+                <div style="display: flex; gap: 12px;">
+                    <label style="display: flex; align-items: center; gap: 4px; cursor: pointer; font-size: 13px; color: #000;">
+                        <input type="radio" name="urlAccessMode" value="always" onchange="setUrlAccessMode('always')" style="cursor: pointer;">
+                        永
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 4px; cursor: pointer; font-size: 13px; color: #000;">
+                        <input type="radio" name="urlAccessMode" value="off" onchange="setUrlAccessMode('off')" style="cursor: pointer;">
+                        关
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 4px; cursor: pointer; font-size: 13px; color: #000;">
+                        <input type="radio" name="urlAccessMode" value="temp" onchange="setUrlAccessMode('temp')" style="cursor: pointer;">
+                        临
+                    </label>
+                </div>
+            </div>
         </div>
         <input type="text" class="search-box" id="searchInput" placeholder=" " autocomplete="off" style="background: #F0F0F0;">
         <div id="engineHintInSearchBox" style="position: absolute; left: 55px; right: auto; top: 50%; transform: translateY(-50%); pointer-events: none; display: flex; justify-content: flex-start; align-items: center; font-family: 'YouYuan', Arial, sans-serif;">
-            <span id="engineHintText" style="font-size: 14px; color: rgba(0, 0, 0, 0.4);">使用百度搜索</span>
+            <span id="engineHintText" style="font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; color: rgba(0, 0, 0, 0.4);">使用百度搜索</span>
         </div>
         <!-- Clear input button (X) -->
         <button id="clearInputBtn" onclick="clearSearchInput()">
@@ -2232,7 +2289,7 @@
     
     <!-- Favorites button at bottom -->
     <div class="bottom-buttons-container" style="display: flex; justify-content: center; gap: 15px; margin-top: 12px; position: fixed; bottom: 20px; left: 0; width: 100%; z-index: 1;">
-        <button class="bottom-btn" id="favBtn" onclick="openFavorites()" style="padding: 8px 16px; border: none; background: transparent; cursor: pointer; font-size: 14px; font-weight: normal; color: #000000; max-width: 100%;">
+        <button class="bottom-btn" id="favBtn" onclick="openFavorites()" style="padding: 8px 16px; border: none; background: transparent; cursor: pointer; font-size: 14px; font-weight: normal; color: #000000; max-width: 100%; font-family: 'YouYuan', Arial, sans-serif;">
             <span id="favBtnText" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90vw; display: inline-block;">古诗</span>
         </button>
     </div>
@@ -2283,24 +2340,24 @@
             </div>
             <!-- 国外搜索引擎 -->
             <div class="engine-item" data-engine="google" data-url="https://www.google.com/search?q=" data-type="foreign">
-                <img class="engine-icon foreign-icon" data-src="https://www.google.com/favicon.ico" alt="谷歌" style="width: 20px; height: 20px; object-fit: contain; display: none;">
-                <span class="engine-name">谷歌</span>
+                <img class="engine-icon foreign-icon" data-src="https://www.google.com/favicon.ico" alt="谷歌" style="width: 20px; height: 20px; object-fit: contain;">
+                谷歌
             </div>
             <div class="engine-item" data-engine="bing" data-url="https://www.bing.com/search?q=" data-type="foreign">
-                <img class="engine-icon foreign-icon" data-src="https://www.bing.com/favicon.ico" alt="必应全球" style="width: 20px; height: 20px; object-fit: contain; display: none;">
-                <span class="engine-name">必应全球</span>
+                <img class="engine-icon foreign-icon" data-src="https://www.bing.com/favicon.ico" alt="必应全球" style="width: 20px; height: 20px; object-fit: contain;">
+                必应全球
             </div>
             <div class="engine-item" data-engine="yahoo" data-url="https://search.yahoo.com/search?p=" data-type="foreign">
-                <img class="engine-icon foreign-icon" data-src="https://www.yahoo.com/favicon.ico" alt="雅虎" style="width: 20px; height: 20px; object-fit: contain; display: none;">
-                <span class="engine-name">雅虎</span>
+                <img class="engine-icon foreign-icon" data-src="https://www.yahoo.com/favicon.ico" alt="雅虎" style="width: 20px; height: 20px; object-fit: contain;">
+                雅虎
             </div>
             <div class="engine-item" data-engine="yandex" data-url="https://yandex.com/search/?text=" data-type="foreign">
-                <img class="engine-icon foreign-icon" data-src="https://yandex.com/favicon.ico" alt="Yandex" style="width: 20px; height: 20px; object-fit: contain; display: none;">
-                <span class="engine-name">Yandex</span>
+                <img class="engine-icon foreign-icon" data-src="https://yandex.com/favicon.ico" alt="Yandex" style="width: 20px; height: 20px; object-fit: contain;">
+                Yandex
             </div>
             <div class="engine-item" data-engine="naver" data-url="https://search.naver.com/search.naver?query=" data-type="foreign">
-                <img class="engine-icon foreign-icon" data-src="https://www.naver.com/favicon.ico" alt="Naver" style="width: 20px; height: 20px; object-fit: contain; display: none;">
-                <span class="engine-name">Naver</span>
+                <img class="engine-icon foreign-icon" data-src="https://www.naver.com/favicon.ico" alt="Naver" style="width: 20px; height: 20px; object-fit: contain;">
+                Naver
             </div>
         </div>
     </div>
@@ -2310,7 +2367,7 @@
     <!-- KG Download Modal -->
     <div id="kgDownloadModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 10001; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease;">
         <div style="background: #F0F0F0; border-radius: var(--global-radius); padding: 20px; width: 90%; max-width: 400px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; position: relative;">
-            <button onclick="closeKgDownloadModal()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; cursor: pointer; font-size: 24px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%;">×</button>
+            <button onclick="closeKgDownloadModal()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; cursor: pointer; font-size: 24px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-family: 'YouYuan', Arial, sans-serif;">×</button>
             <div id="kgDownloadTitle" style="font-family: 'YouYuan'; font-size: 18px; font-weight: bold; margin-bottom: 15px; padding-right: 40px;"></div>
             <div id="kgDownloadLinks" style="display: flex; flex-direction: column; gap: 10px;"></div>
         </div>
@@ -2329,7 +2386,7 @@
                 </button>
                 <button id="engineTabBtn" onclick="switchToEngineTab()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
                     <img id="engineTabIcon" src="index.html" style="width: 24px; height: 24px; object-fit: contain; display: none;" alt="引擎">
-                    <span id="engineTabText" style="font-size: 20px; font-weight: bold;">引</span>
+                    <span id="engineTabText" style="font-family: 'YouYuan', Arial, sans-serif; font-size: 20px; font-weight: bold;">引</span>
                 </button>
                 <button id="hotNewsTabBtn" onclick="switchToHotNewsTab()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;">
@@ -2347,14 +2404,18 @@
             </div>
             
             <!-- Close button (right side, same line as tabs) -->
-            <div class="modal-close-btn" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #000000; font-size: 30px; cursor: pointer; z-index: 10001;" onclick="closeFavorites()">×</div>
+            <div class="modal-close-btn" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #000000; font-size: 30px; cursor: pointer; z-index: 10001; font-family: 'YouYuan', Arial, sans-serif;" onclick="closeFavorites()">×</div>
         </div>
         
         <!-- Favorites Content -->
         <div id="favoritesContent" style="display: block;">
             <div class="favorites-header" style="padding: 20px 20px 0 20px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
                 <input type="text" id="favSearchInput" placeholder="搜索收藏网页..." class="fav-search-input" style="flex: 1; min-width: 150px; padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; font-size: 14px; outline: none; background: #F0F0F0; font-family: 'YouYuan', Arial, sans-serif;">
-                <div style="display: flex; gap: 8px;">
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <label class="toggle-switch" title="显示网页图标">
+                        <input type="checkbox" id="showFavIconsToggle" checked onchange="localStorage.setItem('showFavIcons', this.checked); renderFavorites(document.getElementById('favSearchInput').value); if(typeof renderFolderItems === 'function' && currentFolderId) renderFolderItems(currentFolderId, document.getElementById('folderSearchInput')?.value || '');">
+                        <span class="toggle-slider"></span>
+                    </label>
                     <button id="createFolderBtn" class="fav-add-btn" style="padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-weight: bold; white-space: nowrap; font-family: 'YouYuan', Arial, sans-serif; display: flex; align-items: center; gap: 5px;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
                             <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
@@ -2514,44 +2575,44 @@
                     </div>
                     <!-- 国外搜索引擎 -->
                     <div class="engine-item" data-engine="google" data-url="https://www.google.com/search?q=" data-type="foreign">
-                        <img class="engine-icon foreign-icon" data-src="https://www.google.com/favicon.ico" alt="谷歌" style="width: 20px; height: 20px; object-fit: contain; display: none;">
-                        <span class="engine-name">谷歌</span>
+                        <img class="engine-icon foreign-icon" data-src="https://www.google.com/favicon.ico" alt="谷歌" style="width: 20px; height: 20px; object-fit: contain;">
+                        谷歌
                     </div>
                     <div class="engine-item" data-engine="bingglobal" data-url="https://www.bing.com/search?q=" data-type="foreign">
-                        <img class="engine-icon foreign-icon" data-src="https://www.bing.com/favicon.ico" alt="必应全球" style="width: 20px; height: 20px; object-fit: contain; display: none;">
-                        <span class="engine-name">必应全球</span>
+                        <img class="engine-icon foreign-icon" data-src="https://www.bing.com/favicon.ico" alt="必应全球" style="width: 20px; height: 20px; object-fit: contain;">
+                        必应全球
                     </div>
                     <div class="engine-item" data-engine="yahoo" data-url="https://search.yahoo.com/search?p=" data-type="foreign">
-                        <img class="engine-icon foreign-icon" data-src="https://www.yahoo.com/favicon.ico" alt="雅虎" style="width: 20px; height: 20px; object-fit: contain; display: none;">
-                        <span class="engine-name">雅虎</span>
+                        <img class="engine-icon foreign-icon" data-src="https://www.yahoo.com/favicon.ico" alt="雅虎" style="width: 20px; height: 20px; object-fit: contain;">
+                        雅虎
                     </div>
                     <div class="engine-item" data-engine="yandex" data-url="https://yandex.com/search/?text=" data-type="foreign">
-                        <img class="engine-icon foreign-icon" data-src="https://yandex.com/favicon.ico" alt="Yandex" style="width: 20px; height: 20px; object-fit: contain; display: none;">
-                        <span class="engine-name">Yandex</span>
+                        <img class="engine-icon foreign-icon" data-src="https://yandex.com/favicon.ico" alt="Yandex" style="width: 20px; height: 20px; object-fit: contain;">
+                        Yandex
                     </div>
                     <div class="engine-item" data-engine="naver" data-url="https://search.naver.com/search.naver?query=" data-type="foreign">
-                        <img class="engine-icon foreign-icon" data-src="https://www.naver.com/favicon.ico" alt="Naver" style="width: 20px; height: 20px; object-fit: contain; display: none;">
-                        <span class="engine-name">Naver</span>
+                        <img class="engine-icon foreign-icon" data-src="https://www.naver.com/favicon.ico" alt="Naver" style="width: 20px; height: 20px; object-fit: contain;">
+                        Naver
                     </div>
                     <div class="engine-item" data-engine="duckduckgo" data-url="https://duckduckgo.com/?q=" data-type="foreign">
-                        <img class="engine-icon foreign-icon" data-src="https://duckduckgo.com/favicon.ico" alt="DuckDuckGo" style="width: 20px; height: 20px; object-fit: contain; display: none;">
-                        <span class="engine-name">DuckDuckGo</span>
+                        <img class="engine-icon foreign-icon" data-src="https://duckduckgo.com/favicon.ico" alt="DuckDuckGo" style="width: 20px; height: 20px; object-fit: contain;">
+                        DuckDuckGo
                     </div>
                     <div class="engine-item" data-engine="ecosia" data-url="https://www.ecosia.org/search?q=" data-type="foreign">
-                        <img class="engine-icon foreign-icon" data-src="https://www.ecosia.org/favicon.ico" alt="Ecosia" style="width: 20px; height: 20px; object-fit: contain; display: none;">
-                        <span class="engine-name">Ecosia</span>
+                        <img class="engine-icon foreign-icon" data-src="https://www.ecosia.org/favicon.ico" alt="Ecosia" style="width: 20px; height: 20px; object-fit: contain;">
+                        Ecosia
                     </div>
                     <div class="engine-item" data-engine="qwant" data-url="https://www.qwant.com/?q=" data-type="foreign">
-                        <img class="engine-icon foreign-icon" data-src="https://www.qwant.com/favicon.ico" alt="Qwant" style="width: 20px; height: 20px; object-fit: contain; display: none;">
-                        <span class="engine-name">Qwant</span>
+                        <img class="engine-icon foreign-icon" data-src="https://www.qwant.com/favicon.ico" alt="Qwant" style="width: 20px; height: 20px; object-fit: contain;">
+                        Qwant
                     </div>
                     <div class="engine-item" data-engine="startpage" data-url="https://www.startpage.com/sp/search?query=" data-type="foreign">
-                        <img class="engine-icon foreign-icon" data-src="https://www.startpage.com/favicon.ico" alt="Startpage" style="width: 20px; height: 20px; object-fit: contain; display: none;">
-                        <span class="engine-name">Startpage</span>
+                        <img class="engine-icon foreign-icon" data-src="https://www.startpage.com/favicon.ico" alt="Startpage" style="width: 20px; height: 20px; object-fit: contain;">
+                        Startpage
                     </div>
                     <div class="engine-item" data-engine="brave" data-url="https://search.brave.com/search?q=" data-type="foreign">
-                        <img class="engine-icon foreign-icon" data-src="https://search.brave.com/favicon.ico" alt="Brave" style="width: 20px; height: 20px; object-fit: contain; display: none;">
-                        <span class="engine-name">Brave</span>
+                        <img class="engine-icon foreign-icon" data-src="https://search.brave.com/favicon.ico" alt="Brave" style="width: 20px; height: 20px; object-fit: contain;">
+                        Brave
                     </div>
                 </div>
             </div>
@@ -2645,7 +2706,7 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px; vertical-align: middle;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                         显示左上角 千克之梦 标识：
                     </label>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <div class="settings-radio-grid">
                         <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 13px; cursor: pointer; gap: 4px;">
                             <label class="radio-switch"><input type="radio" name="kgLogoMode" value="show" checked onchange="setKgLogoMode('show')"><span class="radio-slider"></span></label>
                             打开
@@ -2666,13 +2727,13 @@
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px; vertical-align: middle;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                         主题模式：
                     </label>
-                    <div style="margin-bottom: 10px;">
-                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
+                    <div class="settings-radio-grid" style="margin-bottom: 10px;">
+                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
                             <label class="radio-switch"><input type="radio" name="themeMode" value="light" checked onchange="setThemeMode('light')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
                             浅色模式
                         </label>
-                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
+                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
                             <label class="radio-switch"><input type="radio" name="themeMode" value="dark" onchange="setThemeMode('dark')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                             深色模式
@@ -2690,47 +2751,45 @@
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px; vertical-align: middle;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                         背景选择：
                     </label>
-                    <div style="margin-bottom: 10px;">
-                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
+                    <div class="settings-radio-grid" style="margin-bottom: 10px;">
+                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
                             <label class="radio-switch"><input type="radio" name="bgMode" value="none" checked onchange="setBgMode('none')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="3" x2="21" y2="21"></line></svg>
                             无
                         </label>
-                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
+                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
                             <label class="radio-switch"><input type="radio" name="bgMode" value="solid" onchange="setBgMode('solid')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle></svg>
                             纯色
                         </label>
-                        <div id="customColorPicker" style="display: none; margin-left: 30px; margin-bottom: 10px;">
-                            <!-- 圆形调色盘 -->
-                            <div id="colorWheel" style="width: 200px; height: 200px; border-radius: 50%; background: conic-gradient(red, yellow, lime, cyan, blue, magenta, red); position: relative; cursor: crosshair; margin: 10px auto;">
-                                <div id="colorWheelCursor" style="position: absolute; width: 12px; height: 12px; border: 2px solid white; border-radius: 50%; box-shadow: 0 0 4px rgba(0,0,0,0.5); pointer-events: none; transform: translate(-50%, -50%);"></div>
-                            </div>
-                            <!-- 亮度/暗度调节条 -->
-                            <div style="margin: 10px 0;">
-                                <label style="font-family: 'YouYuan'; font-size: 12px;">亮度：</label>
-                                <input type="range" id="brightnessSlider" min="0" max="100" value="50" style="width: 150px; vertical-align: middle;">
-                            </div>
-                            <!-- 颜色代码显示和输入 -->
-                            <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
-                                <div id="colorPreview" style="width: 30px; height: 30px; border-radius: 50%; border: 2px solid #ccc;"></div>
-                                <span style="font-family: 'YouYuan'; font-size: 14px;">#</span>
-                                <input type="text" id="colorCodeInput" value="F0F0F0" maxlength="6" style="width: 80px; padding: 4px 8px; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: inset 3px 3px 6px #cccccc, inset -3px -3px 6px #ffffff; font-family: monospace; font-size: 14px; text-transform: uppercase;">
-                            </div>
+                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
+                            <label class="radio-switch"><input type="radio" name="bgMode" value="wallpaper" onchange="setBgMode('wallpaper')"><span class="radio-slider"></span></label>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                            必应壁纸
+                        </label>
+                    </div>
+                    <div id="customColorPicker" style="display: none; margin-left: 30px; margin-bottom: 10px;">
+                        <!-- 圆形调色盘 -->
+                        <div id="colorWheel" style="width: 200px; height: 200px; border-radius: 50%; background: conic-gradient(red, yellow, lime, cyan, blue, magenta, red); position: relative; cursor: crosshair; margin: 10px auto;">
+                            <div id="colorWheelCursor" style="position: absolute; width: 12px; height: 12px; border: 2px solid white; border-radius: 50%; box-shadow: 0 0 4px rgba(0,0,0,0.5); pointer-events: none; transform: translate(-50%, -50%);"></div>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-                            <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-                                <label class="radio-switch"><input type="radio" name="bgMode" value="wallpaper" onchange="setBgMode('wallpaper')"><span class="radio-slider"></span></label>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                                必应壁纸
-                            </label>
-                            <div id="wallpaperControls" style="display: none; margin-left: 10px; align-items: center; gap: 10px; flex-wrap: wrap;">
-                                <label style="font-family: 'YouYuan'; font-size: 12px;">模糊：</label>
-                                <input type="range" id="wallpaperBlurSlider" min="0" max="20" value="0" style="width: 100px; vertical-align: middle;" oninput="updateWallpaperBlur(this.value)">
-                                <label style="font-family: 'YouYuan'; font-size: 12px; margin-left: 5px;">亮度：</label>
-                                <input type="range" id="wallpaperBrightnessSlider" min="20" max="100" value="100" style="width: 100px; vertical-align: middle;" oninput="updateWallpaperBrightness(this.value)">
-                            </div>
+                        <!-- 亮度/暗度调节条 -->
+                        <div style="margin: 10px 0;">
+                            <label style="font-family: 'YouYuan'; font-size: 12px;">亮度：</label>
+                            <input type="range" id="brightnessSlider" min="0" max="100" value="50" style="width: 150px; vertical-align: middle;">
                         </div>
+                        <!-- 颜色代码显示和输入 -->
+                        <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
+                            <div id="colorPreview" style="width: 30px; height: 30px; border-radius: 50%; border: 2px solid #ccc;"></div>
+                            <span style="font-family: 'YouYuan'; font-size: 14px;">#</span>
+                            <input type="text" id="colorCodeInput" value="F0F0F0" maxlength="6" style="width: 80px; padding: 4px 8px; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: inset 3px 3px 6px #cccccc, inset -3px -3px 6px #ffffff; font-family: monospace; font-size: 14px; text-transform: uppercase;">
+                        </div>
+                    </div>
+                    <div id="wallpaperControls" style="display: none; margin-left: 10px; align-items: center; gap: 10px; flex-wrap: wrap;">
+                        <label style="font-family: 'YouYuan'; font-size: 12px;">模糊：</label>
+                        <input type="range" id="wallpaperBlurSlider" min="0" max="20" value="0" style="width: 100px; vertical-align: middle;" oninput="updateWallpaperBlur(this.value)">
+                        <label style="font-family: 'YouYuan'; font-size: 12px; margin-left: 5px;">亮度：</label>
+                        <input type="range" id="wallpaperBrightnessSlider" min="20" max="100" value="100" style="width: 100px; vertical-align: middle;" oninput="updateWallpaperBrightness(this.value)">
                     </div>
                 </div>
 
@@ -2739,23 +2798,23 @@
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px; vertical-align: middle;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
                         按钮样式：
                     </label>
-                    <div style="margin-bottom: 10px;">
-                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
+                    <div class="settings-radio-grid" style="margin-bottom: 10px;">
+                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
                             <label class="radio-switch"><input type="radio" name="buttonStyle" value="neumorphism" checked onchange="setButtonStyle('neumorphism')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
                             拟物模式
                         </label>
-                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
+                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
 <label class="radio-switch"><input type="radio" name="buttonStyle" value="outline" onchange="setButtonStyle('outline')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
                             线框模式
                         </label>
-                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
+                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
 <label class="radio-switch"><input type="radio" name="buttonStyle" value="glass" onchange="setButtonStyle('glass')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
                             液态玻璃
                         </label>
-                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-bottom: 8px;">
+                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
 <label class="radio-switch"><input type="radio" name="buttonStyle" value="rounded" onchange="setButtonStyle('rounded')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><rect x="3" y="3" width="18" height="18" rx="6" ry="6"></rect></svg>
                             普通圆角
@@ -2765,7 +2824,7 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 0 20" fill="currentColor" opacity="0.3"></path></svg>
                             白色透明
                         </label>
-                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer; margin-top: 8px;">
+                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
 <label class="radio-switch"><input type="radio" name="buttonStyle" value="elder" onchange="setButtonStyle('elder')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                             老年模式（简化界面，去除所有特效）
@@ -3000,6 +3059,35 @@
                         <span style="font-family: 'YouYuan'; font-size: 12px; color: #666;">圆</span>
                     </div>
                 </div>
+
+                <div style="margin-bottom: 15px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                        <label class="toggle-switch"><input type="checkbox" id="searchBoxSizeToggle" onchange="toggleSearchBoxSize(this.checked)"><span class="toggle-slider"></span></label>
+                        <span style="font-family: 'YouYuan'; font-size: 14px;">自定义搜索框尺寸</span>
+                    </div>
+                </div>
+                <div id="searchBoxWidthWrap" style="margin-bottom: 15px; opacity: 0.5; pointer-events: none;">
+                    <label style="display: block; font-family: 'YouYuan'; font-size: 14px; margin-bottom: 8px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px; vertical-align: middle;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="12" x2="21" y2="12"></line></svg>
+                        搜索框宽度：
+                    </label>
+                    <div style="display: flex; align-items: center; gap: 10px; padding: 10px 15px; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0;">
+                        <span style="font-family: 'YouYuan'; font-size: 12px; color: #666;">窄</span>
+                        <input type="range" id="searchBoxWidthSlider" min="50" max="100" value="100" oninput="updateSearchBoxWidth(this.value)" style="flex: 1; cursor: pointer;" disabled>
+                        <span style="font-family: 'YouYuan'; font-size: 12px; color: #666;">宽</span>
+                    </div>
+                </div>
+                <div id="searchBoxHeightWrap" style="margin-bottom: 15px; opacity: 0.5; pointer-events: none;">
+                    <label style="display: block; font-family: 'YouYuan'; font-size: 14px; margin-bottom: 8px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px; vertical-align: middle;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="3" x2="12" y2="21"></line></svg>
+                        搜索框高度：
+                    </label>
+                    <div style="display: flex; align-items: center; gap: 10px; padding: 10px 15px; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0;">
+                        <span style="font-family: 'YouYuan'; font-size: 12px; color: #666;">矮</span>
+                        <input type="range" id="searchBoxHeightSlider" min="30" max="80" value="50" oninput="updateSearchBoxHeight(this.value)" style="flex: 1; cursor: pointer;" disabled>
+                        <span style="font-family: 'YouYuan'; font-size: 12px; color: #666;">高</span>
+                    </div>
+                </div>
             </div>
 
             <!-- 高级设置 -->
@@ -3071,7 +3159,7 @@
                 
                 <div style="font-family: 'YouYuan'; font-size: 14px; line-height: 1.8;">
                     <p><strong>产品名称：</strong>千克之梦 (HelloKG)</p>
-                    <p><strong>版本号：</strong>v3.0.0</p>
+                    <p><strong>版本号：</strong>v2.1.0</p>
                     <p><strong>联系方式：</strong></p>
                     <ul style="margin: 10px 0; padding-left: 20px;">
                         <li>抖音：42187852565</li>
@@ -3515,6 +3603,29 @@
             switchToEngineTab();
         }
         
+        function openHotNewsFromDropdown() {
+            showModalWithFade('favoritesModal');
+            switchToHotNewsTab();
+        }
+        
+        function openSettingsFromDropdown() {
+            showModalWithFade('favoritesModal');
+            switchToSettingsTab();
+        }
+        
+        function setUrlAccessMode(mode) {
+            localStorage.setItem('searchBoxUrlAccess', mode);
+            updateUrlAccessRadio();
+        }
+        
+        function updateUrlAccessRadio() {
+            const mode = localStorage.getItem('searchBoxUrlAccess') || 'always';
+            const radios = document.querySelectorAll('input[name="urlAccessMode"]');
+            radios.forEach(function(r) {
+                r.checked = (r.value === mode);
+            });
+        }
+        
         // Dropdown menu button click
         document.addEventListener('DOMContentLoaded', function() {
             // Restore "disable all animations" setting
@@ -3527,6 +3638,16 @@
             if (localStorage.getItem('enableLaunchAnim') === 'false') {
                 const enableLaunchAnimCb = document.getElementById('enableLaunchAnim');
                 if (enableLaunchAnimCb) enableLaunchAnimCb.checked = false;
+            }
+            // Restore search box URL access mode radio buttons
+            updateUrlAccessRadio();
+            // Restore search box size
+            applySavedSearchBoxSize();
+            // Restore show fav icons setting
+            const showFavIcons = localStorage.getItem('showFavIcons');
+            if (showFavIcons !== null) {
+                const toggle = document.getElementById('showFavIconsToggle');
+                if (toggle) toggle.checked = showFavIcons === 'true';
             }
 
             const dropdownBtn = document.getElementById('dropdownMenuBtn');
@@ -3554,7 +3675,7 @@
                     const keyword = e.target.value.trim().toLowerCase();
                     const apps = kgAppGrid.querySelectorAll('.kg-app-item');
                     apps.forEach(function(app) {
-                        const appName = app.querySelector('span')?.textContent?.toLowerCase() || '';
+                        const appName = app.querySelector('span:last-child')?.textContent?.toLowerCase() || '';
                         if (!keyword || appName.includes(keyword)) {
                             app.style.display = 'flex';
                         } else {
@@ -3801,12 +3922,23 @@
                 query = query.substring(1);
             }
             
-            // Check if it's a URL using browser-standard rules
-            const isUrl = checkIfUrl(query);
+            // Check URL access mode
+            const urlAccessMode = localStorage.getItem('searchBoxUrlAccess') || 'always';
+            let shouldTreatAsUrl = false;
             
-            if (isUrl) {
+            if (urlAccessMode !== 'off') {
+                // Check if it's a URL using browser-standard rules
+                shouldTreatAsUrl = checkIfUrl(query);
+            }
+            
+            if (shouldTreatAsUrl) {
                 // Open URL directly without adding https
                 window.open(query, '_blank');
+                // If temp mode, switch back to off after accessing
+                if (urlAccessMode === 'temp') {
+                    localStorage.setItem('searchBoxUrlAccess', 'off');
+                    updateUrlAccessRadio();
+                }
             } else {
                 // Use current search engine for normal queries
                 window.open(`${currentEngineUrl}${encodeURIComponent(query)}`, '_blank');
@@ -3815,32 +3947,10 @@
         
         // Check if input is a URL using browser-standard rules
         function checkIfUrl(input) {
-            // Rule 1: Contains protocol header -> 100% URL
-            if (input.startsWith('http://') || input.startsWith('https://') || 
-                input.startsWith('ftp://') || input.startsWith('file://')) {
+            // Only treat as URL if starts with ... (user explicitly wants to visit URL)
+            if (input.startsWith('...')) {
                 return true;
             }
-            
-            // Rule 2: Is valid IP address (IPv4)
-            const ipPattern = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
-            if (ipPattern.test(input)) {
-                return true;
-            }
-            
-            // Rule 3: Looks like a domain (contains dot, has valid domain structure)
-            // Valid domain: xxx.xxx format, no spaces, no Chinese characters
-            const domainPattern = /^[a-zA-Z0-9_-]+\.[a-zA-Z0-9_.-]+$/;
-            if (domainPattern.test(input) && !input.includes(' ')) {
-                return true;
-            }
-            
-            // Rule 4: Is localhost or common internal domain
-            const internalDomains = ['localhost', 'router', 'home'];
-            if (internalDomains.includes(input.toLowerCase())) {
-                return true;
-            }
-            
-            // Otherwise -> search keyword
             return false;
         }
 
@@ -3928,18 +4038,7 @@
             suggestionsList.classList.add('visible');
             
             // Match search box width and position exactly
-            const searchBox = document.getElementById('searchInput');
-            const rect = searchBox.getBoundingClientRect();
-            const container = document.querySelector('.search-container');
-            const containerRect = container.getBoundingClientRect();
-            
-            // Calculate position relative to container
-            const leftPos = rect.left - containerRect.left;
-            const rightPos = containerRect.right - rect.right;
-            
-            suggestionsList.style.width = rect.width + 'px';
-            suggestionsList.style.left = leftPos + 'px';
-            suggestionsList.style.right = 'auto';
+            // Suggestions width is now controlled by CSS (width: 100%)
         };
 
         // Hide suggestions
@@ -4173,19 +4272,7 @@
 
         // Update suggestions width on window resize (for mobile)
         window.addEventListener('resize', function() {
-            if (suggestionsList.classList.contains('visible')) {
-                const searchBox = document.getElementById('searchInput');
-                const rect = searchBox.getBoundingClientRect();
-                const container = document.querySelector('.search-container');
-                const containerRect = container.getBoundingClientRect();
-                
-                // Calculate position relative to container
-                const leftPos = rect.left - containerRect.left;
-                
-                suggestionsList.style.width = rect.width + 'px';
-                suggestionsList.style.left = leftPos + 'px';
-                suggestionsList.style.right = 'auto';
-            }
+            // Suggestions width is now controlled by CSS (width: 100%)
             // Also update engine selector width
             const engineSelectorResize = document.querySelector('.search-engine-selector');
             if (engineSelectorResize && engineSelectorResize.style.display !== 'none') {
@@ -4301,7 +4388,21 @@
                 'quark': 'https://quark.sm.cn/favicon.ico',
                 'zhongguo': 'https://www.chinaso.com/favicon.ico',
                 'jike': 'https://www.jike.com/favicon.ico',
-                'wechat': 'https://weixin.sogou.com/favicon.ico'
+                'wechat': 'https://weixin.sogou.com/favicon.ico',
+                'youdao': 'https://www.youdao.com/favicon.ico',
+                'soso': 'https://www.soso.com/favicon.ico',
+                'wuzhui': 'https://www.wuzhuiso.com/favicon.ico',
+                'baiduxueshu': 'https://xueshu.baidu.com/favicon.ico',
+                'google': 'https://www.google.com/favicon.ico',
+                'bingglobal': 'https://www.bing.com/favicon.ico',
+                'yahoo': 'https://www.yahoo.com/favicon.ico',
+                'yandex': 'https://yandex.com/favicon.ico',
+                'naver': 'https://www.naver.com/favicon.ico',
+                'duckduckgo': 'https://duckduckgo.com/favicon.ico',
+                'ecosia': 'https://www.ecosia.org/favicon.ico',
+                'qwant': 'https://www.qwant.com/favicon.ico',
+                'startpage': 'https://www.startpage.com/favicon.ico',
+                'brave': 'https://search.brave.com/favicon.ico'
             };
             
             const faviconUrl = engineFavicons[engineName];
@@ -4557,7 +4658,12 @@
                     borderRadius: localStorage.getItem('borderRadius') || '34',
                     loadForeignIcons: localStorage.getItem('loadForeignIcons') === 'true',
                     showKgLogo: localStorage.getItem('showKgLogo') !== 'false',
-                    kgLogoMode: localStorage.getItem('kgLogoMode') || 'show'
+                    kgLogoMode: localStorage.getItem('kgLogoMode') || 'show',
+                    showFavIcons: localStorage.getItem('showFavIcons') !== 'false',
+                    searchBoxUrlAccess: localStorage.getItem('searchBoxUrlAccess') || 'always',
+                    searchBoxWidth: localStorage.getItem('searchBoxWidth') || '100',
+                    searchBoxHeight: localStorage.getItem('searchBoxHeight') || '50',
+                    searchBoxSizeEnabled: localStorage.getItem('searchBoxSizeEnabled') === 'true'
                 },
                 apiUrls: apiUrls,
                 searchEngine: localStorage.getItem('searchEngine') || 'https://cn.bing.com/search?q='
@@ -4787,6 +4893,31 @@
                                 });
                             }
                         }
+                        
+                        // Restore show fav icons
+                        if (allData.settings.showFavIcons !== undefined) {
+                            localStorage.setItem('showFavIcons', allData.settings.showFavIcons);
+                            const toggle = document.getElementById('showFavIconsToggle');
+                            if (toggle) toggle.checked = allData.settings.showFavIcons;
+                        }
+                        
+                        // Restore search box URL access
+                        if (allData.settings.searchBoxUrlAccess !== undefined) {
+                            localStorage.setItem('searchBoxUrlAccess', allData.settings.searchBoxUrlAccess);
+                            updateUrlAccessRadio();
+                        }
+                        
+                        // Restore search box size
+                        if (allData.settings.searchBoxWidth !== undefined) {
+                            localStorage.setItem('searchBoxWidth', allData.settings.searchBoxWidth);
+                        }
+                        if (allData.settings.searchBoxHeight !== undefined) {
+                            localStorage.setItem('searchBoxHeight', allData.settings.searchBoxHeight);
+                        }
+                        if (allData.settings.searchBoxSizeEnabled !== undefined) {
+                            localStorage.setItem('searchBoxSizeEnabled', allData.settings.searchBoxSizeEnabled);
+                        }
+                        applySavedSearchBoxSize();
                     }
                     
                     if (allData.searchEngine) {
@@ -4845,7 +4976,7 @@
                     localStorage.removeItem('cachedSuggestions');
                     localStorage.removeItem('cachedHotNews');
                 } else if (cb.value === 'settings') {
-                    ['themeMode','themeColor','buttonStyle','bgMode','bgColor','showTimeDisplay','showPoem','showScanner','highContrastMode','borderRadius','debugMode','demoMode','loadForeignIcons','showKgLogo','kgLogoMode','cleanSearchMode','cleanSearchKeyword','privacyMode','showFavCreateTime','autoSortFavorites','noFavIcons','saveSearchHistory','showSearchSuggestions','cacheSuggestions','cacheDuration','preloadHotNews'].forEach(key => localStorage.removeItem(key));
+                    ['themeMode','themeColor','buttonStyle','bgMode','bgColor','showTimeDisplay','showPoem','showScanner','highContrastMode','borderRadius','debugMode','demoMode','loadForeignIcons','showKgLogo','kgLogoMode','cleanSearchMode','cleanSearchKeyword','privacyMode','showFavCreateTime','autoSortFavorites','noFavIcons','saveSearchHistory','showSearchSuggestions','cacheSuggestions','cacheDuration','preloadHotNews','showFavIcons','searchBoxUrlAccess','searchBoxWidth','searchBoxHeight','searchBoxSizeEnabled'].forEach(key => localStorage.removeItem(key));
                     location.reload();
                 } else if (cb.value === 'apiUrls') {
                     localStorage.removeItem('apiUrls');
@@ -5112,6 +5243,85 @@
             }
         }
 
+        // Search box width slider
+        function updateSearchBoxWidth(value) {
+            localStorage.setItem('searchBoxWidth', value);
+            settingsModified = true;
+            const toggle = document.getElementById('searchBoxSizeToggle');
+            if (toggle && toggle.checked) {
+                const searchBox = document.querySelector('.search-box');
+                if (searchBox) {
+                    searchBox.style.width = 'calc(' + value + '% - 40px)';
+                    searchBox.style.maxWidth = 'calc(100vw - 40px)';
+                }
+            }
+        }
+
+        // Search box height slider
+        function updateSearchBoxHeight(value) {
+            localStorage.setItem('searchBoxHeight', value);
+            settingsModified = true;
+            const toggle = document.getElementById('searchBoxSizeToggle');
+            if (toggle && toggle.checked) {
+                const searchBox = document.querySelector('.search-box');
+                if (searchBox) {
+                    searchBox.style.height = value + 'px';
+                }
+            }
+        }
+
+        function toggleSearchBoxSize(enabled) {
+            localStorage.setItem('searchBoxSizeEnabled', enabled);
+            settingsModified = true;
+            const widthWrap = document.getElementById('searchBoxWidthWrap');
+            const heightWrap = document.getElementById('searchBoxHeightWrap');
+            const widthSlider = document.getElementById('searchBoxWidthSlider');
+            const heightSlider = document.getElementById('searchBoxHeightSlider');
+            const searchBox = document.querySelector('.search-box');
+
+            if (enabled) {
+                if (widthWrap) { widthWrap.style.opacity = '1'; widthWrap.style.pointerEvents = 'auto'; }
+                if (heightWrap) { heightWrap.style.opacity = '1'; heightWrap.style.pointerEvents = 'auto'; }
+                if (widthSlider) widthSlider.disabled = false;
+                if (heightSlider) heightSlider.disabled = false;
+                const w = localStorage.getItem('searchBoxWidth') || '100';
+                const h = localStorage.getItem('searchBoxHeight') || '50';
+                if (widthSlider) widthSlider.value = w;
+                if (heightSlider) heightSlider.value = h;
+                if (searchBox) {
+                    searchBox.style.width = 'calc(' + w + '% - 40px)';
+                    searchBox.style.maxWidth = 'calc(100vw - 40px)';
+                    searchBox.style.height = h + 'px';
+                }
+            } else {
+                if (widthWrap) { widthWrap.style.opacity = '0.5'; widthWrap.style.pointerEvents = 'none'; }
+                if (heightWrap) { heightWrap.style.opacity = '0.5'; heightWrap.style.pointerEvents = 'none'; }
+                if (widthSlider) widthSlider.disabled = true;
+                if (heightSlider) heightSlider.disabled = true;
+                if (searchBox) {
+                    searchBox.style.width = '';
+                    searchBox.style.maxWidth = '';
+                    searchBox.style.height = '';
+                }
+            }
+        }
+
+        // Apply saved search box size on page load
+        function applySavedSearchBoxSize() {
+            const width = localStorage.getItem('searchBoxWidth') || '100';
+            const height = localStorage.getItem('searchBoxHeight') || '50';
+            const enabled = localStorage.getItem('searchBoxSizeEnabled') === 'true';
+            const toggle = document.getElementById('searchBoxSizeToggle');
+            if (toggle) toggle.checked = enabled;
+            const widthSlider = document.getElementById('searchBoxWidthSlider');
+            const heightSlider = document.getElementById('searchBoxHeightSlider');
+            if (widthSlider) widthSlider.value = width;
+            if (heightSlider) heightSlider.value = height;
+            if (enabled) {
+                toggleSearchBoxSize(true);
+            }
+        }
+
         // Foreign icons toggle
         function toggleForeignIcons() {
             const checkbox = document.getElementById('loadForeignIconsToggle');
@@ -5123,12 +5333,15 @@
             const foreignIcons = document.querySelectorAll('.foreign-icon');
             foreignIcons.forEach(icon => {
                 if (loadIcons) {
-                    icon.src = icon.getAttribute('data-src');
+                    // Load actual favicon from data-src
+                    const src = icon.getAttribute('data-src');
+                    if (src && icon.src !== src) {
+                        icon.src = src;
+                    }
                     icon.style.display = 'inline-block';
-                    icon.nextElementSibling.style.display = 'none';
                 } else {
+                    // Hide icon, show text only (same as before)
                     icon.style.display = 'none';
-                    icon.nextElementSibling.style.display = 'inline';
                 }
             });
         }
@@ -5144,20 +5357,17 @@
             if (shouldLoad) {
                 if (checkbox) checkbox.checked = true;
                 localStorage.setItem('loadForeignIcons', 'true');
-                // Load icons
                 const foreignIcons = document.querySelectorAll('.foreign-icon');
                 foreignIcons.forEach(icon => {
-                    icon.src = icon.getAttribute('data-src');
+                    const src = icon.getAttribute('data-src');
+                    if (src) icon.src = src;
                     icon.style.display = 'inline-block';
-                    if (icon.nextElementSibling) icon.nextElementSibling.style.display = 'none';
                 });
             } else {
                 if (checkbox) checkbox.checked = false;
-                // Hide icons, show names
                 const foreignIcons = document.querySelectorAll('.foreign-icon');
                 foreignIcons.forEach(icon => {
                     icon.style.display = 'none';
-                    if (icon.nextElementSibling) icon.nextElementSibling.style.display = 'inline';
                 });
             }
         }
@@ -5306,7 +5516,9 @@
             items.forEach((item, index) => {
                 const faviconUrl = getFavicon(item.url);
                 const initials = getInitials(item.name);
-                
+                const color = getUrlColor(item.url);
+                const showFavIcons = document.getElementById('showFavIconsToggle')?.checked !== false;
+
                 html += `<div class="fav-item" onclick="openFavoriteUrl('${item.url.replace(/'/g, "\\'")}', this)">
                     <div class="fav-actions">
                         <button onclick="event.stopPropagation(); editFolderItem(${index})" title="编辑">
@@ -5323,8 +5535,8 @@
                         </button>
                     </div>
                     <div class="fav-icon">
-                        <img src="https://kgdream.github.io/${faviconUrl}" onload="this.style.display='block'; this.nextElementSibling.style.display='none'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" style="display: none;" alt="">
-                        <div class="fav-initial">${initials}</div>
+                        ${showFavIcons && faviconUrl ? `<img src="${faviconUrl}" onload="this.style.display='block'; this.nextElementSibling.style.display='none'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" style="display: none;" alt="">` : ''}
+                        <div class="fav-initial" style="background-color: ${color}; display: ${(!showFavIcons || !faviconUrl) ? 'flex' : 'none'};">${initials}</div>
                     </div>
                     <div class="fav-name">${item.name}</div>
                 </div>`;
@@ -5419,6 +5631,11 @@
             if (localStorage.getItem('noFavIcons') === 'true') {
                 return '';
             }
+            // Check show favicons toggle (default true)
+            const showIcons = document.getElementById('showFavIconsToggle');
+            if (showIcons && !showIcons.checked) {
+                return '';
+            }
             try {
                 const urlObj = new URL(url);
                 return `https://${urlObj.hostname}/favicon.ico`;
@@ -5426,7 +5643,16 @@
                 return '';
             }
         }
-        
+
+        function getUrlColor(url) {
+            let hash = 0;
+            for (let i = 0; i < url.length; i++) {
+                hash = url.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const hue = Math.abs(hash % 360);
+            return `hsl(${hue}, 60%, 45%)`;
+        }
+
         function getInitials(name) {
             if (!name) return '?';
             // Get first character for Chinese or English
@@ -5481,7 +5707,9 @@
                 const originalIndex = favorites.findIndex(f => f.name === fav.name && f.url === fav.url);
                 const faviconUrl = getFavicon(fav.url);
                 const initials = getInitials(fav.name);
-                
+                const color = getUrlColor(fav.url);
+                const showFavIcons = document.getElementById('showFavIconsToggle')?.checked !== false;
+
                 // Format create time if exists and enabled
                 let timeHtml = '';
                 if (showCreateTime && fav.createdAt) {
@@ -5489,7 +5717,7 @@
                     const timeStr = `${date.getMonth() + 1}/${date.getDate()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
                     timeHtml = `<div class="fav-time" style="font-size: 10px; color: #999; margin-top: 2px;">${timeStr}</div>`;
                 }
-                
+
                 const safeUrl = fav.url.replace(/'/g, '\\\'');
                 html += `<div class="fav-item" draggable="false" data-index="${originalIndex}" onclick="openFavoriteUrl('${safeUrl}', this)">
                     <div class="fav-actions">
@@ -5507,8 +5735,8 @@
                         </button>
                     </div>
                     <div class="fav-icon">
-                        <img src="https://kgdream.github.io/${faviconUrl}" onload="this.style.display='block'; this.nextElementSibling.style.display='none'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" style="display: none;" alt="">
-                        <div class="fav-initial">${initials}</div>
+                        ${showFavIcons && faviconUrl ? `<img src="${faviconUrl}" onload="this.style.display='block'; this.nextElementSibling.style.display='none'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" style="display: none;" alt="">` : ''}
+                        <div class="fav-initial" style="background-color: ${color}; display: ${(!showFavIcons || !faviconUrl) ? 'flex' : 'none'};">${initials}</div>
                     </div>
                     <div class="fav-name">${fav.name}</div>
                     ${timeHtml}
@@ -5883,7 +6111,7 @@
 
             // Start expand animation
             requestAnimationFrame(function() {
-                overlay.style.transition = 'top 0.5s cubic-bezier(0.32, 0.72, 0, 1), left 0.5s cubic-bezier(0.32, 0.72, 0, 1), width 0.5s cubic-bezier(0.32, 0.72, 0, 1), height 0.5s cubic-bezier(0.32, 0.72, 0, 1), border-radius 0.4s ease';
+                overlay.style.transition = 'top 1s cubic-bezier(0.32, 0.72, 0, 1), left 1s cubic-bezier(0.32, 0.72, 0, 1), width 1s cubic-bezier(0.32, 0.72, 0, 1), height 1s cubic-bezier(0.32, 0.72, 0, 1), border-radius 0.8s ease';
                 overlay.classList.add('active');
                 overlay.style.top = '0px';
                 overlay.style.left = '0px';
@@ -5892,7 +6120,7 @@
                 overlay.style.borderRadius = '0px';
             });
 
-            // When animation fills full screen (500ms), open URL immediately, then fade out
+            // When animation fills full screen (1000ms), open URL immediately, then fade out
             setTimeout(function() {
                 if (callback) callback();
                 // Then fade out
@@ -5908,7 +6136,7 @@
                     overlay.style.height = '0px';
                     iconWrap.innerHTML = '';
                 }, 300);
-            }, 500);
+            }, 1000);
         }
 
         function launchApp(element, url, bgColor, iconText) {
@@ -7378,7 +7606,7 @@
 
     <div id="drawingCanvas" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 99999;">
         <!-- KG Text in Center -->
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 120px; font-weight: bold; color: #000000; font-family: Arial, sans-serif; pointer-events: none; user-select: none; opacity: 0.1;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 120px; font-weight: bold; color: #000000; font-family: 'YouYuan', Arial, sans-serif; pointer-events: none; user-select: none; opacity: 0.1;">
             kg
         </div>
         
