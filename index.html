@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="千克之梦(HelloKG) - 一款精美的个性化浏览器起始页，集成必应搜索、每日诗词、热点新闻、收藏管理等功能。支持拟物化、玻璃态等多种主题风格，可自定义壁纸、圆角、配色，打造专属搜索主页。">
     <meta name="keywords" content="千克之梦, HelloKG, 搜索主页, 浏览器起始页, 必应搜索, 个性化主页, 拟物化, 新标签页">
-    <title>KgDream-千克之梦-你的搜索网站WAW</title>
+    <title>HelloKG • Start-千克之梦</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <style>
         :root {
@@ -108,6 +108,21 @@
             box-sizing: border-box;
         }
 
+        /* Hide all scrollbars globally, keep scroll functionality */
+        * {
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+        }
+        *::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+
+        #timeDisplay {
+            opacity: 0;
+            transform: scale(0.5);
+            animation: searchBoxEntry 0.8s ease-out 0.2s forwards;
+        }
+
         body {
             background-color: #f0f0f0;
             min-height: 100vh;
@@ -178,9 +193,14 @@
             height: var(--search-box-height, auto);
             background: #F0F0F0;
             box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;
-            transition: transform 0.3s ease, color 0.4s ease, padding 0.3s ease;
+            transition: transform 0.3s ease, color 0.4s ease, padding 0.3s ease, box-shadow 0.3s ease;
             color: transparent;
             caret-color: #000000;
+        }
+
+        .search-box:focus {
+            transform: scale(1.02);
+            box-shadow: 25px 25px 70px #bbbbbb, -25px -25px 70px #ffffff;
         }
 
         .settings-radio-grid {
@@ -299,17 +319,26 @@
 
         /* Search button visibility animation */
         #searchBtn {
-            transition: opacity 0.3s ease, transform 0.3s ease, width 0.3s ease;
+            transition: opacity 0.3s ease, transform 0.3s ease;
             opacity: 0;
             pointer-events: none;
-            width: 0;
-            overflow: hidden;
         }
 
         #searchBtn.visible {
             opacity: 1;
             pointer-events: auto;
-            width: 44px;
+        }
+
+        /* Dropdown button visibility - hidden when search not focused */
+        #dropdownMenuBtn {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #dropdownMenuBtn.visible {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         /* Clear button (X) */
@@ -1263,6 +1292,97 @@
             background: rgba(255, 255, 255, 0.25) !important;
         }
 
+        /* Frosted mode - clean frosted glass like limestart */
+        body[data-button-style="frosted"] button,
+        body[data-button-style="frosted"] input,
+        body[data-button-style="frosted"] select,
+        body[data-button-style="frosted"] .search-box,
+        body[data-button-style="frosted"] .tab-btn,
+        body[data-button-style="frosted"] .modal-content,
+        body[data-button-style="frosted"] .settings-section h3,
+        body[data-button-style="frosted"] .favorite-item,
+        body[data-button-style="frosted"] .kg-content,
+        body[data-button-style="frosted"] .hot-news-container,
+        body[data-button-style="frosted"] .search-hint,
+        body[data-button-style="frosted"] .suggestions,
+        body[data-button-style="frosted"] .search-history,
+        body[data-button-style="frosted"] .engine-item,
+        body[data-button-style="frosted"] #favSearchInput,
+        body[data-button-style="frosted"] #addFavBtn,
+        body[data-button-style="frosted"] #kgSearchInput,
+        body[data-button-style="frosted"] .bottom-btn,
+        body[data-button-style="frosted"] #dropdownMenu,
+        body[data-button-style="frosted"] .modal-close-btn,
+        body[data-button-style="frosted"] .text-result-modal,
+        body[data-button-style="frosted"] .fav-add-btn {
+            box-shadow: none !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            border-radius: var(--global-radius) !important;
+            background: rgba(255, 255, 255, 0.03) !important;
+            backdrop-filter: blur(16px) saturate(140%) !important;
+            -webkit-backdrop-filter: blur(16px) saturate(140%) !important;
+            color: inherit;
+        }
+
+        body[data-button-style="frosted"] button:hover,
+        body[data-button-style="frosted"] .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.08) !important;
+            border-color: rgba(255, 255, 255, 0.25) !important;
+        }
+
+        body[data-button-style="frosted"] .tab-btn.active {
+            background: rgba(255, 255, 255, 0.12) !important;
+            border-color: rgba(255, 255, 255, 0.3) !important;
+        }
+
+        body[data-button-style="frosted"] #favBtn,
+        body[data-button-style="frosted"] #dropdownMenuBtn,
+        body[data-button-style="frosted"] #searchBtn {
+            background: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+            backdrop-filter: none !important;
+        }
+
+        /* Frosted mode in dark theme */
+        body[data-theme="dark"][data-button-style="frosted"] button,
+        body[data-theme="dark"][data-button-style="frosted"] input,
+        body[data-theme="dark"][data-button-style="frosted"] select,
+        body[data-theme="dark"][data-button-style="frosted"] .search-box,
+        body[data-theme="dark"][data-button-style="frosted"] .tab-btn,
+        body[data-theme="dark"][data-button-style="frosted"] .modal-content,
+        body[data-theme="dark"][data-button-style="frosted"] .settings-section h3,
+        body[data-theme="dark"][data-button-style="frosted"] .favorite-item,
+        body[data-theme="dark"][data-button-style="frosted"] .kg-content,
+        body[data-theme="dark"][data-button-style="frosted"] .hot-news-container,
+        body[data-theme="dark"][data-button-style="frosted"] .search-hint,
+        body[data-theme="dark"][data-button-style="frosted"] .suggestions,
+        body[data-theme="dark"][data-button-style="frosted"] .search-history,
+        body[data-theme="dark"][data-button-style="frosted"] .engine-item,
+        body[data-theme="dark"][data-button-style="frosted"] #favSearchInput,
+        body[data-theme="dark"][data-button-style="frosted"] #addFavBtn,
+        body[data-theme="dark"][data-button-style="frosted"] #kgSearchInput,
+        body[data-theme="dark"][data-button-style="frosted"] .bottom-btn,
+        body[data-theme="dark"][data-button-style="frosted"] #dropdownMenu,
+        body[data-theme="dark"][data-button-style="frosted"] .modal-close-btn,
+        body[data-theme="dark"][data-button-style="frosted"] .text-result-modal,
+        body[data-theme="dark"][data-button-style="frosted"] .fav-add-btn {
+            background: rgba(0, 0, 0, 0.03) !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+            box-shadow: none !important;
+        }
+
+        body[data-theme="dark"][data-button-style="frosted"] button:hover,
+        body[data-theme="dark"][data-button-style="frosted"] .tab-btn:hover {
+            background: rgba(0, 0, 0, 0.08) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        body[data-theme="dark"][data-button-style="frosted"] .tab-btn.active {
+            background: rgba(0, 0, 0, 0.35) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+        }
+
         /* Border radius control via CSS variable */
         :root {
             --border-radius: var(--global-radius);
@@ -1273,23 +1393,23 @@
             display: none;
         }
 
-        body[data-bg-mode="wallpaper"] .search-container {
-            margin-top: -50vh;
+        body[data-bg-mode="wallpaper"] #mainContent {
+            margin-top: -25vh;
             transition: margin-top 1s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
         }
 
-        body:not([data-bg-mode="wallpaper"]) .search-container {
+        body[data-bg-mode="wallpaper"] #timeDisplay {
+            color: #ffffff !important;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        body:not([data-bg-mode="wallpaper"]) #mainContent {
             transition: margin-top 0.6s ease;
         }
 
         body[data-bg-mode="wallpaper"] .search-box {
             background: rgba(240, 240, 240, 0.7) !important;
             border: none !important;
-        }
-
-        body[data-bg-mode="wallpaper"] #timeDisplay {
-            color: #ffffff !important;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
 
         body[data-bg-mode="wallpaper"] .poem-content,
@@ -1366,13 +1486,12 @@
             border: none;
             border-radius: var(--global-radius);
             list-style: none;
-            max-height: 160px;
+            max-height: calc(100vh - 220px);
             overflow-y: auto;
             z-index: 99;
             display: none;
             box-sizing: border-box;
             opacity: 0;
-            transform: translateY(-10px);
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
@@ -1387,17 +1506,37 @@
             cursor: pointer;
             font-size: 14px;
             font-family: 'YouYuan', Arial, sans-serif;
-            transition: none;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            opacity: 0;
+            transform: translateX(-10px);
+            animation: suggestionItemIn 0.3s ease forwards;
+        }
+
+        .suggestions.visible li:nth-child(1) { animation-delay: 0.02s; }
+        .suggestions.visible li:nth-child(2) { animation-delay: 0.04s; }
+        .suggestions.visible li:nth-child(3) { animation-delay: 0.06s; }
+        .suggestions.visible li:nth-child(4) { animation-delay: 0.08s; }
+        .suggestions.visible li:nth-child(5) { animation-delay: 0.10s; }
+        .suggestions.visible li:nth-child(6) { animation-delay: 0.12s; }
+        .suggestions.visible li:nth-child(7) { animation-delay: 0.14s; }
+        .suggestions.visible li:nth-child(8) { animation-delay: 0.16s; }
+
+        @keyframes suggestionItemIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to   { opacity: 1; transform: translateX(0); }
         }
 
         .suggestions li:hover {
             background-color: #f0f0f0;
+            transform: translateX(4px);
         }
 
         /* Search history styles */
         .search-history {
             position: absolute;
             top: 100%;
+            left: 0;
+            width: 100%;
             margin-top: 15px;
             background: #F0F0F0;
             border: none;
@@ -1407,8 +1546,8 @@
             z-index: 99;
             display: none;
             box-sizing: border-box;
+            max-height: calc(100vh - 220px);
             opacity: 0;
-            transform: translateY(-10px);
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
@@ -1422,12 +1561,25 @@
             padding: 10px 35px 10px 15px;
             cursor: pointer;
             font-size: 14px;
-            transition: none;
+            transition: background-color 0.2s ease, transform 0.2s ease;
             position: relative;
+            opacity: 0;
+            transform: translateX(-10px);
+            animation: suggestionItemIn 0.3s ease forwards;
         }
+
+        .search-history.visible li:nth-child(1) { animation-delay: 0.02s; }
+        .search-history.visible li:nth-child(2) { animation-delay: 0.04s; }
+        .search-history.visible li:nth-child(3) { animation-delay: 0.06s; }
+        .search-history.visible li:nth-child(4) { animation-delay: 0.08s; }
+        .search-history.visible li:nth-child(5) { animation-delay: 0.10s; }
+        .search-history.visible li:nth-child(6) { animation-delay: 0.12s; }
+        .search-history.visible li:nth-child(7) { animation-delay: 0.14s; }
+        .search-history.visible li:nth-child(8) { animation-delay: 0.16s; }
 
         .search-history li:hover {
             background-color: #f0f0f0;
+            transform: translateX(4px);
         }
 
         .search-history li .delete-btn {
@@ -2199,6 +2351,13 @@
         <span id="kgLogoText" style="font-family: 'YouYuan', Arial, sans-serif; font-size: 18px; font-weight: bold; color: #333; letter-spacing: 2px;">千克之梦</span>
     </button>
 
+    <!-- 主内容区域（时钟+搜索框，壁纸模式下整体偏移） -->
+    <div id="mainContent" style="display: flex; flex-direction: column; align-items: center;">
+    <!-- 时钟显示（搜索框上方） -->
+    <div id="timeDisplay" style="display: flex; justify-content: center; align-items: center; padding: 0 0 8px 0; cursor: pointer; user-select: none;">
+        <span id="clockText" style="font-family: 'Microsoft YaHei', '微软雅黑', sans-serif; font-size: 45px; font-weight: 300; color: #333; letter-spacing: 2px;"></span>
+    </div>
+
     <div class="search-container" style="position: relative; background: transparent;">
         <!-- Dropdown menu button (replaces scan + engine toggle) -->
         <button class="search-button" id="dropdownMenuBtn">
@@ -2265,7 +2424,7 @@
             </div>
         </div>
         <input type="text" class="search-box" id="searchInput" placeholder=" " autocomplete="off" style="background: #F0F0F0;">
-        <div id="engineHintInSearchBox" style="position: absolute; left: 55px; right: auto; top: 50%; transform: translateY(-50%); pointer-events: none; display: flex; justify-content: flex-start; align-items: center; font-family: 'YouYuan', Arial, sans-serif;">
+        <div id="engineHintInSearchBox" style="position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); pointer-events: none; display: flex; justify-content: center; align-items: center; font-family: 'YouYuan', Arial, sans-serif; transition: opacity 0.2s ease;">
             <span id="engineHintText" style="font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; color: rgba(0, 0, 0, 0.4);">使用百度搜索</span>
         </div>
         <!-- Clear input button (X) -->
@@ -2286,6 +2445,7 @@
         <ul id="searchHistory" class="search-history" style="display: none;"></ul>
         <ul id="suggestions" class="suggestions"></ul>
     </div>
+    </div><!-- end mainContent -->
     
     <!-- Favorites button at bottom -->
     <div class="bottom-buttons-container" style="display: flex; justify-content: center; gap: 15px; margin-top: 12px; position: fixed; bottom: 20px; left: 0; width: 100%; z-index: 1;">
@@ -2504,14 +2664,7 @@
         <div id="engineContent" style="display: none;">
             <div style="padding: 20px 20px 0 20px;">
                 <div class="search-engine-selector" id="engineSelectorInTab" style="display: block; position: static; width: 100%; max-width: 600px; margin: 0 auto; border: none; box-shadow: none; background: transparent; opacity: 1; transform: none;">
-                    <!-- 加载国外搜索引擎图标开关 -->
-                    <div style="margin-bottom: 15px; padding: 10px; background: rgba(240,240,240,0.5); border-radius: var(--global-radius);">
-                        <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-                            <label class="toggle-switch"><input type="checkbox" id="loadForeignIconsToggle" checked onchange="toggleForeignIcons()"><span class="toggle-slider"></span></label>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                            加载国外搜索引擎图标
-                        </label>
-                    </div>
+                    <!-- 国外搜索引擎（锁死不显示图标） -->
                     <!-- 国内搜索引擎 -->
                     <div class="engine-item" data-engine="baidu" data-url="https://www.baidu.com/s?wd=" data-type="domestic">
                         <img class="engine-icon" src="https://www.baidu.com/favicon.ico" alt="百度" style="width: 20px; height: 20px; object-fit: contain;">
@@ -2796,7 +2949,7 @@
                 <div style="margin-bottom: 15px;">
                     <label class="settings-label" style="display: block; font-family: 'YouYuan'; font-size: 14px; margin-bottom: 10px; font-weight: bold;">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px; vertical-align: middle;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-                        按钮样式：
+                        主题：
                     </label>
                     <div class="settings-radio-grid" style="margin-bottom: 10px;">
                         <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
@@ -2823,6 +2976,11 @@
 <label class="radio-switch"><input type="radio" name="buttonStyle" value="transparent" onchange="setButtonStyle('transparent')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 0 20" fill="currentColor" opacity="0.3"></path></svg>
                             白色透明
+                        </label>
+                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
+<label class="radio-switch"><input type="radio" name="buttonStyle" value="frosted" onchange="setButtonStyle('frosted')"><span class="radio-slider"></span></label>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 0 20" fill="currentColor" opacity="0.15"></path><path d="M8 12h8M12 8v8" stroke-width="1.5"></path></svg>
+                            透明模糊
                         </label>
                         <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
 <label class="radio-switch"><input type="radio" name="buttonStyle" value="elder" onchange="setButtonStyle('elder')"><span class="radio-slider"></span></label>
@@ -4074,29 +4232,38 @@
 
         function updateSearchButtonVisibility() {
             const keyword = input.value.trim();
-            if (keyword) {
-                // Has text: show search button + clear button, hide dropdown button
+            const isFocused = document.activeElement === input;
+            if (keyword && isFocused) {
+                // Has text + focused: show search button + clear button, hide dropdown button
                 input.classList.add('has-text');
                 if (searchBtn) searchBtn.classList.add('visible');
                 if (clearInputBtn) clearInputBtn.classList.add('visible');
                 if (dropdownMenuBtn) {
-                    dropdownMenuBtn.classList.add('hidden');
+                    dropdownMenuBtn.classList.remove('visible');
                 }
-                // Hide engine hint when typing
+                // Hide engine hint with fade
                 if (engineHintInSearchBox) {
-                    engineHintInSearchBox.style.display = 'none';
+                    engineHintInSearchBox.style.opacity = '0';
                 }
-            } else {
-                // No text: hide search button + clear button, show dropdown button on right
+            } else if (!keyword && isFocused) {
+                // No text + focused: hide search button + clear button, show dropdown button
                 input.classList.remove('has-text');
                 if (searchBtn) searchBtn.classList.remove('visible');
                 if (clearInputBtn) clearInputBtn.classList.remove('visible');
                 if (dropdownMenuBtn) {
-                    dropdownMenuBtn.classList.remove('hidden');
+                    dropdownMenuBtn.classList.add('visible');
                 }
-                // Show engine hint when input is empty
+                // Show engine hint with fade
                 if (engineHintInSearchBox) {
-                    engineHintInSearchBox.style.display = 'flex';
+                    engineHintInSearchBox.style.opacity = '1';
+                }
+            } else {
+                // Not focused: hide both buttons
+                input.classList.remove('has-text');
+                if (searchBtn) searchBtn.classList.remove('visible');
+                if (clearInputBtn) clearInputBtn.classList.remove('visible');
+                if (dropdownMenuBtn) {
+                    dropdownMenuBtn.classList.remove('visible');
                 }
             }
         }
@@ -4546,6 +4713,104 @@
             // Save preference to localStorage
             localStorage.setItem('showTimeDisplay', showTime);
         }
+
+        // Clock display
+        function updateClock() {
+            const clockText = document.getElementById('clockText');
+            const fullClockTime = document.getElementById('fullClockTime');
+            if (!clockText && !fullClockTime) return;
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            const timeStr = h + ':' + m + ':' + s;
+            if (clockText) clockText.textContent = timeStr;
+            if (fullClockTime) fullClockTime.textContent = timeStr;
+        }
+
+        // Full-screen clock overlay
+        function toggleFullScreenClock() {
+            let overlay = document.getElementById('fullScreenClock');
+            if (overlay) {
+                overlay.remove();
+                return;
+            }
+            const now = new Date();
+            const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1;
+            const day = now.getDate();
+            const weekday = weekdays[now.getDay()];
+
+            // Get lunar date
+            let lunarStr = '';
+            try {
+                const lunar = getLunarDate(now);
+                const lunarMonthNames = ['', '正月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '冬月', '腊月'];
+                const lunarDayNames = ['', '初一', '初二', '初三', '初四', '初五', '初六', '初七', '初八', '初九', '初十', '十一', '十二', '十三', '十四', '十五', '十六', '十七', '十八', '十九', '二十', '廿一', '廿二', '廿三', '廿四', '廿五', '廿六', '廿七', '廿八', '廿九', '三十'];
+                lunarStr = (lunar.isLeap ? '闰' : '') + lunarMonthNames[lunar.month] + lunarDayNames[lunar.day];
+            } catch (e) {
+                lunarStr = '';
+            }
+
+            overlay = document.createElement('div');
+            overlay.id = 'fullScreenClock';
+            overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000000; z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; user-select: none;';
+            overlay.innerHTML = '<div id="fullClockTime" style="font-family: \'YouYuan\', Arial, sans-serif; font-size: 80px; font-weight: 200; color: #ffffff; letter-spacing: 6px;"></div>' +
+                '<div style="font-family: \'YouYuan\', Arial, sans-serif; font-size: 18px; color: #888888; margin-top: 20px;">' + year + '年' + month + '月' + day + '日 星期' + weekday + '</div>' +
+                (lunarStr ? '<div style="font-family: \'YouYuan\', Arial, sans-serif; font-size: 16px; color: #666666; margin-top: 10px;">' + lunarStr + '</div>' : '');
+            document.body.appendChild(overlay);
+            updateClock();
+
+            // Click to dismiss with shrink animation back to timeDisplay
+            function dismissClock() {
+                const timeDisplay = document.getElementById('timeDisplay');
+                if (timeDisplay) {
+                    const rect = timeDisplay.getBoundingClientRect();
+                    overlay.style.transition = 'top 0.5s cubic-bezier(0.32, 0.72, 0, 1), left 0.5s cubic-bezier(0.32, 0.72, 0, 1), width 0.5s cubic-bezier(0.32, 0.72, 0, 1), height 0.5s cubic-bezier(0.32, 0.72, 0, 1), border-radius 0.4s ease';
+                    overlay.style.top = rect.top + 'px';
+                    overlay.style.left = rect.left + 'px';
+                    overlay.style.width = rect.width + 'px';
+                    overlay.style.height = rect.height + 'px';
+                    overlay.style.borderRadius = '12px';
+                    setTimeout(function() {
+                        overlay.remove();
+                    }, 500);
+                } else {
+                    overlay.style.transition = 'opacity 0.3s ease';
+                    overlay.style.opacity = '0';
+                    setTimeout(function() {
+                        overlay.remove();
+                    }, 300);
+                }
+            }
+            overlay.addEventListener('click', dismissClock);
+            overlay.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                dismissClock();
+            });
+        }
+
+        // Init clock
+        (function() {
+            const clockText = document.getElementById('clockText');
+            const timeDisplay = document.getElementById('timeDisplay');
+            if (clockText && timeDisplay) {
+                const showTime = localStorage.getItem('showTimeDisplay');
+                if (showTime === 'false') {
+                    timeDisplay.style.display = 'none';
+                }
+                updateClock();
+                setInterval(updateClock, 1000);
+                timeDisplay.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    // Use launch animation from clock position
+                    playLaunchAnimation(timeDisplay, '#F0F0F0', function() {
+                        toggleFullScreenClock();
+                    });
+                });
+            }
+        })();
         
         function importFavorites() {
             document.getElementById('favImportFile').click();
@@ -5800,13 +6065,10 @@
         function openFavoriteUrl(url, element) {
             // Play launch animation first, then open URL after animation completes
             if (element) {
-                const iconEl = element.querySelector('.fav-icon');
-                if (iconEl) {
-                    playLaunchAnimation(iconEl, '#F0F0F0', function() {
-                        window.open(url, '_blank');
-                    });
-                    return;
-                }
+                playLaunchAnimation(element, '#F0F0F0', function() {
+                    window.open(url, '_blank');
+                });
+                return;
             }
             window.open(url, '_blank');
         }
@@ -5975,11 +6237,40 @@
                 const iconEl = clickedApp.querySelector('.kg-app-icon');
                 playLaunchAnimation(iconEl, color, function() {
                     // After animation completes, show the download modal
-                    showDownloadModalContent(appName, windowsUrl);
+                    if (appName.includes('收银')) {
+                        showCashierModalContent();
+                    } else {
+                        showDownloadModalContent(appName, windowsUrl);
+                    }
                 });
             } else {
-                showDownloadModalContent(appName, windowsUrl);
+                if (appName.includes('收银')) {
+                    showCashierModalContent();
+                } else {
+                    showDownloadModalContent(appName, windowsUrl);
+                }
             }
+        }
+
+        function showCashierModalContent() {
+            const modal = document.getElementById('kgDownloadModal');
+            const title = document.getElementById('kgDownloadTitle');
+            const links = document.getElementById('kgDownloadLinks');
+            
+            title.textContent = 'Kg 收银系统 - 选择版本';
+            
+            let html = '';
+            
+            // 1.0 蓝奏云
+            html += '<div class="kg-download-option" onclick="launchAppUrl(\'https://wwbpg.lanzouu.com/iGuw43ibdxgf\'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;"><span style="font-family: \'YouYuan\'; font-size: 14px;">1.0 蓝奏云下载</span></div>';
+            
+            // 2.0 123云盘
+            html += '<div class="kg-download-option" onclick="launchAppUrl(\'https://1823501963.share.123pan.cn/123pan/jE4Fjv-udjih\'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;"><span style="font-family: \'YouYuan\'; font-size: 14px;">2.0 123云盘下载</span></div>';
+            
+            links.innerHTML = html;
+            modal.style.display = 'flex';
+            void modal.offsetWidth;
+            modal.style.opacity = '1';
         }
 
         function showDownloadModalContent(appName, windowsUrl) {
@@ -6105,6 +6396,40 @@
             overlay.style.height = rect.height + 'px';
             overlay.style.transition = 'none';
             overlay.classList.remove('active');
+            overlay.style.opacity = '1';
+
+            // Track animation state
+            let animationCancelled = false;
+            let openTimer = null;
+
+            // Cancel handler - tap anywhere during animation to cancel
+            function cancelAnimation() {
+                if (animationCancelled) return;
+                animationCancelled = true;
+                if (openTimer) clearTimeout(openTimer);
+                // Shrink back to original element position
+                overlay.style.transition = 'top 0.5s cubic-bezier(0.32, 0.72, 0, 1), left 0.5s cubic-bezier(0.32, 0.72, 0, 1), width 0.5s cubic-bezier(0.32, 0.72, 0, 1), height 0.5s cubic-bezier(0.32, 0.72, 0, 1), border-radius 0.3s ease';
+                overlay.style.top = rect.top + 'px';
+                overlay.style.left = rect.left + 'px';
+                overlay.style.width = rect.width + 'px';
+                overlay.style.height = rect.height + 'px';
+                overlay.style.borderRadius = window.getComputedStyle(iconEl).borderRadius;
+                setTimeout(function() {
+                    overlay.style.transition = 'none';
+                    overlay.style.top = '0px';
+                    overlay.style.left = '0px';
+                    overlay.style.width = '0px';
+                    overlay.style.height = '0px';
+                    overlay.style.opacity = '';
+                    iconWrap.innerHTML = '';
+                    overlay.classList.remove('active');
+                }, 500);
+                overlay.removeEventListener('click', cancelAnimation);
+                overlay.removeEventListener('touchend', cancelAnimation);
+            }
+
+            overlay.addEventListener('click', cancelAnimation);
+            overlay.addEventListener('touchend', cancelAnimation);
 
             // Force reflow
             void overlay.offsetWidth;
@@ -6121,7 +6446,8 @@
             });
 
             // When animation fills full screen (1000ms), open URL immediately, then fade out
-            setTimeout(function() {
+            openTimer = setTimeout(function() {
+                if (animationCancelled) return;
                 if (callback) callback();
                 // Then fade out
                 overlay.classList.remove('active');
@@ -6187,23 +6513,32 @@
         }
 
         // Tab switching functions with smooth transition
-        function switchToFavoritesTab() {
-            // Note: settings reload logic removed to prevent unwanted page refreshes when switching tabs
-            
-            const contents = ['favoritesContent', 'kgContent', 'engineContent', 'settingsContent', 'hotNewsContent'];
-            const buttons = ['favTabBtn', 'engineTabBtn', 'settingsTabBtn', 'hotNewsTabBtn'];
-            
-            // Fade out all contents
-            contents.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(10px)';
-                }
-            });
-            
+        // Unified tab switching with slide animation
+        let currentTabIndex = 0;
+        const tabOrder = ['favoritesContent', 'engineContent', 'hotNewsContent', 'settingsContent'];
+        const tabBtnIds = ['favTabBtn', 'engineTabBtn', 'hotNewsTabBtn', 'settingsTabBtn'];
+        const tabCallbacks = [renderFavorites, null, loadHotNewsTab, null];
+        let tabSwitching = false;
+
+        function switchTab(targetIndex, direction) {
+            if (tabSwitching || targetIndex === currentTabIndex) return;
+            if (targetIndex < 0 || targetIndex >= tabOrder.length) return;
+            tabSwitching = true;
+
+            const allContents = ['favoritesContent', 'kgContent', 'engineContent', 'settingsContent', 'hotNewsContent'];
+            const currentContentId = tabOrder[currentTabIndex];
+            const targetContentId = tabOrder[targetIndex];
+
+            // If no direction specified, calculate from index difference
+            if (direction === undefined) {
+                direction = targetIndex > currentTabIndex ? 'left' : 'right';
+            }
+
+            const slideOutX = direction === 'left' ? '-30%' : '30%';
+            const slideInX = direction === 'left' ? '30%' : '-30%';
+
             // Update button styles
-            buttons.forEach(btnId => {
+            tabBtnIds.forEach(btnId => {
                 const btn = document.getElementById(btnId);
                 if (btn) {
                     btn.style.background = '#F0F0F0';
@@ -6211,39 +6546,111 @@
                     btn.style.boxShadow = '20px 20px 62px #cccccc, -20px -20px 62px #ffffff';
                 }
             });
-            
+
             // Set active button
-            const activeBtn = document.getElementById('favTabBtn');
+            const activeBtn = document.getElementById(tabBtnIds[targetIndex]);
             if (activeBtn) {
                 activeBtn.style.background = '#000000';
                 activeBtn.style.color = 'white';
                 activeBtn.style.boxShadow = 'inset 5px 5px 10px #000000, inset -5px -5px 10px #333333';
             }
-            
-            // After fade out, show favorites content
-            setTimeout(() => {
-                contents.forEach(id => {
+
+            // Slide out current content
+            const currentEl = document.getElementById(currentContentId);
+            if (currentEl) {
+                currentEl.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                currentEl.style.transform = 'translateX(' + slideOutX + ')';
+                currentEl.style.opacity = '0';
+            }
+
+            // Prepare target content (invisible, at start position)
+            const targetEl = document.getElementById(targetContentId);
+            if (targetEl) {
+                targetEl.style.transition = 'none';
+                targetEl.style.transform = 'translateX(' + slideInX + ')';
+                targetEl.style.opacity = '0';
+            }
+
+            setTimeout(function() {
+                // Hide all, show target
+                allContents.forEach(function(id) {
                     const el = document.getElementById(id);
-                    if (el) {
-                        el.style.display = id === 'favoritesContent' ? 'block' : 'none';
-                    }
+                    if (el) el.style.display = 'none';
                 });
-                
-                // Fade in favorites content
-                const favContent = document.getElementById('favoritesContent');
-                if (favContent) {
-                    void favContent.offsetWidth; // Force reflow
-                    favContent.style.opacity = '1';
-                    favContent.style.transform = 'translateY(0)';
+                if (targetEl) {
+                    targetEl.style.display = 'block';
+                    // Slide in
+                    void targetEl.offsetWidth;
+                    targetEl.style.transition = 'transform 0.3s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.3s ease';
+                    targetEl.style.transform = 'translateX(0)';
+                    targetEl.style.opacity = '1';
                 }
-                
-                renderFavorites();
+
+                // Run tab-specific callback
+                if (tabCallbacks[targetIndex]) {
+                    tabCallbacks[targetIndex]();
+                }
+
+                currentTabIndex = targetIndex;
+                setTimeout(function() { tabSwitching = false; }, 300);
             }, 300);
         }
-        
+
+        function switchToFavoritesTab() {
+            switchTab(0);
+        }
+
+        function switchToEngineTab() {
+            switchTab(1);
+        }
+
+        function switchToSettingsTab() {
+            switchTab(3);
+        }
+
+        function switchToHotNewsTab() {
+            switchTab(2);
+        }
+
+        // Touch swipe support for tab switching
+        (function() {
+            const modal = document.getElementById('favoritesModal');
+            if (!modal) return;
+            let startX = 0, startY = 0, startTime = 0;
+            let swiping = false;
+
+            modal.addEventListener('touchstart', function(e) {
+                // Only track if not scrolling vertically
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+                startTime = Date.now();
+                swiping = true;
+            }, { passive: true });
+
+            modal.addEventListener('touchend', function(e) {
+                if (!swiping) return;
+                swiping = false;
+                const endX = e.changedTouches[0].clientX;
+                const endY = e.changedTouches[0].clientY;
+                const dx = endX - startX;
+                const dy = endY - startY;
+                const dt = Date.now() - startTime;
+
+                // Only trigger if horizontal swipe > vertical and fast enough
+                if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5 && dt < 500) {
+                    if (dx < 0 && currentTabIndex < tabOrder.length - 1) {
+                        // Swipe left -> next tab
+                        switchTab(currentTabIndex + 1, 'left');
+                    } else if (dx > 0 && currentTabIndex > 0) {
+                        // Swipe right -> previous tab
+                        switchTab(currentTabIndex - 1, 'right');
+                    }
+                }
+            }, { passive: true });
+        })();
+
         function switchToKGTab() {
             const contents = ['favoritesContent', 'kgContent', 'engineContent', 'settingsContent', 'hotNewsContent'];
-            const buttons = ['favTabBtn', 'engineTabBtn', 'settingsTabBtn', 'hotNewsTabBtn'];
             
             // Hide all contents first
             contents.forEach(id => {
@@ -6322,160 +6729,7 @@
                 }
             }, 300);
         }
-        
-        function switchToEngineTab() {
-            const contents = ['favoritesContent', 'kgContent', 'engineContent', 'settingsContent', 'hotNewsContent'];
-            const buttons = ['favTabBtn', 'engineTabBtn', 'settingsTabBtn', 'hotNewsTabBtn'];
-            
-            // Fade out all contents
-            contents.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(10px)';
-                }
-            });
-            
-            // Update button styles
-            buttons.forEach(btnId => {
-                const btn = document.getElementById(btnId);
-                if (btn) {
-                    btn.style.background = '#F0F0F0';
-                    btn.style.color = '#000000';
-                    btn.style.boxShadow = '20px 20px 62px #cccccc, -20px -20px 62px #ffffff';
-                }
-            });
-            
-            // Set active button
-            const activeBtn = document.getElementById('engineTabBtn');
-            if (activeBtn) {
-                activeBtn.style.background = '#000000';
-                activeBtn.style.color = 'white';
-                activeBtn.style.boxShadow = 'inset 5px 5px 10px #000000, inset -5px -5px 10px #333333';
-            }
-            
-            // After fade out, show engine content
-            setTimeout(() => {
-                contents.forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) {
-                        el.style.display = id === 'engineContent' ? 'block' : 'none';
-                    }
-                });
-                
-                // Fade in engine content
-                const engineContent = document.getElementById('engineContent');
-                if (engineContent) {
-                    void engineContent.offsetWidth; // Force reflow
-                    engineContent.style.opacity = '1';
-                    engineContent.style.transform = 'translateY(0)';
-                }
-            }, 300);
-        }
-        
-        function switchToSettingsTab() {
-            
-            const contents = ['favoritesContent', 'kgContent', 'engineContent', 'settingsContent', 'hotNewsContent'];
-            const buttons = ['favTabBtn', 'engineTabBtn', 'settingsTabBtn', 'hotNewsTabBtn'];
-            
-            // Fade out all contents
-            contents.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(10px)';
-                }
-            });
-            
-            // Update button styles
-            buttons.forEach(btnId => {
-                const btn = document.getElementById(btnId);
-                if (btn) {
-                    btn.style.background = '#F0F0F0';
-                    btn.style.color = '#000000';
-                    btn.style.boxShadow = '20px 20px 62px #cccccc, -20px -20px 62px #ffffff';
-                }
-            });
-            
-            // Set active button
-            const activeBtn = document.getElementById('settingsTabBtn');
-            if (activeBtn) {
-                activeBtn.style.background = '#000000';
-                activeBtn.style.color = 'white';
-                activeBtn.style.boxShadow = 'inset 5px 5px 10px #000000, inset -5px -5px 10px #333333';
-            }
-            
-            // After fade out, show settings content
-            setTimeout(() => {
-                contents.forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) {
-                        el.style.display = id === 'settingsContent' ? 'block' : 'none';
-                    }
-                });
-                
-                // Fade in settings content
-                const settingsContent = document.getElementById('settingsContent');
-                if (settingsContent) {
-                    void settingsContent.offsetWidth; // Force reflow
-                    settingsContent.style.opacity = '1';
-                    settingsContent.style.transform = 'translateY(0)';
-                }
-            }, 300);
-        }
-        
-        function switchToHotNewsTab() {
-            const contents = ['favoritesContent', 'kgContent', 'engineContent', 'settingsContent', 'hotNewsContent'];
-            const buttons = ['favTabBtn', 'engineTabBtn', 'settingsTabBtn', 'hotNewsTabBtn'];
-            
-            // Fade out all contents
-            contents.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(10px)';
-                }
-            });
-            
-            // Update button styles
-            buttons.forEach(btnId => {
-                const btn = document.getElementById(btnId);
-                if (btn) {
-                    btn.style.background = '#F0F0F0';
-                    btn.style.color = '#000000';
-                    btn.style.boxShadow = '20px 20px 62px #cccccc, -20px -20px 62px #ffffff';
-                }
-            });
-            
-            // Set active button
-            const activeBtn = document.getElementById('hotNewsTabBtn');
-            if (activeBtn) {
-                activeBtn.style.background = '#000000';
-                activeBtn.style.color = 'white';
-                activeBtn.style.boxShadow = 'inset 5px 5px 10px #000000, inset -5px -5px 10px #333333';
-            }
-            
-            // After fade out, show hot news content
-            setTimeout(() => {
-                contents.forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) {
-                        el.style.display = id === 'hotNewsContent' ? 'block' : 'none';
-                    }
-                });
-                
-                // Fade in hot news content
-                const hotNewsContent = document.getElementById('hotNewsContent');
-                if (hotNewsContent) {
-                    void hotNewsContent.offsetWidth; // Force reflow
-                    hotNewsContent.style.opacity = '1';
-                    hotNewsContent.style.transform = 'translateY(0)';
-                }
-                
-                loadHotNewsTab();
-            }, 300);
-        }
-        
+
         let hotNewsLoaded = false; // Track if hot news has been loaded
         
         async function loadHotNewsTab(force = false) {
@@ -6612,6 +6866,17 @@
                     } else {
                         this.classList.remove('typing');
                     }
+                    // Hide buttons when blurred
+                    if (typeof updateSearchButtonVisibility === 'function') {
+                        setTimeout(updateSearchButtonVisibility, 100);
+                    }
+                });
+
+                // Also update button visibility on focus
+                input.addEventListener('focus', function() {
+                    if (typeof updateSearchButtonVisibility === 'function') {
+                        setTimeout(updateSearchButtonVisibility, 50);
+                    }
                 });
             });
         }
@@ -6619,7 +6884,7 @@
         // Initialize input fade-in animation
         setupInputFadeIn();
 
-        // Lunar calendar conversion (simplified version)
+        // Lunar calendar conversion
         const lunarInfo = [
             0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2,
             0x04ae0, 0x0a5b6, 0x0a4d0, 0x0d250, 0x1d255, 0x0b540, 0x0d6a0, 0x0ada2, 0x095b0, 0x14977,
@@ -6634,83 +6899,88 @@
             0x0c960, 0x0d954, 0x0d4a0, 0x0da50, 0x07552, 0x056a0, 0x0abb7, 0x025d0, 0x092d0, 0x0cab5,
             0x0a950, 0x0b4a0, 0x0baa4, 0x0ad50, 0x055d9, 0x04ba0, 0x0a5b0, 0x15176, 0x052b0, 0x0a930,
             0x07954, 0x06aa0, 0x0ad50, 0x05b52, 0x04b60, 0x0a6e6, 0x0a4e0, 0x0d260, 0x0ea65, 0x0d530,
-            0x05aa0, 0x076a3, 0x096d0, 0x04afb, 0x04ad0, 0x0a4d0, 0x1d0b6, 0x0d250, 0x0d520, 0x0dd45,
-            0x0b5a0, 0x056d0, 0x055b2, 0x049b0, 0x0a577, 0x0a4b0, 0x0aa50, 0x1b255, 0x06d20, 0x0ada0
+            0x05aa0, 0x076a3, 0x096d0, 0x04bd7, 0x04ad0, 0x0a4d0, 0x1d0b6, 0x0d250, 0x0d520, 0x0dd45,
+            0x0b5a0, 0x056d0, 0x055b2, 0x049b0, 0x0a577, 0x0a4b0, 0x0aa50, 0x1b255, 0x06d20, 0x0ada0,
+            0x14b63, 0x09370, 0x049f8, 0x04970, 0x064b0, 0x168a6, 0x0ea50, 0x06b20, 0x1a6c4, 0x0aae0,
+            0x092e0, 0x0d2e3, 0x0c960, 0x0d557, 0x0d4a0, 0x0da50, 0x05d55, 0x056a0, 0x0a6d0, 0x055d4,
+            0x052d0, 0x0a9b8, 0x0a950, 0x0b4a0, 0x0b6a6, 0x0ad50, 0x055a0, 0x0aba4, 0x0a5b0, 0x052b0,
+            0x0b273, 0x06930, 0x07337, 0x06aa0, 0x0ad50, 0x14b55, 0x04b60, 0x0a570, 0x054e4, 0x0d160,
+            0x0e968, 0x0d520, 0x0daa0, 0x16aa6, 0x056d0, 0x04ae0, 0x0a9d4, 0x0a4d0, 0x0d150, 0x0f252,
+            0x0d520
         ];
-        
+
+        function lYearDays(y) {
+            var i, sum = 348;
+            for (i = 0x8000; i > 0x8; i >>= 1) {
+                sum += (lunarInfo[y - 1900] & i) ? 1 : 0;
+            }
+            return sum + leapDays(y);
+        }
+        function leapMonth(y) {
+            return lunarInfo[y - 1900] & 0xf;
+        }
+        function leapDays(y) {
+            if (leapMonth(y)) {
+                return (lunarInfo[y - 1900] & 0x10000) ? 30 : 29;
+            }
+            return 0;
+        }
+        function monthDays(y, m) {
+            return (lunarInfo[y - 1900] & (0x10000 >> m)) ? 30 : 29;
+        }
+
         function getLunarDate(date) {
-            const yearCyl = date.getFullYear() - 1900;
-            const month = date.getMonth();
-            const day = date.getDate();
-            
-            let leap = 0;
-            let temp = 0;
-            
-            for (let i = 1900; i < date.getFullYear(); i++) {
-                temp += getYearDays(i);
+            var baseDate = new Date(1900, 0, 31);
+            var offset = Math.floor((date.getTime() - baseDate.getTime()) / 86400000);
+            var i, temp = 0;
+            var year = 1900;
+            for (i = 1900; i < 2051 && offset > 0; i++) {
+                temp = lYearDays(i);
+                offset -= temp;
+                year = i + 1;
             }
-            
-            const offset = Math.floor((date.getTime() - new Date(1900, 0, 31).getTime()) / 86400000);
-            
-            let isLeap = false;
-            let monthDays = 0;
-            let lunarMonth = 1;
-            
-            for (let i = 0; i < 12; i++) {
-                leap = getLeapMonth(date.getFullYear());
-                if (leap !== i && leap !== 0) {
-                    monthDays += getMonthDays(date.getFullYear(), i, true);
+            if (offset < 0) {
+                offset += temp;
+                year--;
+            }
+            var leap = leapMonth(year);
+            var isLeap = false;
+            var month = 1;
+            for (i = 1; i < 13 && offset > 0; i++) {
+                if (leap > 0 && i === (leap + 1) && !isLeap) {
+                    --i;
+                    isLeap = true;
+                    temp = leapDays(year);
                 } else {
-                    monthDays += getMonthDays(date.getFullYear(), i, false);
+                    temp = monthDays(year, i);
                 }
-                
-                if (leap === i && i > 0) {
-                    monthDays += getMonthDays(date.getFullYear(), i, true);
-                    if (offset <= monthDays) {
-                        isLeap = true;
-                        lunarMonth = i + 1;
-                        break;
-                    }
+                if (isLeap && i === (leap + 1)) {
+                    isLeap = false;
                 }
-                
-                if (offset <= monthDays) {
-                    lunarMonth = i + 1;
-                    break;
+                offset -= temp;
+                if (!isLeap) {
+                    month = i;
+                } else {
+                    month = i;
                 }
             }
-            
-            const lunarDay = offset - monthDays + 1;
-            
-            return {
-                year: date.getFullYear(),
-                month: lunarMonth,
-                day: lunarDay,
-                isLeap: isLeap
-            };
-        }
-        
-        function getYearDays(year) {
-            let sum = 0;
-            for (let i = 0; i < 12; i++) {
-                sum += getMonthDays(year, i, false);
+            if (offset === 0 && leap > 0 && i === leap + 1) {
+                if (isLeap) {
+                    isLeap = false;
+                } else {
+                    isLeap = true;
+                    --i;
+                }
             }
-            const leap = getLeapMonth(year);
-            if (leap !== 0) {
-                sum += getMonthDays(year, leap, true);
+            if (offset < 0) {
+                offset += temp;
+                if (!isLeap) month--;
             }
-            return sum;
-        }
-        
-        function getMonthDays(year, month, isLeap) {
-            if (isLeap) {
-                return (lunarInfo[year - 1900] & (0x10000 >> month)) ? 30 : 29;
-            } else {
-                return (lunarInfo[year - 1900] & (0x10000 >> month)) ? 30 : 29;
-            }
-        }
-        
-        function getLeapMonth(year) {
-            return lunarInfo[year - 1900] & 0xf;
+            var day = offset + 1;
+            // Recalculate month correctly
+            var realMonth = month;
+            if (isLeap) realMonth = leap;
+            return { year: year, month: realMonth, day: day, isLeap: isLeap };
         }
         
         function formatLunarDate(lunar) {
@@ -6951,7 +7221,13 @@
 
                 const img = new Image();
                 img.onload = function() {
+                    // Start with black, fade in the wallpaper
+                    filterOverlay.style.opacity = '0';
+                    filterOverlay.style.transition = 'opacity 1.5s ease';
                     filterOverlay.style.backgroundImage = "url('" + img.src + "')";
+                    requestAnimationFrame(function() {
+                        filterOverlay.style.opacity = '1';
+                    });
                 };
                 img.src = apiUrls.bingWallpaper;
 
