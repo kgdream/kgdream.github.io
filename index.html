@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="千克之梦(HelloKG) - 一款精美的个性化浏览器起始页，集成必应搜索、每日诗词、热点新闻、收藏管理等功能。支持拟物化、玻璃态等多种主题风格，可自定义壁纸、圆角、配色，打造专属搜索主页。">
     <meta name="keywords" content="千克之梦, HelloKG, 搜索主页, 浏览器起始页, 必应搜索, 个性化主页, 拟物化, 新标签页">
-    <title>HelloKG • Start-千克之梦</title>
+    <title>HelloKG•Start-KGdream-千克之梦</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <style>
         :root {
@@ -553,6 +553,7 @@
             .search-box {
                 flex: 1;
                 min-width: 0;
+                width: 100% !important;
                 font-size: 16px;
                 padding: 12px 73px 12px 43px;
                 background: #F0F0F0;
@@ -1391,6 +1392,10 @@
         /* Wallpaper background mode - simplified, no overlay used */
         #wallpaperOverlay {
             display: none;
+        }
+
+        body[data-bg-mode="wallpaper"] {
+            padding: 0 !important;
         }
 
         body[data-bg-mode="wallpaper"] #mainContent {
@@ -7211,7 +7216,7 @@
                 if (!filterOverlay) {
                     filterOverlay = document.createElement('div');
                     filterOverlay.id = 'wallpaperFilterOverlay';
-                    filterOverlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background-size: cover; background-position: center; background-repeat: no-repeat;';
+                    filterOverlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; background-size: cover; background-position: center; background-repeat: no-repeat;';
                     document.body.prepend(filterOverlay);
                 }
 
