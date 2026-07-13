@@ -178,7 +178,7 @@
         }
 
         .search-box {
-            padding: 12px 55px 12px 55px;
+            padding: 12px 55px 12px 15px;
             font-size: 14px;
             font-family: 'YouYuan', Arial, sans-serif;
             border: none;
@@ -524,7 +524,7 @@
                 min-width: 0;
                 width: 100% !important;
                 font-size: 16px;
-                padding: 12px 73px 12px 43px;
+                padding: 12px 73px 12px 15px;
                 background: #F0F0F0;
                 border: none;
                 outline: none;
@@ -549,7 +549,7 @@
                 right: calc(100% + 5px);
                 left: auto;
                 width: auto !important;
-                max-width: 52px !important;
+                max-width: none !important;
                 padding: 8px 6px;
             }
 
@@ -559,17 +559,15 @@
             }
 
             .search-engine-selector .engine-item {
-                padding: 8px 6px;
-                font-size: 0;
+                padding: 8px 10px;
+                font-size: 14px;
                 text-align: center;
-                width: 40px;
-                min-width: 40px;
+                width: auto;
+                min-width: 60px;
             }
 
             .search-engine-selector .engine-item img.engine-icon {
-                display: inline-block !important;
-                width: 20px !important;
-                height: 20px !important;
+                display: none !important;
             }
 
             /* Mobile: dropdown menu shows icons only */
@@ -635,7 +633,32 @@
                 width: 100%;
                 margin-top: 10px;
             }
-            
+
+            /* Settings mobile: reduce gap, tighter layout */
+            .settings-section h3 {
+                font-size: 16px !important;
+                padding: 10px 12px !important;
+            }
+            .settings-section > label,
+            .settings-section > div > label {
+                font-size: 13px !important;
+                padding: 4px 0 !important;
+                margin-bottom: 4px !important;
+            }
+            .settings-radio-grid {
+                gap: 4px !important;
+            }
+            .settings-radio-grid > label {
+                font-size: 13px !important;
+                padding: 4px 8px !important;
+            }
+            .radio-switch {
+                /* Keep original 22x22 size */
+            }
+            .toggle-switch {
+                /* Keep original 44x24 size */
+            }
+
         }
 
         .search-hint {
@@ -1447,7 +1470,7 @@
             border: none;
             border-radius: var(--global-radius);
             list-style: none;
-            max-height: calc(100vh - 220px);
+            max-height: min(320px, calc(100vh - 280px));
             overflow-y: auto;
             z-index: 99;
             display: none;
@@ -1488,14 +1511,12 @@
         }
 
         @keyframes clockOverlayIn {
-            0% { opacity: 0; backdrop-filter: blur(0px); background: transparent; }
-            50% { opacity: 0.7; backdrop-filter: blur(10px); background: rgba(0,0,0,0.3); }
-            100% { opacity: 1; backdrop-filter: blur(0px); background: #000; }
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
         @keyframes clockOverlayOut {
-            0% { opacity: 1; backdrop-filter: blur(0px); background: #000; }
-            50% { opacity: 0.7; backdrop-filter: blur(10px); background: rgba(0,0,0,0.3); }
-            100% { opacity: 0; backdrop-filter: blur(0px); background: transparent; }
+            0% { opacity: 1; }
+            100% { opacity: 0; }
         }
 
         .suggestions li:hover {
@@ -1518,7 +1539,7 @@
             z-index: 99;
             display: none;
             box-sizing: border-box;
-            max-height: calc(100vh - 220px);
+            max-height: min(320px, calc(100vh - 280px));
             opacity: 0;
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
@@ -1625,7 +1646,7 @@
         }
 
         .engine-grid img.engine-icon {
-            display: inline-block !important;
+            display: none !important;
         }
 
         .engine-item {
@@ -2161,6 +2182,9 @@
             animation-duration: 0s !important;
             transition: none !important;
             transition-duration: 0s !important;
+            /* Fix: elements that rely on animation to reach opacity:1 must be visible */
+            opacity: 1 !important;
+            transform: none !important;
         }
         .no-animations #appLaunchOverlay,
         .no-animations #appLaunchOverlay *,
@@ -2243,14 +2267,11 @@
                 </svg>
                 <span class="dropdown-text">引擎</span>
             </div>
-            <div style="display: flex; align-items: center; justify-content: center; padding: 0 8px; cursor: default; font-family: 'YouYuan', Arial, sans-serif; font-size: 12px; color: #666; gap: 6px; white-space: nowrap; border-left: 1px solid rgba(0,0,0,0.1);">
+            <div style="display: flex; align-items: center; justify-content: center; padding: 0 8px; cursor: default; font-family: 'YouYuan', Arial, sans-serif; font-size: 12px; color: #666; gap: 4px; white-space: nowrap; border-left: 1px solid rgba(0,0,0,0.1);">
                 <span class="dropdown-text">网址</span>
-                <label class="radio-switch" style="width:18px;height:18px;"><input type="radio" name="urlAccessMode" value="always" onchange="setUrlAccessMode('always')"><span class="radio-slider" style="border-radius:50%;"></span></label>
-                <span style="font-size:12px;color:#666;">永</span>
-                <label class="radio-switch" style="width:18px;height:18px;"><input type="radio" name="urlAccessMode" value="off" onchange="setUrlAccessMode('off')"><span class="radio-slider" style="border-radius:50%;"></span></label>
-                <span style="font-size:12px;color:#666;">关</span>
-                <label class="radio-switch" style="width:18px;height:18px;"><input type="radio" name="urlAccessMode" value="temp" onchange="setUrlAccessMode('temp')"><span class="radio-slider" style="border-radius:50%;"></span></label>
-                <span style="font-size:12px;color:#666;">临</span>
+                <label style="display: flex; align-items: center; gap: 2px; cursor: pointer; font-size: 12px;"><input type="radio" name="urlAccessMode" value="always" onchange="setUrlAccessMode('always')" style="cursor: pointer; width: 12px; height: 12px;">永</label>
+                <label style="display: flex; align-items: center; gap: 2px; cursor: pointer; font-size: 12px;"><input type="radio" name="urlAccessMode" value="off" onchange="setUrlAccessMode('off')" style="cursor: pointer; width: 12px; height: 12px;">关</label>
+                <label style="display: flex; align-items: center; gap: 2px; cursor: pointer; font-size: 12px;"><input type="radio" name="urlAccessMode" value="temp" onchange="setUrlAccessMode('temp')" style="cursor: pointer; width: 12px; height: 12px;">临</label>
             </div>
         </div>
         <!-- Dropdown menu button (replaces scan + engine toggle) -->
@@ -2260,7 +2281,7 @@
             </svg>
         </button>
         <input type="text" class="search-box" id="searchInput" placeholder=" " autocomplete="off" style="background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;">
-        <div id="engineHintInSearchBox" style="position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); pointer-events: none; display: flex; justify-content: center; align-items: center; font-family: 'YouYuan', Arial, sans-serif; transition: opacity 0.2s ease;">
+        <div id="engineHintInSearchBox" style="position: absolute; left: 15px; right: 0; top: 50%; transform: translateY(-50%); pointer-events: none; display: flex; justify-content: flex-start; align-items: center; font-family: 'YouYuan', Arial, sans-serif; transition: opacity 0.2s ease;">
             <span id="engineHintText" style="font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; color: rgba(0, 0, 0, 0.4);">使用百度搜索</span>
         </div>
         <!-- Clear input button (X) -->
@@ -2275,6 +2296,11 @@
             <svg id="searchBtnIconFallback" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px; display: none;">
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <svg id="urlBtnIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px; display: none;">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
             </svg>
         </button>
         <!-- Search history container -->
@@ -2355,7 +2381,7 @@
                     </svg>
                 </button>
                 <button id="engineTabBtn" onclick="switchToEngineTab()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
-                    <img id="engineTabIcon" src="" style="width: 24px; height: 24px; object-fit: contain; display: none;" alt="引擎">
+                    <img id="engineTabIcon" src="https://www.baidu.com/favicon.ico" style="width: 24px; height: 24px; object-fit: contain; display: none;" alt="引擎">
                     <span id="engineTabText" style="font-family: 'YouYuan', Arial, sans-serif; font-size: 20px; font-weight: bold;">引</span>
                 </button>
                 <button id="hotNewsTabBtn" onclick="switchToHotNewsTab()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
@@ -3873,8 +3899,8 @@
             if (/^https?:\/\//i.test(input) || /^ftp:\/\//i.test(input)) {
                 return input;
             }
-            // Add https://
-            return 'https://' + input;
+            // Return as-is, let browser handle protocol
+            return input;
         }
 
         // Fetch search suggestions from Baidu
@@ -3999,6 +4025,22 @@
             const keyword = input.value.trim();
             const isFocused = document.activeElement === input;
             const isMenuOpen = document.getElementById('dropdownMenu')?.style.display !== 'none';
+            const isUrl = keyword && (checkIfUrl(keyword) || ['always','temp'].includes(localStorage.getItem('searchBoxUrlAccess') || 'off'));
+
+            // Toggle URL icon vs search icon
+            const searchBtnIcon = document.getElementById('searchBtnIcon');
+            const searchBtnIconFallback = document.getElementById('searchBtnIconFallback');
+            const urlBtnIcon = document.getElementById('urlBtnIcon');
+            if (searchBtnIcon && searchBtnIconFallback && urlBtnIcon) {
+                if (isUrl && isFocused) {
+                    searchBtnIcon.style.display = 'none';
+                    searchBtnIconFallback.style.display = 'none';
+                    urlBtnIcon.style.display = 'block';
+                } else {
+                    urlBtnIcon.style.display = 'none';
+                }
+            }
+
             if (keyword && isFocused) {
                 // Has text + focused: show search button + clear button
                 input.classList.add('has-text');
@@ -4150,68 +4192,6 @@
             return false;
         });
         
-        // Disable long press on mobile
-        let longPressTimer;
-        let isLongPress = false;
-        let longPressActive = false; // Prevent multiple toasts
-        let emojiEnabled = (document.cookie.match(/(^|;)emojiEnabled=([^;]*)/) || [])[2] !== 'false';
-        
-        document.addEventListener('touchstart', function(e) {
-            if (longPressActive) return; // Skip if toast is showing
-            isLongPress = false;
-            longPressTimer = setTimeout(function() {
-                isLongPress = true;
-                longPressActive = true;
-                
-                // Toggle emoji feature on long press
-                emojiEnabled = !emojiEnabled;
-                
-                // Save to cookie (365 days)
-                setCookie('emojiEnabled', emojiEnabled, 365);
-                
-                // Show toast notification
-                const toast = document.createElement('div');
-                toast.textContent = emojiEnabled ? 'Emoji 已开启 ✓' : 'Emoji 已关闭 ✗';
-                toast.style.position = 'fixed';
-                toast.style.bottom = '50px';
-                toast.style.left = '50%';
-                toast.style.transform = 'translateX(-50%)';
-                toast.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-                toast.style.color = 'white';
-                toast.style.padding = '12px 24px';
-                toast.style.borderRadius = '8px';
-                toast.style.fontSize = '14px';
-                toast.style.zIndex = '10000';
-                toast.style.transition = 'opacity 0.3s ease';
-                toast.style.fontFamily = "'YouYuan', Arial, sans-serif";
-                document.body.appendChild(toast);
-                
-                setTimeout(() => {
-                    toast.style.opacity = '0';
-                    setTimeout(() => {
-                        toast.remove();
-                        longPressActive = false;
-                    }, 300);
-                }, 1500);
-                
-                return false;
-            }, 500);
-        }, { passive: true });
-        
-        document.addEventListener('touchend', function(e) {
-            if (longPressTimer) {
-                clearTimeout(longPressTimer);
-                longPressTimer = null;
-            }
-        });
-        
-        document.addEventListener('touchmove', function(e) {
-            if (longPressTimer) {
-                clearTimeout(longPressTimer);
-                longPressTimer = null;
-            }
-        }, { passive: true });
-
         // Update suggestions width on window resize (for mobile)
         window.addEventListener('resize', function() {
             // Suggestions width is now controlled by CSS (width: 100%)
