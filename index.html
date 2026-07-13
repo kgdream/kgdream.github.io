@@ -1067,8 +1067,8 @@
                 rgba(255, 255, 255, 0.2) 50%,
                 rgba(255, 255, 255, 0.3) 100%
             ) !important;
-            backdrop-filter: blur(6px) saturate(150%) brightness(1.02) !important;
-            -webkit-backdrop-filter: blur(6px) saturate(150%) brightness(1.02) !important;
+            backdrop-filter: saturate(150%) brightness(1.02) !important;
+            -webkit-backdrop-filter: saturate(150%) brightness(1.02) !important;
             color: inherit;
             text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
         }
@@ -1625,7 +1625,7 @@
         }
 
         .engine-grid img.engine-icon {
-            display: none !important;
+            display: inline-block !important;
         }
 
         .engine-item {
@@ -1900,6 +1900,19 @@
             background: #ffffff !important;
         }
 
+        /* Fix elderly mode - clear button and logo expand links */
+        body[data-elder-mode="true"] #clearInputBtn {
+            opacity: 0 !important;
+        }
+        body[data-elder-mode="true"] #clearInputBtn.visible {
+            opacity: 1 !important;
+        }
+        body[data-elder-mode="true"] #logoLink1,
+        body[data-elder-mode="true"] #logoLink2,
+        body[data-elder-mode="true"] #logoLink3 {
+            opacity: 0 !important;
+        }
+
         /* Settings section h3 titles with neumorphism - transition and hover animation */
         .settings-section h3 {
             transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -2149,6 +2162,15 @@
             transition: none !important;
             transition-duration: 0s !important;
         }
+        .no-animations #appLaunchOverlay,
+        .no-animations #appLaunchOverlay *,
+        .no-animations #appLaunchOverlay.active,
+        .no-animations #appLaunchOverlay.active * {
+            animation: none !important;
+            transition: none !important;
+            opacity: 0 !important;
+            display: none !important;
+        }
     </style>
     <!-- jsQR Library for QR Code scanning -->
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
@@ -2172,6 +2194,11 @@
         </a>
         <a id="logoLink2" href="https://wwbpg.lanzouu.com/b0188grk4b" target="_blank" style="opacity: 0; transform: translateX(-20px) scale(0.5); pointer-events: none; transition: opacity 0.3s cubic-bezier(0.32,0.72,0,1) 0.05s, transform 0.3s cubic-bezier(0.32,0.72,0,1) 0.05s; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: var(--global-radius); overflow: hidden; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0;">
             <svg viewBox="0 0 36 36" style="width: 28px; height: 28px;"><rect width="36" height="18" rx="6" fill="#FF6A00"/><rect y="18" width="36" height="18" fill="#fff"/></svg>
+        </a>
+        <a id="logoLink3" href="https://www.douyin.com/user/MS4wLjABAAAAKuLiTRBe5BKSuGOrXTm5aciE0xnqzf3h_dfdV1s_3tmDa9oXB9ZAvJSwfrCpZ-ta?from_tab_name=main" target="_blank" style="opacity: 0; transform: translateX(-20px) scale(0.5); pointer-events: none; transition: opacity 0.3s cubic-bezier(0.32,0.72,0,1) 0.1s, transform 0.3s cubic-bezier(0.32,0.72,0,1) 0.1s; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: var(--global-radius); overflow: hidden; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0;">
+            <svg viewBox="0 0 16 16" style="width: 22px; height: 22px;" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z" fill="#000000"/>
+            </svg>
         </a>
     </div>
 
@@ -2218,9 +2245,12 @@
             </div>
             <div style="display: flex; align-items: center; justify-content: center; padding: 0 8px; cursor: default; font-family: 'YouYuan', Arial, sans-serif; font-size: 12px; color: #666; gap: 6px; white-space: nowrap; border-left: 1px solid rgba(0,0,0,0.1);">
                 <span class="dropdown-text">网址</span>
-                <label style="display: flex; align-items: center; gap: 2px; cursor: pointer; font-size: 12px;"><input type="radio" name="urlAccessMode" value="always" onchange="setUrlAccessMode('always')" style="cursor: pointer; width: 12px; height: 12px;">永</label>
-                <label style="display: flex; align-items: center; gap: 2px; cursor: pointer; font-size: 12px;"><input type="radio" name="urlAccessMode" value="off" onchange="setUrlAccessMode('off')" style="cursor: pointer; width: 12px; height: 12px;">关</label>
-                <label style="display: flex; align-items: center; gap: 2px; cursor: pointer; font-size: 12px;"><input type="radio" name="urlAccessMode" value="temp" onchange="setUrlAccessMode('temp')" style="cursor: pointer; width: 12px; height: 12px;">临</label>
+                <label class="radio-switch" style="width:18px;height:18px;"><input type="radio" name="urlAccessMode" value="always" onchange="setUrlAccessMode('always')"><span class="radio-slider" style="border-radius:50%;"></span></label>
+                <span style="font-size:12px;color:#666;">永</span>
+                <label class="radio-switch" style="width:18px;height:18px;"><input type="radio" name="urlAccessMode" value="off" onchange="setUrlAccessMode('off')"><span class="radio-slider" style="border-radius:50%;"></span></label>
+                <span style="font-size:12px;color:#666;">关</span>
+                <label class="radio-switch" style="width:18px;height:18px;"><input type="radio" name="urlAccessMode" value="temp" onchange="setUrlAccessMode('temp')"><span class="radio-slider" style="border-radius:50%;"></span></label>
+                <span style="font-size:12px;color:#666;">临</span>
             </div>
         </div>
         <!-- Dropdown menu button (replaces scan + engine toggle) -->
@@ -2265,43 +2295,43 @@
         <div class="engine-grid" id="topEngineGrid">
             <!-- 国内搜索引擎 -->
             <div class="engine-item active" data-engine="baidu" data-url="https://www.baidu.com/s?wd=" data-type="domestic">
-                <img class="engine-icon" src="https://www.baidu.com/favicon.ico" alt="百度" style="width: 20px; height: 20px; object-fit: contain;">
+                <img class="engine-icon" src="https://www.baidu.com/favicon.ico" alt="百度" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                 百度
             </div>
             <div class="engine-item" data-engine="sogou" data-url="https://www.sogou.com/web?query=" data-type="domestic">
-                <img class="engine-icon" src="https://www.sogou.com/favicon.ico" alt="搜狗" style="width: 20px; height: 20px; object-fit: contain;">
+                <img class="engine-icon" src="https://www.sogou.com/favicon.ico" alt="搜狗" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                 搜狗
             </div>
             <div class="engine-item" data-engine="so360" data-url="https://www.so.com/s?q=" data-type="domestic">
-                <img class="engine-icon" src="https://www.so.com/favicon.ico" alt="360" style="width: 20px; height: 20px; object-fit: contain;">
+                <img class="engine-icon" src="https://www.so.com/favicon.ico" alt="360" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                 360
             </div>
             <div class="engine-item" data-engine="toutiao" data-url="https://www.toutiao.com/search/?keyword=" data-type="domestic">
-                <img class="engine-icon" src="https://www.toutiao.com/favicon.ico" alt="头条" style="width: 20px; height: 20px; object-fit: contain;">
+                <img class="engine-icon" src="https://www.toutiao.com/favicon.ico" alt="头条" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                 头条
             </div>
             <div class="engine-item" data-engine="shenma" data-url="https://m.sm.cn/s?q=" data-type="domestic">
-                <img class="engine-icon" src="https://m.sm.cn/favicon.ico" alt="神马" style="width: 20px; height: 20px; object-fit: contain;">
+                <img class="engine-icon" src="https://m.sm.cn/favicon.ico" alt="神马" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                 神马
             </div>
             <div class="engine-item" data-engine="quark" data-url="https://quark.sm.cn/s?q=" data-type="domestic">
-                <img class="engine-icon" src="https://quark.sm.cn/favicon.ico" alt="夸克" style="width: 20px; height: 20px; object-fit: contain;">
+                <img class="engine-icon" src="https://quark.sm.cn/favicon.ico" alt="夸克" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                 夸克
             </div>
             <div class="engine-item" data-engine="bingcn" data-url="https://cn.bing.com/search?q=" data-type="domestic">
-                <img class="engine-icon" src="https://cn.bing.com/favicon.ico" alt="必应中国" style="width: 20px; height: 20px; object-fit: contain;">
+                <img class="engine-icon" src="https://cn.bing.com/favicon.ico" alt="必应中国" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                 必应中国
             </div>
             <div class="engine-item" data-engine="chinaso" data-url="https://www.chinaso.com/search?q=" data-type="domestic">
-                <img class="engine-icon" src="https://www.chinaso.com/favicon.ico" alt="中国搜索" style="width: 20px; height: 20px; object-fit: contain;">
+                <img class="engine-icon" src="https://www.chinaso.com/favicon.ico" alt="中国搜索" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                 中国搜索
             </div>
             <div class="engine-item" data-engine="soso" data-url="https://www.soso.com/q?w=" data-type="domestic">
-                <img class="engine-icon" src="https://www.soso.com/favicon.ico" alt="腾讯搜搜" style="width: 20px; height: 20px; object-fit: contain;">
+                <img class="engine-icon" src="https://www.soso.com/favicon.ico" alt="腾讯搜搜" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                 腾讯搜搜
             </div>
             <div class="engine-item" data-engine="wuzhui" data-url="https://www.wuzhuiso.com/s?q=" data-type="domestic">
-                <img class="engine-icon" src="https://www.wuzhuiso.com/favicon.ico" alt="无追搜索" style="width: 20px; height: 20px; object-fit: contain;">
+                <img class="engine-icon" src="https://www.wuzhuiso.com/favicon.ico" alt="无追搜索" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                 无追搜索
             </div>
             <div class="engine-item add-custom-engine" onclick="showAddCustomEngineDialog()" style="border: 2px dashed #aaa; color: #888; font-style: italic;">
@@ -2325,7 +2355,7 @@
                     </svg>
                 </button>
                 <button id="engineTabBtn" onclick="switchToEngineTab()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
-                    <img id="engineTabIcon" src="index.html" style="width: 24px; height: 24px; object-fit: contain; display: none;" alt="引擎">
+                    <img id="engineTabIcon" src="" style="width: 24px; height: 24px; object-fit: contain; display: none;" alt="引擎">
                     <span id="engineTabText" style="font-family: 'YouYuan', Arial, sans-serif; font-size: 20px; font-weight: bold;">引</span>
                 </button>
                 <button id="hotNewsTabBtn" onclick="switchToHotNewsTab()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
@@ -2383,63 +2413,63 @@
                 <div class="search-engine-selector" id="engineSelectorInTab" style="display: block; position: static; width: 100%; max-width: 600px; margin: 0 auto; border: none; box-shadow: none; background: transparent; opacity: 1; transform: none;">
                     <!-- 国内搜索引擎 -->
                     <div class="engine-item" data-engine="baidu" data-url="https://www.baidu.com/s?wd=" data-type="domestic">
-                        <img class="engine-icon" src="https://www.baidu.com/favicon.ico" alt="百度" style="width: 20px; height: 20px; object-fit: contain;">
+                        <img class="engine-icon" src="https://www.baidu.com/favicon.ico" alt="百度" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         百度
                     </div>
                     <div class="engine-item" data-engine="sogou" data-url="https://www.sogou.com/web?query=" data-type="domestic">
-                        <img class="engine-icon" src="https://www.sogou.com/favicon.ico" alt="搜狗" style="width: 20px; height: 20px; object-fit: contain;">
+                        <img class="engine-icon" src="https://www.sogou.com/favicon.ico" alt="搜狗" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         搜狗
                     </div>
                     <div class="engine-item" data-engine="so360" data-url="https://www.so.com/s?q=" data-type="domestic">
-                        <img class="engine-icon" src="https://www.so.com/favicon.ico" alt="360" style="width: 20px; height: 20px; object-fit: contain;">
+                        <img class="engine-icon" src="https://www.so.com/favicon.ico" alt="360" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         360
                     </div>
                     <div class="engine-item" data-engine="bing" data-url="https://cn.bing.com/search?q=" data-type="domestic">
-                        <img class="engine-icon" src="https://cn.bing.com/favicon.ico" alt="必应" style="width: 20px; height: 20px; object-fit: contain;">
+                        <img class="engine-icon" src="https://cn.bing.com/favicon.ico" alt="必应" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         必应
                     </div>
                     <div class="engine-item" data-engine="shenma" data-url="https://m.sm.cn/s?q=" data-type="domestic">
-                        <img class="engine-icon" src="https://m.sm.cn/favicon.ico" alt="神马" style="width: 20px; height: 20px; object-fit: contain;">
+                        <img class="engine-icon" src="https://m.sm.cn/favicon.ico" alt="神马" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         神马
                     </div>
                     <div class="engine-item" data-engine="toutiao" data-url="https://www.toutiao.com/search/?keyword=" data-type="domestic">
-                        <img class="engine-icon" src="https://www.toutiao.com/favicon.ico" alt="头条" style="width: 20px; height: 20px; object-fit: contain;">
+                        <img class="engine-icon" src="https://www.toutiao.com/favicon.ico" alt="头条" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         头条
                     </div>
                     <div class="engine-item" data-engine="douyin" data-url="https://www.douyin.com/search/" data-type="domestic">
-                        <img class="engine-icon" src="https://www.douyin.com/favicon.ico" alt="抖音" style="width: 20px; height: 20px; object-fit: contain;">
+                        <img class="engine-icon" src="https://www.douyin.com/favicon.ico" alt="抖音" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         抖音
                     </div>
                     <div class="engine-item" data-engine="quark" data-url="https://quark.sm.cn/s?q=" data-type="domestic">
-                        <img class="engine-icon" src="https://quark.sm.cn/favicon.ico" alt="夸克" style="width: 20px; height: 20px; object-fit: contain;">
+                        <img class="engine-icon" src="https://quark.sm.cn/favicon.ico" alt="夸克" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         夸克
                     </div>
                     <div class="engine-item" data-engine="zhongguo" data-url="https://www.chinaso.com/search?q=" data-type="domestic">
-                        <img class="engine-icon" src="https://www.chinaso.com/favicon.ico" alt="中国搜索" style="width: 20px; height: 20px; object-fit: contain;">
+                        <img class="engine-icon" src="https://www.chinaso.com/favicon.ico" alt="中国搜索" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         中国搜索
                     </div>
                     <div class="engine-item" data-engine="jike" data-url="https://www.jike.com/search?q=" data-type="domestic">
-                        <img class="engine-icon" src="https://www.jike.com/favicon.ico" alt="即刻搜索" style="width: 20px; height: 20px; object-fit: contain;">
+                        <img class="engine-icon" src="https://www.jike.com/favicon.ico" alt="即刻搜索" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         即刻搜索
                     </div>
                     <div class="engine-item" data-engine="wechat" data-url="https://weixin.sogou.com/weixin?type=2&q=" data-type="domestic">
-                        <img class="engine-icon" src="https://weixin.sogou.com/favicon.ico" alt="微信搜一搜" style="width: 20px; height: 20px; object-fit: contain;">
+                        <img class="engine-icon" src="https://weixin.sogou.com/favicon.ico" alt="微信搜一搜" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         微信搜一搜
                     </div>
                     <div class="engine-item" data-engine="youdao" data-url="https://www.youdao.com/search?q=" data-type="domestic">
-                        <img class="engine-icon" src="https://www.youdao.com/favicon.ico" alt="有道" style="width: 20px; height: 20px; object-fit: contain;">
+                        <img class="engine-icon" src="https://www.youdao.com/favicon.ico" alt="有道" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         有道
                     </div>
                     <div class="engine-item" data-engine="soso" data-url="https://www.soso.com/q?w=" data-type="domestic">
-                        <img class="engine-icon" src="https://www.soso.com/favicon.ico" alt="搜搜" style="width: 20px; height: 20px; object-fit: contain;">
+                        <img class="engine-icon" src="https://www.soso.com/favicon.ico" alt="搜搜" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         搜搜
                     </div>
                     <div class="engine-item" data-engine="wuzhui" data-url="https://www.wuzhuiso.com/s?q=" data-type="domestic">
-                        <img class="engine-icon" src="https://www.wuzhuiso.com/favicon.ico" alt="无追" style="width: 20px; height: 20px; object-fit: contain;">
+                        <img class="engine-icon" src="https://www.wuzhuiso.com/favicon.ico" alt="无追" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         无追
                     </div>
                     <div class="engine-item" data-engine="baiduxueshu" data-url="https://xueshu.baidu.com/s?wd=" data-type="domestic">
-                        <img class="engine-icon" src="https://xueshu.baidu.com/favicon.ico" alt="百度学术" style="width: 20px; height: 20px; object-fit: contain;">
+                        <img class="engine-icon" src="https://xueshu.baidu.com/favicon.ico" alt="百度学术" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         百度学术
                     </div>
                     <div class="engine-item add-custom-engine" onclick="showAddCustomEngineDialog()" style="border: 2px dashed #aaa; color: #888; font-style: italic;">
@@ -2829,27 +2859,27 @@
                     </label>
                     <div style="margin-bottom: 10px;">
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-<label class="toggle-switch"><input type="checkbox" class="clearOption"><span class="toggle-slider"></span></label>
+<label class="toggle-switch"><input type="checkbox" class="clearOption" value="history"><span class="toggle-slider"></span></label>
 <span style="font-family: 'YouYuan'; font-size: 14px;">搜索历史</span>
 </div>
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-<label class="toggle-switch"><input type="checkbox" class="clearOption"><span class="toggle-slider"></span></label>
+<label class="toggle-switch"><input type="checkbox" class="clearOption" value="favorites"><span class="toggle-slider"></span></label>
 <span style="font-family: 'YouYuan'; font-size: 14px;">收藏数据</span>
 </div>
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-<label class="toggle-switch"><input type="checkbox" class="clearOption"><span class="toggle-slider"></span></label>
+<label class="toggle-switch"><input type="checkbox" class="clearOption" value="cache"><span class="toggle-slider"></span></label>
 <span style="font-family: 'YouYuan'; font-size: 14px;">页面缓存</span>
 </div>
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-<label class="toggle-switch"><input type="checkbox" class="clearOption"><span class="toggle-slider"></span></label>
+<label class="toggle-switch"><input type="checkbox" class="clearOption" value="settings"><span class="toggle-slider"></span></label>
 <span style="font-family: 'YouYuan'; font-size: 14px;">主题与样式设置</span>
 </div>
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-<label class="toggle-switch"><input type="checkbox" class="clearOption"><span class="toggle-slider"></span></label>
+<label class="toggle-switch"><input type="checkbox" class="clearOption" value="apiUrls"><span class="toggle-slider"></span></label>
 <span style="font-family: 'YouYuan'; font-size: 14px;">API 地址配置</span>
 </div>
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-<label class="toggle-switch"><input type="checkbox" class="clearOption"><span class="toggle-slider"></span></label>
+<label class="toggle-switch"><input type="checkbox" class="clearOption" value="engines"><span class="toggle-slider"></span></label>
 <span style="font-family: 'YouYuan'; font-size: 14px;">搜索引擎选择</span>
 </div>
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
@@ -3504,6 +3534,17 @@
                 const enableLaunchAnimCb = document.getElementById('enableLaunchAnim');
                 if (enableLaunchAnimCb) enableLaunchAnimCb.checked = false;
             }
+            // Restore high contrast mode
+            if (localStorage.getItem('highContrastMode') === 'true') {
+                const highContrastCb = document.getElementById('highContrastMode');
+                if (highContrastCb) highContrastCb.checked = true;
+                document.body.style.filter = 'contrast(1.5)';
+            }
+            // Restore show fav create time checkbox
+            if (localStorage.getItem('showFavCreateTime') === 'true') {
+                const showFavCreateTimeCb = document.getElementById('showFavCreateTime');
+                if (showFavCreateTimeCb) showFavCreateTimeCb.checked = true;
+            }
             // Restore search box URL access mode radio buttons
             updateUrlAccessRadio();
             // Restore search box size
@@ -3744,47 +3785,53 @@
             // 先记录用户原始输入到搜索历史
             addToHistory(query);
 
-            // 无广清净模式：自动加过滤词（仅用于搜索，不影响历史）
-            const cleanMode = document.getElementById('cleanSearchMode');
-            if (cleanMode && cleanMode.checked) {
-                const keywordInput = document.getElementById('cleanSearchKeyword');
-                const keyword = keywordInput ? keywordInput.value.trim() : '李彦宏';
-                if (keyword) {
-                    query = query + ' -' + keyword;
-                }
-            }
-            
             // Hide suggestions and search history
             hideSuggestions();
             searchHistoryList.style.display = 'none';
-            
+
             // Handle .xxx format -> www.xxx.com
             if (query.startsWith('.') && !query.includes(' ')) {
                 const domain = query.substring(1);
                 query = `www.${domain}.com`;
             }
-            
+
             // Handle @xxx format -> xxx (remove @)
             if (query.startsWith('@') && !query.includes(' ')) {
                 query = query.substring(1);
             }
-            
-            // Check URL access mode
+
+            // Check URL access mode (before clean mode modifies query)
             const urlAccessMode = localStorage.getItem('searchBoxUrlAccess') || 'off';
             let shouldTreatAsUrl = false;
-            
-            if (urlAccessMode === 'temp') {
-                // Temp mode: treat all input as URL access (no https prefix)
+
+            if (urlAccessMode === 'always') {
+                // Always mode: treat all input as URL, never auto-close
+                shouldTreatAsUrl = true;
+            } else if (urlAccessMode === 'temp') {
+                // Temp mode: treat all input as URL access
                 shouldTreatAsUrl = true;
             } else if (urlAccessMode !== 'off') {
                 // Check if it's a URL using browser-standard rules
                 shouldTreatAsUrl = checkIfUrl(query);
             }
+
+            // 无广清净模式：自动加过滤词（仅用于搜索，不影响历史，不影响URL访问）
+            if (!shouldTreatAsUrl) {
+                const cleanMode = document.getElementById('cleanSearchMode');
+                if (cleanMode && cleanMode.checked) {
+                    const keywordInput = document.getElementById('cleanSearchKeyword');
+                    const keyword = keywordInput ? keywordInput.value.trim() : '李彦宏';
+                    if (keyword) {
+                        query = query + ' -' + keyword;
+                    }
+                }
+            }
             
             if (shouldTreatAsUrl) {
-                // Open URL directly as-is, no protocol prefix added
+                // Normalize and open URL
+                const url = normalizeUrl(query);
                 playSearchLaunchAnimation(function() {
-                    window.open(query, '_blank');
+                    window.open(url, '_blank');
                 });
                 // If temp mode, switch back to off after accessing
                 if (urlAccessMode === 'temp') {
@@ -3801,11 +3848,33 @@
         
         // Check if input is a URL using browser-standard rules
         function checkIfUrl(input) {
-            // Only treat as URL if starts with ... (user explicitly wants to visit URL)
+            // Explicit URL prefix
+            if (/^https?:\/\//i.test(input) || /^ftp:\/\//i.test(input)) {
+                return true;
+            }
+            // Input starting with ... is forced URL
             if (input.startsWith('...')) {
                 return true;
             }
+            // www.xxx.com or domain with dots and valid TLD
+            if (/^(www\.|[a-zA-Z0-9][-a-zA-Z0-9]*\.[a-zA-Z]{2,})/.test(input) && input.includes('.')) {
+                return true;
+            }
             return false;
+        }
+
+        // Normalize URL: add https:// if no protocol
+        function normalizeUrl(input) {
+            // Remove leading ... if present
+            if (input.startsWith('...')) {
+                input = input.substring(3);
+            }
+            // If already has protocol, return as-is
+            if (/^https?:\/\//i.test(input) || /^ftp:\/\//i.test(input)) {
+                return input;
+            }
+            // Add https://
+            return 'https://' + input;
         }
 
         // Fetch search suggestions from Baidu
@@ -4085,6 +4154,7 @@
         let longPressTimer;
         let isLongPress = false;
         let longPressActive = false; // Prevent multiple toasts
+        let emojiEnabled = (document.cookie.match(/(^|;)emojiEnabled=([^;]*)/) || [])[2] !== 'false';
         
         document.addEventListener('touchstart', function(e) {
             if (longPressActive) return; // Skip if toast is showing
@@ -4433,7 +4503,7 @@
                         : '<span style="font-size:16px;">🔍</span>';
                     
                     div.innerHTML = iconHtml + ' ' + engine.name + 
-                        ' <span onclick="event.stopPropagation(); deleteCustomEngine(\'' + engine.id + '\')" style="position:absolute;top:-4px;right:-4px;width:16px;height:16px;background:#ff4444;color:#fff;border-radius:50%;font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;">×</span>';
+                        ' <span onclick="event.stopPropagation(); deleteCustomEngine(\'' + engine.id + '\')" style="position:absolute;top:-6px;right:-6px;width:22px;height:22px;background:#ff4444;color:#fff;border-radius:50%;font-size:14px;font-weight:bold;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 4px rgba(0,0,0,0.3);line-height:1;z-index:5;" title="删除">×</span>';
                     
                     if (addBtn) {
                         grid.insertBefore(div, addBtn);
@@ -4535,6 +4605,7 @@
             settingsModified = true;
             const highContrastMode = document.getElementById('highContrastMode');
             const isHighContrast = highContrastMode ? highContrastMode.checked : false;
+            localStorage.setItem('highContrastMode', isHighContrast);
             if (isHighContrast) {
                 document.body.style.filter = 'contrast(1.5)';
             } else {
@@ -6693,7 +6764,15 @@
             const prevStyle = currentButtonStyle;
             currentButtonStyle = style;
             localStorage.setItem('buttonStyle', style);
-            
+
+            // Elder mode should also disable all animations
+            if (style === 'elder') {
+                localStorage.setItem('disableAllAnim', 'true');
+                document.documentElement.classList.add('no-animations');
+                const disableAllAnimCb = document.getElementById('disableAllAnim');
+                if (disableAllAnimCb) disableAllAnimCb.checked = true;
+            }
+
             // Always restore original styles first to prevent mode mixing
             restoreNeumorphism();
             
@@ -6817,16 +6896,20 @@
                 const brightness = localStorage.getItem('wallpaperBrightness') || '100';
                 filterOverlay.style.filter = 'blur(' + blur + 'px) brightness(' + brightness + '%)';
 
+                // Pre-set initial state before loading image
+                filterOverlay.style.opacity = '0';
+                filterOverlay.style.transform = 'scale(1.05)';
+                filterOverlay.style.transition = 'opacity 1.5s ease, transform 1.5s ease';
+
                 const img = new Image();
                 img.onload = function() {
-                    // Smooth wallpaper appearance animation
+                    // Set wallpaper image, then animate in with double rAF to ensure transition fires
                     filterOverlay.style.backgroundImage = "url('" + img.src + "')";
-                    filterOverlay.style.opacity = '0';
-                    filterOverlay.style.transform = 'scale(1.05)';
-                    filterOverlay.style.transition = 'opacity 1.5s ease, transform 1.5s ease';
                     requestAnimationFrame(function() {
-                        filterOverlay.style.opacity = '1';
-                        filterOverlay.style.transform = 'scale(1)';
+                        requestAnimationFrame(function() {
+                            filterOverlay.style.opacity = '1';
+                            filterOverlay.style.transform = 'scale(1)';
+                        });
                     });
                 };
                 img.onerror = function() {
@@ -7386,6 +7469,7 @@
             logoExpanded = !logoExpanded;
             var link1 = document.getElementById('logoLink1');
             var link2 = document.getElementById('logoLink2');
+            var link3 = document.getElementById('logoLink3');
             if (logoExpanded) {
                 if (link1) {
                     link1.style.opacity = '1';
@@ -7397,6 +7481,11 @@
                     link2.style.transform = 'translateX(0) scale(1)';
                     link2.style.pointerEvents = 'auto';
                 }
+                if (link3) {
+                    link3.style.opacity = '1';
+                    link3.style.transform = 'translateX(0) scale(1)';
+                    link3.style.pointerEvents = 'auto';
+                }
             } else {
                 if (link1) {
                     link1.style.opacity = '0';
@@ -7407,6 +7496,11 @@
                     link2.style.opacity = '0';
                     link2.style.transform = 'translateX(-20px) scale(0.5)';
                     link2.style.pointerEvents = 'none';
+                }
+                if (link3) {
+                    link3.style.opacity = '0';
+                    link3.style.transform = 'translateX(-20px) scale(0.5)';
+                    link3.style.pointerEvents = 'none';
                 }
             }
         }
