@@ -138,11 +138,7 @@
         }
 
         .search-container {
-            display: flex;
-            gap: 0;
-            padding: 0;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: inline-block;
             position: relative;
             z-index: 100;
             opacity: 0;
@@ -200,7 +196,6 @@
 
         .search-box:focus {
             transform: scale(1.02);
-            box-shadow: 25px 25px 70px #bbbbbb, -25px -25px 70px #ffffff;
         }
 
         .settings-radio-grid {
@@ -412,33 +407,7 @@
             opacity: 0.8;
         }
 
-        /* KG app item hover effects */
-        .kg-app-item:hover {
-            transform: translateY(-4px);
-        }
 
-        .kg-app-item:hover .kg-app-icon {
-            transform: scale(1.1);
-            box-shadow: 15px 15px 40px #cccccc, -15px -15px 40px #ffffff;
-        }
-
-        .kg-app-item:active {
-            transform: translateY(-2px) scale(0.95);
-        }
-
-        .kg-app-item:active .kg-app-icon {
-            transform: scale(1.05);
-        }
-
-        /* KG download option hover effects */
-        .kg-download-option:hover {
-            transform: translateX(4px);
-            box-shadow: 15px 15px 40px #cccccc, -15px -15px 40px #ffffff;
-        }
-
-        .kg-download-option:active {
-            transform: translateX(2px) scale(0.98);
-        }
 
         /* Universal hover animation for all neumorphism elements */
         /* This applies to any element with the standard neumorphism shadow */
@@ -575,7 +544,46 @@
             }
 
             .search-engine-selector {
-                position: relative;
+                position: absolute;
+                top: 0;
+                right: calc(100% + 5px);
+                left: auto;
+                width: auto !important;
+                max-width: 52px !important;
+                padding: 8px 6px;
+            }
+
+            .search-engine-selector .engine-grid {
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .search-engine-selector .engine-item {
+                padding: 8px 6px;
+                font-size: 0;
+                text-align: center;
+                width: 40px;
+                min-width: 40px;
+            }
+
+            .search-engine-selector .engine-item img.engine-icon {
+                display: inline-block !important;
+                width: 20px !important;
+                height: 20px !important;
+            }
+
+            /* Mobile: dropdown menu shows icons only */
+            #dropdownMenu > div .dropdown-text {
+                display: none !important;
+            }
+
+            #dropdownMenu > div {
+                padding: 0 8px !important;
+            }
+
+            #dropdownMenu > div svg {
+                width: 20px !important;
+                height: 20px !important;
             }
             
             /* Favorites modal mobile responsive */
@@ -628,10 +636,6 @@
                 margin-top: 10px;
             }
             
-            #kgSearchInput {
-                font-size: 16px !important;
-                padding: 12px 15px !important;
-            }
         }
 
         .search-hint {
@@ -648,7 +652,6 @@
 
         /* Tab content transition */
         #favoritesContent,
-        #kgContent,
         #engineContent,
         #settingsContent {
             transition: opacity 0.3s ease, transform 0.3s ease;
@@ -682,8 +685,6 @@
         }
 
         body[data-theme="dark"] .search-box {
-            background: #3a3a3a;
-            box-shadow: 20px 20px 62px #2a2a2a, -20px -20px 62px #4a4a4a;
             color: #e0e0e0;
         }
 
@@ -789,16 +790,6 @@
             background: #363636;
         }
 
-        body[data-theme="dark"] .kg-content {
-            background: #3a3a3a;
-            box-shadow: 20px 20px 62px #2a2a2a, -20px -20px 62px #4a4a4a;
-            color: #e0e0e0;
-        }
-
-        body[data-theme="dark"] .kg-content p,
-        body[data-theme="dark"] .kg-content h4 {
-            color: #e0e0e0;
-        }
 
         body[data-theme="dark"] .hot-news-container {
             background: #3a3a3a;
@@ -871,10 +862,6 @@
             color: #e0e0e0 !important;
         }
 
-        body[data-theme="dark"] #kgSearchInput {
-            background: #3a3a3a !important;
-            color: #e0e0e0 !important;
-        }
 
         body[data-theme="dark"] .settings-section h3 {
             background: #3a3a3a !important;
@@ -925,7 +912,6 @@
         body[data-button-style="outline"] .modal-content,
         body[data-button-style="outline"] .settings-section h3,
         body[data-button-style="outline"] .favorite-item,
-        body[data-button-style="outline"] .kg-content,
         body[data-button-style="outline"] .hot-news-container,
         body[data-button-style="outline"] .search-hint,
         body[data-button-style="outline"] .suggestions,
@@ -935,7 +921,6 @@
         body[data-button-style="outline"] #favSearchInput,
         body[data-button-style="outline"] #addFavBtn,
         body[data-button-style="outline"] .ui,
-        body[data-button-style="outline"] #kgSearchInput,
         body[data-button-style="outline"] .bottom-btn,
         body[data-button-style="outline"] #dropdownMenu,
         body[data-button-style="outline"] .modal-close-btn,
@@ -949,13 +934,7 @@
             background: transparent !important;
         }
 
-        /* Search box in outline mode - with border */
-        body[data-button-style="outline"] .search-box {
-            box-shadow: none !important;
-            border: 2px solid currentColor !important;
-            border-radius: var(--global-radius) !important;
-            background: transparent !important;
-        }
+
         
         /* Remove outermost border from modal in outline mode */
         body[data-button-style="outline"] #favoritesModal {
@@ -1016,12 +995,10 @@
         body[data-button-style="rounded"] button,
         body[data-button-style="rounded"] input,
         body[data-button-style="rounded"] select,
-        body[data-button-style="rounded"] .search-box,
         body[data-button-style="rounded"] .tab-btn,
         body[data-button-style="rounded"] .modal-content,
         body[data-button-style="rounded"] .settings-section h3,
         body[data-button-style="rounded"] .favorite-item,
-        body[data-button-style="rounded"] .kg-content,
         body[data-button-style="rounded"] .hot-news-container,
         body[data-button-style="rounded"] .search-hint,
         body[data-button-style="rounded"] .suggestions,
@@ -1029,7 +1006,6 @@
         body[data-button-style="rounded"] .engine-item,
         body[data-button-style="rounded"] #favSearchInput,
         body[data-button-style="rounded"] #addFavBtn,
-        body[data-button-style="rounded"] #kgSearchInput,
         body[data-button-style="rounded"] .bottom-btn,
         body[data-button-style="rounded"] #dropdownMenu,
         body[data-button-style="rounded"] .modal-close-btn,
@@ -1062,12 +1038,10 @@
         body[data-button-style="glass"] button,
         body[data-button-style="glass"] input,
         body[data-button-style="glass"] select,
-        body[data-button-style="glass"] .search-box,
         body[data-button-style="glass"] .tab-btn,
         body[data-button-style="glass"] .modal-content,
         body[data-button-style="glass"] .settings-section h3,
         body[data-button-style="glass"] .favorite-item,
-        body[data-button-style="glass"] .kg-content,
         body[data-button-style="glass"] .hot-news-container,
         body[data-button-style="glass"] .search-hint,
         body[data-button-style="glass"] .suggestions,
@@ -1075,7 +1049,6 @@
         body[data-button-style="glass"] .engine-item,
         body[data-button-style="glass"] #favSearchInput,
         body[data-button-style="glass"] #addFavBtn,
-        body[data-button-style="glass"] #kgSearchInput,
         body[data-button-style="glass"] .bottom-btn,
         body[data-button-style="glass"] #dropdownMenu,
         body[data-button-style="glass"] .modal-close-btn,
@@ -1100,17 +1073,6 @@
             text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
         }
 
-        /* Force glass effect on search box (override inline style) */
-        body[data-button-style="glass"] .search-box,
-        body[data-button-style="glass"] #searchInput {
-            background: linear-gradient(
-                135deg,
-                rgba(255, 255, 255, 0.4) 0%,
-                rgba(255, 255, 255, 0.2) 50%,
-                rgba(255, 255, 255, 0.3) 100%
-            ) !important;
-            will-change: transform;
-        }
 
         body[data-button-style="glass"] button:hover,
         body[data-button-style="glass"] .tab-btn:hover {
@@ -1144,12 +1106,10 @@
         body[data-theme="dark"][data-button-style="glass"] button,
         body[data-theme="dark"][data-button-style="glass"] input,
         body[data-theme="dark"][data-button-style="glass"] select,
-        body[data-theme="dark"][data-button-style="glass"] .search-box,
         body[data-theme="dark"][data-button-style="glass"] .tab-btn,
         body[data-theme="dark"][data-button-style="glass"] .modal-content,
         body[data-theme="dark"][data-button-style="glass"] .settings-section h3,
         body[data-theme="dark"][data-button-style="glass"] .favorite-item,
-        body[data-theme="dark"][data-button-style="glass"] .kg-content,
         body[data-theme="dark"][data-button-style="glass"] .hot-news-container,
         body[data-theme="dark"][data-button-style="glass"] .search-hint,
         body[data-theme="dark"][data-button-style="glass"] .suggestions,
@@ -1157,7 +1117,6 @@
         body[data-theme="dark"][data-button-style="glass"] .engine-item,
         body[data-theme="dark"][data-button-style="glass"] #favSearchInput,
         body[data-theme="dark"][data-button-style="glass"] #addFavBtn,
-        body[data-theme="dark"][data-button-style="glass"] #kgSearchInput,
         body[data-theme="dark"][data-button-style="glass"] .bottom-btn,
         body[data-theme="dark"][data-button-style="glass"] #dropdownMenu,
         body[data-theme="dark"][data-button-style="glass"] .modal-close-btn,
@@ -1176,16 +1135,6 @@
                 0 2px 8px rgba(0, 0, 0, 0.2) !important;
         }
 
-        /* Force glass effect on search box in dark mode */
-        body[data-theme="dark"][data-button-style="glass"] .search-box,
-        body[data-theme="dark"][data-button-style="glass"] #searchInput {
-            background: linear-gradient(
-                135deg,
-                rgba(255, 255, 255, 0.15) 0%,
-                rgba(255, 255, 255, 0.08) 50%,
-                rgba(255, 255, 255, 0.12) 100%
-            ) !important;
-        }
 
         body[data-theme="dark"][data-button-style="glass"] button:hover,
         body[data-theme="dark"][data-button-style="glass"] .tab-btn:hover {
@@ -1210,12 +1159,10 @@
         body[data-button-style="transparent"] button,
         body[data-button-style="transparent"] input,
         body[data-button-style="transparent"] select,
-        body[data-button-style="transparent"] .search-box,
         body[data-button-style="transparent"] .tab-btn,
         body[data-button-style="transparent"] .modal-content,
         body[data-button-style="transparent"] .settings-section h3,
         body[data-button-style="transparent"] .favorite-item,
-        body[data-button-style="transparent"] .kg-content,
         body[data-button-style="transparent"] .hot-news-container,
         body[data-button-style="transparent"] .search-hint,
         body[data-button-style="transparent"] .suggestions,
@@ -1223,7 +1170,6 @@
         body[data-button-style="transparent"] .engine-item,
         body[data-button-style="transparent"] #favSearchInput,
         body[data-button-style="transparent"] #addFavBtn,
-        body[data-button-style="transparent"] #kgSearchInput,
         body[data-button-style="transparent"] .bottom-btn,
         body[data-button-style="transparent"] #dropdownMenu,
         body[data-button-style="transparent"] .modal-close-btn,
@@ -1259,12 +1205,10 @@
         body[data-theme="dark"][data-button-style="transparent"] button,
         body[data-theme="dark"][data-button-style="transparent"] input,
         body[data-theme="dark"][data-button-style="transparent"] select,
-        body[data-theme="dark"][data-button-style="transparent"] .search-box,
         body[data-theme="dark"][data-button-style="transparent"] .tab-btn,
         body[data-theme="dark"][data-button-style="transparent"] .modal-content,
         body[data-theme="dark"][data-button-style="transparent"] .settings-section h3,
         body[data-theme="dark"][data-button-style="transparent"] .favorite-item,
-        body[data-theme="dark"][data-button-style="transparent"] .kg-content,
         body[data-theme="dark"][data-button-style="transparent"] .hot-news-container,
         body[data-theme="dark"][data-button-style="transparent"] .search-hint,
         body[data-theme="dark"][data-button-style="transparent"] .suggestions,
@@ -1272,7 +1216,6 @@
         body[data-theme="dark"][data-button-style="transparent"] .engine-item,
         body[data-theme="dark"][data-button-style="transparent"] #favSearchInput,
         body[data-theme="dark"][data-button-style="transparent"] #addFavBtn,
-        body[data-theme="dark"][data-button-style="transparent"] #kgSearchInput,
         body[data-theme="dark"][data-button-style="transparent"] .bottom-btn,
         body[data-theme="dark"][data-button-style="transparent"] #dropdownMenu,
         body[data-theme="dark"][data-button-style="transparent"] .modal-close-btn,
@@ -1297,12 +1240,10 @@
         body[data-button-style="frosted"] button,
         body[data-button-style="frosted"] input,
         body[data-button-style="frosted"] select,
-        body[data-button-style="frosted"] .search-box,
         body[data-button-style="frosted"] .tab-btn,
         body[data-button-style="frosted"] .modal-content,
         body[data-button-style="frosted"] .settings-section h3,
         body[data-button-style="frosted"] .favorite-item,
-        body[data-button-style="frosted"] .kg-content,
         body[data-button-style="frosted"] .hot-news-container,
         body[data-button-style="frosted"] .search-hint,
         body[data-button-style="frosted"] .suggestions,
@@ -1310,7 +1251,6 @@
         body[data-button-style="frosted"] .engine-item,
         body[data-button-style="frosted"] #favSearchInput,
         body[data-button-style="frosted"] #addFavBtn,
-        body[data-button-style="frosted"] #kgSearchInput,
         body[data-button-style="frosted"] .bottom-btn,
         body[data-button-style="frosted"] #dropdownMenu,
         body[data-button-style="frosted"] .modal-close-btn,
@@ -1349,12 +1289,10 @@
         body[data-theme="dark"][data-button-style="frosted"] button,
         body[data-theme="dark"][data-button-style="frosted"] input,
         body[data-theme="dark"][data-button-style="frosted"] select,
-        body[data-theme="dark"][data-button-style="frosted"] .search-box,
         body[data-theme="dark"][data-button-style="frosted"] .tab-btn,
         body[data-theme="dark"][data-button-style="frosted"] .modal-content,
         body[data-theme="dark"][data-button-style="frosted"] .settings-section h3,
         body[data-theme="dark"][data-button-style="frosted"] .favorite-item,
-        body[data-theme="dark"][data-button-style="frosted"] .kg-content,
         body[data-theme="dark"][data-button-style="frosted"] .hot-news-container,
         body[data-theme="dark"][data-button-style="frosted"] .search-hint,
         body[data-theme="dark"][data-button-style="frosted"] .suggestions,
@@ -1362,7 +1300,6 @@
         body[data-theme="dark"][data-button-style="frosted"] .engine-item,
         body[data-theme="dark"][data-button-style="frosted"] #favSearchInput,
         body[data-theme="dark"][data-button-style="frosted"] #addFavBtn,
-        body[data-theme="dark"][data-button-style="frosted"] #kgSearchInput,
         body[data-theme="dark"][data-button-style="frosted"] .bottom-btn,
         body[data-theme="dark"][data-button-style="frosted"] #dropdownMenu,
         body[data-theme="dark"][data-button-style="frosted"] .modal-close-btn,
@@ -1412,21 +1349,40 @@
             transition: margin-top 0.6s ease;
         }
 
-        body[data-bg-mode="wallpaper"] .search-box {
-            background: rgba(240, 240, 240, 0.7) !important;
-            border: none !important;
+
+
+        body[data-bg-mode="wallpaper"] .search-hint {
+            background: transparent !important;
+            box-shadow: none !important;
+            color: #ffffff !important;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        body[data-bg-mode="wallpaper"] .suggestions,
+        body[data-bg-mode="wallpaper"] .search-history {
+            background: rgba(0,0,0,0.3) !important;
+            box-shadow: none !important;
+            color: #ffffff !important;
+        }
+
+        body[data-bg-mode="wallpaper"] .suggestions li,
+        body[data-bg-mode="wallpaper"] .search-history li {
+            color: #ffffff !important;
+        }
+
+        body[data-bg-mode="wallpaper"] .suggestions li:hover,
+        body[data-bg-mode="wallpaper"] .search-history li:hover {
+            background-color: rgba(255,255,255,0.15) !important;
         }
 
         body[data-bg-mode="wallpaper"] .poem-content,
         body[data-bg-mode="wallpaper"] .poem-title,
         body[data-bg-mode="wallpaper"] .poem-author {
-            color: #ffffff !important;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            /* Keep original colors in wallpaper mode */
         }
 
         body[data-bg-mode="wallpaper"] #favBtn {
-            color: #ffffff !important;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            /* Keep original colors in wallpaper mode */
         }
 
         /* Other interfaces (modals) - wallpaper behind + white transparent */
@@ -1531,6 +1487,17 @@
             to   { opacity: 1; transform: translateX(0); }
         }
 
+        @keyframes clockOverlayIn {
+            0% { opacity: 0; backdrop-filter: blur(0px); background: transparent; }
+            50% { opacity: 0.7; backdrop-filter: blur(10px); background: rgba(0,0,0,0.3); }
+            100% { opacity: 1; backdrop-filter: blur(0px); background: #000; }
+        }
+        @keyframes clockOverlayOut {
+            0% { opacity: 1; backdrop-filter: blur(0px); background: #000; }
+            50% { opacity: 0.7; backdrop-filter: blur(10px); background: rgba(0,0,0,0.3); }
+            100% { opacity: 0; backdrop-filter: blur(0px); background: transparent; }
+        }
+
         .suggestions li:hover {
             background-color: #f0f0f0;
             transform: translateX(4px);
@@ -1630,7 +1597,10 @@
 
         /* Search engine selector styles */
         .search-engine-selector {
-            margin-top: 10px;
+            position: absolute;
+            top: 0;
+            right: calc(100% + 10px);
+            margin-top: 0;
             padding: 10px 15px;
             border: none;
             border-radius: var(--global-radius);
@@ -1638,13 +1608,13 @@
             box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;
             max-width: 100%;
             opacity: 0;
-            transform: translateY(-10px);
+            transform: translateX(20px);
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
         .search-engine-selector[style*="display: block"] {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateX(0);
         }
 
         .engine-grid {
@@ -1652,6 +1622,10 @@
             flex-wrap: wrap;
             gap: 8px;
             justify-content: center;
+        }
+
+        .engine-grid img.engine-icon {
+            display: none !important;
         }
 
         .engine-item {
@@ -1679,150 +1653,6 @@
         .engine-name {
             color: inherit;
             font-family: 'YouYuan', Arial, sans-serif;
-        }
-
-        /* KG Grid View - Responsive */
-        #kgList {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-            gap: 15px;
-            padding: 20px;
-        }
-
-        #kgList .kg-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 14px 8px;
-            border: none;
-            border-radius: var(--global-radius);
-            box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;
-            background: #F0F0F0;
-            cursor: pointer;
-            font-family: 'YouYuan', Arial, sans-serif;
-            transition: transform 0.2s ease;
-            text-align: center;
-            position: relative;
-        }
-
-        #kgList .kg-item:hover {
-            transform: translateY(-2px);
-        }
-
-        #kgList .kg-icon {
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: var(--global-radius);
-            font-weight: bold;
-            font-size: 20px;
-            color: white;
-            margin-bottom: 8px;
-            flex-shrink: 0;
-        }
-
-        #kgList .kg-name {
-            font-weight: bold;
-            font-size: 12px;
-            line-height: 1.3;
-            word-break: break-word;
-            max-width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-
-        /* KG System Switch */
-        .kg-switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 26px;
-        }
-        .kg-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .kg-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: var(--global-radius);
-            box-shadow: inset 2px 2px 5px #999, inset -2px -2px 5px #fff;
-        }
-        .kg-slider:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-        }
-        .kg-switch input:checked + .kg-slider {
-            background-color: #0078D4;
-        }
-        .kg-switch input:checked + .kg-slider:before {
-            transform: translateX(24px);
-        }
-
-        /* KG System Items */
-        .kg-system-item {
-            transition: all 0.3s ease;
-        }
-        .kg-system-item.active {
-            box-shadow: 20px 20px 62px #bebebe, -20px -20px 62px #ffffff;
-        }
-        .kg-system-item.active .kg-system-arrow {
-            transform: rotate(180deg);
-        }
-        .kg-app-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            gap: 10px;
-        }
-        .kg-app-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px;
-            border-radius: var(--global-radius);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .kg-app-item:hover {
-            background: rgba(0,0,0,0.05);
-        }
-        .kg-app-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: var(--global-radius);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 5px;
-            font-size: 20px;
-        }
-        .kg-app-name {
-            font-size: 11px;
-            text-align: center;
-            max-width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
         }
 
         /* Favorites Grid View - Desktop icon style */
@@ -1945,13 +1775,11 @@
 
         /* Responsive adjustments */
         @media (max-width: 480px) {
-            #kgList,
             #favoritesList {
                 grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
                 gap: 10px;
                 padding: 15px;
             }
-            #kgList .kg-item,
             #favoritesList .fav-item {
                 padding: 10px 6px;
                 position: relative;
@@ -1969,31 +1797,26 @@
             }
             
 
-            #kgList .kg-icon,
             #favoritesList .fav-icon {
                 width: 40px;
                 height: 40px;
             }
-            #kgList .kg-icon,
             #favoritesList .fav-icon .fav-initial {
                 font-size: 16px;
                 border-radius: var(--global-radius);
             }
-            #kgList .kg-name,
             #favoritesList .fav-name {
                 font-size: 11px;
             }
         }
 
         @media (min-width: 768px) {
-            #kgList,
             #favoritesList {
                 grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
             }
         }
 
         @media (min-width: 1024px) {
-            #kgList,
             #favoritesList {
                 grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
             }
@@ -2067,8 +1890,7 @@
 
         body[data-elder-mode="true"] button,
         body[data-elder-mode="true"] input,
-        body[data-elder-mode="true"] select,
-        body[data-elder-mode="true"] .search-box {
+        body[data-elder-mode="true"] select {
             border: 1px solid #ccc !important;
             background: #f5f5f5 !important;
         }
@@ -2123,18 +1945,6 @@
             box-shadow: 15px 15px 40px #2a2a2a, -15px -15px 40px #4a4a4a !important;
         }
 
-        /* KG Download Modal dark mode support */
-        body[data-theme="dark"] #kgDownloadModal > div {
-            background: #3a3a3a !important;
-        }
-        body[data-theme="dark"] .kg-download-option {
-            background: #3a3a3a !important;
-            box-shadow: 20px 20px 62px #2a2a2a, -20px -20px 62px #4a4a4a !important;
-        }
-        body[data-theme="dark"] .kg-download-option:hover {
-            box-shadow: 15px 15px 40px #2a2a2a, -15px -15px 40px #4a4a4a !important;
-        }
-
         /* Tab buttons in favorites modal - hover animation */
         #favTabBtn, #engineTabBtn, #hotNewsTabBtn, #settingsTabBtn {
             transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -2175,7 +1985,7 @@
             box-shadow: 15px 15px 40px #2a2a2a, -15px -15px 40px #4a4a4a !important;
         }
 
-        /* Dropdown menu items hover */
+        /* Dropdown menu - transparent inside search box */
         #dropdownMenu > div {
             transition: background 0.2s ease;
         }
@@ -2344,17 +2154,26 @@
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 </head>
 <body>
+    <h1 style="display:none">千克之梦(HelloKG) - 个性化浏览器起始页，集成搜索、每日诗词、热点新闻、收藏管理</h1>
     <!-- SVG Filter for Liquid Glass Effect (simplified for performance) -->
     <svg style="display: none">
         <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
             <feGaussianBlur in="SourceGraphic" stdDeviation="0.5" result="blur"/>
         </filter>
     </svg>
-    <!-- KG Logo - top left corner -->
-    <button type="button" id="kgLogoBtn" onclick="switchToKGTab()" style="position: fixed; top: 20px; left: 20px; display: flex; align-items: center; gap: 8px; cursor: pointer; z-index: 9999; user-select: none; border: none; background: transparent; padding: 0; font-family: inherit;">
-        <img src="favicon.png" alt="KG" style="width: 28px; height: 28px; object-fit: cover; border-radius: 50%;">
-        <span id="kgLogoText" style="font-family: 'YouYuan', Arial, sans-serif; font-size: 18px; font-weight: bold; color: #333; letter-spacing: 2px;">千克之梦</span>
-    </button>
+    <!-- Logo - top left corner, expands to show download links -->
+    <div id="logoContainer" style="position: fixed; top: 20px; left: 20px; display: flex; align-items: center; gap: 8px; z-index: 9999; user-select: none;">
+        <button type="button" id="kgLogoBtn" onclick="toggleLogoExpand()" style="display: flex; align-items: center; gap: 8px; cursor: pointer; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; padding: 8px 14px; font-family: inherit; transition: box-shadow 0.3s ease, transform 0.2s ease;">
+            <img src="favicon.png" alt="KG" style="width: 28px; height: 28px; object-fit: cover; border-radius: 50%;">
+            <span id="kgLogoText" style="font-family: 'YouYuan', Arial, sans-serif; font-size: 18px; font-weight: bold; color: #333; letter-spacing: 2px;">千克之梦</span>
+        </button>
+        <a id="logoLink1" href="https://1823501963.share.123pan.cn/123pan/jE4Fjv-oxiih" target="_blank" style="opacity: 0; transform: translateX(-20px) scale(0.5); pointer-events: none; transition: opacity 0.3s cubic-bezier(0.32,0.72,0,1), transform 0.3s cubic-bezier(0.32,0.72,0,1); display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: var(--global-radius); overflow: hidden; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0;">
+            <svg viewBox="0 0 36 36" style="width: 28px; height: 28px;"><rect width="36" height="36" rx="6" fill="#2B7CE9"/><text x="18" y="24" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="bold" fill="#fff">123</text></svg>
+        </a>
+        <a id="logoLink2" href="https://wwbpg.lanzouu.com/b0188grk4b" target="_blank" style="opacity: 0; transform: translateX(-20px) scale(0.5); pointer-events: none; transition: opacity 0.3s cubic-bezier(0.32,0.72,0,1) 0.05s, transform 0.3s cubic-bezier(0.32,0.72,0,1) 0.05s; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: var(--global-radius); overflow: hidden; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0;">
+            <svg viewBox="0 0 36 36" style="width: 28px; height: 28px;"><rect width="36" height="18" rx="6" fill="#FF6A00"/><rect y="18" width="36" height="18" fill="#fff"/></svg>
+        </a>
+    </div>
 
     <!-- 主内容区域（时钟+搜索框，壁纸模式下整体偏移） -->
     <div id="mainContent" style="display: flex; flex-direction: column; align-items: center;">
@@ -2363,72 +2182,54 @@
         <span id="clockText" style="font-family: 'Microsoft YaHei', '微软雅黑', sans-serif; font-size: 45px; font-weight: 300; color: #333; letter-spacing: 2px;"></span>
     </div>
 
-    <div class="search-container" style="position: relative; background: transparent;">
+    <div class="search-container" id="searchContainer" style="position: relative; background: transparent;">
+        <!-- Dropdown menu - fused inside search box, left side -->
+        <!-- Dropdown menu - inside search box, transparent, matches search box size -->
+        <div id="dropdownMenu" style="display: none; position: absolute; left: 0; top: 100%; width: 100%; margin-top: 8px; background: #F0F0F0; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; z-index: 10; overflow: hidden; opacity: 0; transform: translateY(-10px); transition: opacity 0.25s ease, transform 0.25s ease; flex-direction: row; align-items: center; gap: 0; padding: 12px 15px;">
+            <div id="dropdownScanOption" onclick="openScanner(); closeDropdownMenu();" style="display: flex; align-items: center; justify-content: center; padding: 0 8px; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 13px; color: #000; gap: 5px; white-space: nowrap; transition: background 0.2s ease;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
+                    <path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><rect x="7" y="7" width="10" height="10" rx="1"></rect>
+                </svg>
+                <span class="dropdown-text">扫一扫</span>
+            </div>
+            <div onclick="openFavorites(); closeDropdownMenu();" style="display: flex; align-items: center; justify-content: center; padding: 0 8px; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 13px; color: #000; gap: 5px; white-space: nowrap; transition: background 0.2s ease;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+                <span class="dropdown-text">收藏</span>
+            </div>
+            <div onclick="openHotNewsFromDropdown(); closeDropdownMenu();" style="display: flex; align-items: center; justify-content: center; padding: 0 8px; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 13px; color: #000; gap: 5px; white-space: nowrap; transition: background 0.2s ease;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+                <span class="dropdown-text">热点</span>
+            </div>
+            <div onclick="openSettingsFromDropdown(); closeDropdownMenu();" style="display: flex; align-items: center; justify-content: center; padding: 0 8px; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 13px; color: #000; gap: 5px; white-space: nowrap; transition: background 0.2s ease;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
+                    <circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+                <span class="dropdown-text">设置</span>
+            </div>
+            <div id="dropdownEngineOption" onclick="openEngineSelectorFromDropdown(); closeDropdownMenu();" style="display: flex; align-items: center; justify-content: center; padding: 0 8px; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 13px; color: #000; gap: 5px; white-space: nowrap; transition: background 0.2s ease;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
+                    <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span class="dropdown-text">引擎</span>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center; padding: 0 8px; cursor: default; font-family: 'YouYuan', Arial, sans-serif; font-size: 12px; color: #666; gap: 6px; white-space: nowrap; border-left: 1px solid rgba(0,0,0,0.1);">
+                <span class="dropdown-text">网址</span>
+                <label style="display: flex; align-items: center; gap: 2px; cursor: pointer; font-size: 12px;"><input type="radio" name="urlAccessMode" value="always" onchange="setUrlAccessMode('always')" style="cursor: pointer; width: 12px; height: 12px;">永</label>
+                <label style="display: flex; align-items: center; gap: 2px; cursor: pointer; font-size: 12px;"><input type="radio" name="urlAccessMode" value="off" onchange="setUrlAccessMode('off')" style="cursor: pointer; width: 12px; height: 12px;">关</label>
+                <label style="display: flex; align-items: center; gap: 2px; cursor: pointer; font-size: 12px;"><input type="radio" name="urlAccessMode" value="temp" onchange="setUrlAccessMode('temp')" style="cursor: pointer; width: 12px; height: 12px;">临</label>
+            </div>
+        </div>
         <!-- Dropdown menu button (replaces scan + engine toggle) -->
         <button class="search-button" id="dropdownMenuBtn">
             <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
                 <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
         </button>
-        <!-- Dropdown menu -->
-        <div id="dropdownMenu" style="display: none; position: absolute; right: 7px; top: 58px; background: #F0F0F0; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; z-index: 100; overflow: hidden; min-width: 180px; opacity: 0; transform: translateY(-8px) scale(0.95); transition: opacity 0.25s ease, transform 0.25s ease;">
-            <div id="dropdownScanOption" onclick="openScanner(); closeDropdownMenu();" style="display: flex; align-items: center; padding: 12px 18px; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; color: #000; gap: 10px;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
-                    <path d="M3 7V5a2 2 0 0 1 2-2h2"></path>
-                    <path d="M17 3h2a2 2 0 0 1 2 2v2"></path>
-                    <path d="M21 17v2a2 2 0 0 1-2 2h-2"></path>
-                    <path d="M7 21H5a2 2 0 0 1-2-2v-2"></path>
-                    <rect x="7" y="7" width="10" height="10" rx="1"></rect>
-                </svg>
-                扫一扫
-            </div>
-            <div onclick="openFavorites(); closeDropdownMenu();" style="display: flex; align-items: center; padding: 12px 18px; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; color: #000; gap: 10px;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                </svg>
-                收藏
-            </div>
-            <div onclick="openHotNewsFromDropdown(); closeDropdownMenu();" style="display: flex; align-items: center; padding: 12px 18px; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; color: #000; gap: 10px;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
-                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                    <polyline points="2 17 12 22 22 17"></polyline>
-                    <polyline points="2 12 12 17 22 12"></polyline>
-                </svg>
-                热点新闻
-            </div>
-            <div onclick="openSettingsFromDropdown(); closeDropdownMenu();" style="display: flex; align-items: center; padding: 12px 18px; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; color: #000; gap: 10px;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
-                    <circle cx="12" cy="12" r="3"></circle>
-                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                </svg>
-                设置
-            </div>
-            <div id="dropdownEngineOption" onclick="openEngineSelectorFromDropdown(); closeDropdownMenu();" style="display: flex; align-items: center; padding: 12px 18px; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; color: #000; gap: 10px;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
-                切换搜索引擎
-            </div>
-            <div style="padding: 10px 18px; font-family: 'YouYuan', Arial, sans-serif; font-size: 13px; color: #000;">
-                <div style="margin-bottom: 6px; font-size: 14px;">搜索框网址访问</div>
-                <div style="display: flex; gap: 12px;">
-                    <label style="display: flex; align-items: center; gap: 4px; cursor: pointer; font-size: 13px; color: #000;">
-                        <input type="radio" name="urlAccessMode" value="always" onchange="setUrlAccessMode('always')" style="cursor: pointer;">
-                        永
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 4px; cursor: pointer; font-size: 13px; color: #000;">
-                        <input type="radio" name="urlAccessMode" value="off" onchange="setUrlAccessMode('off')" style="cursor: pointer;">
-                        关
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 4px; cursor: pointer; font-size: 13px; color: #000;">
-                        <input type="radio" name="urlAccessMode" value="temp" onchange="setUrlAccessMode('temp')" style="cursor: pointer;">
-                        临
-                    </label>
-                </div>
-            </div>
-        </div>
-        <input type="text" class="search-box" id="searchInput" placeholder=" " autocomplete="off" style="background: #F0F0F0;">
+        <input type="text" class="search-box" id="searchInput" placeholder=" " autocomplete="off" style="background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;">
         <div id="engineHintInSearchBox" style="position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); pointer-events: none; display: flex; justify-content: center; align-items: center; font-family: 'YouYuan', Arial, sans-serif; transition: opacity 0.2s ease;">
             <span id="engineHintText" style="font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; color: rgba(0, 0, 0, 0.4);">使用百度搜索</span>
         </div>
@@ -2454,7 +2255,7 @@
     
     <!-- Favorites button at bottom -->
     <div class="bottom-buttons-container" style="display: flex; justify-content: center; gap: 15px; margin-top: 12px; position: fixed; bottom: 20px; left: 0; width: 100%; z-index: 1;">
-        <button class="bottom-btn" id="favBtn" onclick="openFavorites()" style="padding: 8px 16px; border: none; background: transparent; cursor: pointer; font-size: 14px; font-weight: normal; color: #000000; max-width: 100%; font-family: 'YouYuan', Arial, sans-serif;">
+        <button class="bottom-btn" id="favBtn" onclick="openFavorites()" style="padding: 8px 16px; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; font-size: 14px; font-weight: normal; color: #000000; max-width: 100%; font-family: 'YouYuan', Arial, sans-serif; transition: box-shadow 0.3s ease, transform 0.2s ease;">
             <span id="favBtnText" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90vw; display: inline-block;">古诗</span>
         </button>
     </div>
@@ -2503,42 +2304,16 @@
                 <img class="engine-icon" src="https://www.wuzhuiso.com/favicon.ico" alt="无追搜索" style="width: 20px; height: 20px; object-fit: contain;">
                 无追搜索
             </div>
-            <!-- 国外搜索引擎 -->
-            <div class="engine-item" data-engine="google" data-url="https://www.google.com/search?q=" data-type="foreign">
-                <img class="engine-icon foreign-icon" data-src="https://www.google.com/favicon.ico" alt="谷歌" style="width: 20px; height: 20px; object-fit: contain;">
-                谷歌
-            </div>
-            <div class="engine-item" data-engine="bing" data-url="https://www.bing.com/search?q=" data-type="foreign">
-                <img class="engine-icon foreign-icon" data-src="https://www.bing.com/favicon.ico" alt="必应全球" style="width: 20px; height: 20px; object-fit: contain;">
-                必应全球
-            </div>
-            <div class="engine-item" data-engine="yahoo" data-url="https://search.yahoo.com/search?p=" data-type="foreign">
-                <img class="engine-icon foreign-icon" data-src="https://www.yahoo.com/favicon.ico" alt="雅虎" style="width: 20px; height: 20px; object-fit: contain;">
-                雅虎
-            </div>
-            <div class="engine-item" data-engine="yandex" data-url="https://yandex.com/search/?text=" data-type="foreign">
-                <img class="engine-icon foreign-icon" data-src="https://yandex.com/favicon.ico" alt="Yandex" style="width: 20px; height: 20px; object-fit: contain;">
-                Yandex
-            </div>
-            <div class="engine-item" data-engine="naver" data-url="https://search.naver.com/search.naver?query=" data-type="foreign">
-                <img class="engine-icon foreign-icon" data-src="https://www.naver.com/favicon.ico" alt="Naver" style="width: 20px; height: 20px; object-fit: contain;">
-                Naver
+            <div class="engine-item add-custom-engine" onclick="showAddCustomEngineDialog()" style="border: 2px dashed #aaa; color: #888; font-style: italic;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                添加
             </div>
         </div>
     </div>
 
     <!-- QR Scanner Modal -->
     
-    <!-- KG Download Modal -->
-    <div id="kgDownloadModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 10001; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease;">
-        <div style="background: #F0F0F0; border-radius: var(--global-radius); padding: 20px; width: 90%; max-width: 400px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; position: relative;">
-            <button onclick="closeKgDownloadModal()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; cursor: pointer; font-size: 24px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-family: 'YouYuan', Arial, sans-serif;">×</button>
-            <div id="kgDownloadTitle" style="font-family: 'YouYuan'; font-size: 18px; font-weight: bold; margin-bottom: 15px; padding-right: 40px;"></div>
-            <div id="kgDownloadLinks" style="display: flex; flex-direction: column; gap: 10px;"></div>
-        </div>
-    </div>
-    
-    <!-- Favorites Modal (with KG integration) -->
+    <!-- Favorites Modal -->
     <div id="favoritesModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #F0F0F0; z-index: 10000; overflow-y: auto; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; opacity: 0; transition: opacity 0.3s ease;">
         <!-- Header with close button and tabs -->
         <div style="display: flex; justify-content: center; align-items: center; position: relative; padding: 20px 20px 0 20px;">
@@ -2601,75 +2376,11 @@
             <div id="favoritesList"></div>
         </div>
         
-        <!-- KG Content -->
-        <div id="kgContent" style="display: none;">
-            <!-- KG搜索框 -->
-            <div style="padding: 20px 20px 0 20px;">
-                <div style="position: relative; max-width: 500px; margin: 0 auto;">
-                    <input type="text" id="kgSearchInput" placeholder="搜索软件..." style="width: 100%; padding: 12px 20px; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; font-family: 'YouYuan'; font-size: 14px; outline: none; box-sizing: border-box;">
-                </div>
-            </div>
-            <!-- 固定4个软件 - 手机桌面风格 -->
-            <div style="padding: 20px;">
-                <div id="kgAppGrid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px;">
-                    <!-- Kg 收银系统 -->
-                    <div class="kg-app-item" onclick="showKgDownloadModal('Kg 收银系统', 'https://wwbpg.lanzouu.com/iGuw43ibdxgf', '#FF6B8A', '银')" style="display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s ease;">
-                        <div class="kg-app-icon" style="width: 56px; height: 56px; border-radius: var(--global-radius); background: #FF6B8A; display: flex; align-items: center; justify-content: center; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                            <span style="color: white; font-family: 'YouYuan'; font-size: 22px; font-weight: bold;">银</span>
-                        </div>
-                        <span style="font-family: 'YouYuan'; font-size: 12px; color: #333; text-align: center; line-height: 1.3;">Kg收银</span>
-                    </div>
-                    <!-- Kg bing 壁纸 -->
-                    <div class="kg-app-item" onclick="showKgDownloadModal('Kg bing 壁纸', 'https://github.com/kgdream/kgbing-wallpaper-simple/', '#4ECDC4', '壁')" style="display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s ease;">
-                        <div class="kg-app-icon" style="width: 56px; height: 56px; border-radius: var(--global-radius); background: #4ECDC4; display: flex; align-items: center; justify-content: center; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                            <span style="color: white; font-family: 'YouYuan'; font-size: 22px; font-weight: bold;">壁</span>
-                        </div>
-                        <span style="font-family: 'YouYuan'; font-size: 12px; color: #333; text-align: center; line-height: 1.3;">Kg壁纸</span>
-                    </div>
-                    <!-- KgWinNas -->
-                    <div class="kg-app-item" onclick="showKgDownloadModal('KgWinNas', 'https://github.com/kgdream/kgpan-', '#45B7D1', '盘')" style="display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s ease;">
-                        <div class="kg-app-icon" style="width: 56px; height: 56px; border-radius: var(--global-radius); background: #45B7D1; display: flex; align-items: center; justify-content: center; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                            <span style="color: white; font-family: 'YouYuan'; font-size: 22px; font-weight: bold;">盘</span>
-                        </div>
-                        <span style="font-family: 'YouYuan'; font-size: 12px; color: #333; text-align: center; line-height: 1.3;">KgNas</span>
-                    </div>
-                    <!-- 跃点网络切换 -->
-                    <div class="kg-app-item" onclick="showKgDownloadModal('跃点网络切换', 'https://github.com/kgdream/-KG-NetworkManager', '#323154', '网')" style="display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s ease;">
-                        <div class="kg-app-icon" style="width: 56px; height: 56px; border-radius: var(--global-radius); background: #323154; display: flex; align-items: center; justify-content: center; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                            <span style="color: white; font-family: 'YouYuan'; font-size: 22px; font-weight: bold;">网</span>
-                        </div>
-                        <span style="font-family: 'YouYuan'; font-size: 12px; color: #333; text-align: center; line-height: 1.3;">网络切换</span>
-                    </div>
-                    <div class="kg-app-item" onclick="launchApp(this, 'https://1823501963.share.123865.com/123pan/jE4Fjv-1djihKG', '#6C5CE7', '仿MacOS')" style="display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s ease;">
-                        <div class="kg-app-icon" style="width: 56px; height: 56px; border-radius: var(--global-radius); background: #6C5CE7; display: flex; align-items: center; justify-content: center; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width: 28px; height: 28px;">
-                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                                <line x1="8" y1="21" x2="16" y2="21"></line>
-                                <line x1="12" y1="17" x2="12" y2="21"></line>
-                            </svg>
-                        </div>
-                        <span style="font-family: 'YouYuan'; font-size: 12px; color: #333; text-align: center; line-height: 1.3;">仿MacOS</span>
-                    </div>
-                    <!-- Kg 门铃 -->
-                    <div class="kg-app-item" onclick="showDoorbellDownloadModal()" style="display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s ease;">
-                        <div class="kg-app-icon" style="width: 56px; height: 56px; border-radius: var(--global-radius); background: #E17055; display: flex; align-items: center; justify-content: center; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width: 28px; height: 28px;">
-                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                            </svg>
-                        </div>
-                        <span style="font-family: 'YouYuan'; font-size: 12px; color: #333; text-align: center; line-height: 1.3;">Kg门铃</span>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
         
         <!-- Engine Selector Content -->
         <div id="engineContent" style="display: none;">
             <div style="padding: 20px 20px 0 20px;">
                 <div class="search-engine-selector" id="engineSelectorInTab" style="display: block; position: static; width: 100%; max-width: 600px; margin: 0 auto; border: none; box-shadow: none; background: transparent; opacity: 1; transform: none;">
-                    <!-- 国外搜索引擎（锁死不显示图标） -->
                     <!-- 国内搜索引擎 -->
                     <div class="engine-item" data-engine="baidu" data-url="https://www.baidu.com/s?wd=" data-type="domestic">
                         <img class="engine-icon" src="https://www.baidu.com/favicon.ico" alt="百度" style="width: 20px; height: 20px; object-fit: contain;">
@@ -2731,46 +2442,9 @@
                         <img class="engine-icon" src="https://xueshu.baidu.com/favicon.ico" alt="百度学术" style="width: 20px; height: 20px; object-fit: contain;">
                         百度学术
                     </div>
-                    <!-- 国外搜索引擎 -->
-                    <div class="engine-item" data-engine="google" data-url="https://www.google.com/search?q=" data-type="foreign">
-                        <img class="engine-icon foreign-icon" data-src="https://www.google.com/favicon.ico" alt="谷歌" style="width: 20px; height: 20px; object-fit: contain;">
-                        谷歌
-                    </div>
-                    <div class="engine-item" data-engine="bingglobal" data-url="https://www.bing.com/search?q=" data-type="foreign">
-                        <img class="engine-icon foreign-icon" data-src="https://www.bing.com/favicon.ico" alt="必应全球" style="width: 20px; height: 20px; object-fit: contain;">
-                        必应全球
-                    </div>
-                    <div class="engine-item" data-engine="yahoo" data-url="https://search.yahoo.com/search?p=" data-type="foreign">
-                        <img class="engine-icon foreign-icon" data-src="https://www.yahoo.com/favicon.ico" alt="雅虎" style="width: 20px; height: 20px; object-fit: contain;">
-                        雅虎
-                    </div>
-                    <div class="engine-item" data-engine="yandex" data-url="https://yandex.com/search/?text=" data-type="foreign">
-                        <img class="engine-icon foreign-icon" data-src="https://yandex.com/favicon.ico" alt="Yandex" style="width: 20px; height: 20px; object-fit: contain;">
-                        Yandex
-                    </div>
-                    <div class="engine-item" data-engine="naver" data-url="https://search.naver.com/search.naver?query=" data-type="foreign">
-                        <img class="engine-icon foreign-icon" data-src="https://www.naver.com/favicon.ico" alt="Naver" style="width: 20px; height: 20px; object-fit: contain;">
-                        Naver
-                    </div>
-                    <div class="engine-item" data-engine="duckduckgo" data-url="https://duckduckgo.com/?q=" data-type="foreign">
-                        <img class="engine-icon foreign-icon" data-src="https://duckduckgo.com/favicon.ico" alt="DuckDuckGo" style="width: 20px; height: 20px; object-fit: contain;">
-                        DuckDuckGo
-                    </div>
-                    <div class="engine-item" data-engine="ecosia" data-url="https://www.ecosia.org/search?q=" data-type="foreign">
-                        <img class="engine-icon foreign-icon" data-src="https://www.ecosia.org/favicon.ico" alt="Ecosia" style="width: 20px; height: 20px; object-fit: contain;">
-                        Ecosia
-                    </div>
-                    <div class="engine-item" data-engine="qwant" data-url="https://www.qwant.com/?q=" data-type="foreign">
-                        <img class="engine-icon foreign-icon" data-src="https://www.qwant.com/favicon.ico" alt="Qwant" style="width: 20px; height: 20px; object-fit: contain;">
-                        Qwant
-                    </div>
-                    <div class="engine-item" data-engine="startpage" data-url="https://www.startpage.com/sp/search?query=" data-type="foreign">
-                        <img class="engine-icon foreign-icon" data-src="https://www.startpage.com/favicon.ico" alt="Startpage" style="width: 20px; height: 20px; object-fit: contain;">
-                        Startpage
-                    </div>
-                    <div class="engine-item" data-engine="brave" data-url="https://search.brave.com/search?q=" data-type="foreign">
-                        <img class="engine-icon foreign-icon" data-src="https://search.brave.com/favicon.ico" alt="Brave" style="width: 20px; height: 20px; object-fit: contain;">
-                        Brave
+                    <div class="engine-item add-custom-engine" onclick="showAddCustomEngineDialog()" style="border: 2px dashed #aaa; color: #888; font-style: italic;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        添加
                     </div>
                 </div>
             </div>
@@ -3134,7 +2808,7 @@
 
                 <div style="margin-bottom: 15px;">
                     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-<label class="toggle-switch"><input type="checkbox" id="cleanSearchMode" checked onchange="localStorage.setItem('cleanSearchMode', this.checked)"><span class="toggle-slider"></span></label>
+<label class="toggle-switch"><input type="checkbox" id="cleanSearchMode" onchange="localStorage.setItem('cleanSearchMode', this.checked)"><span class="toggle-slider"></span></label>
 <span style="font-family: 'YouYuan'; font-size: 14px;">无广清净模式（搜索自动过滤广告）</span>
 </div>
                     <div style="margin-left: 30px;">
@@ -3325,7 +2999,7 @@
                     <p><strong>版本号：</strong>v2.1.0</p>
                     <p><strong>联系方式：</strong></p>
                     <ul style="margin: 10px 0; padding-left: 20px;">
-                        <li>抖音：42187852565</li>
+                        <li>抖音：bblpro</li>
                         <li>邮箱：kuang45@outlook.com</li>
                     </ul>
                 </div>
@@ -3736,23 +3410,27 @@
         function toggleDropdownMenu() {
             const menu = document.getElementById('dropdownMenu');
             if (menu.style.display === 'none' || !menu.style.display) {
-                menu.style.display = 'block';
+                menu.style.display = 'flex';
+                // Hide search history when dropdown opens
+                const searchHistoryList = document.getElementById('searchHistory');
+                if (searchHistoryList) searchHistoryList.style.display = 'none';
                 requestAnimationFrame(() => {
                     requestAnimationFrame(() => {
                         menu.style.opacity = '1';
-                        menu.style.transform = 'translateY(0) scale(1)';
+                        menu.style.transform = 'translateY(0)';
+                        checkDropdownTextOverflow();
                     });
                 });
             } else {
                 closeDropdownMenu();
             }
         }
-        
+
         function closeDropdownMenu() {
             const menu = document.getElementById('dropdownMenu');
             if (menu && menu.style.display !== 'none') {
                 menu.style.opacity = '0';
-                menu.style.transform = 'translateY(-8px) scale(0.95)';
+                menu.style.transform = 'translateY(-10px)';
                 setTimeout(() => {
                     if (menu.style.opacity === '0') {
                         menu.style.display = 'none';
@@ -3760,6 +3438,30 @@
                 }, 250);
             }
         }
+
+        // Check if dropdown text overflows search box width, hide text if so
+        function checkDropdownTextOverflow() {
+            const menu = document.getElementById('dropdownMenu');
+            const searchBox = document.getElementById('searchInput');
+            if (!menu || !searchBox || menu.style.display === 'none') return;
+            
+            const searchBoxWidth = searchBox.getBoundingClientRect().width;
+            const menuWidth = menu.scrollWidth;
+            
+            const textSpans = menu.querySelectorAll('.dropdown-text');
+            if (menuWidth > searchBoxWidth) {
+                // Text overflows, hide text
+                textSpans.forEach(s => s.style.display = 'none');
+            } else {
+                // Enough space, show text
+                textSpans.forEach(s => s.style.display = '');
+            }
+        }
+
+        // Check on resize
+        window.addEventListener('resize', function() {
+            checkDropdownTextOverflow();
+        });
         
         function openEngineSelectorFromDropdown() {
             showModalWithFade('favoritesModal');
@@ -3782,7 +3484,7 @@
         }
         
         function updateUrlAccessRadio() {
-            const mode = localStorage.getItem('searchBoxUrlAccess') || 'always';
+            const mode = localStorage.getItem('searchBoxUrlAccess') || 'off';
             const radios = document.querySelectorAll('input[name="urlAccessMode"]');
             radios.forEach(function(r) {
                 r.checked = (r.value === mode);
@@ -3829,24 +3531,6 @@
                     closeDropdownMenu();
                 }
             });
-
-            // KG search input functionality
-            const kgSearchInput = document.getElementById('kgSearchInput');
-            const kgAppGrid = document.getElementById('kgAppGrid');
-            if (kgSearchInput && kgAppGrid) {
-                kgSearchInput.addEventListener('input', function(e) {
-                    const keyword = e.target.value.trim().toLowerCase();
-                    const apps = kgAppGrid.querySelectorAll('.kg-app-item');
-                    apps.forEach(function(app) {
-                        const appName = app.querySelector('span:last-child')?.textContent?.toLowerCase() || '';
-                        if (!keyword || appName.includes(keyword)) {
-                            app.style.display = 'flex';
-                        } else {
-                            app.style.display = 'none';
-                        }
-                    });
-                });
-            }
         });
         
         // Load saved settings from localStorage
@@ -4086,17 +3770,22 @@
             }
             
             // Check URL access mode
-            const urlAccessMode = localStorage.getItem('searchBoxUrlAccess') || 'always';
+            const urlAccessMode = localStorage.getItem('searchBoxUrlAccess') || 'off';
             let shouldTreatAsUrl = false;
             
-            if (urlAccessMode !== 'off') {
+            if (urlAccessMode === 'temp') {
+                // Temp mode: treat all input as URL access (no https prefix)
+                shouldTreatAsUrl = true;
+            } else if (urlAccessMode !== 'off') {
                 // Check if it's a URL using browser-standard rules
                 shouldTreatAsUrl = checkIfUrl(query);
             }
             
             if (shouldTreatAsUrl) {
-                // Open URL directly without adding https
-                window.open(query, '_blank');
+                // Open URL directly as-is, no protocol prefix added
+                playSearchLaunchAnimation(function() {
+                    window.open(query, '_blank');
+                });
                 // If temp mode, switch back to off after accessing
                 if (urlAccessMode === 'temp') {
                     localStorage.setItem('searchBoxUrlAccess', 'off');
@@ -4104,7 +3793,9 @@
                 }
             } else {
                 // Use current search engine for normal queries
-                window.open(`${currentEngineUrl}${encodeURIComponent(query)}`, '_blank');
+                playSearchLaunchAnimation(function() {
+                    window.open(`${currentEngineUrl}${encodeURIComponent(query)}`, '_blank');
+                });
             }
         }
         
@@ -4238,12 +3929,14 @@
         function updateSearchButtonVisibility() {
             const keyword = input.value.trim();
             const isFocused = document.activeElement === input;
+            const isMenuOpen = document.getElementById('dropdownMenu')?.style.display !== 'none';
             if (keyword && isFocused) {
-                // Has text + focused: show search button + clear button, hide dropdown button
+                // Has text + focused: show search button + clear button
                 input.classList.add('has-text');
                 if (searchBtn) searchBtn.classList.add('visible');
                 if (clearInputBtn) clearInputBtn.classList.add('visible');
-                if (dropdownMenuBtn) {
+                // Keep dropdown button visible when menu is open
+                if (dropdownMenuBtn && !isMenuOpen) {
                     dropdownMenuBtn.classList.remove('visible');
                 }
                 // Hide engine hint with fade
@@ -4251,11 +3944,12 @@
                     engineHintInSearchBox.style.opacity = '0';
                 }
             } else if (!keyword && isFocused) {
-                // No text + focused: hide search button + clear button, show dropdown button
+                // No text + focused: hide search button + clear button
                 input.classList.remove('has-text');
                 if (searchBtn) searchBtn.classList.remove('visible');
                 if (clearInputBtn) clearInputBtn.classList.remove('visible');
-                if (dropdownMenuBtn) {
+                // Keep dropdown button visible when menu is open
+                if (dropdownMenuBtn && !isMenuOpen) {
                     dropdownMenuBtn.classList.add('visible');
                 }
                 // Show engine hint with fade
@@ -4267,7 +3961,8 @@
                 input.classList.remove('has-text');
                 if (searchBtn) searchBtn.classList.remove('visible');
                 if (clearInputBtn) clearInputBtn.classList.remove('visible');
-                if (dropdownMenuBtn) {
+                // Keep dropdown button visible when menu is open
+                if (dropdownMenuBtn && !isMenuOpen) {
                     dropdownMenuBtn.classList.remove('visible');
                 }
             }
@@ -4290,7 +3985,7 @@
                 // Debounce: wait 0.5s after user stops typing before fetching suggestions
                 suggestionDebounceTimer = setTimeout(() => {
                     fetchSuggestions(keyword);
-                }, 1091);
+                }, 500);
                 if (engineSelectorDom) {
                     engineSelectorDom.style.display = 'none';
                 }
@@ -4300,6 +3995,11 @@
                 hideSuggestions();
                 // Don't show engine selector automatically - user must click toggle button
             }
+        });
+
+        // Auto-hide dropdown menu when search box is focused
+        input.addEventListener('focus', function() {
+            closeDropdownMenu();
         });
 
         // Clear search input function
@@ -4447,10 +4147,11 @@
             // Suggestions width is now controlled by CSS (width: 100%)
             // Also update engine selector width
             const engineSelectorResize = document.querySelector('.search-engine-selector');
-            if (engineSelectorResize && engineSelectorResize.style.display !== 'none') {
+            if (engineSelectorResize && engineSelectorResize.id === 'engineSelector' && engineSelectorResize.style.display !== 'none') {
                 const searchBox = document.getElementById('searchInput');
                 const rect = searchBox.getBoundingClientRect();
                 engineSelectorResize.style.width = rect.width + 'px';
+                engineSelectorResize.style.maxWidth = rect.width + 'px';
             }
         });
 
@@ -4503,47 +4204,58 @@
         loadPoem();
 
         // Search engine selector functionality
-        const engineItems = document.querySelectorAll('.engine-item');
         const engineSelector = document.getElementById('engineSelector');
         
-        // Engine item click handler
-        engineItems.forEach(item => {
-            item.addEventListener('click', function() {
-                // Remove active class from all items
-                engineItems.forEach(e => e.classList.remove('active'));
-                // Add active class to clicked item
-                this.classList.add('active');
-                // Update current search engine URL
-                const engineUrl = this.getAttribute('data-url');
-                const engineName = this.getAttribute('data-engine');
-                currentEngineUrl = engineUrl;
-                
-                // Update the toggle button icon with search engine favicon
-                updateEngineToggleIcon(engineName);
-                
-                // Update engine hint text
-                updateEngineHint();
-                
-                // Save to cookie (365 days)
-                setCookie('searchEngine', engineUrl, 365);
-                
-                console.log(`Switched to ${engineName}`);
-                // Hide selector after selection
-                engineSelector.style.display = 'none';
+        // Engine item click handler - wrapped in a bindable function so that
+        // custom engines added later can be bound as well.
+        function bindEngineItems() {
+            const engineItems = document.querySelectorAll('.engine-item[data-url]:not(.engine-bound)');
+            engineItems.forEach(item => {
+                item.classList.add('engine-bound');
+                item.addEventListener('click', function() {
+                    // Remove active class from all items (with data-url only, excludes "add" button)
+                    document.querySelectorAll('.engine-item[data-url]').forEach(e => e.classList.remove('active'));
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    // Update current search engine URL
+                    const engineUrl = this.getAttribute('data-url');
+                    const engineName = this.getAttribute('data-engine');
+                    currentEngineUrl = engineUrl;
+                    
+                    // Update the toggle button icon with search engine favicon
+                    updateEngineToggleIcon(engineName, this);
+                    
+                    // Update engine hint text
+                    updateEngineHint();
+                    
+                    // Save to cookie (365 days)
+                    setCookie('searchEngine', engineUrl, 365);
+                    
+                    console.log(`Switched to ${engineName}`);
+                    // Hide selector after selection
+                    engineSelector.style.display = 'none';
+                });
             });
-        });
+        }
         
         // Set initial active state based on saved cookie
-        engineItems.forEach(item => {
-            if (item.getAttribute('data-url') === currentEngineUrl) {
-                item.classList.add('active');
-                const engineName = item.getAttribute('data-engine');
-                updateEngineToggleIcon(engineName);
-            }
-        });
+        function setInitialEngineActive() {
+            const engineItems = document.querySelectorAll('.engine-item[data-url]');
+            engineItems.forEach(item => {
+                if (item.getAttribute('data-url') === currentEngineUrl) {
+                    item.classList.add('active');
+                    const engineName = item.getAttribute('data-engine');
+                    updateEngineToggleIcon(engineName, item);
+                }
+            });
+        }
+        
+        // Bind initial engine items and set active state
+        bindEngineItems();
+        setInitialEngineActive();
         
         // Function to update engine tab icon after engine change
-        function updateEngineToggleIcon(engineName) {
+        function updateEngineToggleIcon(engineName, itemElement) {
             const engineTabIcon = document.getElementById('engineTabIcon');
             const engineTabText = document.getElementById('engineTabText');
             
@@ -4577,7 +4289,15 @@
                 'brave': 'https://search.brave.com/favicon.ico'
             };
             
-            const faviconUrl = engineFavicons[engineName];
+            let faviconUrl = engineFavicons[engineName];
+            
+            // Fallback for custom engines: use the engine item's own icon
+            if (!faviconUrl && itemElement) {
+                const img = itemElement.querySelector('img.engine-icon');
+                if (img && img.src) {
+                    faviconUrl = img.src;
+                }
+            }
             
             if (engineTabIcon && faviconUrl) {
                 // Update engine tab icon
@@ -4608,6 +4328,136 @@
             if (!e.target.closest('.search-container') && !e.target.closest('.search-engine-selector')) {
                 engineSelector.style.display = 'none';
             }
+        });
+        
+        // ===== Custom Search Engine Management =====
+        function showAddCustomEngineDialog() {
+            var modal = document.getElementById('customEngineModal');
+            modal.style.display = 'flex';
+            void modal.offsetWidth;
+            modal.style.opacity = '1';
+        }
+
+        function closeCustomEngineDialog() {
+            var modal = document.getElementById('customEngineModal');
+            modal.style.opacity = '0';
+            setTimeout(function() { modal.style.display = 'none'; }, 300);
+        }
+
+        function getCustomEngines() {
+            try {
+                return JSON.parse(localStorage.getItem('customEngines') || '[]');
+            } catch(e) { return []; }
+        }
+
+        function saveCustomEngines(engines) {
+            localStorage.setItem('customEngines', JSON.stringify(engines));
+        }
+
+        function confirmAddCustomEngine() {
+            var name = document.getElementById('customEngineName').value.trim();
+            var url = document.getElementById('customEngineUrl').value.trim();
+            var icon = document.getElementById('customEngineIcon').value.trim();
+            
+            if (!name || !url) {
+                alert('请填写名称和地址');
+                return;
+            }
+            
+            // Convert <内容> to empty string for the URL pattern
+            if (!url.includes('<内容>')) {
+                alert('地址中需要包含 <内容> 作为搜索词占位符');
+                return;
+            }
+            
+            // Auto-get favicon if not provided
+            if (!icon) {
+                try {
+                    var urlObj = new URL(url);
+                    icon = urlObj.origin + '/favicon.ico';
+                } catch(e) {
+                    icon = '';
+                }
+            }
+            
+            // Convert <内容> to the actual placeholder used by the app
+            var searchUrl = url.replace('<内容>', '');
+            
+            var engines = getCustomEngines();
+            var engineId = 'custom_' + Date.now();
+            engines.push({
+                id: engineId,
+                name: name,
+                url: searchUrl,
+                icon: icon,
+                type: 'custom'
+            });
+            saveCustomEngines(engines);
+            
+            // Clear inputs
+            document.getElementById('customEngineName').value = '';
+            document.getElementById('customEngineUrl').value = '';
+            document.getElementById('customEngineIcon').value = '';
+            
+            closeCustomEngineDialog();
+            
+            // Re-render engine grids
+            renderCustomEngines();
+            
+            alert('添加成功！');
+        }
+
+        function renderCustomEngines() {
+            var engines = getCustomEngines();
+            // Note: the settings tab container uses id="engineSelectorInTab"
+            var grids = [document.getElementById('topEngineGrid'), document.getElementById('engineSelectorInTab')];
+            
+            grids.forEach(function(grid) {
+                if (!grid) return;
+                // Remove existing custom engines
+                grid.querySelectorAll('.custom-engine-item').forEach(function(el) { el.remove(); });
+                
+                // Insert before the "add" button
+                var addBtn = grid.querySelector('.add-custom-engine');
+                
+                engines.forEach(function(engine) {
+                    var div = document.createElement('div');
+                    div.className = 'engine-item custom-engine-item';
+                    div.setAttribute('data-engine', engine.id);
+                    div.setAttribute('data-url', engine.url);
+                    div.setAttribute('data-type', 'custom');
+                    div.style.position = 'relative';
+                    
+                    var iconHtml = engine.icon 
+                        ? '<img class="engine-icon" src="' + engine.icon + '" alt="' + engine.name + '" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'inline\'"><span style="display:none;font-size:16px;">🔍</span>'
+                        : '<span style="font-size:16px;">🔍</span>';
+                    
+                    div.innerHTML = iconHtml + ' ' + engine.name + 
+                        ' <span onclick="event.stopPropagation(); deleteCustomEngine(\'' + engine.id + '\')" style="position:absolute;top:-4px;right:-4px;width:16px;height:16px;background:#ff4444;color:#fff;border-radius:50%;font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;">×</span>';
+                    
+                    if (addBtn) {
+                        grid.insertBefore(div, addBtn);
+                    } else {
+                        grid.appendChild(div);
+                    }
+                });
+            });
+            
+            // Re-bind engine click events (binds only newly added, unbound items)
+            bindEngineItems();
+        }
+
+        function deleteCustomEngine(id) {
+            if (!confirm('确定删除这个搜索引擎吗？')) return;
+            var engines = getCustomEngines();
+            engines = engines.filter(function(e) { return e.id !== id; });
+            saveCustomEngines(engines);
+            renderCustomEngines();
+        }
+
+        // Render custom engines on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCustomEngines();
         });
         
         // Scan QR code button - removed, now links to external site
@@ -4737,7 +4587,11 @@
         function toggleFullScreenClock() {
             let overlay = document.getElementById('fullScreenClock');
             if (overlay) {
-                overlay.remove();
+                // Dismiss with fade-out transition
+                overlay.style.animation = 'clockOverlayOut 0.5s ease forwards';
+                setTimeout(function() {
+                    overlay.remove();
+                }, 500);
                 return;
             }
             const now = new Date();
@@ -4760,34 +4614,19 @@
 
             overlay = document.createElement('div');
             overlay.id = 'fullScreenClock';
-            overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000000; z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; user-select: none;';
+            overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000000; z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; user-select: none; animation: clockOverlayIn 0.6s ease forwards;';
             overlay.innerHTML = '<div id="fullClockTime" style="font-family: \'YouYuan\', Arial, sans-serif; font-size: 80px; font-weight: 200; color: #ffffff; letter-spacing: 6px;"></div>' +
                 '<div style="font-family: \'YouYuan\', Arial, sans-serif; font-size: 18px; color: #888888; margin-top: 20px;">' + year + '年' + month + '月' + day + '日 星期' + weekday + '</div>' +
                 (lunarStr ? '<div style="font-family: \'YouYuan\', Arial, sans-serif; font-size: 16px; color: #666666; margin-top: 10px;">' + lunarStr + '</div>' : '');
             document.body.appendChild(overlay);
             updateClock();
 
-            // Click to dismiss with shrink animation back to timeDisplay
+            // Click to dismiss
             function dismissClock() {
-                const timeDisplay = document.getElementById('timeDisplay');
-                if (timeDisplay) {
-                    const rect = timeDisplay.getBoundingClientRect();
-                    overlay.style.transition = 'top 0.5s cubic-bezier(0.32, 0.72, 0, 1), left 0.5s cubic-bezier(0.32, 0.72, 0, 1), width 0.5s cubic-bezier(0.32, 0.72, 0, 1), height 0.5s cubic-bezier(0.32, 0.72, 0, 1), border-radius 0.4s ease';
-                    overlay.style.top = rect.top + 'px';
-                    overlay.style.left = rect.left + 'px';
-                    overlay.style.width = rect.width + 'px';
-                    overlay.style.height = rect.height + 'px';
-                    overlay.style.borderRadius = '12px';
-                    setTimeout(function() {
-                        overlay.remove();
-                    }, 500);
-                } else {
-                    overlay.style.transition = 'opacity 0.3s ease';
-                    overlay.style.opacity = '0';
-                    setTimeout(function() {
-                        overlay.remove();
-                    }, 300);
-                }
+                overlay.style.animation = 'clockOverlayOut 0.5s ease forwards';
+                setTimeout(function() {
+                    overlay.remove();
+                }, 500);
             }
             overlay.addEventListener('click', dismissClock);
             overlay.addEventListener('touchend', function(e) {
@@ -4809,10 +4648,7 @@
                 setInterval(updateClock, 1000);
                 timeDisplay.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    // Use launch animation from clock position
-                    playLaunchAnimation(timeDisplay, '#F0F0F0', function() {
-                        toggleFullScreenClock();
-                    });
+                    toggleFullScreenClock();
                 });
             }
         })();
@@ -4876,12 +4712,22 @@
                         borderRadius: localStorage.getItem('borderRadius') || '34',
                         loadForeignIcons: localStorage.getItem('loadForeignIcons') === 'true',
                         showKgLogo: localStorage.getItem('showKgLogo') !== 'false',
-                        kgLogoMode: localStorage.getItem('kgLogoMode') || 'show'
+                        kgLogoMode: localStorage.getItem('kgLogoMode') || 'show',
+                        showFavIcons: localStorage.getItem('showFavIcons') !== 'false',
+                        searchBoxUrlAccess: localStorage.getItem('searchBoxUrlAccess') || 'always',
+                        searchBoxWidth: localStorage.getItem('searchBoxWidth') || '100',
+                        searchBoxHeight: localStorage.getItem('searchBoxHeight') || '50',
+                        searchBoxSizeEnabled: localStorage.getItem('searchBoxSizeEnabled') === 'true',
+                        enableLaunchAnim: localStorage.getItem('enableLaunchAnim') !== 'false',
+                        disableAllAnim: localStorage.getItem('disableAllAnim') === 'true',
+                        wallpaperBlur: localStorage.getItem('wallpaperBlur') || '0',
+                        wallpaperBrightness: localStorage.getItem('wallpaperBrightness') || '100'
                     };
                 } else if (cb.value === 'apiUrls') {
                     selectedData.apiUrls = apiUrls;
                 } else if (cb.value === 'engine') {
                     selectedData.searchEngine = localStorage.getItem('searchEngine') || 'https://cn.bing.com/search?q=';
+                    selectedData.customEngines = JSON.parse(localStorage.getItem('customEngines') || '[]');
                 } else if (cb.value === 'cookies') {
                     selectedData.cookiesNote = 'Cookie数据无法导出，请使用浏览器开发者工具手动导出';
                 }
@@ -4933,10 +4779,15 @@
                     searchBoxUrlAccess: localStorage.getItem('searchBoxUrlAccess') || 'always',
                     searchBoxWidth: localStorage.getItem('searchBoxWidth') || '100',
                     searchBoxHeight: localStorage.getItem('searchBoxHeight') || '50',
-                    searchBoxSizeEnabled: localStorage.getItem('searchBoxSizeEnabled') === 'true'
+                    searchBoxSizeEnabled: localStorage.getItem('searchBoxSizeEnabled') === 'true',
+                    enableLaunchAnim: localStorage.getItem('enableLaunchAnim') !== 'false',
+                    disableAllAnim: localStorage.getItem('disableAllAnim') === 'true',
+                    wallpaperBlur: localStorage.getItem('wallpaperBlur') || '0',
+                    wallpaperBrightness: localStorage.getItem('wallpaperBrightness') || '100'
                 },
                 apiUrls: apiUrls,
-                searchEngine: localStorage.getItem('searchEngine') || 'https://cn.bing.com/search?q='
+                searchEngine: localStorage.getItem('searchEngine') || 'https://cn.bing.com/search?q=',
+                customEngines: JSON.parse(localStorage.getItem('customEngines') || '[]')
             };
             
             const dataStr = JSON.stringify(allData, null, 2);
@@ -5061,6 +4912,7 @@
                         if (allData.settings.cleanSearchMode !== undefined) {
                             const el = document.getElementById('cleanSearchMode');
                             if (el) el.checked = allData.settings.cleanSearchMode;
+                            localStorage.setItem('cleanSearchMode', allData.settings.cleanSearchMode);
                         }
                         if (allData.settings.cleanSearchKeyword !== undefined) {
                             const el = document.getElementById('cleanSearchKeyword');
@@ -5086,6 +4938,7 @@
                         if (allData.settings.showFavCreateTime !== undefined) {
                             const el = document.getElementById('showFavCreateTime');
                             if (el) el.checked = allData.settings.showFavCreateTime;
+                            localStorage.setItem('showFavCreateTime', allData.settings.showFavCreateTime);
                         }
                         if (allData.settings.autoSortFavorites !== undefined) {
                             const el = document.getElementById('autoSortFavorites');
@@ -5148,22 +5001,6 @@
                             document.body.setAttribute('data-border-radius', allData.settings.borderRadius);
                         }
                         
-                        // Restore foreign icons setting
-                        if (allData.settings.loadForeignIcons !== undefined) {
-                            localStorage.setItem('loadForeignIcons', allData.settings.loadForeignIcons);
-                            const foreignCheckbox = document.getElementById('loadForeignIconsToggle');
-                            if (foreignCheckbox) foreignCheckbox.checked = allData.settings.loadForeignIcons;
-                            // Apply the setting
-                            if (allData.settings.loadForeignIcons) {
-                                const foreignIcons = document.querySelectorAll('.foreign-icon');
-                                foreignIcons.forEach(icon => {
-                                    icon.src = icon.getAttribute('data-src');
-                                    icon.style.display = 'inline-block';
-                                    if (icon.nextElementSibling) icon.nextElementSibling.style.display = 'none';
-                                });
-                            }
-                        }
-                        
                         // Restore show fav icons
                         if (allData.settings.showFavIcons !== undefined) {
                             localStorage.setItem('showFavIcons', allData.settings.showFavIcons);
@@ -5188,10 +5025,40 @@
                             localStorage.setItem('searchBoxSizeEnabled', allData.settings.searchBoxSizeEnabled);
                         }
                         applySavedSearchBoxSize();
+
+                        // Restore logo display settings
+                        if (allData.settings.loadForeignIcons !== undefined) {
+                            localStorage.setItem('loadForeignIcons', allData.settings.loadForeignIcons);
+                        }
+                        if (allData.settings.showKgLogo !== undefined) {
+                            localStorage.setItem('showKgLogo', allData.settings.showKgLogo);
+                        }
+                        if (allData.settings.kgLogoMode !== undefined) {
+                            localStorage.setItem('kgLogoMode', allData.settings.kgLogoMode);
+                        }
+
+                        // Restore animation settings
+                        if (allData.settings.enableLaunchAnim !== undefined) {
+                            localStorage.setItem('enableLaunchAnim', allData.settings.enableLaunchAnim);
+                        }
+                        if (allData.settings.disableAllAnim !== undefined) {
+                            localStorage.setItem('disableAllAnim', allData.settings.disableAllAnim);
+                        }
+
+                        // Restore wallpaper filter settings
+                        if (allData.settings.wallpaperBlur !== undefined) {
+                            localStorage.setItem('wallpaperBlur', allData.settings.wallpaperBlur);
+                        }
+                        if (allData.settings.wallpaperBrightness !== undefined) {
+                            localStorage.setItem('wallpaperBrightness', allData.settings.wallpaperBrightness);
+                        }
                     }
                     
                     if (allData.searchEngine) {
                         localStorage.setItem('searchEngine', allData.searchEngine);
+                    }
+                    if (allData.customEngines) {
+                        localStorage.setItem('customEngines', JSON.stringify(allData.customEngines));
                     }
 
                     // Restore API URLs
@@ -5592,56 +5459,6 @@
             }
         }
 
-        // Foreign icons toggle
-        function toggleForeignIcons() {
-            const checkbox = document.getElementById('loadForeignIconsToggle');
-            const loadIcons = checkbox.checked;
-            
-            localStorage.setItem('loadForeignIcons', loadIcons);
-            
-            // Update all foreign engine icons
-            const foreignIcons = document.querySelectorAll('.foreign-icon');
-            foreignIcons.forEach(icon => {
-                if (loadIcons) {
-                    // Load actual favicon from data-src
-                    const src = icon.getAttribute('data-src');
-                    if (src && icon.src !== src) {
-                        icon.src = src;
-                    }
-                    icon.style.display = 'inline-block';
-                } else {
-                    // Hide icon, show text only (same as before)
-                    icon.style.display = 'none';
-                }
-            });
-        }
-        
-        // Load foreign icons state on page load
-        function loadForeignIconsState() {
-            const savedLoadForeignIcons = localStorage.getItem('loadForeignIcons');
-            const checkbox = document.getElementById('loadForeignIconsToggle');
-            
-            // Default to loading foreign icons if not explicitly set
-            const shouldLoad = savedLoadForeignIcons !== 'false';
-            
-            if (shouldLoad) {
-                if (checkbox) checkbox.checked = true;
-                localStorage.setItem('loadForeignIcons', 'true');
-                const foreignIcons = document.querySelectorAll('.foreign-icon');
-                foreignIcons.forEach(icon => {
-                    const src = icon.getAttribute('data-src');
-                    if (src) icon.src = src;
-                    icon.style.display = 'inline-block';
-                });
-            } else {
-                if (checkbox) checkbox.checked = false;
-                const foreignIcons = document.querySelectorAll('.foreign-icon');
-                foreignIcons.forEach(icon => {
-                    icon.style.display = 'none';
-                });
-            }
-        }
-        
         // Custom dialog callbacks
         let confirmCallback = null;
         let promptCallback = null;
@@ -6225,145 +6042,16 @@
             }
         };
 
+        // Search/URL launch animation - same as playLaunchAnimation (iOS/澎湃OS style)
+        function playSearchLaunchAnimation(callback) {
+            const searchBox = document.getElementById('searchInput');
+            playLaunchAnimation(searchBox, '#F0F0F0', callback);
+        }
+
         let currentOpenSystem = null;
 
         // Show KG Download Modal - like a folder with download links for each platform
-        function showKgDownloadModal(appName, windowsUrl, color, initial) {
-            // Find the clicked app icon for animation
-            const apps = document.querySelectorAll('.kg-app-item');
-            let clickedApp = null;
-            apps.forEach(function(app) {
-                if (app.getAttribute('onclick') && app.getAttribute('onclick').includes(appName)) {
-                    clickedApp = app;
-                }
-            });
-
-            if (clickedApp) {
-                const iconEl = clickedApp.querySelector('.kg-app-icon');
-                playLaunchAnimation(iconEl, color, function() {
-                    // After animation completes, show the download modal
-                    if (appName.includes('收银')) {
-                        showCashierModalContent();
-                    } else {
-                        showDownloadModalContent(appName, windowsUrl);
-                    }
-                });
-            } else {
-                if (appName.includes('收银')) {
-                    showCashierModalContent();
-                } else {
-                    showDownloadModalContent(appName, windowsUrl);
-                }
-            }
-        }
-
-        function showCashierModalContent() {
-            const modal = document.getElementById('kgDownloadModal');
-            const title = document.getElementById('kgDownloadTitle');
-            const links = document.getElementById('kgDownloadLinks');
-            
-            title.textContent = 'Kg 收银系统 - 选择版本';
-            
-            let html = '';
-            
-            // 1.0 蓝奏云
-            html += '<div class="kg-download-option" onclick="launchAppUrl(\'https://wwbpg.lanzouu.com/iGuw43ibdxgf\'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;"><span style="font-family: \'YouYuan\'; font-size: 14px;">1.0 蓝奏云下载</span></div>';
-            
-            // 2.0 123云盘
-            html += '<div class="kg-download-option" onclick="launchAppUrl(\'https://1823501963.share.123pan.cn/123pan/jE4Fjv-udjih\'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;"><span style="font-family: \'YouYuan\'; font-size: 14px;">2.0 123云盘下载</span></div>';
-            
-            links.innerHTML = html;
-            modal.style.display = 'flex';
-            void modal.offsetWidth;
-            modal.style.opacity = '1';
-        }
-
-        function showDownloadModalContent(appName, windowsUrl) {
-            const modal = document.getElementById('kgDownloadModal');
-            const title = document.getElementById('kgDownloadTitle');
-            const links = document.getElementById('kgDownloadLinks');
-            
-            title.textContent = appName + ' - 选择下载平台';
-            
-            // Build download links for all platforms
-            let html = '';
-            
-            // Check if URL is from GitHub
-            const isGitHub = windowsUrl.includes('github.com');
-            const downloadLabel = isGitHub ? 'GitHub Windows 下载' : 'Windows 下载';
-            
-            // Windows (has real URL)
-            html += `<div class="kg-download-option" onclick="launchAppUrl('${windowsUrl.replace(/'/g, "\\'")}'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                <span style="font-family: 'YouYuan'; font-size: 14px;">${downloadLabel}</span>
-            </div>`;
-            
-            links.innerHTML = html;
-            modal.style.display = 'flex';
-            // Trigger reflow for transition
-            void modal.offsetWidth;
-            modal.style.opacity = '1';
-        }
-        
-        // Doorbell download modal with multiple links
-        function showDoorbellDownloadModal() {
-            const apps = document.querySelectorAll('.kg-app-item');
-            let clickedApp = null;
-            apps.forEach(function(app) {
-                if (app.getAttribute('onclick') && app.getAttribute('onclick').includes('showDoorbellDownloadModal')) {
-                    clickedApp = app;
-                }
-            });
-            if (clickedApp) {
-                const iconEl = clickedApp.querySelector('.kg-app-icon');
-                playLaunchAnimation(iconEl, '#E17055', function() {
-                    showDoorbellModalContent();
-                });
-            } else {
-                showDoorbellModalContent();
-            }
-        }
-        
-        function showDoorbellModalContent() {
-            const modal = document.getElementById('kgDownloadModal');
-            const title = document.getElementById('kgDownloadTitle');
-            const links = document.getElementById('kgDownloadLinks');
-            
-            title.textContent = 'Kg 门铃 - 选择下载';
-            
-            let html = '';
-            
-            // Android GitHub
-            html += `<div class="kg-download-option" onclick="launchAppUrl('https://github.com/kgdream/kg-doorbell'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                <span style="font-family: 'YouYuan'; font-size: 14px;">Android GitHub 下载</span>
-            </div>`;
-            
-            // 123云盘
-            html += `<div class="kg-download-option" onclick="launchAppUrl('https://1823501963.share.123865.com/123pan/jE4Fjv-VTMih'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                <span style="font-family: 'YouYuan'; font-size: 14px;">123云盘下载（含源代码和软件）</span>
-            </div>`;
-            
-            // 蓝奏云
-            html += `<div class="kg-download-option" onclick="launchAppUrl('https://wwbpg.lanzouu.com/iuk953sfbzad'); closeKgDownloadModal();" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                <span style="font-family: 'YouYuan'; font-size: 14px;">蓝奏云下载（不含源代码）密码: 2bbo</span>
-            </div>`;
-            
-            links.innerHTML = html;
-            modal.style.display = 'flex';
-            void modal.offsetWidth;
-            modal.style.opacity = '1';
-        }
-        
-        function closeKgDownloadModal() {
-            const modal = document.getElementById('kgDownloadModal');
-            if (modal) {
-                modal.style.opacity = '0';
-                setTimeout(function() {
-                    modal.style.display = 'none';
-                }, 300);
-            }
-        }
-
-        /* ========== iOS / 澎湃OS Style App Launch Animation ========== */
+        /* ========== iOS / 澃湃OS Style App Launch Animation ========== */
         function playLaunchAnimation(iconEl, bgColor, callback) {
             // Check if launch animation is enabled
             const enableLaunchAnim = localStorage.getItem('enableLaunchAnim');
@@ -6470,14 +6158,6 @@
             }, 1000);
         }
 
-        function launchApp(element, url, bgColor, iconText) {
-            // Play animation first, then open URL after animation
-            const iconEl = element.querySelector('.kg-app-icon');
-            playLaunchAnimation(iconEl, bgColor, function() {
-                window.open(url, '_blank');
-            });
-        }
-
         function launchAppUrl(url) {
             // Check animation settings
             const enableLaunchAnim = localStorage.getItem('enableLaunchAnim');
@@ -6530,7 +6210,7 @@
             if (targetIndex < 0 || targetIndex >= tabOrder.length) return;
             tabSwitching = true;
 
-            const allContents = ['favoritesContent', 'kgContent', 'engineContent', 'settingsContent', 'hotNewsContent'];
+            const allContents = ['favoritesContent', 'engineContent', 'settingsContent', 'hotNewsContent'];
             const currentContentId = tabOrder[currentTabIndex];
             const targetContentId = tabOrder[targetIndex];
 
@@ -6654,87 +6334,6 @@
             }, { passive: true });
         })();
 
-        function switchToKGTab() {
-            const contents = ['favoritesContent', 'kgContent', 'engineContent', 'settingsContent', 'hotNewsContent'];
-            
-            // Hide all contents first
-            contents.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.style.display = 'none';
-                }
-            });
-            
-            // Show KG content
-            const kgContent = document.getElementById('kgContent');
-            if (kgContent) {
-                kgContent.style.display = 'block';
-                kgContent.style.opacity = '1';
-                kgContent.style.transform = 'translateY(0)';
-            }
-            
-            // Update button styles
-            buttons.forEach(btnId => {
-                const btn = document.getElementById(btnId);
-                if (btn) {
-                    btn.style.background = '#F0F0F0';
-                    btn.style.color = '#000000';
-                    btn.style.boxShadow = '20px 20px 62px #cccccc, -20px -20px 62px #ffffff';
-                }
-            });
-            // KG content is static HTML, no need to render
-        }
-        
-        function switchToOfficialTab() {
-            const contents = ['favoritesContent', 'kgContent', 'engineContent', 'settingsContent', 'hotNewsContent'];
-            const buttons = ['favTabBtn', 'engineTabBtn', 'settingsTabBtn', 'hotNewsTabBtn'];
-            
-            // Fade out all contents
-            contents.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(10px)';
-                }
-            });
-            
-            // Update button styles
-            buttons.forEach(btnId => {
-                const btn = document.getElementById(btnId);
-                if (btn) {
-                    btn.style.background = '#F0F0F0';
-                    btn.style.color = '#000000';
-                    btn.style.boxShadow = '20px 20px 62px #cccccc, -20px -20px 62px #ffffff';
-                }
-            });
-            
-            // Set active button
-            const activeBtn = document.getElementById('officialTabBtn');
-            if (activeBtn) {
-                activeBtn.style.background = '#000000';
-                activeBtn.style.color = 'white';
-                activeBtn.style.boxShadow = 'inset 5px 5px 10px #000000, inset -5px -5px 10px #333333';
-            }
-            
-            // After fade out, show official content (currently same as KG)
-            setTimeout(() => {
-                contents.forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) {
-                        el.style.display = id === 'kgContent' ? 'block' : 'none';
-                    }
-                });
-                
-                // Fade in content
-                const kgContent = document.getElementById('kgContent');
-                if (kgContent) {
-                    void kgContent.offsetWidth; // Force reflow
-                    kgContent.style.opacity = '1';
-                    kgContent.style.transform = 'translateY(0)';
-                }
-            }, 300);
-        }
-
         let hotNewsLoaded = false; // Track if hot news has been loaded
         
         async function loadHotNewsTab(force = false) {
@@ -6780,13 +6379,6 @@
             }
         }
         
-        function openKG() {
-            openFavorites();
-            setTimeout(() => {
-                switchToKGTab();
-            }, 100);
-        }
-        
         // Event listeners for favorites
         const favBtn = document.getElementById('favBtn');
         if (favBtn) {
@@ -6827,13 +6419,14 @@
             });
         }
         
-        // Update engine selector width initially
+        // Update engine selector width initially - don't exceed search box width
         setTimeout(() => {
             const engineSelector = document.querySelector('.search-engine-selector');
-            if (engineSelector) {
+            if (engineSelector && engineSelector.id === 'engineSelector') {
                 const searchBox = document.getElementById('searchInput');
                 const rect = searchBox.getBoundingClientRect();
                 engineSelector.style.width = rect.width + 'px';
+                engineSelector.style.maxWidth = rect.width + 'px';
             }
         }, 100);
 
@@ -7226,10 +6819,21 @@
 
                 const img = new Image();
                 img.onload = function() {
-                    // Start with black, fade in the wallpaper
-                    filterOverlay.style.opacity = '0';
-                    filterOverlay.style.transition = 'opacity 1.5s ease';
+                    // Smooth wallpaper appearance animation
                     filterOverlay.style.backgroundImage = "url('" + img.src + "')";
+                    filterOverlay.style.opacity = '0';
+                    filterOverlay.style.transform = 'scale(1.05)';
+                    filterOverlay.style.transition = 'opacity 1.5s ease, transform 1.5s ease';
+                    requestAnimationFrame(function() {
+                        filterOverlay.style.opacity = '1';
+                        filterOverlay.style.transform = 'scale(1)';
+                    });
+                };
+                img.onerror = function() {
+                    // If image fails, show body background color as fallback
+                    filterOverlay.style.background = document.body.style.backgroundColor || '#F0F0F0';
+                    filterOverlay.style.opacity = '0';
+                    filterOverlay.style.transition = 'opacity 1s ease';
                     requestAnimationFrame(function() {
                         filterOverlay.style.opacity = '1';
                     });
@@ -7341,9 +6945,6 @@
             if (preloadCheckbox) preloadCheckbox.checked = true;
             loadHotNewsTab();
         }
-
-        // Load foreign icons state
-        loadForeignIconsState();
 
         // Load no favicons preference
         const noFavIcons = localStorage.getItem('noFavIcons');
@@ -7779,34 +7380,43 @@
             document.getElementById('drawingCanvas').style.display = 'none';
         }
         
-        // Bind KG Logo click event
-        document.addEventListener('DOMContentLoaded', function() {
-            var kgLogoBtn = document.getElementById('kgLogoBtn');
-            if (kgLogoBtn) {
-                kgLogoBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    // Show favorites modal first
-                    var modal = document.getElementById('favoritesModal');
-                    if (modal) {
-                        modal.style.display = 'block';
-                        setTimeout(function() {
-                            modal.style.opacity = '1';
-                        }, 10);
-                    }
-                    // Then switch to KG tab
-                    var fav = document.getElementById('favoritesContent');
-                    var kg = document.getElementById('kgContent');
-                    var eng = document.getElementById('engineContent');
-                    var set = document.getElementById('settingsContent');
-                    var hot = document.getElementById('hotNewsContent');
-                    if (fav) { fav.style.display = 'none'; fav.style.opacity = '0'; }
-                    if (kg) { kg.style.display = 'block'; kg.style.opacity = '1'; kg.style.transform = 'translateY(0)'; }
-                    if (eng) { eng.style.display = 'none'; eng.style.opacity = '0'; }
-                    if (set) { set.style.display = 'none'; set.style.opacity = '0'; }
-                    if (hot) { hot.style.display = 'none'; hot.style.opacity = '0'; }
-                    console.log('KG Logo clicked, modal and kgContent shown');
-                });
+        // Logo expand/collapse toggle
+        let logoExpanded = false;
+        function toggleLogoExpand() {
+            logoExpanded = !logoExpanded;
+            var link1 = document.getElementById('logoLink1');
+            var link2 = document.getElementById('logoLink2');
+            if (logoExpanded) {
+                if (link1) {
+                    link1.style.opacity = '1';
+                    link1.style.transform = 'translateX(0) scale(1)';
+                    link1.style.pointerEvents = 'auto';
+                }
+                if (link2) {
+                    link2.style.opacity = '1';
+                    link2.style.transform = 'translateX(0) scale(1)';
+                    link2.style.pointerEvents = 'auto';
+                }
+            } else {
+                if (link1) {
+                    link1.style.opacity = '0';
+                    link1.style.transform = 'translateX(-20px) scale(0.5)';
+                    link1.style.pointerEvents = 'none';
+                }
+                if (link2) {
+                    link2.style.opacity = '0';
+                    link2.style.transform = 'translateX(-20px) scale(0.5)';
+                    link2.style.pointerEvents = 'none';
+                }
+            }
+        }
+
+        // Close logo expansion when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!logoExpanded) return;
+            var container = document.getElementById('logoContainer');
+            if (container && !container.contains(e.target)) {
+                toggleLogoExpand();
             }
         });
         
@@ -7896,6 +7506,27 @@
         
         <!-- Canvas for Drawing -->
         <canvas id="drawCanvas" style="position: absolute; top: 0; left: 0; cursor: crosshair;"></canvas>
+    </div>
+
+    <!-- Add Custom Search Engine Modal -->
+    <div id="customEngineModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10002; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease;">
+        <div style="background: #F0F0F0; border-radius: var(--global-radius); padding: 25px; width: 90%; max-width: 400px; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; position: relative;">
+            <button onclick="closeCustomEngineDialog()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; cursor: pointer; font-size: 24px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-family: 'YouYuan';">×</button>
+            <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 20px; padding-right: 40px;">添加自定义搜索引擎</h3>
+            <div style="margin-bottom: 15px;">
+                <label style="font-family: 'YouYuan'; font-size: 13px; color: #666; display: block; margin-bottom: 5px;">名称</label>
+                <input type="text" id="customEngineName" placeholder="如：必应" style="width: 100%; padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 14px; outline: none; box-sizing: border-box;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="font-family: 'YouYuan'; font-size: 13px; color: #666; display: block; margin-bottom: 5px;">搜索地址（用&lt;内容&gt;代替搜索词）</label>
+                <input type="text" id="customEngineUrl" placeholder="https://cn.bing.com/search?q=<内容>" style="width: 100%; padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 14px; outline: none; box-sizing: border-box;">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="font-family: 'YouYuan'; font-size: 13px; color: #666; display: block; margin-bottom: 5px;">图标URL（留空自动获取）</label>
+                <input type="text" id="customEngineIcon" placeholder="https://cn.bing.com/favicon.ico" style="width: 100%; padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 14px; outline: none; box-sizing: border-box;">
+            </div>
+            <button onclick="confirmAddCustomEngine()" style="width: 100%; padding: 12px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold;">确认添加</button>
+        </div>
     </div>
 </body>
 </html>
