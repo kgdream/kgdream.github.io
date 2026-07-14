@@ -190,7 +190,7 @@
             background: #F0F0F0;
             box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;
             transition: transform 0.3s ease, color 0.4s ease, padding 0.3s ease, box-shadow 0.3s ease;
-            color: transparent;
+            color: #000000;
             caret-color: #000000;
         }
 
@@ -802,6 +802,13 @@
             box-shadow: inset 5px 5px 10px #2a2a2a, inset -5px -5px 10px #4a4a4a;
             font-weight: bold;
         }
+        body[data-theme="dark"] #scannerModal,
+        body[data-theme="dark"] #scannerModal * {
+            color: #e0e0e0 !important;
+        }
+        body[data-theme="dark"] #scannerModal {
+            background-color: #343434 !important;
+        }
 
         body[data-theme="dark"] .favorite-item {
             background: #3a3a3a;
@@ -836,7 +843,7 @@
         }
 
         body[data-theme="dark"] #engineHintInSearchBox span {
-            color: rgba(224, 224, 224, 0.5);
+            color: rgba(224, 224, 224, 0.75);
         }
 
         body[data-theme="dark"] .delete-btn {
@@ -956,6 +963,14 @@
             border-radius: var(--global-radius) !important;
             background: transparent !important;
         }
+        body[data-button-style="outline"] div[style*="box-shadow"],
+        body[data-button-style="outline"] button[style*="box-shadow"],
+        body[data-button-style="outline"] input[style*="box-shadow"] {
+            box-shadow: none !important;
+            border: 2px solid currentColor !important;
+            border-radius: var(--global-radius) !important;
+            background: transparent !important;
+        }
 
 
         
@@ -1014,6 +1029,36 @@
             isolation: isolate;
         }
 
+        /* Outline mode dark theme */
+        body[data-theme="dark"][data-button-style="outline"] button,
+        body[data-theme="dark"][data-button-style="outline"] input,
+        body[data-theme="dark"][data-button-style="outline"] select,
+        body[data-theme="dark"][data-button-style="outline"] .tab-btn,
+        body[data-theme="dark"][data-button-style="outline"] .modal-content,
+        body[data-theme="dark"][data-button-style="outline"] .settings-section h3,
+        body[data-theme="dark"][data-button-style="outline"] .favorite-item,
+        body[data-theme="dark"][data-button-style="outline"] .hot-news-container,
+        body[data-theme="dark"][data-button-style="outline"] .search-hint,
+        body[data-theme="dark"][data-button-style="outline"] .suggestions,
+        body[data-theme="dark"][data-button-style="outline"] .search-history,
+        body[data-theme="dark"][data-button-style="outline"] .engine-item,
+        body[data-theme="dark"][data-button-style="outline"] #favSearchInput,
+        body[data-theme="dark"][data-button-style="outline"] #addFavBtn,
+        body[data-theme="dark"][data-button-style="outline"] .bottom-btn,
+        body[data-theme="dark"][data-button-style="outline"] #dropdownMenu,
+        body[data-theme="dark"][data-button-style="outline"] .modal-close-btn,
+        body[data-theme="dark"][data-button-style="outline"] .text-result-modal,
+        body[data-theme="dark"][data-button-style="outline"] .fav-add-btn,
+        body[data-theme="dark"][data-button-style="outline"] .history-item,
+        body[data-theme="dark"][data-button-style="outline"] .news-item {
+            border-color: rgba(224, 224, 224, 0.6) !important;
+        }
+        body[data-theme="dark"][data-button-style="outline"] div[style*="box-shadow"],
+        body[data-theme="dark"][data-button-style="outline"] button[style*="box-shadow"],
+        body[data-theme="dark"][data-button-style="outline"] input[style*="box-shadow"] {
+            border-color: rgba(224, 224, 224, 0.6) !important;
+        }
+
         /* Rounded mode - no neumorphism, just rounded corners with darker background */
         body[data-button-style="rounded"] button,
         body[data-button-style="rounded"] input,
@@ -1037,6 +1082,14 @@
             box-shadow: none !important;
             border: none !important;
             border-radius: var(--global-radius) !important;
+            background: rgba(200, 200, 200, 0.4) !important;
+        }
+        body[data-button-style="rounded"] div[style*="box-shadow"],
+        body[data-button-style="rounded"] button[style*="box-shadow"],
+        body[data-button-style="rounded"] input[style*="box-shadow"] {
+            box-shadow: none !important;
+            border: none !important;
+            border-radius: var(--global-radius) !important;
             background: rgba(200, 200, 200, 0.3) !important;
         }
 
@@ -1055,6 +1108,34 @@
 
         body[data-button-style="rounded"] .tab-btn.active {
             opacity: 1 !important;
+        }
+
+        /* Rounded mode dark theme */
+        body[data-theme="dark"][data-button-style="rounded"] button,
+        body[data-theme="dark"][data-button-style="rounded"] input,
+        body[data-theme="dark"][data-button-style="rounded"] select,
+        body[data-theme="dark"][data-button-style="rounded"] .tab-btn,
+        body[data-theme="dark"][data-button-style="rounded"] .modal-content,
+        body[data-theme="dark"][data-button-style="rounded"] .settings-section h3,
+        body[data-theme="dark"][data-button-style="rounded"] .favorite-item,
+        body[data-theme="dark"][data-button-style="rounded"] .hot-news-container,
+        body[data-theme="dark"][data-button-style="rounded"] .search-hint,
+        body[data-theme="dark"][data-button-style="rounded"] .suggestions,
+        body[data-theme="dark"][data-button-style="rounded"] .search-history,
+        body[data-theme="dark"][data-button-style="rounded"] .engine-item,
+        body[data-theme="dark"][data-button-style="rounded"] #favSearchInput,
+        body[data-theme="dark"][data-button-style="rounded"] #addFavBtn,
+        body[data-theme="dark"][data-button-style="rounded"] .bottom-btn,
+        body[data-theme="dark"][data-button-style="rounded"] #dropdownMenu,
+        body[data-theme="dark"][data-button-style="rounded"] .modal-close-btn,
+        body[data-theme="dark"][data-button-style="rounded"] .text-result-modal,
+        body[data-theme="dark"][data-button-style="rounded"] .fav-add-btn {
+            background: rgba(80, 80, 80, 0.5) !important;
+        }
+        body[data-theme="dark"][data-button-style="rounded"] div[style*="box-shadow"],
+        body[data-theme="dark"][data-button-style="rounded"] button[style*="box-shadow"],
+        body[data-theme="dark"][data-button-style="rounded"] input[style*="box-shadow"] {
+            background: rgba(80, 80, 80, 0.4) !important;
         }
 
         /* Glass mode - Apple liquid glass effect */
@@ -1078,22 +1159,41 @@
         body[data-button-style="glass"] .text-result-modal,
         body[data-button-style="glass"] .fav-add-btn {
             box-shadow: 
-                0 0 0 1px rgba(255, 255, 255, 0.3) inset,
-                0 0 0 2px rgba(255, 255, 255, 0.1) inset,
-                0 8px 32px rgba(0, 0, 0, 0.12),
-                0 2px 8px rgba(0, 0, 0, 0.08) !important;
+                0 0 0 1px rgba(255, 255, 255, 0.5) inset,
+                0 8px 32px rgba(0, 0, 0, 0.15),
+                0 2px 8px rgba(0, 0, 0, 0.1) !important;
             border: none !important;
             border-radius: var(--global-radius) !important;
             background: linear-gradient(
                 135deg,
-                rgba(255, 255, 255, 0.4) 0%,
-                rgba(255, 255, 255, 0.2) 50%,
-                rgba(255, 255, 255, 0.3) 100%
+                rgba(255, 255, 255, 0.65) 0%,
+                rgba(255, 255, 255, 0.45) 50%,
+                rgba(255, 255, 255, 0.55) 100%
             ) !important;
-            backdrop-filter: saturate(150%) brightness(1.02) !important;
-            -webkit-backdrop-filter: saturate(150%) brightness(1.02) !important;
-            color: inherit;
-            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(6px) saturate(150%) brightness(1.02) !important;
+            -webkit-backdrop-filter: blur(6px) saturate(150%) brightness(1.02) !important;
+            color: inherit !important;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+        }
+        body[data-button-style="glass"] div[style*="box-shadow"],
+        body[data-button-style="glass"] button[style*="box-shadow"],
+        body[data-button-style="glass"] input[style*="box-shadow"] {
+            box-shadow: 
+                0 0 0 1px rgba(255, 255, 255, 0.5) inset,
+                0 8px 32px rgba(0, 0, 0, 0.15),
+                0 2px 8px rgba(0, 0, 0, 0.1) !important;
+            border: none !important;
+            border-radius: var(--global-radius) !important;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.65) 0%,
+                rgba(255, 255, 255, 0.45) 50%,
+                rgba(255, 255, 255, 0.55) 100%
+            ) !important;
+            backdrop-filter: blur(8px) saturate(150%) brightness(1.02) !important;
+            -webkit-backdrop-filter: blur(8px) saturate(150%) brightness(1.02) !important;
+            color: inherit !important;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5) !important;
         }
 
 
@@ -1123,6 +1223,7 @@
             box-shadow: none !important;
             border: none !important;
             backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
         }
 
         /* Glass mode in dark theme */
@@ -1147,15 +1248,28 @@
         body[data-theme="dark"][data-button-style="glass"] .fav-add-btn {
             background: linear-gradient(
                 135deg,
-                rgba(255, 255, 255, 0.15) 0%,
-                rgba(255, 255, 255, 0.08) 50%,
-                rgba(255, 255, 255, 0.12) 100%
+                rgba(255, 255, 255, 0.25) 0%,
+                rgba(255, 255, 255, 0.15) 50%,
+                rgba(255, 255, 255, 0.2) 100%
             ) !important;
             box-shadow: 
-                0 0 0 1px rgba(255, 255, 255, 0.15) inset,
-                0 0 0 2px rgba(255, 255, 255, 0.05) inset,
-                0 8px 32px rgba(0, 0, 0, 0.3),
-                0 2px 8px rgba(0, 0, 0, 0.2) !important;
+                0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 2px 8px rgba(0, 0, 0, 0.3) !important;
+        }
+        body[data-theme="dark"][data-button-style="glass"] div[style*="box-shadow"],
+        body[data-theme="dark"][data-button-style="glass"] button[style*="box-shadow"],
+        body[data-theme="dark"][data-button-style="glass"] input[style*="box-shadow"] {
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.25) 0%,
+                rgba(255, 255, 255, 0.15) 50%,
+                rgba(255, 255, 255, 0.2) 100%
+            ) !important;
+            box-shadow: 
+                0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 2px 8px rgba(0, 0, 0, 0.3) !important;
         }
 
 
@@ -1200,11 +1314,13 @@
         body[data-button-style="transparent"] .fav-add-btn,
         body[data-button-style="transparent"] [class*="btn"],
         body[data-button-style="transparent"] [id*="Btn"],
-        body[data-button-style="transparent"] div[style*="box-shadow"] {
+        body[data-button-style="transparent"] div[style*="box-shadow"],
+        body[data-button-style="transparent"] button[style*="box-shadow"],
+        body[data-button-style="transparent"] input[style*="box-shadow"] {
             box-shadow: none !important;
             border: none !important;
             border-radius: var(--global-radius) !important;
-            background: rgba(255, 255, 255, 0.6) !important;
+            background: rgba(255, 255, 255, 0.85) !important;
         }
 
         body[data-button-style="transparent"] button:hover,
@@ -1246,8 +1362,10 @@
         body[data-theme="dark"][data-button-style="transparent"] .fav-add-btn,
         body[data-theme="dark"][data-button-style="transparent"] [class*="btn"],
         body[data-theme="dark"][data-button-style="transparent"] [id*="Btn"],
-        body[data-theme="dark"][data-button-style="transparent"] div[style*="box-shadow"] {
-            background: rgba(255, 255, 255, 0.15) !important;
+        body[data-theme="dark"][data-button-style="transparent"] div[style*="box-shadow"],
+        body[data-theme="dark"][data-button-style="transparent"] button[style*="box-shadow"],
+        body[data-theme="dark"][data-button-style="transparent"] input[style*="box-shadow"] {
+            background: rgba(255, 255, 255, 0.5) !important;
         }
 
         body[data-theme="dark"][data-button-style="transparent"] button:hover,
@@ -1280,12 +1398,23 @@
         body[data-button-style="frosted"] .text-result-modal,
         body[data-button-style="frosted"] .fav-add-btn {
             box-shadow: none !important;
-            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            border: 1px solid rgba(255, 255, 255, 0.35) !important;
             border-radius: var(--global-radius) !important;
-            background: rgba(255, 255, 255, 0.03) !important;
-            backdrop-filter: blur(16px) saturate(140%) !important;
-            -webkit-backdrop-filter: blur(16px) saturate(140%) !important;
-            color: inherit;
+            background: rgba(255, 255, 255, 0.25) !important;
+            backdrop-filter: blur(20px) saturate(140%) !important;
+            -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
+            color: inherit !important;
+        }
+        body[data-button-style="frosted"] div[style*="box-shadow"],
+        body[data-button-style="frosted"] button[style*="box-shadow"],
+        body[data-button-style="frosted"] input[style*="box-shadow"] {
+            box-shadow: none !important;
+            border: 1px solid rgba(255, 255, 255, 0.35) !important;
+            border-radius: var(--global-radius) !important;
+            background: rgba(255, 255, 255, 0.25) !important;
+            backdrop-filter: blur(20px) saturate(140%) !important;
+            -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
+            color: inherit !important;
         }
 
         body[data-button-style="frosted"] button:hover,
@@ -1306,6 +1435,7 @@
             box-shadow: none !important;
             border: none !important;
             backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
         }
 
         /* Frosted mode in dark theme */
@@ -1328,8 +1458,15 @@
         body[data-theme="dark"][data-button-style="frosted"] .modal-close-btn,
         body[data-theme="dark"][data-button-style="frosted"] .text-result-modal,
         body[data-theme="dark"][data-button-style="frosted"] .fav-add-btn {
-            background: rgba(0, 0, 0, 0.03) !important;
-            border-color: rgba(255, 255, 255, 0.1) !important;
+            background: rgba(0, 0, 0, 0.35) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+            box-shadow: none !important;
+        }
+        body[data-theme="dark"][data-button-style="frosted"] div[style*="box-shadow"],
+        body[data-theme="dark"][data-button-style="frosted"] button[style*="box-shadow"],
+        body[data-theme="dark"][data-button-style="frosted"] input[style*="box-shadow"] {
+            background: rgba(0, 0, 0, 0.35) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
             box-shadow: none !important;
         }
 
@@ -1374,30 +1511,6 @@
 
 
 
-        body[data-bg-mode="wallpaper"] .search-hint {
-            background: transparent !important;
-            box-shadow: none !important;
-            color: #ffffff !important;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-        }
-
-        body[data-bg-mode="wallpaper"] .suggestions,
-        body[data-bg-mode="wallpaper"] .search-history {
-            background: rgba(0,0,0,0.3) !important;
-            box-shadow: none !important;
-            color: #ffffff !important;
-        }
-
-        body[data-bg-mode="wallpaper"] .suggestions li,
-        body[data-bg-mode="wallpaper"] .search-history li {
-            color: #ffffff !important;
-        }
-
-        body[data-bg-mode="wallpaper"] .suggestions li:hover,
-        body[data-bg-mode="wallpaper"] .search-history li:hover {
-            background-color: rgba(255,255,255,0.15) !important;
-        }
-
         body[data-bg-mode="wallpaper"] .poem-content,
         body[data-bg-mode="wallpaper"] .poem-title,
         body[data-bg-mode="wallpaper"] .poem-author {
@@ -1408,45 +1521,45 @@
             /* Keep original colors in wallpaper mode */
         }
 
-        /* Other interfaces (modals) - wallpaper behind + white transparent */
-        body[data-bg-mode="wallpaper"] #favoritesModal {
-            background: transparent !important;
-            background-size: cover !important;
-            background-position: center !important;
-            background-repeat: no-repeat !important;
-        }
+        /* Other interfaces (modals) - wallpaper mode uses solid bg same as none mode */
+        /* No transparent rules for wallpaper mode - all modals use solid backgrounds */
 
-        body[data-bg-mode="wallpaper"] #favoritesModal::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.5);
-            z-index: -1;
-        }
-
-        body[data-bg-mode="wallpaper"] #favoritesModal > div {
-            background: rgba(255, 255, 255, 0.5) !important;
-            border: 1px solid rgba(255, 255, 255, 0.5) !important;
-        }
-        
-        /* Solid and none modes - no transparency, no blur */
+        /* Solid and none and wallpaper modes - no transparency, no blur */
         body[data-bg-mode="solid"] #favoritesModal,
-        body[data-bg-mode="none"] #favoritesModal {
+        body[data-bg-mode="none"] #favoritesModal,
+        body[data-bg-mode="wallpaper"] #favoritesModal {
             background-color: #F0F0F0 !important;
             background-image: none !important;
         }
         
         body[data-bg-mode="solid"] #favoritesModal::before,
-        body[data-bg-mode="none"] #favoritesModal::before {
+        body[data-bg-mode="none"] #favoritesModal::before,
+        body[data-bg-mode="wallpaper"] #favoritesModal::before {
             display: none;
         }
         
         body[data-theme="dark"][data-bg-mode="solid"] #favoritesModal,
-        body[data-theme="dark"][data-bg-mode="none"] #favoritesModal {
+        body[data-theme="dark"][data-bg-mode="none"] #favoritesModal,
+        body[data-theme="dark"][data-bg-mode="wallpaper"] #favoritesModal {
             background-color: #3a3a3a !important;
+        }
+
+        /* Dark mode for wallpaper source modals */
+        body[data-theme="dark"] #wallpaperSourceModal {
+            background-color: #2a2a2a !important;
+        }
+        body[data-theme="dark"] #wallpaperSourceModal h2 {
+            color: #e0e0e0;
+        }
+        body[data-theme="dark"] #addWallpaperSourceModal > div {
+            background: #3a3a3a !important;
+        }
+        body[data-theme="dark"] #addWallpaperSourceModal h3,
+        body[data-theme="dark"] #addWallpaperSourceModal label {
+            color: #e0e0e0;
+        }
+        body[data-theme="dark"] #currentWallpaperName {
+            color: #999 !important;
         }
 
 
@@ -1517,6 +1630,14 @@
         @keyframes clockOverlayOut {
             0% { opacity: 1; }
             100% { opacity: 0; }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         .suggestions li:hover {
@@ -2018,6 +2139,92 @@
         body[data-theme="dark"] .fav-add-btn:hover {
             box-shadow: 15px 15px 40px #2a2a2a, -15px -15px 40px #4a4a4a !important;
         }
+        .wallpaper-source-item:hover {
+            transform: translateY(-2px);
+        }
+        .wallpaper-source-item.active {
+            box-shadow: inset 4px 4px 8px #cccccc, inset -4px -4px 8px #ffffff !important;
+        }
+
+        /* Wallpaper source items theme adaptations */
+        body[data-button-style="outline"] .wallpaper-source-item,
+        body[data-button-style="outline"] #addWallpaperSourceModal > div {
+            box-shadow: none !important;
+            border: 2px solid currentColor !important;
+            border-radius: var(--global-radius) !important;
+            background: transparent !important;
+        }
+        body[data-theme="dark"][data-button-style="outline"] .wallpaper-source-item,
+        body[data-theme="dark"][data-button-style="outline"] #addWallpaperSourceModal > div {
+            border-color: rgba(224, 224, 224, 0.6) !important;
+        }
+
+        body[data-button-style="rounded"] .wallpaper-source-item,
+        body[data-button-style="rounded"] #addWallpaperSourceModal > div {
+            box-shadow: none !important;
+            border: none !important;
+            border-radius: var(--global-radius) !important;
+            background: rgba(200, 200, 200, 0.4) !important;
+        }
+        body[data-theme="dark"][data-button-style="rounded"] .wallpaper-source-item,
+        body[data-theme="dark"][data-button-style="rounded"] #addWallpaperSourceModal > div {
+            background: rgba(80, 80, 80, 0.5) !important;
+        }
+
+        body[data-button-style="glass"] .wallpaper-source-item,
+        body[data-button-style="glass"] #addWallpaperSourceModal > div {
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5) inset,
+                0 8px 32px rgba(0, 0, 0, 0.15),
+                0 2px 8px rgba(0, 0, 0, 0.1) !important;
+            border: none !important;
+            border-radius: var(--global-radius) !important;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0.45) 50%, rgba(255, 255, 255, 0.55) 100%) !important;
+            backdrop-filter: blur(8px) saturate(150%) brightness(1.02) !important;
+            -webkit-backdrop-filter: blur(8px) saturate(150%) brightness(1.02) !important;
+            color: inherit !important;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+        }
+        body[data-theme="dark"][data-button-style="glass"] .wallpaper-source-item,
+        body[data-theme="dark"][data-button-style="glass"] #addWallpaperSourceModal > div {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.2) 100%) !important;
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2) inset, 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        body[data-button-style="transparent"] .wallpaper-source-item,
+        body[data-button-style="transparent"] #addWallpaperSourceModal > div {
+            box-shadow: none !important;
+            border: none !important;
+            border-radius: var(--global-radius) !important;
+            background: rgba(255, 255, 255, 0.85) !important;
+        }
+        body[data-theme="dark"][data-button-style="transparent"] .wallpaper-source-item,
+        body[data-theme="dark"][data-button-style="transparent"] #addWallpaperSourceModal > div {
+            background: rgba(255, 255, 255, 0.5) !important;
+        }
+
+        body[data-button-style="frosted"] .wallpaper-source-item,
+        body[data-button-style="frosted"] #addWallpaperSourceModal > div {
+            box-shadow: none !important;
+            border: 1px solid rgba(255, 255, 255, 0.35) !important;
+            border-radius: var(--global-radius) !important;
+            background: rgba(255, 255, 255, 0.25) !important;
+            backdrop-filter: blur(20px) saturate(140%) !important;
+            -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
+            color: inherit !important;
+        }
+        body[data-theme="dark"][data-button-style="frosted"] .wallpaper-source-item,
+        body[data-theme="dark"][data-button-style="frosted"] #addWallpaperSourceModal > div {
+            background: rgba(0, 0, 0, 0.35) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+            box-shadow: none !important;
+        }
+
+        body[data-elder-mode="true"] .wallpaper-source-item,
+        body[data-elder-mode="true"] #addWallpaperSourceModal > div {
+            border: 1px solid #ccc !important;
+            background: #f5f5f5 !important;
+            box-shadow: none !important;
+        }
 
         /* Dropdown menu - transparent inside search box */
         #dropdownMenu > div {
@@ -2153,6 +2360,14 @@
 
         body[data-theme="dark"] #appLaunchOverlay .launch-bg {
             background: #000000;
+        }
+
+        /* Wallpaper mode: use semi-transparent overlay instead of solid color */
+        body[data-bg-mode="wallpaper"] #appLaunchOverlay .launch-bg {
+            background: rgba(255, 255, 255, 0.85);
+        }
+        body[data-theme="dark"][data-bg-mode="wallpaper"] #appLaunchOverlay .launch-bg {
+            background: rgba(0, 0, 0, 0.7);
         }
 
         #appLaunchOverlay .launch-icon-wrap {
@@ -2369,6 +2584,53 @@
 
     <!-- QR Scanner Modal -->
     
+    <!-- Wallpaper Source Modal -->
+    <div id="wallpaperSourceModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #F0F0F0; z-index: 10001; overflow-y: auto; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; opacity: 0; transition: opacity 0.3s ease; flex-direction: column;">
+        <div style="display: flex; justify-content: center; align-items: center; position: relative; padding: 20px 20px 0 20px;">
+            <h2 style="font-family: 'YouYuan', Arial, sans-serif; font-size: 20px; margin: 0;">壁纸来源管理</h2>
+            <div class="modal-close-btn" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #000000; font-size: 30px; cursor: pointer; z-index: 10002; font-family: 'YouYuan', Arial, sans-serif;" onclick="closeWallpaperSourceModal()">×</div>
+        </div>
+        <div style="padding: 20px 20px 0 20px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <input type="text" id="wallpaperSourceSearchInput" placeholder="搜索壁纸来源..." oninput="renderWallpaperSources(this.value)" class="fav-search-input" style="flex: 1; min-width: 150px; padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; font-size: 14px; outline: none; background: #F0F0F0; font-family: 'YouYuan', Arial, sans-serif;">
+            <button onclick="openAddWallpaperSourceModal()" class="fav-add-btn" style="padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; display: flex; align-items: center; gap: 5px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                添加壁纸来源
+            </button>
+        </div>
+        <div style="padding: 20px; overflow-y: auto; flex: 1;">
+            <div id="wallpaperSourceList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 12px;"></div>
+        </div>
+    </div>
+
+    <!-- Add Wallpaper Source Modal -->
+    <div id="addWallpaperSourceModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10002; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease;">
+        <div style="background: #F0F0F0; border-radius: var(--global-radius); padding: 25px; width: 90%; max-width: 400px; box-shadow: 20px 20px 62px rgba(0,0,0,0.3);">
+            <h3 style="font-family: 'YouYuan', Arial, sans-serif; font-size: 18px; margin: 0 0 20px 0;">添加壁纸来源</h3>
+            <div style="margin-bottom: 12px;">
+                <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">名称：</label>
+                <input type="text" id="newWallpaperName" placeholder="如：我的壁纸" style="width: 100%; padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 14px; outline: none;">
+            </div>
+            <div style="margin-bottom: 12px;">
+                <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">接口地址：</label>
+                <input type="text" id="newWallpaperUrl" placeholder="如：https://example.com/api" style="width: 100%; padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 14px; outline: none;">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">类型：</label>
+                <select id="newWallpaperType" style="width: 100%; padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 14px; outline: none; cursor: pointer;">
+                    <option value="综合">综合</option>
+                    <option value="二次元">二次元</option>
+                    <option value="AI">AI</option>
+                    <option value="游戏">游戏</option>
+                    <option value="风景">风景</option>
+                </select>
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button onclick="closeAddWallpaperSourceModal()" class="settings-btn" style="padding: 8px 15px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 13px;">取消</button>
+                <button onclick="addWallpaperSource()" class="settings-btn" style="padding: 8px 15px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 13px;">添加</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Favorites Modal -->
     <div id="favoritesModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #F0F0F0; z-index: 10000; overflow-y: auto; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; opacity: 0; transition: opacity 0.3s ease;">
         <!-- Header with close button and tabs -->
@@ -2528,7 +2790,7 @@
                             <line x1="12" y1="5" x2="12" y2="19"></line>
                             <line x1="5" y1="12" x2="19" y2="12"></line>
                         </svg>
-                        新建软件
+                        新建收藏
                     </button>
                 </div>
                 
@@ -2567,8 +2829,8 @@
                         <option value="juejin">掘金</option>
                         <option value="github">GitHub</option>
                     </select>
-                    <button onclick="loadHotNewsTab()" style="padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; display: flex; align-items: center; gap: 5px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
+                    <button onclick="loadHotNewsTab(true)" style="padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; display: flex; align-items: center; gap: 5px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; transition: transform 0.5s ease;" id="hotNewsRefreshIcon">
                             <polyline points="23 4 23 10 17 10"></polyline>
                             <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
                         </svg>
@@ -2653,8 +2915,14 @@
                         <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
                             <label class="radio-switch"><input type="radio" name="bgMode" value="wallpaper" onchange="setBgMode('wallpaper')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                            必应壁纸
+                            壁纸模式
                         </label>
+                    </div>
+                    <div id="wallpaperSourceManagerBtn" style="display: none; margin-left: 30px; margin-bottom: 10px;">
+                        <button onclick="openWallpaperSourceModal()" class="settings-btn" style="padding: 8px 15px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 13px; display: flex; align-items: center; gap: 5px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                            壁纸来源管理
+                        </button>
                     </div>
                     <div id="customColorPicker" style="display: none; margin-left: 30px; margin-bottom: 10px;">
                         <!-- 圆形调色盘 -->
@@ -2674,6 +2942,16 @@
                         </div>
                     </div>
                     <div id="wallpaperControls" style="display: none; margin-left: 10px; align-items: center; gap: 10px; flex-wrap: wrap;">
+                        <span id="currentWallpaperName" style="font-family: 'YouYuan'; font-size: 12px; color: #666; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
+                        <button onclick="refreshWallpaper()" title="换一张" style="padding: 6px 10px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 12px; display: flex; align-items: center; gap: 3px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                            换一张
+                        </button>
+                        <label class="toggle-switch" title="聚焦搜索框时放大壁纸" style="margin-left: 5px;">
+                            <input type="checkbox" id="focusZoomToggle" onchange="toggleFocusZoom(this.checked)">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <label style="font-family: 'YouYuan'; font-size: 12px; cursor: pointer;" onclick="document.getElementById('focusZoomToggle').click(); document.getElementById('focusZoomToggle').dispatchEvent(new Event('change'));">聚焦放大</label>
                         <label style="font-family: 'YouYuan'; font-size: 12px;">模糊：</label>
                         <input type="range" id="wallpaperBlurSlider" min="0" max="20" value="0" style="width: 100px; vertical-align: middle;" oninput="updateWallpaperBlur(this.value)">
                         <label style="font-family: 'YouYuan'; font-size: 12px; margin-left: 5px;">亮度：</label>
@@ -2994,23 +3272,19 @@
                         API 地址配置
                     </div>
                     <div style="margin-bottom: 10px;">
-                        <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">热点新闻 API：</label>
+                        <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">热点新闻 API <span style="color: #999; font-size: 11px;">（JSON）</span>：</label>
                         <input type="text" id="hotNewsApiUrlInput" value="https://orz.ai/api/v1/dailynews/" style="width: 100%; padding: 8px 12px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
                     </div>
                     <div style="margin-bottom: 10px;">
-                        <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">搜索建议 API（百度）：</label>
+                        <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">搜索建议 API（百度）<span style="color: #999; font-size: 11px;">（JSONP）</span>：</label>
                         <input type="text" id="suggestionApiUrlInput" value="https://suggestion.baidu.com/su" style="width: 100%; padding: 8px 12px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
                     </div>
                     <div style="margin-bottom: 10px;">
-                        <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">今日诗词 API：</label>
+                        <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">今日诗词 API <span style="color: #999; font-size: 11px;">（JSON）</span>：</label>
                         <input type="text" id="poemApiUrlInput" value="https://v1.jinrishici.com/all.json" style="width: 100%; padding: 8px 12px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
                     </div>
                     <div style="margin-bottom: 10px;">
-                        <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">Bing 壁纸 API：</label>
-                        <input type="text" id="bingWallpaperApiUrlInput" value="https://bing.img.run/1920x1080.php" style="width: 100%; padding: 8px 12px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
-                    </div>
-                    <div style="margin-bottom: 10px;">
-                        <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">网站元信息 API：</label>
+                        <label style="font-family: 'YouYuan'; font-size: 12px; color: #666; display: block; margin-bottom: 5px;">网站元信息 API <span style="color: #999; font-size: 11px;">（JSON）</span>：</label>
                         <input type="text" id="websiteMetaApiUrlInput" value="https://orz.ai/api/v1/tools/website-meta/" style="width: 100%; padding: 8px 12px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan'; font-size: 13px; outline: none;">
                     </div>
                     <button class="settings-btn" onclick="saveAllApiUrls()" style="padding: 8px 15px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 13px;">保存所有 API 配置</button>
@@ -3555,6 +3829,26 @@
                 const disableAllAnimCb = document.getElementById('disableAllAnim');
                 if (disableAllAnimCb) disableAllAnimCb.checked = true;
             }
+
+            // Focus zoom - restore setting & bind events
+            if (localStorage.getItem('focusZoomEnabled') === 'true') {
+                focusZoomEnabled = true;
+                const focusZoomCb = document.getElementById('focusZoomToggle');
+                if (focusZoomCb) focusZoomCb.checked = true;
+            }
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('focus', function() {
+                    if (focusZoomEnabled && currentBgMode === 'wallpaper') {
+                        applyWallpaperFocusZoom();
+                    }
+                });
+                searchInput.addEventListener('blur', function() {
+                    if (focusZoomEnabled && currentBgMode === 'wallpaper') {
+                        applyWallpaperNormal();
+                    }
+                });
+            }
             // Restore "enable launch animation" setting
             if (localStorage.getItem('enableLaunchAnim') === 'false') {
                 const enableLaunchAnimCb = document.getElementById('enableLaunchAnim');
@@ -3712,6 +4006,10 @@
                     }
                 }
             });
+            
+            // Re-apply current button style theme after color update
+            // This ensures glass/transparent/frosted/etc. styles override neumorphism
+            applyThemeDirectly();
         }
         
         // Apply theme to inline styles (fixes hardcoded light colors in dark mode)
@@ -3958,6 +4256,13 @@
             const cacheEnabled = document.getElementById('cacheSuggestions');
             const keyword = document.getElementById('searchInput').value.trim();
             if (cacheEnabled && cacheEnabled.checked && keyword) {
+                // Limit cache size to 50 entries (LRU eviction)
+                const cacheKeys = Object.keys(suggestionCache);
+                if (cacheKeys.length >= 50) {
+                    const oldestKey = cacheKeys.reduce((a, b) => cacheTimestamps[a] < cacheTimestamps[b] ? a : b);
+                    delete suggestionCache[oldestKey];
+                    delete cacheTimestamps[oldestKey];
+                }
                 suggestionCache[keyword] = data.s;
                 cacheTimestamps[keyword] = Date.now();
             }
@@ -4227,6 +4532,15 @@
 
         // Load random poem from API
         function loadPoem() {
+            const favBtnText = document.getElementById('favBtnText');
+            
+            // Show loading state with animation
+            if (favBtnText) {
+                favBtnText.style.opacity = '0.5';
+                favBtnText.textContent = '加载中...';
+                favBtnText.style.transition = 'opacity 0.3s ease';
+            }
+            
             fetch(apiUrls.poem)
                 .then(res => res.json())
                 .then(data => {
@@ -4235,17 +4549,23 @@
                     searchInput.placeholder = ' ';
                     
                     // Update the favorites button text with poem content
-                    const favBtnText = document.getElementById('favBtnText');
                     if (favBtnText) {
-                        favBtnText.textContent = data.content;
+                        favBtnText.style.opacity = '0';
+                        setTimeout(() => {
+                            favBtnText.textContent = data.content;
+                            favBtnText.style.opacity = '1';
+                        }, 200);
                     }
                 })
                 .catch(err => {
                     console.error('Failed to load poem:', err);
                     document.getElementById('searchInput').placeholder = ' ';
-                    const favBtnText = document.getElementById('favBtnText');
                     if (favBtnText) {
-                        favBtnText.textContent = '古诗';
+                        favBtnText.style.opacity = '0';
+                        setTimeout(() => {
+                            favBtnText.textContent = '古诗';
+                            favBtnText.style.opacity = '1';
+                        }, 200);
                     }
                 });
         }
@@ -4386,6 +4706,10 @@
             modal.style.display = 'flex';
             void modal.offsetWidth;
             modal.style.opacity = '1';
+            setTimeout(function() {
+                var nameInput = document.getElementById('customEngineName');
+                if (nameInput) nameInput.focus();
+            }, 150);
         }
 
         function closeCustomEngineDialog() {
@@ -4535,7 +4859,7 @@
             const folder = folders.find(f => f.id === folderId);
             if (!folder) return;
             
-            const confirmed = await customConfirm(`确定要删除文件夹"${folder.name}"吗？里面的所有软件也会一起删除，此操作不可恢复！`);
+            const confirmed = await customConfirm(`确定要删除文件夹"${folder.name}"吗？里面的所有收藏也会一起删除，此操作不可恢复！`);
             if (!confirmed) return;
             
             const folderIndex = folders.findIndex(f => f.id === folderId);
@@ -4704,6 +5028,30 @@
             }
         })();
         
+        // Add change listener for favImportFile (was missing)
+        document.getElementById('favImportFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async function(event) {
+                try {
+                    const data = JSON.parse(event.target.result);
+                    if (Array.isArray(data)) {
+                        favorites = data;
+                        saveFavorites();
+                        renderFavorites();
+                        await customAlert('收藏导入成功！共导入 ' + data.length + ' 条收藏。');
+                    } else {
+                        await customAlert('数据格式不正确，请选择有效的收藏 JSON 文件。');
+                    }
+                } catch (err) {
+                    await customAlert('文件格式错误，请选择有效的 JSON 文件：' + err.message);
+                }
+            };
+            reader.readAsText(file);
+            this.value = '';
+        });
+
         function importFavorites() {
             document.getElementById('favImportFile').click();
         }
@@ -4774,6 +5122,8 @@
                         wallpaperBlur: localStorage.getItem('wallpaperBlur') || '0',
                         wallpaperBrightness: localStorage.getItem('wallpaperBrightness') || '100'
                     };
+                    selectedData.wallpaperSources = wallpaperSources;
+                    selectedData.currentWallpaperSourceId = currentWallpaperSourceId;
                 } else if (cb.value === 'apiUrls') {
                     selectedData.apiUrls = apiUrls;
                 } else if (cb.value === 'engine') {
@@ -4836,6 +5186,8 @@
                     wallpaperBlur: localStorage.getItem('wallpaperBlur') || '0',
                     wallpaperBrightness: localStorage.getItem('wallpaperBrightness') || '100'
                 },
+                wallpaperSources: wallpaperSources,
+                currentWallpaperSourceId: currentWallpaperSourceId,
                 apiUrls: apiUrls,
                 searchEngine: localStorage.getItem('searchEngine') || 'https://cn.bing.com/search?q=',
                 customEngines: JSON.parse(localStorage.getItem('customEngines') || '[]')
@@ -5105,6 +5457,16 @@
                         }
                     }
                     
+                    // Restore wallpaper sources
+                    if (allData.wallpaperSources) {
+                        wallpaperSources = allData.wallpaperSources;
+                        localStorage.setItem('wallpaperSources', JSON.stringify(wallpaperSources));
+                    }
+                    if (allData.currentWallpaperSourceId) {
+                        currentWallpaperSourceId = allData.currentWallpaperSourceId;
+                        localStorage.setItem('currentWallpaperSourceId', currentWallpaperSourceId);
+                    }
+                    
                     if (allData.searchEngine) {
                         localStorage.setItem('searchEngine', allData.searchEngine);
                     }
@@ -5119,6 +5481,13 @@
                             localStorage.setItem('apiUrl_' + key, allData.apiUrls[key]);
                         });
                         hotNewsApiUrl = apiUrls.hotNews;
+                    }
+
+                    // Sync animation states before reload
+                    if (allData.settings.disableAllAnim) {
+                        document.documentElement.classList.add('no-animations');
+                    } else {
+                        document.documentElement.classList.remove('no-animations');
                     }
 
                     await customAlert('全量数据恢复成功！');
@@ -5169,6 +5538,8 @@
                 } else if (cb.value === 'apiUrls') {
                     localStorage.removeItem('apiUrls');
                     localStorage.removeItem('apiUrl_bingWallpaper');
+                    localStorage.removeItem('wallpaperSources');
+                    localStorage.removeItem('currentWallpaperSourceId');
                     localStorage.removeItem('apiUrl_hotNews');
                     localStorage.removeItem('apiUrl_timeApi');
                     localStorage.removeItem('apiUrl_poemApi');
@@ -5190,6 +5561,39 @@
                 return;
             }
             
+            // Reset all localStorage settings to defaults
+            localStorage.removeItem('disableAllAnim');
+            localStorage.removeItem('enableLaunchAnim');
+            localStorage.removeItem('highContrastMode');
+            localStorage.removeItem('themeMode');
+            localStorage.removeItem('themeColor');
+            localStorage.removeItem('buttonStyle');
+            localStorage.removeItem('bgMode');
+            localStorage.removeItem('bgColor');
+            localStorage.removeItem('privacyMode');
+            localStorage.removeItem('cleanSearchMode');
+            localStorage.removeItem('cleanSearchKeyword');
+            localStorage.removeItem('borderRadius');
+            localStorage.removeItem('showTimeDisplay');
+            localStorage.removeItem('noFavIcons');
+            localStorage.removeItem('showFavCreateTime');
+            localStorage.removeItem('wallpaperBlur');
+            localStorage.removeItem('wallpaperBrightness');
+            localStorage.removeItem('wallpaperSources');
+            localStorage.removeItem('currentWallpaperSourceId');
+            localStorage.removeItem('focusZoomEnabled');
+            localStorage.removeItem('debugMode');
+            localStorage.removeItem('kgLogoMode');
+            localStorage.removeItem('showKgLogo');
+            localStorage.removeItem('loadForeignIcons');
+            localStorage.removeItem('searchBoxWidth');
+            localStorage.removeItem('searchBoxHeight');
+            localStorage.removeItem('searchBoxSizeEnabled');
+
+            // Remove no-animations class from html
+            document.documentElement.classList.remove('no-animations');
+
+            // Reset UI checkboxes to defaults
             const saveSearchHistory = document.getElementById('saveSearchHistory');
             if (saveSearchHistory) saveSearchHistory.checked = true;
             const showSearchSuggestions = document.getElementById('showSearchSuggestions');
@@ -5206,9 +5610,23 @@
             if (autoSortFavorites) autoSortFavorites.checked = true;
             const highContrastMode = document.getElementById('highContrastMode');
             if (highContrastMode) highContrastMode.checked = false;
+            const disableAllAnim = document.getElementById('disableAllAnim');
+            if (disableAllAnim) disableAllAnim.checked = false;
+            const enableLaunchAnim = document.getElementById('enableLaunchAnim');
+            if (enableLaunchAnim) enableLaunchAnim.checked = true;
             toggleHighContrast();
 
-            await customAlert('设置已重置为默认值！');
+            // Reset theme and button style
+            currentThemeMode = 'light';
+            currentButtonStyle = 'neumorphism';
+            currentBgMode = 'none';
+            applyTheme();
+            applyButtonStyle();
+            applyBgMode();
+            applySavedBorderRadius();
+            initWallpaperSources();
+
+            await customAlert('设置已重置为默认值！刷新页面后生效。');
         }
 
         // Clear all data including favorites
@@ -5257,7 +5675,6 @@
                 { key: 'hotNews', inputId: 'hotNewsApiUrlInput' },
                 { key: 'suggestion', inputId: 'suggestionApiUrlInput' },
                 { key: 'poem', inputId: 'poemApiUrlInput' },
-                { key: 'bingWallpaper', inputId: 'bingWallpaperApiUrlInput' },
                 { key: 'websiteMeta', inputId: 'websiteMetaApiUrlInput' }
             ];
             configs.forEach(function(cfg) {
@@ -5279,7 +5696,6 @@
                 { key: 'hotNews', inputId: 'hotNewsApiUrlInput' },
                 { key: 'suggestion', inputId: 'suggestionApiUrlInput' },
                 { key: 'poem', inputId: 'poemApiUrlInput' },
-                { key: 'bingWallpaper', inputId: 'bingWallpaperApiUrlInput' },
                 { key: 'websiteMeta', inputId: 'websiteMetaApiUrlInput' }
             ];
             configs.forEach(function(cfg) {
@@ -5704,7 +6120,7 @@
             if (!currentFolderId) return;
             
             // Use the same add favorite dialog but add to folder instead
-            const name = await customPrompt('请输入软件名称：');
+            const name = await customPrompt('请输入收藏名称：');
             if (!name || !name.trim()) return;
             
             const url = await customPrompt('请输入网址：');
@@ -5752,7 +6168,7 @@
         
         async function deleteFolderItem(index) {
             if (!currentFolderId) return;
-            if (!await customConfirm('确定要删除这个软件吗？')) return;
+            if (!await customConfirm('确定要删除这个收藏吗？')) return;
             
             removeFromFolder(currentFolderId, index);
             renderFolderItems(currentFolderId);
@@ -5971,8 +6387,9 @@
                 const nameInput = document.getElementById('favNameInput');
                 if (nameInput) {
                     nameInput.focus();
+                    nameInput.select();
                 }
-            }, 100);
+            }, 200);
             
             // Create handlers for the new UI
             okHandler = function() {
@@ -6395,8 +6812,15 @@
             
             const list = document.getElementById('hotNewsListTab');
             const platform = document.getElementById('hotNewsPlatformTab').value;
+            const refreshIcon = document.getElementById('hotNewsRefreshIcon');
             
-            list.innerHTML = '<div style="text-align: center; color: #999; padding: 40px; font-family: \'YouYuan\', Arial, sans-serif;">加载中...</div>';
+            // Rotate refresh icon
+            if (refreshIcon) {
+                refreshIcon.style.transition = 'transform 0.6s ease';
+                refreshIcon.style.transform = 'rotate(360deg)';
+            }
+            
+            list.innerHTML = '<div style="text-align: center; color: #999; padding: 40px; font-family: \'YouYuan\', Arial, sans-serif; animation: fadeIn 0.3s ease;">加载中...</div>';
             
             try {
                 const response = await fetch(`${hotNewsApiUrl}?platform=${platform}`);
@@ -6407,7 +6831,8 @@
                     data.data.forEach((item, index) => {
                         const rank = index + 1;
                         const rankColor = rank <= 3 ? '#FF6B6B' : '#999';
-                        html += `<div onclick="window.open('${item.url}', '_blank')" style="display: flex; align-items: flex-start; padding: 12px 15px; margin-bottom: 10px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; transition: transform 0.2s ease;">
+                        const delay = index * 0.05;
+                        html += `<div onclick="window.open('${item.url}', '_blank')" style="display: flex; align-items: flex-start; padding: 12px 15px; margin-bottom: 10px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; transition: transform 0.2s ease; opacity: 0; animation: fadeInUp 0.4s ease ${delay}s forwards;">
                             <span style="color: ${rankColor}; font-weight: bold; font-size: 18px; margin-right: 12px; min-width: 24px; text-align: center;">${rank}</span>
                             <div style="flex: 1;">
                                 <div style="font-size: 15px; font-weight: bold; line-height: 1.4; margin-bottom: 4px;">${item.title}</div>
@@ -6427,6 +6852,13 @@
                     <div>加载失败</div>
                     <div style="font-size: 12px; margin-top: 10px;">${error.message}</div>
                 </div>`;
+            } finally {
+                // Reset refresh icon rotation
+                if (refreshIcon) {
+                    setTimeout(() => {
+                        refreshIcon.style.transform = 'rotate(0deg)';
+                    }, 300);
+                }
             }
         }
         
@@ -6466,6 +6898,11 @@
         const favSearchInput = document.getElementById('favSearchInput');
         if (favSearchInput) {
             favSearchInput.addEventListener('input', function() {
+                // Hide main search history/suggestions when typing in favorites search
+                var searchHistoryList = document.getElementById('searchHistory');
+                if (searchHistoryList) searchHistoryList.style.display = 'none';
+                var suggestionsList = document.getElementById('suggestions');
+                if (suggestionsList) suggestionsList.style.display = 'none';
                 renderFavorites(this.value);
             });
         }
@@ -6688,14 +7125,8 @@
             
             // Apply theme to inline styles to fix hardcoded colors
             applyThemeToInlineStyles();
-            
-            // Re-apply button style after theme change to prevent conflicts
-            setTimeout(() => {
-                restoreNeumorphism();
-                applyButtonStyle();
-                // Re-apply inline style theme after button style restoration
-                applyThemeToInlineStyles();
-            }, 100);
+            // Re-apply button style theme (glass/frosted need different values for dark/light)
+            applyThemeDirectly();
         }
         
         // Listen for system theme changes
@@ -6707,6 +7138,9 @@
                 }
             });
         }
+        
+        // Button style management - MUST be defined before applyTheme() because applyThemeDirectly uses it
+        let currentButtonStyle = localStorage.getItem('buttonStyle') || 'neumorphism';
         
         // Load theme mode preference
         const savedThemeMode = localStorage.getItem('themeMode');
@@ -6733,9 +7167,6 @@
             }
         }
         
-        // Button style management
-        let currentButtonStyle = localStorage.getItem('buttonStyle') || 'neumorphism';
-        
         // Background mode management
         let currentBgMode = localStorage.getItem('bgMode') || 'none';
         
@@ -6751,6 +7182,13 @@
                 document.documentElement.classList.add('no-animations');
                 const disableAllAnimCb = document.getElementById('disableAllAnim');
                 if (disableAllAnimCb) disableAllAnimCb.checked = true;
+            } else if (prevStyle === 'elder') {
+                // Leaving elder mode: restore animation setting to previous state
+                // Only restore if the user hadn't explicitly set it before entering elder mode
+                document.documentElement.classList.remove('no-animations');
+                const disableAllAnimCb = document.getElementById('disableAllAnim');
+                if (disableAllAnimCb) disableAllAnimCb.checked = false;
+                localStorage.removeItem('disableAllAnim');
             }
 
             // Always restore original styles first to prevent mode mixing
@@ -6765,18 +7203,7 @@
         }
         
         function clearButtonStyleConflicts() {
-            // Remove inline styles that might conflict between modes
-            const allElements = document.querySelectorAll('*');
-            allElements.forEach(el => {
-                // Remove data-original-style to start fresh
-                if (el.hasAttribute('data-original-style')) {
-                    const original = el.getAttribute('data-original-style');
-                    if (original) {
-                        el.setAttribute('style', original);
-                    }
-                    el.removeAttribute('data-original-style');
-                }
-            });
+            // No longer needed - all themes use pure CSS now
         }
         
         function applyButtonStyle() {
@@ -6784,27 +7211,96 @@
             document.body.removeAttribute('data-button-style');
             document.body.removeAttribute('data-elder-mode');
 
-            // Force reflow to ensure clean state
-            void document.body.offsetHeight;
-
-            // Apply new style
+            // Apply new style synchronously to ensure immediate effect
             document.body.setAttribute('data-button-style', currentButtonStyle);
 
-            if (currentButtonStyle === 'outline') {
-                // Small delay to ensure CSS transitions complete
-                setTimeout(() => applyOutlineToAll(), 50);
-            } else if (currentButtonStyle === 'elder') {
+            if (currentButtonStyle === 'elder') {
                 // Elder mode: remove all effects
                 document.body.setAttribute('data-elder-mode', 'true');
             }
+
+            // Apply theme styles directly via JS for reliability
+            applyThemeDirectly();
+        }
+        
+        function applyThemeDirectly() {
+            const theme = currentButtonStyle;
+            const isDark = document.body.getAttribute('data-theme') === 'dark';
+            
+            // Skip default neumorphism and elder (elder handled by CSS *)
+            if (theme === 'neumorphism' || theme === 'elder') return;
+
+            // Directly target key elements instead of traversing all DOM (more reliable)
+            const keySelectors = [
+                '#searchInput', '#kgLogoBtn', '.bottom-btn', '.tab-btn',
+                '#favBtn', '#dropdownMenuBtn', '#searchBtn', '#micBtn',
+                '#addFavBtn', '#favSearchInput', '.modal-close-btn',
+                '.engine-item', '.favorite-item', '.history-item', '.news-item',
+                'button[style*="box-shadow"]', 'input[style*="box-shadow"]',
+                'div[style*="box-shadow"]', 'label[style*="box-shadow"]'
+            ];
+            
+            const elements = new Set();
+            keySelectors.forEach(sel => {
+                try {
+                    document.querySelectorAll(sel).forEach(el => elements.add(el));
+                } catch(e) {}
+            });
+
+            elements.forEach(el => {
+                try {
+                    if (theme === 'outline') {
+                        el.style.boxShadow = 'none';
+                        el.style.border = '2px solid currentColor';
+                        el.style.borderRadius = '34px';
+                        el.style.background = 'transparent';
+                    } else if (theme === 'rounded') {
+                        el.style.boxShadow = 'none';
+                        el.style.border = 'none';
+                        el.style.borderRadius = '34px';
+                        el.style.background = isDark ? 'rgba(80, 80, 80, 0.5)' : 'rgba(200, 200, 200, 0.4)';
+                    } else if (theme === 'glass') {
+                        if (isDark) {
+                            el.style.boxShadow = '0 0 0 1px rgba(255,255,255,0.2) inset, 0 8px 32px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.3)';
+                            el.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.2) 100%)';
+                        } else {
+                            el.style.boxShadow = '0 0 0 1px rgba(255,255,255,0.5) inset, 0 8px 32px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.1)';
+                            el.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.45) 50%, rgba(255,255,255,0.55) 100%)';
+                        }
+                        el.style.border = 'none';
+                        el.style.borderRadius = '34px';
+                        el.style.backdropFilter = 'blur(8px) saturate(150%) brightness(1.02)';
+                        el.style.webkitBackdropFilter = 'blur(8px) saturate(150%) brightness(1.02)';
+                        el.style.color = 'inherit';
+                    } else if (theme === 'transparent') {
+                        el.style.boxShadow = 'none';
+                        el.style.border = 'none';
+                        el.style.borderRadius = '34px';
+                        el.style.background = isDark ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.85)';
+                    } else if (theme === 'frosted') {
+                        el.style.boxShadow = 'none';
+                        el.style.border = '1px solid ' + (isDark ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.35)');
+                        el.style.borderRadius = '34px';
+                        el.style.background = isDark ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.25)';
+                        el.style.backdropFilter = 'blur(20px) saturate(140%)';
+                        el.style.webkitBackdropFilter = 'blur(20px) saturate(140%)';
+                        el.style.color = 'inherit';
+                    }
+                } catch(e) {}
+            });
         }
         
         function setBgMode(mode) {
-            settingsModified = true;
-            currentBgMode = mode;
-            localStorage.setItem('bgMode', mode);
-            applyBgMode();
-        }
+    settingsModified = true;
+    currentBgMode = mode;
+    localStorage.setItem('bgMode', mode);
+    
+    // Show/hide wallpaper source manager button
+    const wsmb = document.getElementById('wallpaperSourceManagerBtn');
+    if (wsmb) wsmb.style.display = mode === 'wallpaper' ? 'block' : 'none';
+    
+    applyBgMode();
+}
         
         function changeBgColor(color) {
             settingsModified = true;
@@ -6833,6 +7329,294 @@
             localStorage.setItem('wallpaperBrightness', value);
             settingsModified = true;
         }
+
+        // ===== Wallpaper Source Management System =====
+        const DEFAULT_WALLPAPER_SOURCES = [
+            { id: 'bing-today', name: 'Bing今日壁纸', url: 'https://bing.img.run/1920x1080.php', type: '综合' },
+            { id: 'bing-default', name: '随机PC壁纸', url: 'https://t.mwm.moe/pc', type: '综合' },
+            { id: 'luvying', name: '随机二次元壁纸', url: 'https://api.luvying.com/acgimg', type: '二次元' },
+            { id: 'suyan-acg', name: '随机二次元(备用)', url: 'https://acg.suyanw.cn/Anime', type: '二次元' },
+            { id: 'sakura', name: '樱花API', url: 'https://img.vindo.cn/Vindo/img_6.webp', type: '综合' },
+            { id: 'landscape-4k', name: '4K风景壁纸', url: 'https://acg.suyanw.cn/landscape', type: '风景' },
+            { id: 'gqbz-random', name: '随机高清风景', url: 'https://acg.suyanw.cn/gqbz/random.php', type: '风景' },
+            { id: 'scenery-anime', name: '随机二次元风景', url: 'https://acg.suyanw.cn/scenery/random.php', type: '风景' }
+        ];
+
+        let wallpaperSources = [];
+        let currentWallpaperSourceId = '';
+
+        function initWallpaperSources() {
+            const saved = localStorage.getItem('wallpaperSources');
+            if (saved) {
+                try {
+                    const savedSources = JSON.parse(saved);
+                    // Build fresh list: keep custom sources + current defaults, remove dead presets
+                    const merged = [];
+                    const defaultIds = DEFAULT_WALLPAPER_SOURCES.map(function(d) { return d.id; });
+                    savedSources.forEach(function(s) {
+                        // Keep if it's a custom source or still in current defaults
+                        if (s.id.indexOf('custom-') === 0 || defaultIds.indexOf(s.id) > -1) {
+                            merged.push(s);
+                        }
+                    });
+                    // Add any new defaults that aren't in saved list
+                    DEFAULT_WALLPAPER_SOURCES.forEach(function(def) {
+                        if (!merged.find(function(s) { return s.id === def.id; })) {
+                            merged.push(def);
+                        }
+                    });
+                    wallpaperSources = merged;
+                    // Only save if list changed (new defaults added or dead presets removed)
+                    if (merged.length !== savedSources.length) {
+                        saveWallpaperSources();
+                    }
+                } catch (e) {
+                    wallpaperSources = DEFAULT_WALLPAPER_SOURCES.slice();
+                }
+            } else {
+                wallpaperSources = DEFAULT_WALLPAPER_SOURCES.slice();
+            }
+            currentWallpaperSourceId = localStorage.getItem('currentWallpaperSourceId') || 'bing-today';
+            // Ensure current source exists, but do NOT save if changed (keep user's choice in case source gets added back)
+            if (!wallpaperSources.find(s => s.id === currentWallpaperSourceId)) {
+                currentWallpaperSourceId = wallpaperSources[0] ? wallpaperSources[0].id : '';
+            }
+        }
+
+        function saveWallpaperSources() {
+            localStorage.setItem('wallpaperSources', JSON.stringify(wallpaperSources));
+            localStorage.setItem('currentWallpaperSourceId', currentWallpaperSourceId);
+        }
+
+        function getCurrentWallpaperUrl() {
+            const source = wallpaperSources.find(s => s.id === currentWallpaperSourceId);
+            const url = source ? source.url : (apiUrls.bingWallpaper || 'https://bing.img.run/1920x1080.php');
+            // Add timestamp to bypass cache and ensure fresh image
+            const separator = url.indexOf('?') > -1 ? '&' : '?';
+            return url + separator + '_t=' + Date.now();
+        }
+
+        function loadWallpaperImage() {
+            let filterOverlay = document.getElementById('wallpaperFilterOverlay');
+            if (!filterOverlay) {
+                filterOverlay = document.createElement('div');
+                filterOverlay.id = 'wallpaperFilterOverlay';
+                filterOverlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; background-size: cover; background-position: center; background-repeat: no-repeat;';
+                document.body.prepend(filterOverlay);
+            }
+
+            const blur = localStorage.getItem('wallpaperBlur') || '0';
+            const brightness = localStorage.getItem('wallpaperBrightness') || '100';
+            filterOverlay.style.filter = 'blur(' + blur + 'px) brightness(' + brightness + '%)';
+
+            // Reset state before loading
+            filterOverlay.style.opacity = '0';
+            filterOverlay.style.transform = 'scale(1.05)';
+            filterOverlay.style.transition = 'opacity 1.5s ease, transform 1.5s ease';
+
+            const img = new Image();
+            img.onload = function() {
+                filterOverlay.style.backgroundImage = "url('" + img.src + "')";
+                requestAnimationFrame(function() {
+                    requestAnimationFrame(function() {
+                        filterOverlay.style.opacity = '1';
+                        filterOverlay.style.transform = 'scale(1)';
+                    });
+                });
+            };
+            img.onerror = function() {
+                // Show a subtle dark fallback with a loading error indicator
+                filterOverlay.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)';
+                filterOverlay.style.opacity = '0';
+                filterOverlay.style.transition = 'opacity 1s ease';
+                requestAnimationFrame(function() {
+                    filterOverlay.style.opacity = '1';
+                });
+                // Show error hint on the name display
+                const nameEl = document.getElementById('currentWallpaperName');
+                if (nameEl) {
+                    const src = getCurrentWallpaperSource();
+                    nameEl.textContent = (src ? src.name : '') + ' (加载失败)';
+                    nameEl.style.color = '#FF6B6B';
+                    setTimeout(function() {
+                        nameEl.style.color = '#666';
+                    }, 3000);
+                }
+            };
+            img.src = getCurrentWallpaperUrl();
+        }
+
+        function refreshWallpaper() {
+            const nameEl = document.getElementById('currentWallpaperName');
+            if (nameEl) {
+                const src = getCurrentWallpaperSource();
+                nameEl.textContent = (src ? src.name : '') + ' (加载中...)';
+            }
+            loadWallpaperImage();
+        }
+
+        // Focus zoom feature
+        let focusZoomEnabled = false;
+        let savedWallpaperFilter = '';
+
+        function toggleFocusZoom(enabled) {
+            focusZoomEnabled = enabled;
+            localStorage.setItem('focusZoomEnabled', enabled ? 'true' : 'false');
+            if (!enabled) {
+                // Restore immediately if disabled while focused
+                const overlay = document.getElementById('wallpaperFilterOverlay');
+                if (overlay && document.activeElement === document.getElementById('searchInput')) {
+                    applyWallpaperNormal();
+                }
+            }
+        }
+
+        function applyWallpaperFocusZoom() {
+            const overlay = document.getElementById('wallpaperFilterOverlay');
+            if (!overlay || currentBgMode !== 'wallpaper') return;
+            const brightness = localStorage.getItem('wallpaperBrightness') || '100';
+            savedWallpaperFilter = 'blur(' + (localStorage.getItem('wallpaperBlur') || '0') + 'px) brightness(' + brightness + '%)';
+            overlay.style.transition = 'transform 0.4s ease, filter 0.4s ease';
+            overlay.style.transform = 'scale(1.2)';
+            overlay.style.filter = 'blur(20px) brightness(' + brightness + '%)';
+        }
+
+        function applyWallpaperNormal() {
+            const overlay = document.getElementById('wallpaperFilterOverlay');
+            if (!overlay || currentBgMode !== 'wallpaper') return;
+            if (savedWallpaperFilter) {
+                overlay.style.transition = 'transform 0.4s ease, filter 0.4s ease';
+                overlay.style.transform = 'scale(1)';
+                overlay.style.filter = savedWallpaperFilter;
+            }
+        }
+
+        function getCurrentWallpaperSource() {
+            return wallpaperSources.find(s => s.id === currentWallpaperSourceId) || null;
+        }
+
+        // Open wallpaper source modal
+        function openWallpaperSourceModal() {
+            const modal = document.getElementById('wallpaperSourceModal');
+            if (!modal) return;
+            modal.style.display = 'flex';
+            modal.style.opacity = '0';
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    modal.style.opacity = '1';
+                });
+            });
+            renderWallpaperSources();
+            document.getElementById('wallpaperSourceSearchInput').value = '';
+        }
+
+        function closeWallpaperSourceModal() {
+            const modal = document.getElementById('wallpaperSourceModal');
+            if (!modal) return;
+            modal.style.opacity = '0';
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        function renderWallpaperSources(filterText) {
+            const list = document.getElementById('wallpaperSourceList');
+            if (!list) return;
+            const filter = (filterText || '').toLowerCase();
+            const filtered = filter ? wallpaperSources.filter(s =>
+                s.name.toLowerCase().includes(filter) ||
+                s.type.toLowerCase().includes(filter) ||
+                s.url.toLowerCase().includes(filter)
+            ) : wallpaperSources;
+
+            if (filtered.length === 0) {
+                list.innerHTML = '<div style="text-align: center; color: #999; padding: 40px; font-family: \'YouYuan\', Arial, sans-serif; grid-column: 1 / -1;">没有找到匹配的壁纸来源</div>';
+                return;
+            }
+
+            let html = '';
+            filtered.forEach(source => {
+                const isActive = source.id === currentWallpaperSourceId;
+                const typeColors = {
+                    '综合': '#4ECDC4', '二次元': '#FF6B9D', 'AI': '#A78BFA',
+                    '游戏': '#60A5FA', '风景': '#34D399'
+                };
+                const typeColor = typeColors[source.type] || '#999';
+                const initial = source.name.charAt(0);
+
+                html += `<div class="wallpaper-source-item${isActive ? ' active' : ''}" onclick="selectWallpaperSource('${source.id}')" style="display: flex; flex-direction: column; align-items: center; padding: 14px 8px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: ${isActive ? '#e0e0e0' : '#F0F0F0'}; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; transition: transform 0.2s ease, box-shadow 0.2s ease; position: relative; min-width: 0;">
+                    ${!DEFAULT_WALLPAPER_SOURCES.find(d => d.id === source.id) ? '<div style="position: absolute; top: 4px; right: 4px;"><button onclick="event.stopPropagation(); deleteWallpaperSource(\'' + source.id + '\')" style="background: none; border: none; cursor: pointer; color: #999; font-size: 14px; padding: 2px;" title="删除"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>' : ''}
+                    <div class="fav-icon" style="width: 48px; height: 48px; margin-bottom: 8px; flex-shrink: 0; position: relative;">
+                        <div class="fav-initial" style="width: 100%; height: 100%; background: ${typeColor}; color: white; border-radius: var(--global-radius); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; position: absolute; top: 0; left: 0;">${initial}</div>
+                    </div>
+                    <div class="fav-name" style="font-weight: bold; font-size: 12px; line-height: 1.3; word-break: break-word; max-width: 100%; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; text-align: center;">${source.name}</div>
+                    <div style="font-size: 10px; color: ${typeColor}; margin-top: 3px; font-weight: bold;">${source.type}</div>
+                </div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        function selectWallpaperSource(id) {
+            currentWallpaperSourceId = id;
+            saveWallpaperSources();
+            renderWallpaperSources(document.getElementById('wallpaperSourceSearchInput').value);
+            // Immediately apply new wallpaper
+            if (currentBgMode === 'wallpaper') {
+                applyBgMode();
+            }
+        }
+
+        function deleteWallpaperSource(id) {
+            wallpaperSources = wallpaperSources.filter(s => s.id !== id);
+            if (currentWallpaperSourceId === id) {
+                currentWallpaperSourceId = wallpaperSources[0] ? wallpaperSources[0].id : '';
+                if (currentBgMode === 'wallpaper') applyBgMode();
+            }
+            saveWallpaperSources();
+            renderWallpaperSources(document.getElementById('wallpaperSourceSearchInput').value);
+        }
+
+        function openAddWallpaperSourceModal() {
+            const modal = document.getElementById('addWallpaperSourceModal');
+            if (!modal) return;
+            modal.style.display = 'flex';
+            modal.style.opacity = '0';
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    modal.style.opacity = '1';
+                });
+            });
+            document.getElementById('newWallpaperName').value = '';
+            document.getElementById('newWallpaperUrl').value = '';
+            document.getElementById('newWallpaperType').value = '综合';
+        }
+
+        function closeAddWallpaperSourceModal() {
+            const modal = document.getElementById('addWallpaperSourceModal');
+            if (!modal) return;
+            modal.style.opacity = '0';
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        function addWallpaperSource() {
+            const name = document.getElementById('newWallpaperName').value.trim();
+            const url = document.getElementById('newWallpaperUrl').value.trim();
+            const type = document.getElementById('newWallpaperType').value;
+            if (!name || !url) {
+                customAlert('请填写名称和接口地址！');
+                return;
+            }
+            const id = 'custom-' + Date.now();
+            wallpaperSources.push({ id, name, url, type });
+            saveWallpaperSources();
+            closeAddWallpaperSourceModal();
+            renderWallpaperSources(document.getElementById('wallpaperSourceSearchInput').value);
+        }
+
+        // Initialize wallpaper sources on load
+        initWallpaperSources();
 
         function applyBgMode() {
             document.body.setAttribute('data-bg-mode', currentBgMode);
@@ -6864,52 +7648,20 @@
                 document.body.style.backgroundRepeat = '';
                 document.body.style.filter = '';
 
-                let filterOverlay = document.getElementById('wallpaperFilterOverlay');
-                if (!filterOverlay) {
-                    filterOverlay = document.createElement('div');
-                    filterOverlay.id = 'wallpaperFilterOverlay';
-                    filterOverlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; background-size: cover; background-position: center; background-repeat: no-repeat;';
-                    document.body.prepend(filterOverlay);
-                }
+                loadWallpaperImage();
 
-                const blur = localStorage.getItem('wallpaperBlur') || '0';
-                const brightness = localStorage.getItem('wallpaperBrightness') || '100';
-                filterOverlay.style.filter = 'blur(' + blur + 'px) brightness(' + brightness + '%)';
-
-                // Pre-set initial state before loading image
-                filterOverlay.style.opacity = '0';
-                filterOverlay.style.transform = 'scale(1.05)';
-                filterOverlay.style.transition = 'opacity 1.5s ease, transform 1.5s ease';
-
-                const img = new Image();
-                img.onload = function() {
-                    // Set wallpaper image, then animate in with double rAF to ensure transition fires
-                    filterOverlay.style.backgroundImage = "url('" + img.src + "')";
-                    requestAnimationFrame(function() {
-                        requestAnimationFrame(function() {
-                            filterOverlay.style.opacity = '1';
-                            filterOverlay.style.transform = 'scale(1)';
-                        });
-                    });
-                };
-                img.onerror = function() {
-                    // If image fails, show body background color as fallback
-                    filterOverlay.style.background = document.body.style.backgroundColor || '#F0F0F0';
-                    filterOverlay.style.opacity = '0';
-                    filterOverlay.style.transition = 'opacity 1s ease';
-                    requestAnimationFrame(function() {
-                        filterOverlay.style.opacity = '1';
-                    });
-                };
-                img.src = apiUrls.bingWallpaper;
-
-                // Show wallpaper controls
+                // Show wallpaper controls and update source name
                 const controls = document.getElementById('wallpaperControls');
                 if (controls) controls.style.display = 'flex';
+                const nameEl = document.getElementById('currentWallpaperName');
+                const src = getCurrentWallpaperSource();
+                if (nameEl && src) nameEl.textContent = src.name;
 
                 // Set slider values
                 const blurSlider = document.getElementById('wallpaperBlurSlider');
                 const brightnessSlider = document.getElementById('wallpaperBrightnessSlider');
+                const blur = localStorage.getItem('wallpaperBlur') || '0';
+                const brightness = localStorage.getItem('wallpaperBrightness') || '100';
                 if (blurSlider) blurSlider.value = blur;
                 if (brightnessSlider) brightnessSlider.value = brightness;
             } else {
@@ -6929,34 +7681,13 @@
         }
         
         function applyOutlineToAll() {
-            const skipIds = ['favoritesModal', 'searchContainer', 'dropdownMenu', 'scannerContainer', 'scannerVideo', 'textResultModal'];
-            const skipClasses = ['search-container', 'bottom-buttons-container', 'poem-container', 'modal-overlay'];
-            const allElements = document.querySelectorAll('*');
-            allElements.forEach(el => {
-                if (skipIds.includes(el.id)) return;
-                if (skipClasses.some(c => el.classList.contains(c))) return;
-                if (el.classList.contains('search-box')) return;
-                
-                const style = el.getAttribute('style');
-                if (style && style.includes('box-shadow')) {
-                    el.setAttribute('data-original-style', style);
-                    el.style.boxShadow = 'none';
-                    el.style.border = '2px solid currentColor';
-                    el.style.borderRadius = '34px';
-                    el.style.background = 'transparent';
-                }
-            });
+            // Outline mode now uses pure CSS - no inline style modifications needed
+            // The CSS selectors handle everything via data-button-style attribute
         }
         
         function restoreNeumorphism() {
-            const allElements = document.querySelectorAll('[data-original-style]');
-            allElements.forEach(el => {
-                const original = el.getAttribute('data-original-style');
-                if (original) {
-                    el.setAttribute('style', original);
-                    el.removeAttribute('data-original-style');
-                }
-            });
+            // No longer needed since we don't modify inline styles
+            // Kept as no-op for compatibility
         }
         
         // Load button style preference
@@ -6971,6 +7702,7 @@
             });
         }
         applyButtonStyle();
+        applyThemeToInlineStyles();
         
         // Load background mode preference
         const savedBgMode = localStorage.getItem('bgMode');
@@ -6982,6 +7714,11 @@
                     radio.checked = true;
                 }
             });
+        }
+        // Show wallpaper source manager button if in wallpaper mode
+        const wsmbInit = document.getElementById('wallpaperSourceManagerBtn');
+        if (wsmbInit && currentBgMode === 'wallpaper') {
+            wsmbInit.style.display = 'block';
         }
         const savedBgColor = localStorage.getItem('bgColor');
         if (savedBgColor) {
@@ -7497,6 +8234,10 @@
         // Force trigger load event after page is ready
         // This fixes the issue where page keeps spinning due to blocked resources
         window.addEventListener('DOMContentLoaded', function() {
+            // Re-apply button style on DOMContentLoaded to ensure CSS is fully calculated
+            applyButtonStyle();
+            applyThemeToInlineStyles();
+
             setTimeout(function() {
                 // Check if load event has already been fired
                 if (document.readyState === 'complete') {
@@ -7506,6 +8247,12 @@
                 window.dispatchEvent(new Event('load'));
                 console.log('Load event forced');
             }, 2000); // Wait 2 seconds after DOM is ready
+        });
+
+        // Final fallback: re-apply button style on window load to ensure persistence
+        window.addEventListener('load', function() {
+            applyButtonStyle();
+            applyThemeToInlineStyles();
         });
     </script>
     
