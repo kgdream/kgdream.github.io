@@ -4023,67 +4023,66 @@
         
         // Update all element colors
         function updateElementColors(bgColor, darkShadow, lightShadow) {
-            // Only target elements with inline style containing #F0F0F0 (much faster than querySelectorAll('*'))
-            const elements = document.querySelectorAll('[style*="#F0F0F0"], [style*="#f0f0f0"], [style*="240, 240, 240"]');
+            // Get all elements with the default background
+            const elements = document.querySelectorAll('*');
             elements.forEach(el => {
-                el.style.backgroundColor = bgColor;
-                el.style.boxShadow = `20px 20px 62px ${darkShadow}, -20px -20px 62px ${lightShadow}`;
+                const computedStyle = window.getComputedStyle(el);
+                const currentBg = computedStyle.backgroundColor;
+                
+                // Convert rgb to hex for comparison
+                const rgbMatch = currentBg.match(/\d+/g);
+                if (rgbMatch && rgbMatch.length >= 3) {
+                    const hex = '#' + ((1 << 24) + (parseInt(rgbMatch[0]) << 16) + (parseInt(rgbMatch[1]) << 8) + parseInt(rgbMatch[2])).toString(16).slice(1).toUpperCase();
+                    
+                    // If it matches #F0F0F0, replace with new theme color
+                    if (hex === '#F0F0F0') {
+                        el.style.backgroundColor = bgColor;
+                        el.style.boxShadow = `20px 20px 62px ${darkShadow}, -20px -20px 62px ${lightShadow}`;
+                    }
+                }
             });
-            
-            // Also update elements whose computed background is #F0F0F0 but without inline style
-            // (CSS class based) - only check a few key selectors instead of all DOM
-            const keySelectors = ['.search-box', '.search-button', '.bottom-btn', '.tab-btn', 
-                '.engine-item', '#dropdownMenu', '#favoritesModal > div', '.modal-content',
-                '.fav-search-input', '.fav-add-btn'];
-            keySelectors.forEach(sel => {
-                try {
-                    document.querySelectorAll(sel).forEach(el => {
-                        if (!el.style.backgroundColor) {
-                            const cs = window.getComputedStyle(el);
-                            if (cs.backgroundColor === 'rgb(240, 240, 240)') {
-                                el.style.backgroundColor = bgColor;
-                                el.style.boxShadow = `20px 20px 62px ${darkShadow}, -20px -20px 62px ${lightShadow}`;
-                            }
-                        }
-                    });
-                } catch(e) {}
-            });
-            
-            // Re-apply current button style theme after color update
-            applyThemeDirectly();
         }
         
         // Apply theme to inline styles (fixes hardcoded light colors in dark mode)
         function applyThemeToInlineStyles() {
             const isDark = document.body.getAttribute('data-theme') === 'dark';
-            if (isDark) {
-                // Only query elements that have the target colors in their inline style
-                document.querySelectorAll('[style*="#F0F0F0"], [style*="#f0f0f0"]').forEach(el => {
-                    el.style.background = el.style.background.replace(/#F0F0F0/gi, '#3a3a3a');
-                    if (el.style.backgroundColor) el.style.backgroundColor = el.style.backgroundColor.replace(/#F0F0F0/gi, '#3a3a3a');
-                });
-                document.querySelectorAll('[style*="#cccccc"]').forEach(el => {
-                    if (el.getAttribute('style').includes('#ffffff')) {
+            const allElements = document.querySelectorAll('*');
+            allElements.forEach(el => {
+                const style = el.getAttribute('style');
+                if (!style) return;
+                
+                if (isDark) {
+                    // Replace light background colors with dark
+                    if (style.includes('#F0F0F0')) {
+                        el.style.background = el.style.background.replace(/#F0F0F0/g, '#3a3a3a');
+                        if (el.style.backgroundColor) {
+                            el.style.backgroundColor = el.style.backgroundColor.replace(/#F0F0F0/g, '#3a3a3a');
+                        }
+                    }
+                    // Replace light box-shadow colors with dark
+                    if (style.includes('#cccccc') && style.includes('#ffffff')) {
                         el.style.boxShadow = el.style.boxShadow.replace(/#cccccc/g, '#2a2a2a').replace(/#ffffff/g, '#4a4a4a');
                     }
-                });
-                document.querySelectorAll('[style*="color: #000000"], [style*="color:#000000"]').forEach(el => {
-                    el.style.color = '#e0e0e0';
-                });
-            } else {
-                document.querySelectorAll('[style*="#3a3a3a"]').forEach(el => {
-                    el.style.background = el.style.background.replace(/#3a3a3a/g, '#F0F0F0');
-                    if (el.style.backgroundColor) el.style.backgroundColor = el.style.backgroundColor.replace(/#3a3a3a/g, '#F0F0F0');
-                });
-                document.querySelectorAll('[style*="#2a2a2a"]').forEach(el => {
-                    if (el.getAttribute('style').includes('#4a4a4a')) {
+                    // Replace black text with light text
+                    if (el.style.color === '#000000') {
+                        el.style.color = '#e0e0e0';
+                    }
+                } else {
+                    // Restore light mode colors
+                    if (style.includes('#3a3a3a')) {
+                        el.style.background = el.style.background.replace(/#3a3a3a/g, '#F0F0F0');
+                        if (el.style.backgroundColor) {
+                            el.style.backgroundColor = el.style.backgroundColor.replace(/#3a3a3a/g, '#F0F0F0');
+                        }
+                    }
+                    if (style.includes('#2a2a2a') && style.includes('#4a4a4a')) {
                         el.style.boxShadow = el.style.boxShadow.replace(/#2a2a2a/g, '#cccccc').replace(/#4a4a4a/g, '#ffffff');
                     }
-                });
-                document.querySelectorAll('[style*="color: #e0e0e0"], [style*="color:#e0e0e0"]').forEach(el => {
-                    el.style.color = '#000000';
-                });
-            }
+                    if (el.style.color === '#e0e0e0') {
+                        el.style.color = '#000000';
+                    }
+                }
+            });
         }
         
         // Load saved engine from cookie or use default
@@ -4361,7 +4360,7 @@
         function updateSearchButtonVisibility() {
             const keyword = input.value.trim();
             const isFocused = document.activeElement === input;
-            const isMenuOpen = document.getElementById('dropdownMenu')?.style.display !== 'none';
+            const isMenuOpen = document.getElementById('dropdownMenu')?.style.display !== 'none' && document.getElementById('dropdownMenu')?.style.opacity !== '0';
             const isUrl = keyword && (checkIfUrl(keyword) || ['always','temp'].includes(localStorage.getItem('searchBoxUrlAccess') || 'off'));
 
             // Toggle URL icon vs search icon
@@ -4379,7 +4378,7 @@
             }
 
             if (keyword && isFocused) {
-                // Has text + focused: show search button + clear button
+                // Has text + focused: show search button + clear button, hide dropdown button
                 input.classList.add('has-text');
                 if (searchBtn) searchBtn.classList.add('visible');
                 if (clearInputBtn) clearInputBtn.classList.add('visible');
@@ -4395,7 +4394,7 @@
                 input.classList.remove('has-text');
                 if (searchBtn) searchBtn.classList.remove('visible');
                 if (clearInputBtn) clearInputBtn.classList.remove('visible');
-                if (dropdownMenuBtn) {
+                if (dropdownMenuBtn && !isMenuOpen) {
                     dropdownMenuBtn.classList.add('visible');
                 }
                 // Show engine hint with fade
@@ -4857,6 +4856,16 @@
             engines = engines.filter(function(e) { return e.id !== id; });
             saveCustomEngines(engines);
             renderCustomEngines();
+            // Bug 17: If current engine was deleted, update toggle icon to default
+            var deletedEngineItem = document.querySelector('.engine-item[data-engine="' + id + '"]');
+            if (deletedEngineItem && deletedEngineItem.classList.contains('active')) {
+                var bingItem = document.querySelector('.engine-item[data-engine="bing"]');
+                if (bingItem) {
+                    bingItem.classList.add('active');
+                    currentEngineUrl = bingItem.getAttribute('data-url');
+                    updateEngineToggleIcon('bing', bingItem);
+                }
+            }
         }
 
         // Render custom engines on page load
@@ -5043,6 +5052,14 @@
                 e.preventDefault();
                 dismissClock();
             });
+            // Bug 19: Support ESC key to close full screen clock
+            function escDismiss(e) {
+                if (e.key === 'Escape') {
+                    dismissClock();
+                    document.removeEventListener('keydown', escDismiss);
+                }
+            }
+            document.addEventListener('keydown', escDismiss);
         }
 
         // Init clock
@@ -5623,6 +5640,27 @@
             localStorage.removeItem('searchBoxWidth');
             localStorage.removeItem('searchBoxHeight');
             localStorage.removeItem('searchBoxSizeEnabled');
+            localStorage.removeItem('showPoem');
+            localStorage.removeItem('showScanner');
+            localStorage.removeItem('searchBoxUrlAccess');
+            localStorage.removeItem('showFavIcons');
+            localStorage.removeItem('demoMode');
+            localStorage.removeItem('customEngines');
+
+            // Bug 1: Clear search engine cookie and reset memory variable
+            document.cookie = 'searchEngine=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/';
+            currentEngineUrl = 'https://cn.bing.com/search?q=';
+
+            // Bug 2: Reset wallpaper source memory variables
+            currentWallpaperSourceId = 'bing-today';
+
+            // Bug 3: Reset focus zoom
+            focusZoomEnabled = false;
+            const focusZoomToggle = document.getElementById('focusZoomToggle');
+            if (focusZoomToggle) focusZoomToggle.checked = false;
+
+            // Bug 20: Reset logo expand state
+            logoExpanded = false;
 
             // Remove no-animations class from html
             document.documentElement.classList.remove('no-animations');
@@ -5648,6 +5686,41 @@
             if (disableAllAnim) disableAllAnim.checked = false;
             const enableLaunchAnim = document.getElementById('enableLaunchAnim');
             if (enableLaunchAnim) enableLaunchAnim.checked = true;
+
+            // Bug 5: Reset clean search keyword input
+            const cleanSearchKeywordInput = document.getElementById('cleanSearchKeyword');
+            if (cleanSearchKeywordInput) cleanSearchKeywordInput.value = '李彦宏';
+            const cleanSearchModeToggle = document.getElementById('cleanSearchMode');
+            if (cleanSearchModeToggle) cleanSearchModeToggle.checked = false;
+
+            // Bug 9: Reset search box size UI
+            const searchBoxSizeToggle = document.getElementById('searchBoxSizeToggle');
+            if (searchBoxSizeToggle) searchBoxSizeToggle.checked = false;
+            const widthWrap = document.getElementById('searchBoxWidthWrap');
+            if (widthWrap) widthWrap.style.display = 'none';
+            const heightWrap = document.getElementById('searchBoxHeightWrap');
+            if (heightWrap) heightWrap.style.display = 'none';
+
+            // Bug 10: Reset show time display
+            const showTimeToggle = document.getElementById('showTimeToggle');
+            if (showTimeToggle) showTimeToggle.checked = true;
+            const timeDisplay = document.getElementById('timeDisplay');
+            if (timeDisplay) timeDisplay.style.display = 'flex';
+
+            // Bug 11: Reset show poem
+            const showPoemToggle = document.getElementById('showPoemToggle');
+            if (showPoemToggle) showPoemToggle.checked = true;
+            const favBtn = document.getElementById('favBtn');
+            if (favBtn) favBtn.style.display = 'flex';
+
+            // Bug 12: Reset show scanner
+            const showScannerToggle = document.getElementById('showScannerToggle');
+            if (showScannerToggle) showScannerToggle.checked = true;
+            const dropdownScanOption = document.getElementById('dropdownScanOption');
+            if (dropdownScanOption) dropdownScanOption.style.display = 'flex';
+
+            // Bug 14: Already handled above (disableAllAnim checkbox + class removal)
+            // Bug 15: Toggle high contrast off
             toggleHighContrast();
 
             // Reset theme and button style
@@ -5658,7 +5731,23 @@
             applyButtonStyle();
             applyBgMode();
             applySavedBorderRadius();
+            applySavedSearchBoxSize();
             initWallpaperSources();
+            renderCustomEngines();
+
+            // Bug 20: Collapse logo links
+            var link1 = document.getElementById('logoLink1');
+            var link2 = document.getElementById('logoLink2');
+            var link3 = document.getElementById('logoLink3');
+            [link1, link2, link3].forEach(function(l) {
+                if (l) { l.style.opacity = '0'; l.style.transform = 'translateX(-20px) scale(0.8)'; l.style.pointerEvents = 'none'; }
+            });
+
+            // Update engine selector active state to default (Bing)
+            document.querySelectorAll('.engine-item[data-url]').forEach(function(e) {
+                e.classList.toggle('active', e.getAttribute('data-url') === currentEngineUrl);
+            });
+            updateEngineToggleIcon('bing', document.querySelector('.engine-item[data-engine="bing"]'));
 
             await customAlert('设置已重置为默认值！刷新页面后生效。');
         }
@@ -5676,6 +5765,18 @@
             document.cookie.split(";").forEach(function(c) {
                 document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
             });
+
+            // Bug 4: Reset all memory variables before reload to prevent stale state
+            currentButtonStyle = 'neumorphism';
+            currentThemeMode = 'light';
+            currentBgMode = 'none';
+            currentEngineUrl = 'https://cn.bing.com/search?q=';
+            currentWallpaperSourceId = 'bing-today';
+            focusZoomEnabled = false;
+            logoExpanded = false;
+            favorites = [];
+            folders = [];
+            document.documentElement.classList.remove('no-animations');
 
             await customAlert('所有数据已清空，页面将刷新！');
             location.reload();
@@ -6962,6 +7063,7 @@
                 if (searchHistoryList) searchHistoryList.style.display = 'none';
                 var suggestionsList = document.getElementById('suggestions');
                 if (suggestionsList) suggestionsList.style.display = 'none';
+                // Bug 16: When search box is cleared, renderFavorites('') restores full list
                 renderFavorites(this.value);
             });
         }
@@ -7634,6 +7736,12 @@
             }
             saveWallpaperSources();
             renderWallpaperSources(document.getElementById('wallpaperSourceSearchInput').value);
+            // Bug 18: Update wallpaper control bar name
+            var nameEl = document.getElementById('currentWallpaperName');
+            if (nameEl) {
+                var currentSource = wallpaperSources.find(s => s.id === currentWallpaperSourceId);
+                nameEl.textContent = currentSource ? currentSource.name : '未知';
+            }
         }
 
         function openAddWallpaperSourceModal() {
@@ -8294,8 +8402,9 @@
         // Force trigger load event after page is ready
         // This fixes the issue where page keeps spinning due to blocked resources
         window.addEventListener('DOMContentLoaded', function() {
-            // applyButtonStyle() and applyThemeToInlineStyles() already called
-            // in top-level code above - no need to repeat here
+            // Re-apply button style on DOMContentLoaded to ensure CSS is fully calculated
+            applyButtonStyle();
+            applyThemeToInlineStyles();
 
             setTimeout(function() {
                 // Check if load event has already been fired
@@ -8304,10 +8413,11 @@
                 }
                 // Force trigger load event
                 window.dispatchEvent(new Event('load'));
-            }, 300);
+                console.log('Load event forced');
+            }, 2000); // Wait 2 seconds after DOM is ready
         });
 
-        // Final fallback: re-apply on window load to ensure all elements styled
+        // Final fallback: re-apply button style on window load to ensure persistence
         window.addEventListener('load', function() {
             applyButtonStyle();
             applyThemeToInlineStyles();
