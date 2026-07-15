@@ -3368,6 +3368,34 @@
     </div>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // === Auto-fix corrupted localStorage data (prevents startup crash from bad imports) ===
+        (function() {
+            var fixArray = function(key) {
+                try {
+                    var val = localStorage.getItem(key);
+                    if (val) {
+                        var parsed = JSON.parse(val);
+                        if (!Array.isArray(parsed)) {
+                            console.warn('Auto-fix: corrupted ' + key + ' removed (was not array)');
+                            localStorage.removeItem(key);
+                        }
+                    }
+                } catch(e) {
+                    console.warn('Auto-fix: corrupted ' + key + ' removed (parse error)');
+                    localStorage.removeItem(key);
+                }
+            };
+            ['favorites','folders','searchHistory','customEngines','wallpaperSources'].forEach(fixArray);
+
+            // Fix invalid string settings
+            var validButtonStyles = ['neumorphism','outline','glass','transparent','frosted','rounded','elder'];
+            var bs = localStorage.getItem('buttonStyle');
+            if (bs && validButtonStyles.indexOf(bs) === -1) {
+                console.warn('Auto-fix: invalid buttonStyle "' + bs + '" reset to neumorphism');
+                localStorage.removeItem('buttonStyle');
+            }
+        })();
+
         // API URL Configuration (must be at top - used by functions below)
         let apiUrls = {
             hotNews: localStorage.getItem('apiUrl_hotNews') || 'https://orz.ai/api/v1/dailynews/',
@@ -4355,7 +4383,6 @@
                 input.classList.add('has-text');
                 if (searchBtn) searchBtn.classList.add('visible');
                 if (clearInputBtn) clearInputBtn.classList.add('visible');
-                // Keep dropdown button visible when menu is open
                 if (dropdownMenuBtn && !isMenuOpen) {
                     dropdownMenuBtn.classList.remove('visible');
                 }
@@ -4364,12 +4391,11 @@
                     engineHintInSearchBox.style.opacity = '0';
                 }
             } else if (!keyword && isFocused) {
-                // No text + focused: hide search button + clear button
+                // No text + focused: hide search button + clear button, show dropdown button
                 input.classList.remove('has-text');
                 if (searchBtn) searchBtn.classList.remove('visible');
                 if (clearInputBtn) clearInputBtn.classList.remove('visible');
-                // Keep dropdown button visible when menu is open
-                if (dropdownMenuBtn && !isMenuOpen) {
+                if (dropdownMenuBtn) {
                     dropdownMenuBtn.classList.add('visible');
                 }
                 // Show engine hint with fade
@@ -4377,11 +4403,10 @@
                     engineHintInSearchBox.style.opacity = '1';
                 }
             } else {
-                // Not focused: hide both buttons
+                // Not focused: hide all buttons
                 input.classList.remove('has-text');
                 if (searchBtn) searchBtn.classList.remove('visible');
                 if (clearInputBtn) clearInputBtn.classList.remove('visible');
-                // Keep dropdown button visible when menu is open
                 if (dropdownMenuBtn && !isMenuOpen) {
                     dropdownMenuBtn.classList.remove('visible');
                 }
@@ -4724,7 +4749,8 @@
 
         function getCustomEngines() {
             try {
-                return JSON.parse(localStorage.getItem('customEngines') || '[]');
+                var parsed = JSON.parse(localStorage.getItem('customEngines') || '[]');
+                return Array.isArray(parsed) ? parsed : [];
             } catch(e) { return []; }
         }
 
@@ -4905,7 +4931,12 @@
         
         function loadFolders() {
             const saved = localStorage.getItem('folders');
-            folders = saved ? JSON.parse(saved) : [];
+            try {
+                const parsed = saved ? JSON.parse(saved) : [];
+                folders = Array.isArray(parsed) ? parsed : [];
+            } catch(e) {
+                folders = [];
+            }
         }
         
         // Settings functions
@@ -6017,7 +6048,12 @@
         
         function loadFavorites() {
             const saved = localStorage.getItem('favorites');
-            favorites = saved ? JSON.parse(saved) : [];
+            try {
+                const parsed = saved ? JSON.parse(saved) : [];
+                favorites = Array.isArray(parsed) ? parsed : [];
+            } catch(e) {
+                favorites = [];
+            }
             loadFolders();
             renderFavorites();
         }
@@ -7373,6 +7409,7 @@
             if (saved) {
                 try {
                     const savedSources = JSON.parse(saved);
+                    if (!Array.isArray(savedSources)) throw new Error('not array');
                     // Build fresh list: keep custom sources + current defaults, remove dead presets
                     const merged = [];
                     const defaultIds = DEFAULT_WALLPAPER_SOURCES.map(function(d) { return d.id; });
@@ -8270,12 +8307,10 @@
             }, 300);
         });
 
-        // Final fallback: re-apply on window load only if needed
+        // Final fallback: re-apply on window load to ensure all elements styled
         window.addEventListener('load', function() {
-            // Only re-apply if button style is not neumorphism (default needs no JS)
-            if (currentButtonStyle !== 'neumorphism' && currentButtonStyle !== 'elder') {
-                applyButtonStyle();
-            }
+            applyButtonStyle();
+            applyThemeToInlineStyles();
         });
     </script>
     
