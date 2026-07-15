@@ -3925,6 +3925,8 @@
                 const btn = document.getElementById('dropdownMenuBtn');
                 if (menu && !menu.contains(e.target) && !btn.contains(e.target)) {
                     closeDropdownMenu();
+                    // Force update button visibility after closing menu
+                    setTimeout(updateSearchButtonVisibility, 10);
                 }
             });
         });
@@ -7396,9 +7398,7 @@
                 '#searchInput', '#kgLogoBtn', '.bottom-btn', '.tab-btn',
                 '#favBtn', '#dropdownMenuBtn', '#searchBtn', '#micBtn',
                 '#addFavBtn', '#favSearchInput', '.modal-close-btn',
-                '.engine-item', '.favorite-item', '.history-item', '.news-item',
-                'button[style*="box-shadow"]', 'input[style*="box-shadow"]',
-                'div[style*="box-shadow"]', 'label[style*="box-shadow"]'
+                '.engine-item', '.favorite-item', '.history-item', '.news-item'
             ];
             
             const elements = new Set();
@@ -7410,6 +7410,10 @@
 
             elements.forEach(el => {
                 try {
+                    // Clear backdrop-filter from previous theme (only glass/frosted use it)
+                    el.style.removeProperty('backdrop-filter');
+                    el.style.removeProperty('-webkit-backdrop-filter');
+
                     if (theme === 'outline') {
                         el.style.boxShadow = 'none';
                         el.style.border = '2px solid currentColor';
@@ -7432,7 +7436,6 @@
                         el.style.borderRadius = '34px';
                         el.style.backdropFilter = 'blur(8px) saturate(150%) brightness(1.02)';
                         el.style.webkitBackdropFilter = 'blur(8px) saturate(150%) brightness(1.02)';
-                        el.style.color = 'inherit';
                     } else if (theme === 'transparent') {
                         el.style.boxShadow = 'none';
                         el.style.border = 'none';
@@ -7445,7 +7448,6 @@
                         el.style.background = isDark ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.25)';
                         el.style.backdropFilter = 'blur(20px) saturate(140%)';
                         el.style.webkitBackdropFilter = 'blur(20px) saturate(140%)';
-                        el.style.color = 'inherit';
                     }
                 } catch(e) {}
             });
