@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="description" content="千克之梦(HelloKG) - 一款精美的个性化浏览器起始页，集成必应搜索、每日诗词、热点新闻、收藏管理等功能。支持拟物化、玻璃态等多种主题风格，可自定义壁纸、圆角、配色，打造专属搜索主页。">
     <meta name="keywords" content="千克之梦, HelloKG, 搜索主页, 浏览器起始页, 必应搜索, 个性化主页, 拟物化, 新标签页">
     <title>HelloKG•Start-KGdream-千克之梦</title>
@@ -1964,6 +1964,18 @@
             }
         }
 
+        /* Engine tab: always show as mobile-style list */
+        #engineSelectorInTab .engine-item {
+            padding: 8px 10px;
+            font-size: 14px;
+            text-align: center;
+            width: auto;
+            min-width: 60px;
+        }
+        #engineSelectorInTab .engine-item img.engine-icon {
+            display: none !important;
+        }
+
         /* Poem styles */
         .poem-container {
             margin-top: 30px;
@@ -2411,8 +2423,6 @@
             display: none !important;
         }
     </style>
-    <!-- jsQR Library for QR Code scanning -->
-    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 </head>
 <body>
     <h1 style="display:none">千克之梦(HelloKG) - 个性化浏览器起始页，集成搜索、每日诗词、热点新闻、收藏管理</h1>
@@ -2536,43 +2546,43 @@
         <div class="engine-grid" id="topEngineGrid">
             <!-- 国内搜索引擎 -->
             <div class="engine-item active" data-engine="baidu" data-url="https://www.baidu.com/s?wd=" data-type="domestic">
-                <img class="engine-icon" src="https://www.baidu.com/favicon.ico" alt="百度" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                <img class="engine-icon" data-src="https://www.baidu.com/favicon.ico" alt="百度" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                 百度
             </div>
             <div class="engine-item" data-engine="sogou" data-url="https://www.sogou.com/web?query=" data-type="domestic">
-                <img class="engine-icon" src="https://www.sogou.com/favicon.ico" alt="搜狗" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                <img class="engine-icon" data-src="https://www.sogou.com/favicon.ico" alt="搜狗" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                 搜狗
             </div>
             <div class="engine-item" data-engine="so360" data-url="https://www.so.com/s?q=" data-type="domestic">
-                <img class="engine-icon" src="https://www.so.com/favicon.ico" alt="360" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                <img class="engine-icon" data-src="https://www.so.com/favicon.ico" alt="360" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                 360
             </div>
             <div class="engine-item" data-engine="toutiao" data-url="https://www.toutiao.com/search/?keyword=" data-type="domestic">
-                <img class="engine-icon" src="https://www.toutiao.com/favicon.ico" alt="头条" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                <img class="engine-icon" data-src="https://www.toutiao.com/favicon.ico" alt="头条" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                 头条
             </div>
             <div class="engine-item" data-engine="shenma" data-url="https://m.sm.cn/s?q=" data-type="domestic">
-                <img class="engine-icon" src="https://m.sm.cn/favicon.ico" alt="神马" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                <img class="engine-icon" data-src="https://m.sm.cn/favicon.ico" alt="神马" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                 神马
             </div>
             <div class="engine-item" data-engine="quark" data-url="https://quark.sm.cn/s?q=" data-type="domestic">
-                <img class="engine-icon" src="https://quark.sm.cn/favicon.ico" alt="夸克" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                <img class="engine-icon" data-src="https://quark.sm.cn/favicon.ico" alt="夸克" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                 夸克
             </div>
             <div class="engine-item" data-engine="bingcn" data-url="https://cn.bing.com/search?q=" data-type="domestic">
-                <img class="engine-icon" src="https://cn.bing.com/favicon.ico" alt="必应中国" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                <img class="engine-icon" data-src="https://cn.bing.com/favicon.ico" alt="必应中国" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                 必应中国
             </div>
             <div class="engine-item" data-engine="chinaso" data-url="https://www.chinaso.com/search?q=" data-type="domestic">
-                <img class="engine-icon" src="https://www.chinaso.com/favicon.ico" alt="中国搜索" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                <img class="engine-icon" data-src="https://www.chinaso.com/favicon.ico" alt="中国搜索" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                 中国搜索
             </div>
             <div class="engine-item" data-engine="soso" data-url="https://www.soso.com/q?w=" data-type="domestic">
-                <img class="engine-icon" src="https://www.soso.com/favicon.ico" alt="腾讯搜搜" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                <img class="engine-icon" data-src="https://www.soso.com/favicon.ico" alt="腾讯搜搜" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                 腾讯搜搜
             </div>
             <div class="engine-item" data-engine="wuzhui" data-url="https://www.wuzhuiso.com/s?q=" data-type="domestic">
-                <img class="engine-icon" src="https://www.wuzhuiso.com/favicon.ico" alt="无追搜索" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                <img class="engine-icon" data-src="https://www.wuzhuiso.com/favicon.ico" alt="无追搜索" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                 无追搜索
             </div>
             <div class="engine-item add-custom-engine" onclick="showAddCustomEngineDialog()" style="border: 2px dashed #aaa; color: #888; font-style: italic;">
@@ -2701,63 +2711,63 @@
                 <div class="search-engine-selector" id="engineSelectorInTab" style="display: block; position: static; width: 100%; max-width: 600px; margin: 0 auto; border: none; box-shadow: none; background: transparent; opacity: 1; transform: none;">
                     <!-- 国内搜索引擎 -->
                     <div class="engine-item" data-engine="baidu" data-url="https://www.baidu.com/s?wd=" data-type="domestic">
-                        <img class="engine-icon" src="https://www.baidu.com/favicon.ico" alt="百度" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                        <img class="engine-icon"data-src="https://www.baidu.com/favicon.ico"alt="百度" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         百度
                     </div>
                     <div class="engine-item" data-engine="sogou" data-url="https://www.sogou.com/web?query=" data-type="domestic">
-                        <img class="engine-icon" src="https://www.sogou.com/favicon.ico" alt="搜狗" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                        <img class="engine-icon"data-src="https://www.sogou.com/favicon.ico"alt="搜狗" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         搜狗
                     </div>
                     <div class="engine-item" data-engine="so360" data-url="https://www.so.com/s?q=" data-type="domestic">
-                        <img class="engine-icon" src="https://www.so.com/favicon.ico" alt="360" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                        <img class="engine-icon"data-src="https://www.so.com/favicon.ico"alt="360" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         360
                     </div>
                     <div class="engine-item" data-engine="bing" data-url="https://cn.bing.com/search?q=" data-type="domestic">
-                        <img class="engine-icon" src="https://cn.bing.com/favicon.ico" alt="必应" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                        <img class="engine-icon"data-src="https://cn.bing.com/favicon.ico"alt="必应" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         必应
                     </div>
                     <div class="engine-item" data-engine="shenma" data-url="https://m.sm.cn/s?q=" data-type="domestic">
-                        <img class="engine-icon" src="https://m.sm.cn/favicon.ico" alt="神马" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                        <img class="engine-icon"data-src="https://m.sm.cn/favicon.ico"alt="神马" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         神马
                     </div>
                     <div class="engine-item" data-engine="toutiao" data-url="https://www.toutiao.com/search/?keyword=" data-type="domestic">
-                        <img class="engine-icon" src="https://www.toutiao.com/favicon.ico" alt="头条" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                        <img class="engine-icon"data-src="https://www.toutiao.com/favicon.ico"alt="头条" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         头条
                     </div>
                     <div class="engine-item" data-engine="douyin" data-url="https://www.douyin.com/search/" data-type="domestic">
-                        <img class="engine-icon" src="https://www.douyin.com/favicon.ico" alt="抖音" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                        <img class="engine-icon"data-src="https://www.douyin.com/favicon.ico"alt="抖音" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         抖音
                     </div>
                     <div class="engine-item" data-engine="quark" data-url="https://quark.sm.cn/s?q=" data-type="domestic">
-                        <img class="engine-icon" src="https://quark.sm.cn/favicon.ico" alt="夸克" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                        <img class="engine-icon"data-src="https://quark.sm.cn/favicon.ico"alt="夸克" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         夸克
                     </div>
                     <div class="engine-item" data-engine="zhongguo" data-url="https://www.chinaso.com/search?q=" data-type="domestic">
-                        <img class="engine-icon" src="https://www.chinaso.com/favicon.ico" alt="中国搜索" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                        <img class="engine-icon"data-src="https://www.chinaso.com/favicon.ico"alt="中国搜索" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         中国搜索
                     </div>
                     <div class="engine-item" data-engine="jike" data-url="https://www.jike.com/search?q=" data-type="domestic">
-                        <img class="engine-icon" src="https://www.jike.com/favicon.ico" alt="即刻搜索" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                        <img class="engine-icon"data-src="https://www.jike.com/favicon.ico"alt="即刻搜索" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         即刻搜索
                     </div>
                     <div class="engine-item" data-engine="wechat" data-url="https://weixin.sogou.com/weixin?type=2&q=" data-type="domestic">
-                        <img class="engine-icon" src="https://weixin.sogou.com/favicon.ico" alt="微信搜一搜" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                        <img class="engine-icon"data-src="https://weixin.sogou.com/favicon.ico"alt="微信搜一搜" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         微信搜一搜
                     </div>
                     <div class="engine-item" data-engine="youdao" data-url="https://www.youdao.com/search?q=" data-type="domestic">
-                        <img class="engine-icon" src="https://www.youdao.com/favicon.ico" alt="有道" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                        <img class="engine-icon"data-src="https://www.youdao.com/favicon.ico"alt="有道" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         有道
                     </div>
                     <div class="engine-item" data-engine="soso" data-url="https://www.soso.com/q?w=" data-type="domestic">
-                        <img class="engine-icon" src="https://www.soso.com/favicon.ico" alt="搜搜" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                        <img class="engine-icon"data-src="https://www.soso.com/favicon.ico"alt="搜搜" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         搜搜
                     </div>
                     <div class="engine-item" data-engine="wuzhui" data-url="https://www.wuzhuiso.com/s?q=" data-type="domestic">
-                        <img class="engine-icon" src="https://www.wuzhuiso.com/favicon.ico" alt="无追" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                        <img class="engine-icon"data-src="https://www.wuzhuiso.com/favicon.ico"alt="无追" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         无追
                     </div>
                     <div class="engine-item" data-engine="baiduxueshu" data-url="https://xueshu.baidu.com/s?wd=" data-type="domestic">
-                        <img class="engine-icon" src="https://xueshu.baidu.com/favicon.ico" alt="百度学术" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
+                        <img class="engine-icon"data-src="https://xueshu.baidu.com/favicon.ico"alt="百度学术" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display='none'">
                         百度学术
                     </div>
                     <div class="engine-item add-custom-engine" onclick="showAddCustomEngineDialog()" style="border: 2px dashed #aaa; color: #888; font-style: italic;">
@@ -2811,10 +2821,7 @@
                     热点新闻
                 </h2>
                 <div style="display: flex; gap: 10px; align-items: center;">
-                    <label style="display: flex; align-items: center; font-family: 'YouYuan', Arial, sans-serif; font-size: 13px; cursor: pointer; white-space: nowrap;">
-                        <label class="toggle-switch"><input type="checkbox" id="preloadHotNews" checked onchange="localStorage.setItem('preloadHotNews', this.checked)"><span class="toggle-slider"></span></label>
-                        启动时预加载
-                    </label>
+                    
                     <select id="hotNewsPlatformTab" onchange="loadHotNewsTab(true)" style="padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: inset 5px 5px 10px #cccccc, inset -5px -5px 10px #ffffff; background: #F0F0F0; font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; outline: none; cursor: pointer;">
                         <option value="baidu">百度</option>
                         <option value="shaoshupai">少数派</option>
@@ -3330,7 +3337,7 @@
                     <p><strong>联系方式：</strong></p>
                     <ul style="margin: 10px 0; padding-left: 20px;">
                         <li>抖音：bblpro</li>
-                        <li>邮箱：kuang45@outlook.com</li>
+                        <li>邮箱：<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1c77697d727b28295c73696870737377327f7371">[email&#160;protected]</a></li>
                     </ul>
                 </div>
             </div>
@@ -3360,7 +3367,7 @@
         </div>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // API URL Configuration (must be at top - used by functions below)
         let apiUrls = {
             hotNews: localStorage.getItem('apiUrl_hotNews') || 'https://orz.ai/api/v1/dailynews/',
@@ -3988,70 +3995,67 @@
         
         // Update all element colors
         function updateElementColors(bgColor, darkShadow, lightShadow) {
-            // Get all elements with the default background
-            const elements = document.querySelectorAll('*');
+            // Only target elements with inline style containing #F0F0F0 (much faster than querySelectorAll('*'))
+            const elements = document.querySelectorAll('[style*="#F0F0F0"], [style*="#f0f0f0"], [style*="240, 240, 240"]');
             elements.forEach(el => {
-                const computedStyle = window.getComputedStyle(el);
-                const currentBg = computedStyle.backgroundColor;
-                
-                // Convert rgb to hex for comparison
-                const rgbMatch = currentBg.match(/\d+/g);
-                if (rgbMatch && rgbMatch.length >= 3) {
-                    const hex = '#' + ((1 << 24) + (parseInt(rgbMatch[0]) << 16) + (parseInt(rgbMatch[1]) << 8) + parseInt(rgbMatch[2])).toString(16).slice(1).toUpperCase();
-                    
-                    // If it matches #F0F0F0, replace with new theme color
-                    if (hex === '#F0F0F0') {
-                        el.style.backgroundColor = bgColor;
-                        el.style.boxShadow = `20px 20px 62px ${darkShadow}, -20px -20px 62px ${lightShadow}`;
-                    }
-                }
+                el.style.backgroundColor = bgColor;
+                el.style.boxShadow = `20px 20px 62px ${darkShadow}, -20px -20px 62px ${lightShadow}`;
+            });
+            
+            // Also update elements whose computed background is #F0F0F0 but without inline style
+            // (CSS class based) - only check a few key selectors instead of all DOM
+            const keySelectors = ['.search-box', '.search-button', '.bottom-btn', '.tab-btn', 
+                '.engine-item', '#dropdownMenu', '#favoritesModal > div', '.modal-content',
+                '.fav-search-input', '.fav-add-btn'];
+            keySelectors.forEach(sel => {
+                try {
+                    document.querySelectorAll(sel).forEach(el => {
+                        if (!el.style.backgroundColor) {
+                            const cs = window.getComputedStyle(el);
+                            if (cs.backgroundColor === 'rgb(240, 240, 240)') {
+                                el.style.backgroundColor = bgColor;
+                                el.style.boxShadow = `20px 20px 62px ${darkShadow}, -20px -20px 62px ${lightShadow}`;
+                            }
+                        }
+                    });
+                } catch(e) {}
             });
             
             // Re-apply current button style theme after color update
-            // This ensures glass/transparent/frosted/etc. styles override neumorphism
             applyThemeDirectly();
         }
         
         // Apply theme to inline styles (fixes hardcoded light colors in dark mode)
         function applyThemeToInlineStyles() {
             const isDark = document.body.getAttribute('data-theme') === 'dark';
-            const allElements = document.querySelectorAll('*');
-            allElements.forEach(el => {
-                const style = el.getAttribute('style');
-                if (!style) return;
-                
-                if (isDark) {
-                    // Replace light background colors with dark
-                    if (style.includes('#F0F0F0')) {
-                        el.style.background = el.style.background.replace(/#F0F0F0/g, '#3a3a3a');
-                        if (el.style.backgroundColor) {
-                            el.style.backgroundColor = el.style.backgroundColor.replace(/#F0F0F0/g, '#3a3a3a');
-                        }
-                    }
-                    // Replace light box-shadow colors with dark
-                    if (style.includes('#cccccc') && style.includes('#ffffff')) {
+            if (isDark) {
+                // Only query elements that have the target colors in their inline style
+                document.querySelectorAll('[style*="#F0F0F0"], [style*="#f0f0f0"]').forEach(el => {
+                    el.style.background = el.style.background.replace(/#F0F0F0/gi, '#3a3a3a');
+                    if (el.style.backgroundColor) el.style.backgroundColor = el.style.backgroundColor.replace(/#F0F0F0/gi, '#3a3a3a');
+                });
+                document.querySelectorAll('[style*="#cccccc"]').forEach(el => {
+                    if (el.getAttribute('style').includes('#ffffff')) {
                         el.style.boxShadow = el.style.boxShadow.replace(/#cccccc/g, '#2a2a2a').replace(/#ffffff/g, '#4a4a4a');
                     }
-                    // Replace black text with light text
-                    if (el.style.color === '#000000') {
-                        el.style.color = '#e0e0e0';
-                    }
-                } else {
-                    // Restore light mode colors
-                    if (style.includes('#3a3a3a')) {
-                        el.style.background = el.style.background.replace(/#3a3a3a/g, '#F0F0F0');
-                        if (el.style.backgroundColor) {
-                            el.style.backgroundColor = el.style.backgroundColor.replace(/#3a3a3a/g, '#F0F0F0');
-                        }
-                    }
-                    if (style.includes('#2a2a2a') && style.includes('#4a4a4a')) {
+                });
+                document.querySelectorAll('[style*="color: #000000"], [style*="color:#000000"]').forEach(el => {
+                    el.style.color = '#e0e0e0';
+                });
+            } else {
+                document.querySelectorAll('[style*="#3a3a3a"]').forEach(el => {
+                    el.style.background = el.style.background.replace(/#3a3a3a/g, '#F0F0F0');
+                    if (el.style.backgroundColor) el.style.backgroundColor = el.style.backgroundColor.replace(/#3a3a3a/g, '#F0F0F0');
+                });
+                document.querySelectorAll('[style*="#2a2a2a"]').forEach(el => {
+                    if (el.getAttribute('style').includes('#4a4a4a')) {
                         el.style.boxShadow = el.style.boxShadow.replace(/#2a2a2a/g, '#cccccc').replace(/#4a4a4a/g, '#ffffff');
                     }
-                    if (el.style.color === '#e0e0e0') {
-                        el.style.color = '#000000';
-                    }
-                }
-            });
+                });
+                document.querySelectorAll('[style*="color: #e0e0e0"], [style*="color:#e0e0e0"]').forEach(el => {
+                    el.style.color = '#000000';
+                });
+            }
         }
         
         // Load saved engine from cookie or use default
@@ -4803,7 +4807,7 @@
                     div.style.position = 'relative';
                     
                     var iconHtml = engine.icon 
-                        ? '<img class="engine-icon" src="' + engine.icon + '" alt="' + engine.name + '" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'inline\'"><span style="display:none;font-size:16px;">🔍</span>'
+                        ? '<img class="engine-icon" data-src="' + engine.icon + '" alt="' + engine.name + '" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'inline\'"><span style="display:none;font-size:16px;">🔍</span>'
                         : '<span style="font-size:16px;">🔍</span>';
                     
                     div.innerHTML = iconHtml + ' ' + engine.name + 
@@ -5093,8 +5097,7 @@
                         privacyMode: localStorage.getItem('privacyMode') === 'true',
                         cleanSearchMode: localStorage.getItem('cleanSearchMode') === 'true',
                         cleanSearchKeyword: localStorage.getItem('cleanSearchKeyword') || '李彦宏',
-                        preloadHotNews: localStorage.getItem('preloadHotNews') === 'true',
-                        showFavCreateTime: localStorage.getItem('showFavCreateTime') === 'true',
+                            showFavCreateTime: localStorage.getItem('showFavCreateTime') === 'true',
                         autoSortFavorites: localStorage.getItem('autoSortFavorites') !== 'false',
                         noFavIcons: localStorage.getItem('noFavIcons') === 'true',
                         themeMode: localStorage.getItem('themeMode') || 'light',
@@ -5157,7 +5160,6 @@
                     privacyMode: localStorage.getItem('privacyMode') === 'true',
                     cleanSearchMode: localStorage.getItem('cleanSearchMode') === 'true',
                     cleanSearchKeyword: localStorage.getItem('cleanSearchKeyword') || '李彦宏',
-                    preloadHotNews: localStorage.getItem('preloadHotNews') === 'true',
                     showFavCreateTime: localStorage.getItem('showFavCreateTime') === 'true',
                     autoSortFavorites: localStorage.getItem('autoSortFavorites') !== 'false',
                     noFavIcons: localStorage.getItem('noFavIcons') === 'true',
@@ -5217,25 +5219,25 @@
                 try {
                     const allData = JSON.parse(event.target.result);
                     
-                    if (allData.favorites) {
+                    if (allData.favorites && Array.isArray(allData.favorites)) {
                         favorites = allData.favorites;
                         localStorage.setItem('favorites', JSON.stringify(favorites));
                     }
                     
-                    if (allData.folders) {
+                    if (allData.folders && Array.isArray(allData.folders)) {
                         folders = allData.folders;
                         localStorage.setItem('folders', JSON.stringify(folders));
                     }
                     
                     renderFavorites();
                     
-                    if (allData.searchHistory) {
+                    if (allData.searchHistory && Array.isArray(allData.searchHistory)) {
                         localStorage.setItem('searchHistory', JSON.stringify(allData.searchHistory));
                     }
                     
                     if (allData.settings) {
                         // Handle both old darkMode and new themeMode for backward compatibility
-                        if (allData.settings.themeMode) {
+                        if (allData.settings.themeMode !== undefined) {
                             localStorage.setItem('themeMode', allData.settings.themeMode);
                         } else if (allData.settings.darkMode !== undefined) {
                             // Convert old darkMode to new themeMode
@@ -5243,8 +5245,8 @@
                         }
                         
                         localStorage.setItem('showTimeDisplay', allData.settings.showTimeDisplay);
-                        localStorage.setItem('showPoem', allData.settings.showPoem);
-                        localStorage.setItem('showScanner', allData.settings.showScanner);
+                        if (allData.settings.showPoem !== undefined) localStorage.setItem('showPoem', allData.settings.showPoem);
+                        if (allData.settings.showScanner !== undefined) localStorage.setItem('showScanner', allData.settings.showScanner);
                         
                         // Apply theme mode
                         const savedThemeMode = localStorage.getItem('themeMode');
@@ -5324,13 +5326,7 @@
                                 localStorage.setItem('cleanSearchKeyword', allData.settings.cleanSearchKeyword);
                             }
                         }
-                        if (allData.settings.preloadHotNews !== undefined) {
-                            const el = document.getElementById('preloadHotNews');
-                            if (el) {
-                                el.checked = allData.settings.preloadHotNews;
-                                localStorage.setItem('preloadHotNews', allData.settings.preloadHotNews);
-                            }
-                        }
+                        
                         if (allData.settings.noFavIcons !== undefined) {
                             const el = document.getElementById('noFavIcons');
                             if (el) {
@@ -5361,7 +5357,7 @@
                         }
                         
                         // Restore bg mode
-                        if (allData.settings.bgMode) {
+                        if (allData.settings.bgMode !== undefined) {
                             localStorage.setItem('bgMode', allData.settings.bgMode);
                             currentBgMode = allData.settings.bgMode;
                             const bgRadios = document.querySelectorAll('input[name="bgMode"]');
@@ -5390,6 +5386,7 @@
                         
                         // Restore demo mode
                         if (allData.settings.demoMode !== undefined) {
+                            localStorage.setItem('demoMode', allData.settings.demoMode);
                             const demoCheckbox = document.getElementById('demoModeToggle');
                             if (demoCheckbox) demoCheckbox.checked = allData.settings.demoMode;
                         }
@@ -5458,7 +5455,7 @@
                     }
                     
                     // Restore wallpaper sources
-                    if (allData.wallpaperSources) {
+                    if (allData.wallpaperSources && Array.isArray(allData.wallpaperSources)) {
                         wallpaperSources = allData.wallpaperSources;
                         localStorage.setItem('wallpaperSources', JSON.stringify(wallpaperSources));
                     }
@@ -5470,7 +5467,7 @@
                     if (allData.searchEngine) {
                         localStorage.setItem('searchEngine', allData.searchEngine);
                     }
-                    if (allData.customEngines) {
+                    if (allData.customEngines && Array.isArray(allData.customEngines)) {
                         localStorage.setItem('customEngines', JSON.stringify(allData.customEngines));
                     }
 
@@ -5493,7 +5490,13 @@
                     await customAlert('全量数据恢复成功！');
                     location.reload();
                 } catch (err) {
-                    await customAlert('数据格式错误：' + err.message);
+                    if (err.name === 'QuotaExceededError' || (err.message && err.message.includes('quota'))) {
+                        await customAlert('存储空间不足，部分数据可能未保存。请清除不需要的数据后重试。');
+                    } else if (err instanceof SyntaxError) {
+                        await customAlert('数据格式错误：文件不是有效的JSON格式。');
+                    } else {
+                        await customAlert('导入失败：' + err.message);
+                    }
                 }
             };
             reader.readAsText(file);
@@ -5533,7 +5536,7 @@
                     localStorage.removeItem('cachedSuggestions');
                     localStorage.removeItem('cachedHotNews');
                 } else if (cb.value === 'settings') {
-                    ['themeMode','themeColor','buttonStyle','bgMode','bgColor','showTimeDisplay','showPoem','showScanner','highContrastMode','borderRadius','debugMode','demoMode','loadForeignIcons','showKgLogo','kgLogoMode','cleanSearchMode','cleanSearchKeyword','privacyMode','showFavCreateTime','autoSortFavorites','noFavIcons','saveSearchHistory','showSearchSuggestions','cacheSuggestions','cacheDuration','preloadHotNews','showFavIcons','searchBoxUrlAccess','searchBoxWidth','searchBoxHeight','searchBoxSizeEnabled'].forEach(key => localStorage.removeItem(key));
+                    ['themeMode','themeColor','buttonStyle','bgMode','bgColor','showTimeDisplay','showPoem','showScanner','highContrastMode','borderRadius','debugMode','demoMode','loadForeignIcons','showKgLogo','kgLogoMode','cleanSearchMode','cleanSearchKeyword','privacyMode','showFavCreateTime','autoSortFavorites','noFavIcons','saveSearchHistory','showSearchSuggestions','cacheSuggestions','cacheDuration','showFavIcons','searchBoxUrlAccess','searchBoxWidth','searchBoxHeight','searchBoxSizeEnabled'].forEach(key => localStorage.removeItem(key));
                     location.reload();
                 } else if (cb.value === 'apiUrls') {
                     localStorage.removeItem('apiUrls');
@@ -6089,7 +6092,7 @@
                         </button>
                     </div>
                     <div class="fav-icon">
-                        ${showFavIcons && faviconUrl ? `<img src="${faviconUrl}" onload="this.style.display='block'; this.nextElementSibling.style.display='none'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" style="display: none;" alt="">` : ''}
+                        ${showFavIcons && faviconUrl ? `<img data-src="${faviconUrl}" onload="this.style.display='block'; this.nextElementSibling.style.display='none'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" style="display: none;" alt="">` : ''}
                         <div class="fav-initial" style="background-color: ${color}; display: ${(!showFavIcons || !faviconUrl) ? 'flex' : 'none'};">${initials}</div>
                     </div>
                     <div class="fav-name">${item.name}</div>
@@ -6097,6 +6100,11 @@
             });
             
             list.innerHTML = html;
+            // Lazy load favorite icons (data-src -> src)
+            list.querySelectorAll('img[data-src]').forEach(function(img) {
+                img.src = img.getAttribute('data-src');
+                img.removeAttribute('data-src');
+            });
             // Apply outline mode to dynamically generated content
             if (currentButtonStyle === 'outline') {
                 applyOutlineToAll();
@@ -6289,7 +6297,7 @@
                         </button>
                     </div>
                     <div class="fav-icon">
-                        ${showFavIcons && faviconUrl ? `<img src="${faviconUrl}" onload="this.style.display='block'; this.nextElementSibling.style.display='none'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" style="display: none;" alt="">` : ''}
+                        ${showFavIcons && faviconUrl ? `<img data-src="${faviconUrl}" onload="this.style.display='block'; this.nextElementSibling.style.display='none'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" style="display: none;" alt="">` : ''}
                         <div class="fav-initial" style="background-color: ${color}; display: ${(!showFavIcons || !faviconUrl) ? 'flex' : 'none'};">${initials}</div>
                     </div>
                     <div class="fav-name">${fav.name}</div>
@@ -6303,6 +6311,11 @@
             }
             
             list.innerHTML = html;
+            // Lazy load favorite icons (data-src -> src)
+            list.querySelectorAll('img[data-src]').forEach(function(img) {
+                img.src = img.getAttribute('data-src');
+                img.removeAttribute('data-src');
+            });
             // Apply outline mode to dynamically generated content
             if (currentButtonStyle === 'outline') {
                 applyOutlineToAll();
@@ -6670,7 +6683,17 @@
         let currentTabIndex = 0;
         const tabOrder = ['favoritesContent', 'engineContent', 'hotNewsContent', 'settingsContent'];
         const tabBtnIds = ['favTabBtn', 'engineTabBtn', 'hotNewsTabBtn', 'settingsTabBtn'];
-        const tabCallbacks = [renderFavorites, null, loadHotNewsTab, null];
+        const tabCallbacks = [renderFavorites, lazyLoadEngineIcons, loadHotNewsTab, null];
+        function lazyLoadEngineIcons() {
+            const ec = document.getElementById('engineContent');
+            if (!ec) return;
+            ec.querySelectorAll('img[data-src]').forEach(function(img) {
+                if (img.getAttribute('data-src')) {
+                    img.src = img.getAttribute('data-src');
+                    img.removeAttribute('data-src');
+                }
+            });
+        }
         let tabSwitching = false;
 
         function switchTab(targetIndex, direction) {
@@ -7401,7 +7424,7 @@
             if (!filterOverlay) {
                 filterOverlay = document.createElement('div');
                 filterOverlay.id = 'wallpaperFilterOverlay';
-                filterOverlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; background-size: cover; background-position: center; background-repeat: no-repeat;';
+                filterOverlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; height: 100vh; z-index: -1; background-size: cover; background-position: center; background-repeat: no-repeat;';
                 document.body.prepend(filterOverlay);
             }
 
@@ -7738,14 +7761,6 @@
             applySavedBorderRadius();
         })();
 
-        // Preload hot news if enabled (default: true)
-        const preloadHotNews = localStorage.getItem('preloadHotNews');
-        if (preloadHotNews !== 'false') {
-            const preloadCheckbox = document.getElementById('preloadHotNews');
-            if (preloadCheckbox) preloadCheckbox.checked = true;
-            loadHotNewsTab();
-        }
-
         // Load no favicons preference
         const noFavIcons = localStorage.getItem('noFavIcons');
         if (noFavIcons === 'true') {
@@ -8032,6 +8047,14 @@
                 modal.style.opacity = '1';
             }, 10);
             
+            // Lazy load jsQR if not already loaded
+            if (typeof jsQR === 'undefined') {
+                const s = document.createElement('script');
+                s.src = 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js';
+                s.onerror = function() { console.error('Failed to load jsQR'); };
+                document.head.appendChild(s);
+            }
+            
             // Request camera access
             navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
                 .then(function(stream) {
@@ -8234,9 +8257,8 @@
         // Force trigger load event after page is ready
         // This fixes the issue where page keeps spinning due to blocked resources
         window.addEventListener('DOMContentLoaded', function() {
-            // Re-apply button style on DOMContentLoaded to ensure CSS is fully calculated
-            applyButtonStyle();
-            applyThemeToInlineStyles();
+            // applyButtonStyle() and applyThemeToInlineStyles() already called
+            // in top-level code above - no need to repeat here
 
             setTimeout(function() {
                 // Check if load event has already been fired
@@ -8245,14 +8267,15 @@
                 }
                 // Force trigger load event
                 window.dispatchEvent(new Event('load'));
-                console.log('Load event forced');
-            }, 2000); // Wait 2 seconds after DOM is ready
+            }, 300);
         });
 
-        // Final fallback: re-apply button style on window load to ensure persistence
+        // Final fallback: re-apply on window load only if needed
         window.addEventListener('load', function() {
-            applyButtonStyle();
-            applyThemeToInlineStyles();
+            // Only re-apply if button style is not neumorphism (default needs no JS)
+            if (currentButtonStyle !== 'neumorphism' && currentButtonStyle !== 'elder') {
+                applyButtonStyle();
+            }
         });
     </script>
     
