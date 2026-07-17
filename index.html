@@ -58,6 +58,14 @@
             transform: translateX(20px);
         }
 
+        /* Red toggle switch */
+        .toggle-switch-red .toggle-slider {
+            background-color: #ccc;
+        }
+        .toggle-switch-red input:checked + .toggle-slider {
+            background-color: #f44336;
+        }
+
         /* Custom Radio Button */
         .radio-switch {
             position: relative;
@@ -213,6 +221,58 @@
                 grid-template-columns: repeat(3, 1fr);
                 gap: 4px;
             }
+        }
+
+        /* Dock Bar Styles */
+        .dock-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 64px;
+            border: none;
+            background: transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+            flex-shrink: 0;
+        }
+        .dock-item:hover {
+            transform: scale(1.1);
+            background: rgba(0, 0, 0, 0.05);
+        }
+        .dock-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #F0F0F0;
+            box-shadow: 4px 4px 8px #cccccc, -4px -4px 8px #ffffff;
+            margin-bottom: 4px;
+        }
+        .dock-initial {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: 'YouYuan', Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+        .dock-name {
+            font-size: 10px;
+            color: #666;
+            font-family: 'YouYuan', Arial, sans-serif;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 50px;
         }
 
         .search-box.has-text {
@@ -1793,7 +1853,8 @@
             position: absolute;
             top: 4px;
             right: 4px;
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 2px;
             opacity: 1;
             pointer-events: auto;
@@ -2285,6 +2346,22 @@
             background: rgba(0, 0, 0, 0.7);
         }
 
+        /* Ensure launch animation is always opaque in glass/transparent modes */
+        body[data-button-style="glass"] #appLaunchOverlay .launch-bg,
+        body[data-button-style="transparent"] #appLaunchOverlay .launch-bg,
+        body[data-button-style="outline"] #appLaunchOverlay .launch-bg,
+        body[data-button-style="rounded"] #appLaunchOverlay .launch-bg {
+            background: #ffffff !important;
+            opacity: 1 !important;
+        }
+        body[data-theme="dark"][data-button-style="glass"] #appLaunchOverlay .launch-bg,
+        body[data-theme="dark"][data-button-style="transparent"] #appLaunchOverlay .launch-bg,
+        body[data-theme="dark"][data-button-style="outline"] #appLaunchOverlay .launch-bg,
+        body[data-theme="dark"][data-button-style="rounded"] #appLaunchOverlay .launch-bg {
+            background: #000000 !important;
+            opacity: 1 !important;
+        }
+
         #appLaunchOverlay .launch-icon-wrap {
             position: relative;
             z-index: 2;
@@ -2443,6 +2520,12 @@
             <span id="favBtnText" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90vw; display: inline-block;">古诗</span>
         </button>
     </div>
+    
+    <!-- Dock Bar -->
+    <div id="dockContainer" style="display: none; position: fixed; bottom: 20px; left: 0; width: 100%; justify-content: center; z-index: 1;">
+        <div id="dockScrollArea" style="display: flex; gap: 8px; padding: 8px 16px; background: #F0F0F0; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; overflow-x: auto; overflow-y: hidden; max-width: calc(100% - 40px); -webkit-overflow-scrolling: touch; scrollbar-width: none;">
+        </div>
+    </div>
 
     <!-- Search Engine Selector (hidden by default) -->
     <div class="search-engine-selector" id="engineSelector" style="display: none;">
@@ -2585,6 +2668,10 @@
                 <div style="display: flex; gap: 8px; align-items: center;">
                     <label class="toggle-switch" title="显示网页图标">
                         <input type="checkbox" id="showFavIconsToggle" checked onchange="localStorage.setItem('showFavIcons', this.checked); renderFavorites(document.getElementById('favSearchInput').value); if(typeof renderFolderItems === 'function' && currentFolderId) renderFolderItems(currentFolderId, document.getElementById('folderSearchInput')?.value || '');">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <label class="toggle-switch toggle-switch-red" title="编辑模式（显示删除/编辑按钮）">
+                        <input type="checkbox" id="editModeToggle" onchange="toggleEditMode(this.checked); renderFavorites(document.getElementById('favSearchInput').value);">
                         <span class="toggle-slider"></span>
                     </label>
                     <button id="createFolderBtn" class="fav-add-btn" style="padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-weight: bold; white-space: nowrap; font-family: 'YouYuan', Arial, sans-serif; display: flex; align-items: center; gap: 5px;">
@@ -2948,10 +3035,24 @@
                 </div>
                 
                 <div style="margin-bottom: 15px;">
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-<label class="toggle-switch"><input type="checkbox" id="showPoemToggle" checked onchange="togglePoemDisplay()"><span class="toggle-slider"></span></label>
-<span style="font-family: 'YouYuan'; font-size: 14px;">显示古诗</span>
-</div>
+                    <label style="display: block; font-family: 'YouYuan'; font-size: 14px; margin-bottom: 10px; font-weight: bold;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px; vertical-align: middle;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        底部显示：
+                    </label>
+                    <div class="settings-radio-grid">
+                        <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 13px; cursor: pointer; gap: 4px;">
+                            <label class="radio-switch"><input type="radio" name="bottomDisplayMode" value="off" onchange="setBottomDisplayMode('off')"><span class="radio-slider"></span></label>
+                            关
+                        </label>
+                        <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 13px; cursor: pointer; gap: 4px;">
+                            <label class="radio-switch"><input type="radio" name="bottomDisplayMode" value="poem" checked onchange="setBottomDisplayMode('poem')"><span class="radio-slider"></span></label>
+                            古诗
+                        </label>
+                        <label style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 13px; cursor: pointer; gap: 4px;">
+                            <label class="radio-switch"><input type="radio" name="bottomDisplayMode" value="dock" onchange="setBottomDisplayMode('dock')"><span class="radio-slider"></span></label>
+                            Dock栏
+                        </label>
+                    </div>
                 </div>
                 
                 <div style="margin-bottom: 15px;">
@@ -3670,20 +3771,35 @@
         
         // Track if settings were modified (must be declared before any function uses it)
         let settingsModified = false;
+        
+        // Dock items (must be declared before loadDisplaySettings)
+        let dockItems = [];
 
-        // Toggle poem display
-        function togglePoemDisplay() {
+        // Set bottom display mode
+        function setBottomDisplayMode(mode) {
             settingsModified = true;
-            const checkbox = document.getElementById('showPoemToggle');
             const favBtn = document.getElementById('favBtn');
-            const showPoem = checkbox.checked;
+            const poemContainer = document.querySelector('.poem-container');
+            const dockContainer = document.getElementById('dockContainer');
             
-            if (favBtn) {
-                favBtn.style.display = showPoem ? 'flex' : 'none';
+            // Hide all bottom elements first
+            if (favBtn) favBtn.style.display = 'none';
+            if (poemContainer) poemContainer.style.display = 'none';
+            if (dockContainer) dockContainer.style.display = 'none';
+            
+            // Show based on mode
+            if (mode === 'poem') {
+                if (favBtn) favBtn.style.display = 'flex';
+                if (poemContainer) poemContainer.style.display = 'block';
+            } else if (mode === 'dock') {
+                if (dockContainer) {
+                    dockContainer.style.display = 'flex';
+                    renderDock();
+                }
             }
             
             // Save to localStorage
-            localStorage.setItem('showPoem', showPoem);
+            localStorage.setItem('bottomDisplayMode', mode);
         }
         
         // Toggle scanner display
@@ -3895,13 +4011,30 @@
         
         // Load saved settings from localStorage
         function loadDisplaySettings() {
-            // Load poem display setting
-            const showPoem = localStorage.getItem('showPoem');
-            if (showPoem !== null) {
-                const poemCheckbox = document.getElementById('showPoemToggle');
-                if (poemCheckbox) {
-                    poemCheckbox.checked = showPoem === 'true';
-                    togglePoemDisplay();
+            // Load bottom display mode setting
+            const bottomMode = localStorage.getItem('bottomDisplayMode');
+            if (bottomMode !== null) {
+                const radios = document.getElementsByName('bottomDisplayMode');
+                for (let i = 0; i < radios.length; i++) {
+                    if (radios[i].value === bottomMode) {
+                        radios[i].checked = true;
+                        break;
+                    }
+                }
+                setBottomDisplayMode(bottomMode);
+            } else {
+                // Migrate old showPoem setting
+                const showPoem = localStorage.getItem('showPoem');
+                if (showPoem !== null) {
+                    const mode = showPoem === 'true' ? 'poem' : 'off';
+                    const radios = document.getElementsByName('bottomDisplayMode');
+                    for (let i = 0; i < radios.length; i++) {
+                        if (radios[i].value === mode) {
+                            radios[i].checked = true;
+                            break;
+                        }
+                    }
+                    setBottomDisplayMode(mode);
                 }
             }
             
@@ -4090,6 +4223,9 @@
                 }
             });
         })();
+        
+        // Load dock items first (before display settings)
+        loadDockItems();
         
         // Load display settings from cookies
         loadDisplaySettings();
@@ -5109,6 +5245,7 @@
                 } else if (cb.value === 'favorites') {
                     selectedData.favorites = favorites;
                     selectedData.folders = folders;
+                    selectedData.dockItems = dockItems;
                 } else if (cb.value === 'cache') {
                     selectedData.cachedSuggestions = localStorage.getItem('cachedSuggestions');
                     selectedData.cachedHotNews = localStorage.getItem('cachedHotNews');
@@ -5126,7 +5263,7 @@
                         noFavIcons: localStorage.getItem('noFavIcons') === 'true',
                         themeMode: localStorage.getItem('themeMode') || 'light',
                         showTimeDisplay: localStorage.getItem('showTimeDisplay') !== 'false',
-                        showPoem: localStorage.getItem('showPoem') !== 'false',
+                        bottomDisplayMode: localStorage.getItem('bottomDisplayMode') || 'poem',
                         showScanner: localStorage.getItem('showScanner') !== 'false',
                         highContrast: localStorage.getItem('highContrastMode') === 'true',
                         themeColor: localStorage.getItem('themeColor') || '#F0F0F0',
@@ -5175,6 +5312,7 @@
             const allData = {
                 favorites: favorites,
                 folders: folders,
+                dockItems: dockItems,
                 searchHistory: JSON.parse(localStorage.getItem('searchHistory') || '[]'),
                 settings: {
                     saveSearchHistory: localStorage.getItem('saveSearchHistory') !== 'false',
@@ -5189,7 +5327,7 @@
                     noFavIcons: localStorage.getItem('noFavIcons') === 'true',
                     themeMode: localStorage.getItem('themeMode') || 'light',
                     showTimeDisplay: localStorage.getItem('showTimeDisplay') !== 'false',
-                    showPoem: localStorage.getItem('showPoem') !== 'false',
+                    bottomDisplayMode: localStorage.getItem('bottomDisplayMode') || 'poem',
                     showScanner: localStorage.getItem('showScanner') !== 'false',
                     highContrast: localStorage.getItem('highContrastMode') === 'true',
                     themeColor: localStorage.getItem('themeColor') || '#F0F0F0',
@@ -5257,6 +5395,12 @@
                         localStorage.setItem('folders', JSON.stringify(folders));
                     }
                     
+                    if (allData.dockItems && Array.isArray(allData.dockItems)) {
+                        dockItems = allData.dockItems;
+                        localStorage.setItem('dockItems', JSON.stringify(dockItems));
+                        renderDock();
+                    }
+                    
                     renderFavorites();
                     
                     if (allData.searchHistory && Array.isArray(allData.searchHistory)) {
@@ -5273,7 +5417,11 @@
                         }
                         
                         localStorage.setItem('showTimeDisplay', allData.settings.showTimeDisplay);
-                        if (allData.settings.showPoem !== undefined) localStorage.setItem('showPoem', allData.settings.showPoem);
+                        if (allData.settings.bottomDisplayMode !== undefined) localStorage.setItem('bottomDisplayMode', allData.settings.bottomDisplayMode);
+                        if (allData.settings.showPoem !== undefined) {
+                            const mode = allData.settings.showPoem ? 'poem' : 'off';
+                            localStorage.setItem('bottomDisplayMode', mode);
+                        }
                         if (allData.settings.showScanner !== undefined) localStorage.setItem('showScanner', allData.settings.showScanner);
                         
                         // Apply theme mode
@@ -5383,9 +5531,27 @@
                             localStorage.setItem('highContrastMode', allData.settings.highContrast);
                         }
                         if (allData.settings.showPoem !== undefined) {
-                            const el = document.getElementById('showPoemToggle');
-                            if (el) el.checked = allData.settings.showPoem;
-                            localStorage.setItem('showPoem', allData.settings.showPoem);
+                            const mode = allData.settings.showPoem ? 'poem' : 'off';
+                            localStorage.setItem('bottomDisplayMode', mode);
+                            const radios = document.getElementsByName('bottomDisplayMode');
+                            for (let i = 0; i < radios.length; i++) {
+                                if (radios[i].value === mode) {
+                                    radios[i].checked = true;
+                                    break;
+                                }
+                            }
+                            setBottomDisplayMode(mode);
+                        }
+                        if (allData.settings.bottomDisplayMode !== undefined) {
+                            localStorage.setItem('bottomDisplayMode', allData.settings.bottomDisplayMode);
+                            const radios = document.getElementsByName('bottomDisplayMode');
+                            for (let i = 0; i < radios.length; i++) {
+                                if (radios[i].value === allData.settings.bottomDisplayMode) {
+                                    radios[i].checked = true;
+                                    break;
+                                }
+                            }
+                            setBottomDisplayMode(allData.settings.bottomDisplayMode);
                         }
                         if (allData.settings.showScanner !== undefined) {
                             const el = document.getElementById('showScannerToggle');
@@ -5666,7 +5832,7 @@
             localStorage.removeItem('searchBoxWidth');
             localStorage.removeItem('searchBoxHeight');
             localStorage.removeItem('searchBoxSizeEnabled');
-            localStorage.removeItem('showPoem');
+            localStorage.removeItem('bottomDisplayMode');
             localStorage.removeItem('showScanner');
             localStorage.removeItem('searchBoxUrlAccess');
             localStorage.removeItem('showFavIcons');
@@ -5733,11 +5899,15 @@
             const timeDisplay = document.getElementById('timeDisplay');
             if (timeDisplay) timeDisplay.style.display = 'flex';
 
-            // Bug 11: Reset show poem
-            const showPoemToggle = document.getElementById('showPoemToggle');
-            if (showPoemToggle) showPoemToggle.checked = true;
-            const favBtn = document.getElementById('favBtn');
-            if (favBtn) favBtn.style.display = 'flex';
+            // Bug 11: Reset bottom display mode to poem
+            const radios = document.getElementsByName('bottomDisplayMode');
+            for (let i = 0; i < radios.length; i++) {
+                if (radios[i].value === 'poem') {
+                    radios[i].checked = true;
+                    break;
+                }
+            }
+            setBottomDisplayMode('poem');
 
             // Bug 12: Reset show scanner
             const showScannerToggle = document.getElementById('showScannerToggle');
@@ -6185,6 +6355,81 @@
             renderFavorites();
         }
         
+        // Dock Bar Functions
+        function loadDockItems() {
+            const saved = localStorage.getItem('dockItems');
+            if (saved) {
+                try {
+                    dockItems = JSON.parse(saved);
+                } catch(e) {
+                    dockItems = [];
+                }
+            }
+        }
+        
+        function saveDockItems() {
+            localStorage.setItem('dockItems', JSON.stringify(dockItems));
+            renderDock();
+        }
+        
+        function toggleDockItem(index) {
+            const fav = favorites[index];
+            if (!fav) return;
+            
+            const existingIndex = dockItems.findIndex(item => item.url === fav.url);
+            if (existingIndex >= 0) {
+                dockItems.splice(existingIndex, 1);
+            } else {
+                dockItems.push({
+                    name: fav.name,
+                    url: fav.url,
+                    createdAt: fav.createdAt || Date.now()
+                });
+            }
+            saveDockItems();
+            renderFavorites();
+        }
+        
+        function renderDock() {
+            const scrollArea = document.getElementById('dockScrollArea');
+            if (!scrollArea) return;
+            
+            let html = '';
+            
+            html += `<button class="dock-item" onclick="openFavorites()" title="收藏">
+                        <div class="dock-icon" style="background: #FF6B6B; display: flex; align-items: center; justify-content: center;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                        </div>
+                        <div class="dock-name">收藏</div>
+                    </button>`;
+            
+            dockItems.forEach((item) => {
+                const initials = getInitials(item.name);
+                const color = getUrlColor(item.url);
+                
+                html += `<button class="dock-item" onclick="openDockUrl('${item.url.replace(/'/g, "\\'")}', this)" title="${item.name}">
+                            <div class="dock-icon">
+                                <div class="dock-initial" style="background-color: ${color};">${initials}</div>
+                            </div>
+                            <div class="dock-name">${item.name}</div>
+                        </button>`;
+            });
+            
+            scrollArea.innerHTML = html;
+        }
+        
+        function openDockUrl(url, element) {
+            if (element) {
+                playLaunchAnimation(element, '#F0F0F0', function() {
+                    window.open(url, '_blank');
+                });
+                return;
+            }
+            window.open(url, '_blank');
+        }
+        
         // Folder modal functions
         function openFolderModal(folderId) {
             currentFolderId = folderId;
@@ -6350,6 +6595,41 @@
             localStorage.setItem('favorites', JSON.stringify(favorites));
             renderFavorites();
         }
+
+        let currentSelectedFavIndex = -1;
+
+        function toggleEditMode(enabled) {
+            const sortButtons = document.getElementById('sortButtons');
+            if (sortButtons) {
+                sortButtons.style.display = enabled ? 'flex' : 'none';
+            }
+            const list = document.getElementById('favoritesList');
+            if (list && enabled) {
+                currentSelectedFavIndex = -1;
+            }
+        }
+
+        function moveFavoriteUp(event, index) {
+            event.stopPropagation();
+            if (index > 0) {
+                const temp = favorites[index];
+                favorites[index] = favorites[index - 1];
+                favorites[index - 1] = temp;
+                saveFavorites();
+                currentSelectedFavIndex = index - 1;
+            }
+        }
+
+        function moveFavoriteDown(event, index) {
+            event.stopPropagation();
+            if (index < favorites.length - 1) {
+                const temp = favorites[index];
+                favorites[index] = favorites[index + 1];
+                favorites[index + 1] = temp;
+                saveFavorites();
+                currentSelectedFavIndex = index + 1;
+            }
+        }
         
         function getFavicon(url) {
             // Check if user disabled favicon loading
@@ -6428,6 +6708,8 @@
             
             const showCreateTime = document.getElementById('showFavCreateTime')?.checked || false;
             
+            const editMode = document.getElementById('editModeToggle')?.checked || false;
+            
             filtered.forEach((fav) => {
                 const originalIndex = favorites.findIndex(f => f.name === fav.name && f.url === fav.url);
                 const faviconUrl = getFavicon(fav.url);
@@ -6444,8 +6726,25 @@
                 }
 
                 const safeUrl = fav.url.replace(/'/g, '\\\'');
-                html += `<div class="fav-item" draggable="false" data-index="${originalIndex}" onclick="openFavoriteUrl('${safeUrl}', this)">
-                    <div class="fav-actions">
+                const isInDock = dockItems.some(item => item.url === fav.url);
+                const dockIcon = isInDock ? '<polyline points="18 6 6 18"></polyline><polyline points="6 6 18 18"></polyline>' : '<line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line>';
+                const dockTitle = isInDock ? '从Dock栏移除' : '添加到Dock栏';
+                const dockActionHtml = `<button onclick="event.stopPropagation(); toggleDockItem(${originalIndex})" title="${dockTitle}" class="fav-dock-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                ${dockIcon}
+                            </svg>
+                        </button>`;
+                const actionsHtml = editMode ? `<div class="fav-actions">
+                        <button onclick="event.stopPropagation(); moveFavoriteUp(event, ${originalIndex})" title="上移">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="18 15 12 9 6 15"></polyline>
+                            </svg>
+                        </button>
+                        <button onclick="event.stopPropagation(); moveFavoriteDown(event, ${originalIndex})" title="下移">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
                         <button onclick="event.stopPropagation(); editFavorite(${originalIndex})" title="编辑">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
@@ -6458,7 +6757,10 @@
                                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                             </svg>
                         </button>
-                    </div>
+                        ${dockActionHtml}
+                    </div>` : '';
+                html += `<div class="fav-item" draggable="false" data-index="${originalIndex}" onclick="openFavoriteUrl('${safeUrl}', this)">
+                    ${actionsHtml}
                     <div class="fav-icon">
                         ${showFavIcons && faviconUrl ? `<img data-src="${faviconUrl}" onload="this.style.display='block'; this.nextElementSibling.style.display='none'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" style="display: none;" alt="">` : ''}
                         <div class="fav-initial" style="background-color: ${color}; display: ${(!showFavIcons || !faviconUrl) ? 'flex' : 'none'};">${initials}</div>
@@ -6734,6 +7036,10 @@
             overlay.style.transition = 'none';
             overlay.classList.remove('active');
             overlay.style.opacity = '1';
+            
+            // Use global radius for overlay
+            const globalRadius = getComputedStyle(document.documentElement).getPropertyValue('--global-radius').trim();
+            overlay.style.borderRadius = globalRadius;
 
             // Track animation state
             let animationCancelled = false;
@@ -6750,7 +7056,7 @@
                 overlay.style.left = rect.left + 'px';
                 overlay.style.width = rect.width + 'px';
                 overlay.style.height = rect.height + 'px';
-                overlay.style.borderRadius = window.getComputedStyle(iconEl).borderRadius;
+                overlay.style.borderRadius = globalRadius;
                 setTimeout(function() {
                     overlay.style.transition = 'none';
                     overlay.style.top = '0px';
@@ -8658,5 +8964,6 @@
             <button onclick="confirmAddCustomEngine()" style="width: 100%; padding: 12px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold;">确认添加</button>
         </div>
     </div>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"feb4124b699a45789047e397f516d00d","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
