@@ -178,7 +178,7 @@
         }
 
         .search-box {
-            padding: 12px 55px 12px 15px;
+            padding: 12px 55px 12px 120px;
             font-size: 14px;
             font-family: 'YouYuan', Arial, sans-serif;
             border: none;
@@ -219,6 +219,14 @@
             padding: 12px 95px 12px 20px;
             color: #000000;
             animation: textFadeIn 0.4s ease;
+        }
+
+        #engineHintInSearchBox {
+            transition: opacity 0.2s ease;
+        }
+
+        #engineHintInSearchBox.hidden {
+            opacity: 0 !important;
         }
 
         @keyframes textFadeIn {
@@ -524,7 +532,7 @@
                 min-width: 0;
                 width: 100% !important;
                 font-size: 16px;
-                padding: 12px 73px 12px 15px;
+                padding: 12px 73px 12px 100px;
                 background: #F0F0F0;
                 border: none;
                 outline: none;
@@ -1377,109 +1385,14 @@
             background: rgba(255, 255, 255, 0.25) !important;
         }
 
-        /* Frosted mode - clean frosted glass like limestart */
-        body[data-button-style="frosted"] button,
-        body[data-button-style="frosted"] input,
-        body[data-button-style="frosted"] select,
-        body[data-button-style="frosted"] .tab-btn,
-        body[data-button-style="frosted"] .modal-content,
-        body[data-button-style="frosted"] .settings-section h3,
-        body[data-button-style="frosted"] .favorite-item,
-        body[data-button-style="frosted"] .hot-news-container,
-        body[data-button-style="frosted"] .search-hint,
-        body[data-button-style="frosted"] .suggestions,
-        body[data-button-style="frosted"] .search-history,
-        body[data-button-style="frosted"] .engine-item,
-        body[data-button-style="frosted"] #favSearchInput,
-        body[data-button-style="frosted"] #addFavBtn,
-        body[data-button-style="frosted"] .bottom-btn,
-        body[data-button-style="frosted"] #dropdownMenu,
-        body[data-button-style="frosted"] .modal-close-btn,
-        body[data-button-style="frosted"] .text-result-modal,
-        body[data-button-style="frosted"] .fav-add-btn {
-            box-shadow: none !important;
-            border: 1px solid rgba(255, 255, 255, 0.35) !important;
-            border-radius: var(--global-radius) !important;
-            background: rgba(255, 255, 255, 0.25) !important;
-            backdrop-filter: blur(20px) saturate(140%) !important;
-            -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
-            color: inherit !important;
-        }
-        body[data-button-style="frosted"] div[style*="box-shadow"],
-        body[data-button-style="frosted"] button[style*="box-shadow"],
-        body[data-button-style="frosted"] input[style*="box-shadow"] {
-            box-shadow: none !important;
-            border: 1px solid rgba(255, 255, 255, 0.35) !important;
-            border-radius: var(--global-radius) !important;
-            background: rgba(255, 255, 255, 0.25) !important;
-            backdrop-filter: blur(20px) saturate(140%) !important;
-            -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
-            color: inherit !important;
-        }
+        
 
-        body[data-button-style="frosted"] button:hover,
-        body[data-button-style="frosted"] .tab-btn:hover {
-            background: rgba(255, 255, 255, 0.08) !important;
-            border-color: rgba(255, 255, 255, 0.25) !important;
-        }
 
-        body[data-button-style="frosted"] .tab-btn.active {
-            background: rgba(255, 255, 255, 0.12) !important;
-            border-color: rgba(255, 255, 255, 0.3) !important;
-        }
 
-        body[data-button-style="frosted"] #favBtn,
-        body[data-button-style="frosted"] #dropdownMenuBtn,
-        body[data-button-style="frosted"] #searchBtn {
-            background: transparent !important;
-            box-shadow: none !important;
-            border: none !important;
-            backdrop-filter: none !important;
-            -webkit-backdrop-filter: none !important;
-        }
 
-        /* Frosted mode in dark theme */
-        body[data-theme="dark"][data-button-style="frosted"] button,
-        body[data-theme="dark"][data-button-style="frosted"] input,
-        body[data-theme="dark"][data-button-style="frosted"] select,
-        body[data-theme="dark"][data-button-style="frosted"] .tab-btn,
-        body[data-theme="dark"][data-button-style="frosted"] .modal-content,
-        body[data-theme="dark"][data-button-style="frosted"] .settings-section h3,
-        body[data-theme="dark"][data-button-style="frosted"] .favorite-item,
-        body[data-theme="dark"][data-button-style="frosted"] .hot-news-container,
-        body[data-theme="dark"][data-button-style="frosted"] .search-hint,
-        body[data-theme="dark"][data-button-style="frosted"] .suggestions,
-        body[data-theme="dark"][data-button-style="frosted"] .search-history,
-        body[data-theme="dark"][data-button-style="frosted"] .engine-item,
-        body[data-theme="dark"][data-button-style="frosted"] #favSearchInput,
-        body[data-theme="dark"][data-button-style="frosted"] #addFavBtn,
-        body[data-theme="dark"][data-button-style="frosted"] .bottom-btn,
-        body[data-theme="dark"][data-button-style="frosted"] #dropdownMenu,
-        body[data-theme="dark"][data-button-style="frosted"] .modal-close-btn,
-        body[data-theme="dark"][data-button-style="frosted"] .text-result-modal,
-        body[data-theme="dark"][data-button-style="frosted"] .fav-add-btn {
-            background: rgba(0, 0, 0, 0.35) !important;
-            border-color: rgba(255, 255, 255, 0.2) !important;
-            box-shadow: none !important;
-        }
-        body[data-theme="dark"][data-button-style="frosted"] div[style*="box-shadow"],
-        body[data-theme="dark"][data-button-style="frosted"] button[style*="box-shadow"],
-        body[data-theme="dark"][data-button-style="frosted"] input[style*="box-shadow"] {
-            background: rgba(0, 0, 0, 0.35) !important;
-            border-color: rgba(255, 255, 255, 0.2) !important;
-            box-shadow: none !important;
-        }
+        
 
-        body[data-theme="dark"][data-button-style="frosted"] button:hover,
-        body[data-theme="dark"][data-button-style="frosted"] .tab-btn:hover {
-            background: rgba(0, 0, 0, 0.08) !important;
-            border-color: rgba(255, 255, 255, 0.2) !important;
-        }
 
-        body[data-theme="dark"][data-button-style="frosted"] .tab-btn.active {
-            background: rgba(0, 0, 0, 0.35) !important;
-            border-color: rgba(255, 255, 255, 0.2) !important;
-        }
 
         /* Border radius control via CSS variable */
         :root {
@@ -1964,7 +1877,13 @@
             }
         }
 
-        /* Engine tab: always show as mobile-style list */
+                @media (max-width: 768px) {
+            .settings-radio-grid label:has(input[value="glass"]) {
+                display: none !important;
+            }
+        }
+
+            /* Engine tab: always show as mobile-style list */
         #engineSelectorInTab .engine-item {
             padding: 8px 10px;
             font-size: 14px;
@@ -2214,22 +2133,6 @@
             background: rgba(255, 255, 255, 0.5) !important;
         }
 
-        body[data-button-style="frosted"] .wallpaper-source-item,
-        body[data-button-style="frosted"] #addWallpaperSourceModal > div {
-            box-shadow: none !important;
-            border: 1px solid rgba(255, 255, 255, 0.35) !important;
-            border-radius: var(--global-radius) !important;
-            background: rgba(255, 255, 255, 0.25) !important;
-            backdrop-filter: blur(20px) saturate(140%) !important;
-            -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
-            color: inherit !important;
-        }
-        body[data-theme="dark"][data-button-style="frosted"] .wallpaper-source-item,
-        body[data-theme="dark"][data-button-style="frosted"] #addWallpaperSourceModal > div {
-            background: rgba(0, 0, 0, 0.35) !important;
-            border-color: rgba(255, 255, 255, 0.2) !important;
-            box-shadow: none !important;
-        }
 
         body[data-elder-mode="true"] .wallpaper-source-item,
         body[data-elder-mode="true"] #addWallpaperSourceModal > div {
@@ -2506,7 +2409,7 @@
             </svg>
         </button>
         <input type="text" class="search-box" id="searchInput" placeholder=" " autocomplete="off" style="background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;">
-        <div id="engineHintInSearchBox" style="position: absolute; left: 15px; right: 0; top: 50%; transform: translateY(-50%); pointer-events: none; display: flex; justify-content: flex-start; align-items: center; font-family: 'YouYuan', Arial, sans-serif; transition: opacity 0.2s ease;">
+        <div id="engineHintInSearchBox" style="position: absolute; left: 15px; right: 0; top: 50%; transform: translateY(-50%); pointer-events: none; display: flex; justify-content: flex-start; align-items: center; font-family: 'YouYuan', Arial, sans-serif; transition: opacity 0.2s ease; z-index: -1;">
             <span id="engineHintText" style="font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; color: rgba(0, 0, 0, 0.4);">使用百度搜索</span>
         </div>
         <!-- Clear input button (X) -->
@@ -2646,7 +2549,7 @@
         <!-- Header with close button and tabs -->
         <div style="display: flex; justify-content: center; align-items: center; position: relative; padding: 20px 20px 0 20px;">
             <!-- Tab Navigation (centered) -->
-            <div style="display: flex; gap: 10px;">
+            <div id="tabButtonsContainer" style="display: flex; gap: 10px;">
                 <button id="favTabBtn" onclick="switchToFavoritesTab()" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; color: #000000; cursor: pointer; font-weight: bold;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;">
                         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
@@ -2852,7 +2755,21 @@
         
         <!-- Settings Content -->
         <div id="settingsContent" style="display: none; padding: 20px; overflow-y: auto; max-height: calc(100vh - 100px);">
-            <h2 style="font-family: 'YouYuan', Arial, sans-serif; font-size: 24px; margin-bottom: 20px;">设置</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+                <h2 style="font-family: 'YouYuan', Arial, sans-serif; font-size: 24px; margin: 0;">设置</h2>
+                <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                    <label class="toggle-switch" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" id="showTabButtonsToggle" onchange="toggleTabButtons(this.checked)">
+                        <span class="toggle-slider"></span>
+                        <span style="font-family: 'YouYuan', Arial, sans-serif; font-size: 14px;">显示Tab按钮</span>
+                    </label>
+                    <label class="toggle-switch" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" id="showAllSettingsToggle" onchange="toggleAllSettings(this.checked)">
+                        <span class="toggle-slider"></span>
+                        <span style="font-family: 'YouYuan', Arial, sans-serif; font-size: 14px;">显示全部设置</span>
+                    </label>
+                </div>
+            </div>
             
             <!-- 外观设置 -->
             <div class="settings-section" style="margin-bottom: 30px;">
@@ -2997,16 +2914,29 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 0 20" fill="currentColor" opacity="0.3"></path></svg>
                             白色透明
                         </label>
-                        <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
-<label class="radio-switch"><input type="radio" name="buttonStyle" value="frosted" onchange="setButtonStyle('frosted')"><span class="radio-slider"></span></label>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 0 20" fill="currentColor" opacity="0.15"></path><path d="M8 12h8M12 8v8" stroke-width="1.5"></path></svg>
-                            透明模糊
-                        </label>
+
                         <label class="settings-label" style="display: flex; align-items: center; font-family: 'YouYuan'; font-size: 14px; cursor: pointer;">
 <label class="radio-switch"><input type="radio" name="buttonStyle" value="elder" onchange="setButtonStyle('elder')"><span class="radio-slider"></span></label>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 5px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                             老年模式（简化界面，去除所有特效）
                         </label>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label class="settings-label" style="display: block; font-family: 'YouYuan'; font-size: 14px; margin-bottom: 8px; font-weight: bold;">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-right: 5px; vertical-align: middle;"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 0 20" fill="currentColor" opacity="0.3"></path></svg>
+                        主题效果：
+                    </label>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap;">
+                        <label style="font-family: 'YouYuan'; font-size: 12px; width: 50px;">模糊：</label>
+                        <input type="range" id="themeBlurSlider" min="0" max="20" value="0" style="width: 120px; vertical-align: middle;" oninput="updateThemeBlur(this.value)">
+                        <span id="themeBlurValue" style="font-family: 'YouYuan'; font-size: 12px; width: 30px;">0</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                        <label style="font-family: 'YouYuan'; font-size: 12px; width: 50px;">透明：</label>
+                        <input type="range" id="themeOpacitySlider" min="0" max="100" value="100" style="width: 120px; vertical-align: middle;" oninput="updateThemeOpacity(this.value)">
+                        <span id="themeOpacityValue" style="font-family: 'YouYuan'; font-size: 12px; width: 30px;">100%</span>
                     </div>
                 </div>
 
@@ -3031,21 +2961,21 @@
 </div>
                 </div>
                 
-                <div style="margin-bottom: 15px;">
+                <div style="margin-bottom: 15px;" data-advanced-item="true">
                     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
 <label class="toggle-switch"><input type="checkbox" id="highContrastMode" onchange="toggleHighContrast()"><span class="toggle-slider"></span></label>
 <span style="font-family: 'YouYuan'; font-size: 14px;">高对比度模式</span>
 </div>
                 </div>
                 
-                <div style="margin-bottom: 15px;">
+                <div style="margin-bottom: 15px;" data-advanced-item="true">
                     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
 <label class="toggle-switch"><input type="checkbox" id="enableLaunchAnim" checked onchange="localStorage.setItem('enableLaunchAnim', this.checked)"><span class="toggle-slider"></span></label>
 <span style="font-family: 'YouYuan'; font-size: 14px;">启用应用启动动画</span>
 </div>
                 </div>
 
-                <div style="margin-bottom: 15px;">
+                <div style="margin-bottom: 15px;" data-advanced-item="true">
                     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
 <label class="toggle-switch"><input type="checkbox" id="disableAllAnim" onchange="toggleDisableAllAnim()"><span class="toggle-slider"></span></label>
 <span style="font-family: 'YouYuan'; font-size: 14px;">禁止所有动画</span>
@@ -3056,7 +2986,7 @@
 
             <!-- 收藏设置 -->
             <div class="settings-section" style="margin-bottom: 30px;">
-                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">二、收藏设置</h3>
+                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;" data-advanced="true">二、收藏设置</h3>
 
                 <div style="margin-bottom: 15px;">
                     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
@@ -3112,7 +3042,7 @@
             
             <!-- 搜索设置 -->
             <div class="settings-section" style="margin-bottom: 30px;">
-                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">三、搜索设置</h3>
+                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;" data-advanced="true">三、搜索设置</h3>
 
                 <div style="margin-bottom: 15px;">
                     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
@@ -3161,7 +3091,7 @@
             
             <!-- 隐私与数据管理 -->
             <div class="settings-section" style="margin-bottom: 30px;">
-                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">四、隐私与数据管理</h3>
+                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;" data-advanced="true">四、隐私与数据管理</h3>
                 
                 <div style="margin-bottom: 15px;">
                     <label class="settings-label" style="display: block; font-family: 'YouYuan'; font-size: 14px; margin-bottom: 10px; font-weight: bold;">
@@ -3224,7 +3154,7 @@
             
             <!-- 界面样式 -->
             <div class="settings-section" style="margin-bottom: 30px;">
-                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">五、界面样式</h3>
+                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;" data-advanced="true">五、界面样式</h3>
                 
                 <div style="margin-bottom: 15px;">
                     <label style="display: block; font-family: 'YouYuan'; font-size: 14px; margin-bottom: 8px;">
@@ -3270,7 +3200,7 @@
 
             <!-- 高级设置 -->
             <div class="settings-section" style="margin-bottom: 30px;">
-                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">六、高级设置</h3>
+                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;" data-advanced="true">六、高级设置</h3>
                 
                 <!-- API Configuration -->
                 <div style="margin-bottom: 15px; padding: 15px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0;">
@@ -3317,7 +3247,7 @@
             
             <!-- 快速操作 -->
             <div class="settings-section" style="margin-bottom: 30px;">
-                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">七、快速操作</h3>
+                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;" data-advanced="true">七、快速操作</h3>
                 
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                     <button class="settings-btn" onclick="location.reload()" style="flex: 1; min-width: 120px; padding: 10px 15px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
@@ -3329,7 +3259,7 @@
             
             <!-- 关于与帮助 -->
             <div class="settings-section" style="margin-bottom: 30px;">
-                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;">八、关于与帮助</h3>
+                <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;" data-advanced="true">八、关于与帮助</h3>
                 
                 <div style="font-family: 'YouYuan'; font-size: 14px; line-height: 1.8;">
                     <p><strong>产品名称：</strong>千克之梦 (HelloKG)</p>
@@ -3388,7 +3318,7 @@
             ['favorites','folders','searchHistory','customEngines','wallpaperSources'].forEach(fixArray);
 
             // Fix invalid string settings
-            var validButtonStyles = ['neumorphism','outline','glass','transparent','frosted','rounded','elder'];
+            var validButtonStyles = ['neumorphism','outline','glass','transparent','rounded','elder'];
             var bs = localStorage.getItem('buttonStyle');
             if (bs && validButtonStyles.indexOf(bs) === -1) {
                 console.warn('Auto-fix: invalid buttonStyle "' + bs + '" reset to neumorphism');
@@ -3854,63 +3784,59 @@
             radios.forEach(function(r) {
                 r.checked = (r.value === mode);
             });
+            // Update search button icon to match URL/search mode
+            const searchBtnIcon = document.getElementById('searchBtnIcon');
+            const searchBtnIconFallback = document.getElementById('searchBtnIconFallback');
+            const urlBtnIcon = document.getElementById('urlBtnIcon');
+            if (mode === 'always' || mode === 'temp') {
+                if (searchBtnIcon) searchBtnIcon.style.display = 'none';
+                if (searchBtnIconFallback) searchBtnIconFallback.style.display = 'none';
+                if (urlBtnIcon) urlBtnIcon.style.display = 'block';
+            } else {
+                if (urlBtnIcon) urlBtnIcon.style.display = 'none';
+                // Restore engine icon
+                const engineItems = document.querySelectorAll('.engine-item');
+                engineItems.forEach(function(item) {
+                    if (item.getAttribute('data-url') === currentEngineUrl) {
+                        const img = item.querySelector('img');
+                        if (searchBtnIcon && img) {
+                            searchBtnIcon.style.display = 'block';
+                            searchBtnIcon.src = img.src;
+                        }
+                        if (searchBtnIconFallback) searchBtnIconFallback.style.display = 'none';
+                    }
+                });
+            }
         }
         
         // Dropdown menu button click
         document.addEventListener('DOMContentLoaded', function() {
+            // === Critical path: minimal init for fast startup ===
+            
             // Restore "disable all animations" setting
             if (localStorage.getItem('disableAllAnim') === 'true') {
                 document.documentElement.classList.add('no-animations');
                 const disableAllAnimCb = document.getElementById('disableAllAnim');
                 if (disableAllAnimCb) disableAllAnimCb.checked = true;
             }
-
-            // Focus zoom - restore setting & bind events
-            if (localStorage.getItem('focusZoomEnabled') === 'true') {
-                focusZoomEnabled = true;
-                const focusZoomCb = document.getElementById('focusZoomToggle');
-                if (focusZoomCb) focusZoomCb.checked = true;
-            }
-            const searchInput = document.getElementById('searchInput');
-            if (searchInput) {
-                searchInput.addEventListener('focus', function() {
-                    if (focusZoomEnabled && currentBgMode === 'wallpaper') {
-                        applyWallpaperFocusZoom();
-                    }
-                });
-                searchInput.addEventListener('blur', function() {
-                    if (focusZoomEnabled && currentBgMode === 'wallpaper') {
-                        applyWallpaperNormal();
-                    }
-                });
-            }
-            // Restore "enable launch animation" setting
-            if (localStorage.getItem('enableLaunchAnim') === 'false') {
-                const enableLaunchAnimCb = document.getElementById('enableLaunchAnim');
-                if (enableLaunchAnimCb) enableLaunchAnimCb.checked = false;
-            }
+            
             // Restore high contrast mode
             if (localStorage.getItem('highContrastMode') === 'true') {
                 const highContrastCb = document.getElementById('highContrastMode');
                 if (highContrastCb) highContrastCb.checked = true;
                 document.body.style.filter = 'contrast(1.5)';
             }
-            // Restore show fav create time checkbox
-            if (localStorage.getItem('showFavCreateTime') === 'true') {
-                const showFavCreateTimeCb = document.getElementById('showFavCreateTime');
-                if (showFavCreateTimeCb) showFavCreateTimeCb.checked = true;
-            }
-            // Restore search box URL access mode radio buttons
+            
+            // Restore search box URL access mode radio buttons + icon
             updateUrlAccessRadio();
+            
+            // Restore Tab buttons visibility
+            loadTabButtons();
+            
             // Restore search box size
             applySavedSearchBoxSize();
-            // Restore show fav icons setting
-            const showFavIcons = localStorage.getItem('showFavIcons');
-            if (showFavIcons !== null) {
-                const toggle = document.getElementById('showFavIconsToggle');
-                if (toggle) toggle.checked = showFavIcons === 'true';
-            }
-
+            
+            // Setup dropdown
             const dropdownBtn = document.getElementById('dropdownMenuBtn');
             if (dropdownBtn) {
                 dropdownBtn.addEventListener('click', function(e) {
@@ -3918,15 +3844,51 @@
                     toggleDropdownMenu();
                 });
             }
-
-            // Close dropdown when clicking outside
             document.addEventListener('click', function(e) {
                 const menu = document.getElementById('dropdownMenu');
                 const btn = document.getElementById('dropdownMenuBtn');
                 if (menu && !menu.contains(e.target) && !btn.contains(e.target)) {
                     closeDropdownMenu();
-                    // Force update button visibility after closing menu
                     setTimeout(updateSearchButtonVisibility, 10);
+                }
+            });
+            
+            // === Defer non-critical init ===
+            requestAnimationFrame(function() {
+                // Focus zoom
+                if (localStorage.getItem('focusZoomEnabled') === 'true') {
+                    focusZoomEnabled = true;
+                    const focusZoomCb = document.getElementById('focusZoomToggle');
+                    if (focusZoomCb) focusZoomCb.checked = true;
+                }
+                const searchInput = document.getElementById('searchInput');
+                if (searchInput) {
+                    searchInput.addEventListener('focus', function() {
+                        if (focusZoomEnabled && currentBgMode === 'wallpaper') {
+                            applyWallpaperFocusZoom();
+                        }
+                    });
+                    searchInput.addEventListener('blur', function() {
+                        if (focusZoomEnabled && currentBgMode === 'wallpaper') {
+                            applyWallpaperNormal();
+                        }
+                    });
+                }
+                // Restore "enable launch animation" setting
+                if (localStorage.getItem('enableLaunchAnim') === 'false') {
+                    const enableLaunchAnimCb = document.getElementById('enableLaunchAnim');
+                    if (enableLaunchAnimCb) enableLaunchAnimCb.checked = false;
+                }
+                // Restore show fav create time checkbox
+                if (localStorage.getItem('showFavCreateTime') === 'true') {
+                    const showFavCreateTimeCb = document.getElementById('showFavCreateTime');
+                    if (showFavCreateTimeCb) showFavCreateTimeCb.checked = true;
+                }
+                // Restore show fav icons setting
+                const showFavIcons = localStorage.getItem('showFavIcons');
+                if (showFavIcons !== null) {
+                    const toggle = document.getElementById('showFavIconsToggle');
+                    if (toggle) toggle.checked = showFavIcons === 'true';
                 }
             });
         });
@@ -4131,7 +4093,9 @@
         
         // Load display settings from cookies
         loadDisplaySettings();
-        loadHotNewsApiUrl();
+        
+        // Defer loading hot news API URL for faster startup
+        setTimeout(loadHotNewsApiUrl, 500);
 
         // Search functionality using current engine
         function performSearch() {
@@ -4230,7 +4194,10 @@
             if (/^https?:\/\//i.test(input) || /^ftp:\/\//i.test(input)) {
                 return input;
             }
-            // Return as-is, let browser handle protocol
+            // Auto-prefix with https:// for any input without protocol
+            if (!input.startsWith('http')) {
+                return 'https://' + input;
+            }
             return input;
         }
 
@@ -4390,6 +4357,7 @@
                 // Hide engine hint with fade
                 if (engineHintInSearchBox) {
                     engineHintInSearchBox.style.opacity = '0';
+                    engineHintInSearchBox.style.pointerEvents = 'none';
                 }
             } else if (!keyword && isFocused) {
                 // No text + focused: hide search button + clear button, show dropdown button
@@ -4402,6 +4370,7 @@
                 // Show engine hint with fade
                 if (engineHintInSearchBox) {
                     engineHintInSearchBox.style.opacity = '1';
+                    engineHintInSearchBox.style.pointerEvents = 'none';
                 }
             } else {
                 // Not focused: hide all buttons
@@ -4410,6 +4379,11 @@
                 if (clearInputBtn) clearInputBtn.classList.remove('visible');
                 if (dropdownMenuBtn && !isMenuOpen) {
                     dropdownMenuBtn.classList.remove('visible');
+                }
+                // Hide engine hint when not focused or has text
+                if (engineHintInSearchBox) {
+                    engineHintInSearchBox.style.opacity = '0';
+                    engineHintInSearchBox.style.pointerEvents = 'none';
                 }
             }
         }
@@ -4600,8 +4574,8 @@
                 });
         }
 
-        // Load poem on page load
-        loadPoem();
+        // Load poem after page load (deferred for faster startup)
+        setTimeout(loadPoem, 1000);
 
         // Search engine selector functionality
         const engineSelector = document.getElementById('engineSelector');
@@ -5236,7 +5210,11 @@
                     enableLaunchAnim: localStorage.getItem('enableLaunchAnim') !== 'false',
                     disableAllAnim: localStorage.getItem('disableAllAnim') === 'true',
                     wallpaperBlur: localStorage.getItem('wallpaperBlur') || '0',
-                    wallpaperBrightness: localStorage.getItem('wallpaperBrightness') || '100'
+                    wallpaperBrightness: localStorage.getItem('wallpaperBrightness') || '100',
+                    themeBlur: localStorage.getItem('themeBlur') || '0',
+                    themeOpacity: localStorage.getItem('themeOpacity') || '100',
+                    showAllSettings: localStorage.getItem('showAllSettings') || 'false',
+                    showTabButtons: localStorage.getItem('showTabButtons') !== 'false'
                 },
                 wallpaperSources: wallpaperSources,
                 currentWallpaperSourceId: currentWallpaperSourceId,
@@ -5347,22 +5325,27 @@
                         if (allData.settings.saveSearchHistory !== undefined) {
                             const el = document.getElementById('saveSearchHistory');
                             if (el) el.checked = allData.settings.saveSearchHistory;
+                            localStorage.setItem('saveSearchHistory', allData.settings.saveSearchHistory);
                         }
                         if (allData.settings.showSearchSuggestions !== undefined) {
                             const el = document.getElementById('showSearchSuggestions');
                             if (el) el.checked = allData.settings.showSearchSuggestions;
+                            localStorage.setItem('showSearchSuggestions', allData.settings.showSearchSuggestions);
                         }
                         if (allData.settings.cacheSuggestions !== undefined) {
                             const el = document.getElementById('cacheSuggestions');
                             if (el) el.checked = allData.settings.cacheSuggestions;
+                            localStorage.setItem('cacheSuggestions', allData.settings.cacheSuggestions);
                         }
                         if (allData.settings.cacheDuration !== undefined) {
                             const el = document.getElementById('cacheDuration');
                             if (el) el.value = allData.settings.cacheDuration;
+                            localStorage.setItem('cacheDuration', allData.settings.cacheDuration);
                         }
                         if (allData.settings.privacyMode !== undefined) {
                             const el = document.getElementById('privacyMode');
                             if (el) el.checked = allData.settings.privacyMode;
+                            localStorage.setItem('privacyMode', allData.settings.privacyMode);
                         }
                         if (allData.settings.cleanSearchMode !== undefined) {
                             const el = document.getElementById('cleanSearchMode');
@@ -5392,18 +5375,22 @@
                         if (allData.settings.autoSortFavorites !== undefined) {
                             const el = document.getElementById('autoSortFavorites');
                             if (el) el.checked = allData.settings.autoSortFavorites;
+                            localStorage.setItem('autoSortFavorites', allData.settings.autoSortFavorites);
                         }
                         if (allData.settings.highContrast !== undefined) {
                             const el = document.getElementById('highContrastMode');
                             if (el) el.checked = allData.settings.highContrast;
+                            localStorage.setItem('highContrastMode', allData.settings.highContrast);
                         }
                         if (allData.settings.showPoem !== undefined) {
                             const el = document.getElementById('showPoemToggle');
                             if (el) el.checked = allData.settings.showPoem;
+                            localStorage.setItem('showPoem', allData.settings.showPoem);
                         }
                         if (allData.settings.showScanner !== undefined) {
                             const el = document.getElementById('showScannerToggle');
                             if (el) el.checked = allData.settings.showScanner;
+                            localStorage.setItem('showScanner', allData.settings.showScanner);
                         }
                         
                         // Restore bg mode
@@ -5462,6 +5449,43 @@
                         if (allData.settings.searchBoxUrlAccess !== undefined) {
                             localStorage.setItem('searchBoxUrlAccess', allData.settings.searchBoxUrlAccess);
                             updateUrlAccessRadio();
+                        }
+                        // Restore search box size
+                        if (allData.settings.searchBoxWidth !== undefined) {
+                            localStorage.setItem('searchBoxWidth', allData.settings.searchBoxWidth);
+                        }
+                        if (allData.settings.searchBoxHeight !== undefined) {
+                            localStorage.setItem('searchBoxHeight', allData.settings.searchBoxHeight);
+                        }
+                        if (allData.settings.searchBoxSizeEnabled !== undefined) {
+                            localStorage.setItem('searchBoxSizeEnabled', allData.settings.searchBoxSizeEnabled);
+                        }
+                        // Restore animation settings
+                        if (allData.settings.enableLaunchAnim !== undefined) {
+                            localStorage.setItem('enableLaunchAnim', allData.settings.enableLaunchAnim);
+                        }
+                        if (allData.settings.disableAllAnim !== undefined) {
+                            localStorage.setItem('disableAllAnim', allData.settings.disableAllAnim);
+                        }
+                        // Restore wallpaper settings
+                        if (allData.settings.wallpaperBlur !== undefined) {
+                            localStorage.setItem('wallpaperBlur', allData.settings.wallpaperBlur);
+                        }
+                        if (allData.settings.wallpaperBrightness !== undefined) {
+                            localStorage.setItem('wallpaperBrightness', allData.settings.wallpaperBrightness);
+                        }
+                        // Restore theme blur/opacity if exists
+                        if (allData.settings.themeBlur !== undefined) {
+                            localStorage.setItem('themeBlur', allData.settings.themeBlur);
+                        }
+                        if (allData.settings.themeOpacity !== undefined) {
+                            localStorage.setItem('themeOpacity', allData.settings.themeOpacity);
+                        }
+                        if (allData.settings.showAllSettings !== undefined) {
+                            localStorage.setItem('showAllSettings', allData.settings.showAllSettings);
+                        }
+                        if (allData.settings.showTabButtons !== undefined) {
+                            localStorage.setItem('showTabButtons', allData.settings.showTabButtons ? 'true' : 'false');
                         }
                         
                         // Restore search box size
@@ -7288,7 +7312,7 @@
             
             // Apply theme to inline styles to fix hardcoded colors
             applyThemeToInlineStyles();
-            // Re-apply button style theme (glass/frosted need different values for dark/light)
+            // Re-apply button style theme (glass needs different values for dark/light)
             applyThemeDirectly();
         }
         
@@ -7410,7 +7434,7 @@
 
             elements.forEach(el => {
                 try {
-                    // Clear backdrop-filter from previous theme (only glass/frosted use it)
+                    // Clear backdrop-filter from previous theme (only glass uses it)
                     el.style.removeProperty('backdrop-filter');
                     el.style.removeProperty('-webkit-backdrop-filter');
 
@@ -7441,16 +7465,114 @@
                         el.style.border = 'none';
                         el.style.borderRadius = '34px';
                         el.style.background = isDark ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.85)';
-                    } else if (theme === 'frosted') {
-                        el.style.boxShadow = 'none';
-                        el.style.border = '1px solid ' + (isDark ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.35)');
-                        el.style.borderRadius = '34px';
-                        el.style.background = isDark ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.25)';
-                        el.style.backdropFilter = 'blur(20px) saturate(140%)';
-                        el.style.webkitBackdropFilter = 'blur(20px) saturate(140%)';
                     }
                 } catch(e) {}
             });
+        }
+        
+        function updateThemeBlur(value) {
+            settingsModified = true;
+            localStorage.setItem('themeBlur', value);
+            document.getElementById('themeBlurValue').textContent = value;
+            applyThemeBlurOpacity();
+        }
+        
+        function updateThemeOpacity(value) {
+            settingsModified = true;
+            localStorage.setItem('themeOpacity', value);
+            document.getElementById('themeOpacityValue').textContent = value + '%';
+            applyThemeBlurOpacity();
+        }
+        
+        function applyThemeBlurOpacity() {
+            const blur = parseInt(localStorage.getItem('themeBlur') || '0', 10);
+            const opacity = parseInt(localStorage.getItem('themeOpacity') || '100', 10);
+            const isDark = document.body.getAttribute('data-theme') === 'dark';
+            
+            const keySelectors = [
+                '#searchInput', '#kgLogoBtn', '.bottom-btn', '.tab-btn',
+                '#favBtn', '#dropdownMenuBtn', '#searchBtn', '#micBtn',
+                '#addFavBtn', '#favSearchInput', '.modal-close-btn',
+                '.engine-item', '.favorite-item', '.history-item', '.news-item'
+            ];
+            
+            const elements = new Set();
+            keySelectors.forEach(sel => {
+                try { document.querySelectorAll(sel).forEach(el => elements.add(el)); } catch(e) {}
+            });
+            
+            elements.forEach(el => {
+                try {
+                    if (blur > 0) {
+                        el.style.backdropFilter = 'blur(' + blur + 'px)';
+                        el.style.webkitBackdropFilter = 'blur(' + blur + 'px)';
+                    } else {
+                        el.style.removeProperty('backdrop-filter');
+                        el.style.removeProperty('-webkit-backdrop-filter');
+                    }
+                    const alpha = opacity / 100;
+                    if (isDark) {
+                        el.style.background = 'rgba(255,255,255,' + (alpha * 0.5) + ')';
+                    } else {
+                        el.style.background = 'rgba(255,255,255,' + (alpha * 0.85) + ')';
+                    }
+                } catch(e) {}
+            });
+        }
+        
+        function loadThemeBlurOpacity() {
+            const blur = localStorage.getItem('themeBlur') || '0';
+            const opacity = localStorage.getItem('themeOpacity') || '100';
+            const blurSlider = document.getElementById('themeBlurSlider');
+            const opacitySlider = document.getElementById('themeOpacitySlider');
+            const blurValue = document.getElementById('themeBlurValue');
+            const opacityValue = document.getElementById('themeOpacityValue');
+            if (blurSlider) blurSlider.value = blur;
+            if (opacitySlider) opacitySlider.value = opacity;
+            if (blurValue) blurValue.textContent = blur;
+            if (opacityValue) opacityValue.textContent = opacity + '%';
+            applyThemeBlurOpacity();
+        }
+        
+        function toggleAllSettings(show) {
+            settingsModified = true;
+            localStorage.setItem('showAllSettings', show ? 'true' : 'false');
+            // Toggle advanced settings sections (h3 with data-advanced)
+            const advancedHeaders = document.querySelectorAll('[data-advanced="true"]');
+            advancedHeaders.forEach(function(header) {
+                const section = header.parentElement;
+                if (section) {
+                    section.style.display = show ? 'block' : 'none';
+                }
+            });
+            // Toggle advanced items within simple sections
+            const advancedItems = document.querySelectorAll('[data-advanced-item="true"]');
+            advancedItems.forEach(function(item) {
+                item.style.display = show ? 'block' : 'none';
+            });
+        }
+        
+        function loadShowAllSettings() {
+            const show = localStorage.getItem('showAllSettings') === 'true';
+            const toggle = document.getElementById('showAllSettingsToggle');
+            if (toggle) toggle.checked = show;
+            toggleAllSettings(show);
+        }
+        
+        function toggleTabButtons(show) {
+            settingsModified = true;
+            localStorage.setItem('showTabButtons', show ? 'true' : 'false');
+            const tabBtns = document.getElementById('tabButtonsContainer');
+            if (tabBtns) {
+                tabBtns.style.display = show ? 'flex' : 'none';
+            }
+        }
+        
+        function loadTabButtons() {
+            const show = localStorage.getItem('showTabButtons') !== 'false'; // default true
+            const toggle = document.getElementById('showTabButtonsToggle');
+            if (toggle) toggle.checked = show;
+            toggleTabButtons(show);
         }
         
         function setBgMode(mode) {
@@ -7872,7 +7994,11 @@
             });
         }
         applyButtonStyle();
-        applyThemeToInlineStyles();
+        
+        // Defer theme inline styles for faster startup
+        requestAnimationFrame(function() {
+            applyThemeToInlineStyles();
+        });
         
         // Load background mode preference
         const savedBgMode = localStorage.getItem('bgMode');
@@ -7902,6 +8028,12 @@
         
         // Load debug mode state
         loadDebugModeState();
+        
+        // Load show all settings state
+        loadShowAllSettings();
+        
+        // Load theme blur/opacity settings
+        loadThemeBlurOpacity();
 
         // Initialize border radius on page load
         (function() {
@@ -8406,7 +8538,11 @@
         window.addEventListener('DOMContentLoaded', function() {
             // Re-apply button style on DOMContentLoaded to ensure CSS is fully calculated
             applyButtonStyle();
-            applyThemeToInlineStyles();
+            
+            // Defer theme inline styles for faster startup
+            requestAnimationFrame(function() {
+                applyThemeToInlineStyles();
+            });
 
             setTimeout(function() {
                 // Check if load event has already been fired
@@ -8422,7 +8558,10 @@
         // Final fallback: re-apply button style on window load to ensure persistence
         window.addEventListener('load', function() {
             applyButtonStyle();
-            applyThemeToInlineStyles();
+            // Use requestAnimationFrame to avoid blocking the main thread
+            requestAnimationFrame(function() {
+                applyThemeToInlineStyles();
+            });
         });
     </script>
     
