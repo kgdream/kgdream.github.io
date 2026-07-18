@@ -2042,11 +2042,7 @@
         body[data-elder-mode="true"] #clearInputBtn.visible {
             opacity: 1 !important;
         }
-        body[data-elder-mode="true"] #logoLink1,
-        body[data-elder-mode="true"] #logoLink2,
-        body[data-elder-mode="true"] #logoLink3 {
-            opacity: 0 !important;
-        }
+
 
         /* Settings section h3 titles with neumorphism - transition and hover animation */
         .settings-section h3 {
@@ -2413,23 +2409,12 @@
             <feGaussianBlur in="SourceGraphic" stdDeviation="0.5" result="blur"/>
         </filter>
     </svg>
-    <!-- Logo - top left corner, expands to show download links -->
+    <!-- Logo - top left corner, clicks to navigate to /d.html -->
     <div id="logoContainer" style="position: fixed; top: 20px; left: 20px; display: flex; align-items: center; gap: 8px; z-index: 9999; user-select: none;">
-        <button type="button" id="kgLogoBtn" onclick="toggleLogoExpand()" style="display: flex; align-items: center; gap: 8px; cursor: pointer; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; padding: 8px 14px; font-family: inherit; transition: box-shadow 0.3s ease, transform 0.2s ease;">
+        <button type="button" id="kgLogoBtn" onclick="goToDPage(this)" style="display: flex; align-items: center; gap: 8px; cursor: pointer; border: none; border-radius: var(--global-radius); background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; padding: 8px 14px; font-family: inherit; transition: box-shadow 0.3s ease, transform 0.2s ease;">
             <img src="favicon.png" alt="KG" style="width: 28px; height: 28px; object-fit: cover; border-radius: 50%;">
             <span id="kgLogoText" style="font-family: 'YouYuan', Arial, sans-serif; font-size: 18px; font-weight: bold; color: #333; letter-spacing: 2px;">千克之梦</span>
         </button>
-        <a id="logoLink1" href="https://1823501963.share.123pan.cn/123pan/jE4Fjv-oxiih" target="_blank" style="opacity: 0; transform: translateX(-20px) scale(0.5); pointer-events: none; transition: opacity 0.3s cubic-bezier(0.32,0.72,0,1), transform 0.3s cubic-bezier(0.32,0.72,0,1); display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: var(--global-radius); overflow: hidden; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0;">
-            <svg viewBox="0 0 36 36" style="width: 28px; height: 28px;"><rect width="36" height="36" rx="6" fill="#2B7CE9"/><text x="18" y="24" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="bold" fill="#fff">123</text></svg>
-        </a>
-        <a id="logoLink2" href="https://wwbpg.lanzouu.com/b0188grk4b" target="_blank" style="opacity: 0; transform: translateX(-20px) scale(0.5); pointer-events: none; transition: opacity 0.3s cubic-bezier(0.32,0.72,0,1) 0.05s, transform 0.3s cubic-bezier(0.32,0.72,0,1) 0.05s; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: var(--global-radius); overflow: hidden; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0;">
-            <svg viewBox="0 0 36 36" style="width: 28px; height: 28px;"><rect width="36" height="18" rx="6" fill="#FF6A00"/><rect y="18" width="36" height="18" fill="#fff"/></svg>
-        </a>
-        <a id="logoLink3" href="https://www.douyin.com/user/MS4wLjABAAAAKuLiTRBe5BKSuGOrXTm5aciE0xnqzf3h_dfdV1s_3tmDa9oXB9ZAvJSwfrCpZ-ta?from_tab_name=main" target="_blank" style="opacity: 0; transform: translateX(-20px) scale(0.5); pointer-events: none; transition: opacity 0.3s cubic-bezier(0.32,0.72,0,1) 0.1s, transform 0.3s cubic-bezier(0.32,0.72,0,1) 0.1s; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: var(--global-radius); overflow: hidden; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0;">
-            <svg viewBox="0 0 16 16" style="width: 22px; height: 22px;" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z" fill="#000000"/>
-            </svg>
-        </a>
     </div>
 
     <!-- 主内容区域（时钟+搜索框，壁纸模式下整体偏移） -->
@@ -2523,7 +2508,7 @@
     </div>
     
     <!-- Dock Bar -->
-    <div id="dockContainer" style="display: none; position: fixed; bottom: 20px; left: 0; width: 100%; justify-content: center; z-index: 1;">
+    <div id="dockContainer" style="display: none; position: fixed; bottom: 20px; left: 0; width: 100%; justify-content: center; z-index: 1; opacity: 0; transform: translateY(30px);">
         <div id="dockScrollArea" style="display: flex; gap: 8px; padding: 8px 16px; background: #F0F0F0; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; overflow-x: auto; overflow-y: hidden; max-width: calc(100% - 40px); -webkit-overflow-scrolling: touch; scrollbar-width: none;">
         </div>
     </div>
@@ -3795,7 +3780,15 @@
             } else if (mode === 'dock') {
                 if (dockContainer) {
                     dockContainer.style.display = 'flex';
+                    dockContainer.style.transition = 'none';
+                    dockContainer.style.opacity = '0';
+                    dockContainer.style.transform = 'translateY(30px)';
                     renderDock();
+                    setTimeout(function() {
+                        dockContainer.style.transition = 'opacity 0.5s cubic-bezier(0.32, 0.72, 0, 1), transform 0.5s cubic-bezier(0.32, 0.72, 0, 1)';
+                        dockContainer.style.opacity = '1';
+                        dockContainer.style.transform = 'translateY(0)';
+                    }, 50);
                 }
             }
             
@@ -5852,9 +5845,6 @@
             const focusZoomToggle = document.getElementById('focusZoomToggle');
             if (focusZoomToggle) focusZoomToggle.checked = false;
 
-            // Bug 20: Reset logo expand state
-            logoExpanded = false;
-
             // Remove no-animations class from html
             document.documentElement.classList.remove('no-animations');
 
@@ -5932,13 +5922,7 @@
             initWallpaperSources();
             renderCustomEngines();
 
-            // Bug 20: Collapse logo links
-            var link1 = document.getElementById('logoLink1');
-            var link2 = document.getElementById('logoLink2');
-            var link3 = document.getElementById('logoLink3');
-            [link1, link2, link3].forEach(function(l) {
-                if (l) { l.style.opacity = '0'; l.style.transform = 'translateX(-20px) scale(0.8)'; l.style.pointerEvents = 'none'; }
-            });
+
 
             // Update engine selector active state to default (Bing)
             document.querySelectorAll('.engine-item[data-url]').forEach(function(e) {
@@ -5970,7 +5954,6 @@
             currentEngineUrl = 'https://cn.bing.com/search?q=';
             currentWallpaperSourceId = 'bing-today';
             focusZoomEnabled = false;
-            logoExpanded = false;
             favorites = [];
             folders = [];
             document.documentElement.classList.remove('no-animations');
@@ -7322,7 +7305,7 @@
                         const rank = index + 1;
                         const rankColor = rank <= 3 ? '#FF6B6B' : '#999';
                         const delay = index * 0.05;
-                        html += `<div onclick="window.open('${item.url}', '_blank')" style="display: flex; align-items: flex-start; padding: 12px 15px; margin-bottom: 10px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; transition: transform 0.2s ease; opacity: 0; animation: fadeInUp 0.4s ease ${delay}s forwards;">
+                        html += `<div onclick="openNews('${item.url.replace(/'/g, "\\'")}', this)" style="display: flex; align-items: flex-start; padding: 12px 15px; margin-bottom: 10px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan', Arial, sans-serif; transition: transform 0.2s ease; opacity: 0; animation: fadeInUp 0.4s ease ${delay}s forwards;">
                             <span style="color: ${rankColor}; font-weight: bold; font-size: 18px; margin-right: 12px; min-width: 24px; text-align: center;">${rank}</span>
                             <div style="flex: 1;">
                                 <div style="font-size: 15px; font-weight: bold; line-height: 1.4; margin-bottom: 4px;">${item.title}</div>
@@ -8790,56 +8773,17 @@
             document.getElementById('drawingCanvas').style.display = 'none';
         }
         
-        // Logo expand/collapse toggle
-        let logoExpanded = false;
-        function toggleLogoExpand() {
-            logoExpanded = !logoExpanded;
-            var link1 = document.getElementById('logoLink1');
-            var link2 = document.getElementById('logoLink2');
-            var link3 = document.getElementById('logoLink3');
-            if (logoExpanded) {
-                if (link1) {
-                    link1.style.opacity = '1';
-                    link1.style.transform = 'translateX(0) scale(1)';
-                    link1.style.pointerEvents = 'auto';
-                }
-                if (link2) {
-                    link2.style.opacity = '1';
-                    link2.style.transform = 'translateX(0) scale(1)';
-                    link2.style.pointerEvents = 'auto';
-                }
-                if (link3) {
-                    link3.style.opacity = '1';
-                    link3.style.transform = 'translateX(0) scale(1)';
-                    link3.style.pointerEvents = 'auto';
-                }
-            } else {
-                if (link1) {
-                    link1.style.opacity = '0';
-                    link1.style.transform = 'translateX(-20px) scale(0.5)';
-                    link1.style.pointerEvents = 'none';
-                }
-                if (link2) {
-                    link2.style.opacity = '0';
-                    link2.style.transform = 'translateX(-20px) scale(0.5)';
-                    link2.style.pointerEvents = 'none';
-                }
-                if (link3) {
-                    link3.style.opacity = '0';
-                    link3.style.transform = 'translateX(-20px) scale(0.5)';
-                    link3.style.pointerEvents = 'none';
-                }
-            }
+        function goToDPage(element) {
+            playLaunchAnimation(element, '#F0F0F0', function() {
+                window.location.href = '/d.html';
+            });
         }
-
-        // Close logo expansion when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!logoExpanded) return;
-            var container = document.getElementById('logoContainer');
-            if (container && !container.contains(e.target)) {
-                toggleLogoExpand();
-            }
-        });
+        
+        function openNews(url, element) {
+            playLaunchAnimation(element, '#F0F0F0', function() {
+                window.open(url, '_blank');
+            });
+        }
         
         // Force trigger load event after page is ready
         // This fixes the issue where page keeps spinning due to blocked resources
