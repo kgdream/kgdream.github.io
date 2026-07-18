@@ -230,7 +230,7 @@
             align-items: center;
             justify-content: center;
             width: 56px;
-            height: 64px;
+            height: 56px;
             border: none;
             background: transparent;
             border-radius: 12px;
@@ -251,7 +251,6 @@
             justify-content: center;
             background: #F0F0F0;
             box-shadow: 4px 4px 8px #cccccc, -4px -4px 8px #ffffff;
-            margin-bottom: 4px;
         }
         .dock-initial {
             color: white;
@@ -265,14 +264,14 @@
             height: 100%;
             border-radius: 10px;
         }
-        .dock-name {
-            font-size: 10px;
-            color: #666;
-            font-family: 'YouYuan', Arial, sans-serif;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 50px;
+        
+        /* Dark mode dock styles */
+        body[data-theme="dark"] .dock-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        body[data-theme="dark"] .dock-icon {
+            background: #3a3a3a;
+            box-shadow: 4px 4px 8px #2a2a2a, -4px -4px 8px #4a4a4a;
         }
 
         .search-box.has-text {
@@ -773,6 +772,8 @@
         /* Dark mode styles - Neumorphism Style */
         body[data-theme="dark"] {
             background-color: #343434;
+            color-scheme: dark;
+            -webkit-color-scheme: dark;
         }
 
         body[data-theme="dark"] .search-box {
@@ -3365,7 +3366,6 @@
                 <div style="font-family: 'YouYuan'; font-size: 14px; line-height: 1.8;">
                     <p><strong>产品名称：</strong>千克之梦 (HelloKG)</p>
                     <p><strong>版本号：</strong>v2.1.0</p>
-                    <p><strong>lite版：</strong>https:/当前域名/lite.html</p>
                     <p><strong>联系方式：</strong></p>
                     <ul style="margin: 10px 0; padding-left: 20px;">
                         <li>抖音：bblpro</li>
@@ -6403,18 +6403,19 @@
                                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                             </svg>
                         </div>
-                        <div class="dock-name">收藏</div>
                     </button>`;
             
             dockItems.forEach((item) => {
                 const initials = getInitials(item.name);
                 const color = getUrlColor(item.url);
+                const faviconUrl = getFavicon(item.url);
+                const showFavIcons = document.getElementById('showFavIconsToggle')?.checked !== false;
                 
                 html += `<button class="dock-item" onclick="openDockUrl('${item.url.replace(/'/g, "\\'")}', this)" title="${item.name}">
                             <div class="dock-icon">
-                                <div class="dock-initial" style="background-color: ${color};">${initials}</div>
+                                ${showFavIcons && faviconUrl ? `<img src="${faviconUrl}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" style="display: block; width: 100%; height: 100%; object-fit: contain; border-radius: 10px;" alt="">` : ''}
+                                <div class="dock-initial" style="background-color: ${color}; display: ${(!showFavIcons || !faviconUrl) ? 'flex' : 'none'};">${initials}</div>
                             </div>
-                            <div class="dock-name">${item.name}</div>
                         </button>`;
             });
             
@@ -6501,7 +6502,7 @@
                         </button>
                     </div>
                     <div class="fav-icon">
-                        ${showFavIcons && faviconUrl ? `<img data-src="${faviconUrl}" onload="this.style.display='block'; this.nextElementSibling.style.display='none'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" style="display: none;" alt="">` : ''}
+                        ${showFavIcons && faviconUrl ? `<img src="${faviconUrl}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" style="display: block; width: 100%; height: 100%; object-fit: contain; border-radius: var(--global-radius);" alt="">` : ''}
                         <div class="fav-initial" style="background-color: ${color}; display: ${(!showFavIcons || !faviconUrl) ? 'flex' : 'none'};">${initials}</div>
                     </div>
                     <div class="fav-name">${item.name}</div>
@@ -6763,7 +6764,7 @@
                 html += `<div class="fav-item" draggable="false" data-index="${originalIndex}" onclick="openFavoriteUrl('${safeUrl}', this)">
                     ${actionsHtml}
                     <div class="fav-icon">
-                        ${showFavIcons && faviconUrl ? `<img data-src="${faviconUrl}" onload="this.style.display='block'; this.nextElementSibling.style.display='none'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" style="display: none;" alt="">` : ''}
+                        ${showFavIcons && faviconUrl ? `<img src="${faviconUrl}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" style="display: block; width: 100%; height: 100%; object-fit: contain; border-radius: var(--global-radius);" alt="">` : ''}
                         <div class="fav-initial" style="background-color: ${color}; display: ${(!showFavIcons || !faviconUrl) ? 'flex' : 'none'};">${initials}</div>
                     </div>
                     <div class="fav-name">${fav.name}</div>
@@ -7266,7 +7267,6 @@
             let swiping = false;
 
             modal.addEventListener('touchstart', function(e) {
-                // Only track if not scrolling vertically
                 startX = e.touches[0].clientX;
                 startY = e.touches[0].clientY;
                 startTime = Date.now();
@@ -7282,13 +7282,10 @@
                 const dy = endY - startY;
                 const dt = Date.now() - startTime;
 
-                // Only trigger if horizontal swipe > vertical and fast enough
                 if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5 && dt < 500) {
                     if (dx < 0 && currentTabIndex < tabOrder.length - 1) {
-                        // Swipe left -> next tab
                         switchTab(currentTabIndex + 1, 'left');
                     } else if (dx > 0 && currentTabIndex > 0) {
-                        // Swipe right -> previous tab
                         switchTab(currentTabIndex - 1, 'right');
                     }
                 }
@@ -7621,6 +7618,10 @@
             applyThemeToInlineStyles();
             // Re-apply button style theme (glass needs different values for dark/light)
             applyThemeDirectly();
+            
+            const isDark = document.body.getAttribute('data-theme') === 'dark';
+            document.body.style.setProperty('color-scheme', isDark ? 'dark' : 'light');
+            document.body.style.setProperty('-webkit-color-scheme', isDark ? 'dark' : 'light');
         }
         
         // Listen for system theme changes
