@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>软件下载</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            background: #ffffff;
+            font-family: -apple-system, "Helvetica Neue", Roboto, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+            background: #ffffff;
+            padding: 12px;
+            gap: 10px;
+            overflow: hidden;
+        }
+
+        /* 每个面板：毛玻璃 + 圆角 + 彩色边框 */
+        .panel {
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(32px) saturate(180%);
+            -webkit-backdrop-filter: blur(32px) saturate(180%);
+            border-radius: 24px;
+            border-width: 2px;
+            border-style: solid;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02), 0 1px 4px rgba(0, 0, 0, 0.01), inset 0 0.5px 0 rgba(255, 255, 255, 0.8);
+            overflow: hidden;
+            transition: height 0.45s cubic-bezier(0.32, 0.94, 0.6, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+            height: 64px;
+            /* 默认折叠高度（头部） */
+            flex-shrink: 0;
+        }
+
+        .panel.expanded {
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.02), inset 0 0.5px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        /* 各面板边框颜色 */
+        .panel-lanzou {
+            border-color: #f57c00;
+        }
+        .panel-douyin {
+            border-color: #e60000;
+        }
+        .panel-123pan {
+            border-color: #1976d2;
+        }
+
+        /* 面板头部 */
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            flex-shrink: 0;
+            min-height: 64px;
+            transition: background 0.2s ease;
+            border-radius: 24px 24px 0 0;
+        }
+        .panel-header:hover {
+            background: rgba(0, 0, 0, 0.01);
+        }
+
+        .panel-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #1c1c1e;
+            letter-spacing: 0.3px;
+        }
+        .panel-title .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .panel-lanzou .dot {
+            background: #f57c00;
+        }
+        .panel-douyin .dot {
+            background: #e60000;
+        }
+        .panel-123pan .dot {
+            background: #1976d2;
+        }
+
+        .panel-title .label {
+            font-size: 13px;
+            font-weight: 400;
+            color: #8e8e93;
+            margin-left: 2px;
+        }
+        .panel-title .sub-label {
+            font-size: 12px;
+            font-weight: 400;
+            color: #8e8e93;
+            margin-left: 6px;
+            background: rgba(0, 0, 0, 0.04);
+            padding: 2px 10px;
+            border-radius: 12px;
+        }
+
+        /* 指示箭头 */
+        .panel-indicator {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s cubic-bezier(0.32, 0.94, 0.6, 1);
+            flex-shrink: 0;
+            color: #8e8e93;
+        }
+        .panel.expanded .panel-indicator {
+            transform: rotate(180deg);
+        }
+        .panel-indicator svg {
+            width: 20px;
+            height: 20px;
+            stroke: #8e8e93;
+            fill: none;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* 面板内容区 */
+        .panel-body {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            background: rgba(255, 255, 255, 0.2);
+            border-top: 0.5px solid rgba(0, 0, 0, 0.03);
+            border-radius: 0 0 24px 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* iframe 容器 */
+        .panel-body .iframe-wrap {
+            flex: 1;
+            position: relative;
+            background: #fafafa;
+            border-radius: 0 0 24px 24px;
+            overflow: hidden;
+        }
+        .panel-body .iframe-wrap iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            background: #ffffff;
+        }
+
+        /* 抖音面板：中间显示 logo 跳转 */
+        .panel-douyin .panel-body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 0 0 24px 24px;
+        }
+        .panel-douyin .panel-body .douyin-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            gap: 10px;
+            padding: 20px 32px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            transition: transform 0.2s ease, background 0.2s ease;
+            width: 100%;
+            max-width: 300px;
+        }
+        .panel-douyin .panel-body .douyin-link:active {
+            transform: scale(0.96);
+            background: rgba(255, 255, 255, 0.5);
+        }
+        .panel-douyin .panel-body .douyin-link img {
+            width: 56px;
+            height: 56px;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+        .panel-douyin .panel-body .douyin-link span {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1c1c1e;
+            letter-spacing: 0.5px;
+        }
+        .panel-douyin .panel-body .douyin-link .sub-hint {
+            font-size: 11px;
+            font-weight: 400;
+            color: #8e8e93;
+            letter-spacing: 0.3px;
+        }
+
+        /* 小屏手机 */
+        @media (max-width: 480px) {
+            .container {
+                padding: 6px;
+                gap: 6px;
+            }
+            .panel {
+                height: 56px;
+                border-radius: 20px;
+            }
+            .panel-header {
+                padding: 12px 16px;
+                min-height: 56px;
+            }
+            .panel-title {
+                font-size: 14px;
+                gap: 10px;
+            }
+            .panel-title .label {
+                font-size: 11px;
+            }
+            .panel-title .sub-label {
+                font-size: 10px;
+                padding: 1px 8px;
+            }
+            .panel-indicator svg {
+                width: 18px;
+                height: 18px;
+            }
+            .panel-douyin .panel-body {
+                padding: 16px;
+            }
+            .panel-douyin .panel-body .douyin-link img {
+                width: 44px;
+                height: 44px;
+            }
+            .panel-douyin .panel-body .douyin-link span {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .panel-douyin .panel-body .douyin-link {
+                padding: 12px 20px;
+                max-width: 200px;
+            }
+            .panel-douyin .panel-body .douyin-link img {
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        /* 横屏适配 */
+        @media (orientation: landscape) and (min-height: 500px) {
+            .container {
+                padding: 16px 24px;
+                gap: 12px;
+            }
+            .panel {
+                height: 72px;
+            }
+            .panel-header {
+                min-height: 72px;
+                padding: 18px 24px;
+            }
+            .panel-douyin .panel-body .douyin-link img {
+                width: 64px;
+                height: 64px;
+            }
+        }
+
+        /* 滚动条隐藏 */
+        ::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+
+        <!-- 面板一：蓝奏云 (橙色) -->
+        <div class="panel panel-lanzou" id="panelLanzou">
+            <div class="panel-header" onclick="togglePanel('panelLanzou')">
+                <div class="panel-title">
+                    <span class="dot"></span>
+                    蓝奏云
+                    <span class="label">lanzouu.com</span>
+                    <span class="sub-label">提取码 kgdream</span>
+                </div>
+                <div class="panel-indicator">
+                    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9" /></svg>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="iframe-wrap">
+                    <iframe src="https://wwbpg.lanzouu.com/b0188grk4b" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- 面板二：抖音 (红色) -->
+        <div class="panel panel-douyin" id="panelDouyin">
+            <div class="panel-header" onclick="togglePanel('panelDouyin')">
+                <div class="panel-title">
+                    <span class="dot"></span>
+                    抖音
+                    <span class="label">douyin.com</span>
+                </div>
+                <div class="panel-indicator">
+                    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9" /></svg>
+                </div>
+            </div>
+            <div class="panel-body">
+                <a href="https://m.douyin.com/share/user/MS4wLjABAAAAKuLiTRBe5BKSuGOrXTm5aciE0xnqzf3h_dfdV1s_3tmDa9oXB9ZAvJSwfrCpZ-ta" target="_blank" rel="noopener noreferrer" class="douyin-link">
+                    <img src="https://www.douyin.com/favicon.ico" alt="抖音" loading="lazy" />
+                    <span>前往抖音</span>
+                    <span class="sub-hint">点击跳转</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- 面板三：123云盘 (蓝色) -->
+        <div class="panel panel-123pan" id="panel123pan">
+            <div class="panel-header" onclick="togglePanel('panel123pan')">
+                <div class="panel-title">
+                    <span class="dot"></span>
+                    123云盘
+                    <span class="label">123pan.cn</span>
+                </div>
+                <div class="panel-indicator">
+                    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9" /></svg>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="iframe-wrap">
+                    <iframe src="https://1823501963.mshare.123pan.cn/123pan/jE4Fjv-oxiih" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            const container = document.getElementById('container');
+            const panels = document.querySelectorAll('.panel');
+            const HEADER_HEIGHT = 64; // 折叠时高度（头部高度），媒体查询里会变，但为了方便我们用 JS 动态获取
+
+            // 获取面板头部实际高度（折叠时的高度）
+            function getCollapsedHeight(panel) {
+                // 从 header 的高度计算，但 header 有 padding，我们直接用 panel 的当前高度，但折叠时 panel 高度等于 header 高度
+                // 更准确：读取 header 的 offsetHeight，但 header 可能因 padding 变化，我们直接取 panel 当前高度（折叠状态）
+                // 但为了动态适应，我们统一用 header 的 offsetHeight + border
+                const header = panel.querySelector('.panel-header');
+                if (header) {
+                    return header.offsetHeight + 2; // 加上边框
+                }
+                return 64;
+            }
+
+            // 计算所有面板折叠高度总和 + 间距
+            function getTotalCollapsedHeight() {
+                let total = 0;
+                panels.forEach(p => {
+                    total += getCollapsedHeight(p);
+                });
+                // 加上 gap (10px * 2)
+                const gapTotal = (panels.length - 1) * 10;
+                return total + gapTotal;
+            }
+
+            // 更新所有面板高度
+            function updateHeights() {
+                const containerHeight = container.clientHeight;
+                const paddingTotal = 24; // padding 上下各 12px
+                const availableHeight = containerHeight - paddingTotal;
+
+                // 获取所有面板当前折叠高度总和
+                let collapsedTotal = 0;
+                const collapsedHeights = [];
+                panels.forEach(p => {
+                    const h = getCollapsedHeight(p);
+                    collapsedHeights.push(h);
+                    collapsedTotal += h;
+                });
+                const gapTotal = (panels.length - 1) * 10;
+                const fixedTotal = collapsedTotal + gapTotal;
+
+                // 找出展开的面板
+                let expandedPanel = null;
+                panels.forEach(p => {
+                    if (p.classList.contains('expanded')) {
+                        expandedPanel = p;
+                    }
+                });
+
+                // 计算剩余高度
+                const remaining = availableHeight - fixedTotal;
+
+                if (expandedPanel) {
+                    // 展开面板的高度 = 其折叠高度 + remaining (确保 >= 折叠高度)
+                    const expandedIndex = Array.from(panels).indexOf(expandedPanel);
+                    const collapsedH = collapsedHeights[expandedIndex];
+                    let newHeight = collapsedH + Math.max(remaining, 0);
+                    // 设置高度
+                    expandedPanel.style.height = newHeight + 'px';
+                    // 其他面板保持折叠高度
+                    panels.forEach((p, idx) => {
+                        if (p !== expandedPanel) {
+                            p.style.height = collapsedHeights[idx] + 'px';
+                        }
+                    });
+                } else {
+                    // 没有展开，全部折叠
+                    panels.forEach((p, idx) => {
+                        p.style.height = collapsedHeights[idx] + 'px';
+                    });
+                }
+            }
+
+            // 切换面板
+            window.togglePanel = function(panelId) {
+                const target = document.getElementById(panelId);
+                if (!target) return;
+
+                const isExpanded = target.classList.contains('expanded');
+
+                // 如果已展开，则折叠
+                if (isExpanded) {
+                    target.classList.remove('expanded');
+                } else {
+                    // 折叠其他所有面板
+                    panels.forEach(p => {
+                        p.classList.remove('expanded');
+                    });
+                    target.classList.add('expanded');
+                }
+
+                // 更新高度
+                updateHeights();
+            };
+
+            // 窗口 resize 时重新计算
+            let resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(updateHeights, 100);
+            });
+
+            // 初始默认展开第一个（蓝奏云）
+            setTimeout(function() {
+                const firstPanel = document.getElementById('panelLanzou');
+                if (firstPanel) {
+                    // 添加 expanded 类
+                    panels.forEach(p => p.classList.remove('expanded'));
+                    firstPanel.classList.add('expanded');
+                    // 强制更新高度
+                    updateHeights();
+                }
+            }, 50);
+
+            // 额外：在字体加载或内容变化后重新计算
+            window.addEventListener('load', function() {
+                setTimeout(updateHeights, 100);
+            });
+
+            // 监听 iframe 加载完成可能会改变布局，但一般不影响
+            // 暴露 updateHeights 以便调试
+            window.updateHeights = updateHeights;
+
+            // 处理点击面板内部但不要触发折叠（比如 iframe 内点击）
+            document.querySelectorAll('.panel-body').forEach(function(body) {
+                body.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            });
+
+        })();
+    </script>
+</body>
+</html> 
