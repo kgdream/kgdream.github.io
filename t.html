@@ -2,8 +2,383 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
-  <link rel="stylesheet" href="style.css" />
   <title>GNU通用公共许可协议+kgdream软件许可协议（附加条款）</title>
+  <style>
+:root {
+  --primary-color: #2563eb;
+  --primary-light: #3b82f6;
+  --primary-dark: #1d4ed8;
+  --secondary-color: #64748b;
+  --bg-color: #f8fafc;
+  --card-bg: #ffffff;
+  --border-color: #e2e8f0;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  background: var(--bg-color);
+  min-height: 100vh;
+}
+
+#doc {
+  max-width: 860px;
+  margin: 32px auto;
+  padding: 48px 56px;
+  background: var(--card-bg);
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-lg);
+  position: relative;
+}
+
+#doc::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-dark), var(--primary-color), var(--primary-light));
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+h1 {
+  color: var(--text-primary);
+  font-size: 24px;
+  font-weight: 700;
+  padding-bottom: 16px;
+  margin-bottom: var(--spacing-xl);
+  border-bottom: 3px solid var(--border-color);
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+h2 {
+  color: var(--text-primary);
+  font-size: 19px;
+  font-weight: 600;
+  margin-top: var(--spacing-xl);
+  margin-bottom: var(--spacing-md);
+  padding-left: var(--spacing-md);
+  border-left: 4px solid var(--primary-color);
+  background: linear-gradient(90deg, rgba(37, 99, 235, 0.06), transparent);
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+p {
+  margin-bottom: var(--spacing-md);
+  text-align: justify;
+  text-indent: 2em;
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 2;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+p.no-indent {
+  text-indent: 0;
+}
+
+#doc h1, #doc h2, #doc p {
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+#doc h1.visible, #doc h2.visible, #doc p.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#toc {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: var(--spacing-xl) var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+
+#toc h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid var(--border-color);
+  position: relative;
+}
+
+#toc h3::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 45px;
+  height: 2px;
+  background: var(--primary-color);
+}
+
+#toc ul {
+  list-style: none;
+  columns: 2;
+  gap: var(--spacing-md);
+}
+
+#toc li {
+  margin-bottom: var(--spacing-sm);
+  position: relative;
+}
+
+#toc li::before {
+  content: '›';
+  color: var(--primary-light);
+  margin-right: var(--spacing-sm);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+#toc a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.25s ease;
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+}
+
+#toc a:hover {
+  color: #ffffff;
+  background: var(--primary-color);
+  padding-left: 14px;
+}
+
+.section {
+  scroll-margin-top: var(--spacing-lg);
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+#back-to-top {
+  position: fixed;
+  bottom: var(--spacing-xl);
+  right: var(--spacing-xl);
+  width: 48px;
+  height: 48px;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35);
+  z-index: 1000;
+}
+
+#back-to-top:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+}
+
+#back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (max-width: 768px) {
+  #doc {
+    padding: var(--spacing-lg) var(--spacing-md);
+    margin: var(--spacing-md);
+    border-radius: var(--radius-md);
+  }
+  
+  h1 {
+    font-size: 21px;
+  }
+  
+  h2 {
+    font-size: 18px;
+    padding-left: var(--spacing-sm);
+  }
+  
+  #toc {
+    padding: var(--spacing-lg);
+  }
+  
+  #toc ul {
+    columns: 1;
+  }
+  
+  #toc a {
+    font-size: 13px;
+  }
+  
+  p {
+    font-size: 14px;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+#gpl-terms p[id^="gpl-term"] {
+  text-indent: 0;
+  font-size: 16px;
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-sm);
+  padding-left: var(--spacing-sm);
+  border-left: 3px solid var(--text-muted);
+}
+
+#gpl-terms p[id^="gpl-term"] strong {
+  color: var(--text-primary);
+}
+
+#context-menu {
+  position: fixed;
+  background: #ffffff;
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+  border: 1px solid var(--border-color);
+  padding: var(--spacing-xs);
+  min-width: 160px;
+  z-index: 9999;
+  display: none;
+}
+
+#context-menu.show {
+  display: block;
+  animation: menuFadeIn 0.15s ease-out;
+}
+
+@keyframes menuFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+#context-menu button {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s ease;
+}
+
+#context-menu button:hover {
+  background: rgba(37, 99, 235, 0.08);
+  color: var(--primary-color);
+}
+
+#context-menu .divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: var(--spacing-xs) 0;
+}
+
+.content-section {
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-lg);
+  background: linear-gradient(135deg, #fafbfc 0%, #f5f7fa 100%);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.content-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--primary-color), var(--primary-light));
+}
+
+.content-section h1 {
+  margin-left: var(--spacing-sm);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid var(--border-color);
+  margin-bottom: var(--spacing-lg);
+}
+
+.content-section p {
+  margin-bottom: var(--spacing-md);
+  padding-left: var(--spacing-sm);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.section-title::before {
+  content: '';
+  width: 4px;
+  height: 24px;
+  background: var(--primary-color);
+  border-radius: 2px;
+}
+
+#gpl-section {
+  padding-top: var(--spacing-xl);
+}
+
+#gpl-section h1 {
+  text-align: center;
+  margin-left: 0;
+}
+  </style>
 </head>
 <body>
 
@@ -15,9 +390,8 @@
 本附加条款是《GNU通用公共许可证》（GPL-3.0）不可分割的组成部分。一旦本附加条款与GPL正文发生冲突，以本附加条款为准。分发、修改或使用本软件即代表您无条件接受本附加条款的全部内容。
 </p>
 
-<!-- 导航目录 -->
 <div id="toc">
-  <h3>📋 条款目录</h3>
+  <h3>kgdream软件许可协议（附加条款）</h3>
   <ul>
     <li><a href="#article1">第一条 定义与范围</a></li>
     <li><a href="#article2">第二条 修改与更名规则</a></li>
@@ -26,15 +400,33 @@
     <li><a href="#article5">第五条 违约自动终止条款</a></li>
     <li><a href="#article6">第六条 管辖与争议解决</a></li>
     <li><a href="#article7">第七条 附加条款生效</a></li>
-    <li><a href="#gpl">GNU通用公共许可协议</a></li>
+  </ul>
+  <h3>GNU通用公共许可协议</h3>
+  <ul>
     <li><a href="#gpl-intro">引言</a></li>
-    <li><a href="#gpl-terms">术语和条件</a></li>
+    <li><a href="#gpl-term-0">〇、定义</a></li>
+    <li><a href="#gpl-term-1">一、源码</a></li>
+    <li><a href="#gpl-term-2">二、基本许可</a></li>
+    <li><a href="#gpl-term-3">三、保护用户权益</a></li>
+    <li><a href="#gpl-term-4">四、转发完整副本</a></li>
+    <li><a href="#gpl-term-5">五、转发修改过的源码</a></li>
+    <li><a href="#gpl-term-6">六、以非源码形式转发</a></li>
+    <li><a href="#gpl-term-7">七、附加条款</a></li>
+    <li><a href="#gpl-term-8">八、终止授权</a></li>
+    <li><a href="#gpl-term-9">九、持有副本无需接受协议</a></li>
+    <li><a href="#gpl-term-10">十、对下游接收者的自动授权</a></li>
+    <li><a href="#gpl-term-11">十一、专利</a></li>
+    <li><a href="#gpl-term-12">十二、不得牺牲他人的自由</a></li>
+    <li><a href="#gpl-term-13">十三、和GNU Affero一起使用</a></li>
+    <li><a href="#gpl-term-14">十四、本协议的修订版</a></li>
+    <li><a href="#gpl-term-15">十五、不提供品质担保</a></li>
+    <li><a href="#gpl-term-16">十六、责任范围</a></li>
+    <li><a href="#gpl-term-17">十七、第十五条和第十六条的解释</a></li>
     <li><a href="#gpl-appendix">附录</a></li>
   </ul>
 </div>
 
-<!-- 附加条款 -->
-<div id="article1" class="section">
+<div id="article1" class="section content-section">
 <h1>【第一条 定义与范围】</h1>
 <p>
 1.1 “本软件”指由原始作者 kgdream（以下简称“原始作者”或“作者”）发布的原始计算机程序及其全部源代码、文档、资源文件及相关数据。
@@ -56,7 +448,7 @@
 </p>
 </div>
 
-<div id="article2" class="section">
+<div id="article2" class="section content-section">
 <h1>【第二条 关于修改与更名的完整规则】</h1>
 <p>
 2.1 修改完全自由
@@ -85,7 +477,7 @@
 </p>
 </div>
 
-<div id="article3" class="section">
+<div id="article3" class="section content-section">
 <h1>【第三条 关于署名与声明的豁免】</h1>
 <p>
 3.1 原始作者在此明确、自愿、不可撤销地放弃要求任何修改版本（定义见2.1条）的作者或分发者在任何位置（包括但不限于启动界面、关于对话框、README.md文件、下载页面、源代码文件头部注释）标注原始作者名称、项目名称、网站地址或任何形式署名信息的权利。
@@ -96,7 +488,7 @@
 </p>
 </div>
 
-<div id="article4" class="section">
+<div id="article4" class="section content-section">
 <h1>【第四条 关于“未修改”的证明责任】</h1>
 <p>
 4.1 若原始作者主张某分发者实施了换皮行为（即违反2.2条），原始作者负有以下初步举证责任：
@@ -110,7 +502,7 @@
 </p>
 </div>
 
-<div id="article5" class="section">
+<div id="article5" class="section content-section">
 <h1>【第五条 违约自动终止条款】</h1>
 <p>
 5.1 任何人若违反本附加条款第2.2条（即实施换皮行为），其依据GPL-3.0协议及本附加条款获得的所有授权将立即自动终止，无需原始作者另行通知。
@@ -121,7 +513,7 @@
 </p>
 </div>
 
-<div id="article6" class="section">
+<div id="article6" class="section content-section">
 <h1>【第六条 管辖、法律适用与争议解决】</h1>
 <p>
 6.1 本附加条款的解释、效力、履行及争议解决均适用中华人民共和国法律。
@@ -134,7 +526,7 @@
 </p>
 </div>
 
-<div id="article7" class="section">
+<div id="article7" class="section content-section">
 <h1>【第七条 附加条款的生效与不可分割性】</h1>
 <p>
 7.1 本附加条款自原始作者公开发布本软件之日（2026年7月24日）起生效。
@@ -150,7 +542,6 @@
 </p>
 </div>
 
-<!-- GNU通用公共许可协议 -->
 <div id="gpl" class="section">
 <h1>GNU通用公共许可协议</h1>
 
@@ -189,9 +580,9 @@ https://www.gnu.org/licenses/translations.html</a>.</p>
 </p>
 </div>
 
-<div id="gpl-terms" class="section">
+<div id="gpl-terms" class="section content-section">
 <h2>【关于复制、分发和修改的术语和条件】</h2>
-<p>〇、定义</p>
+<p id="gpl-term-0"><strong>〇、定义</strong></p>
 <p>
 　　“本协议”指GNU通用公共许可协议第三版。<br>
 　　“版权”也指适用于诸如半导体掩模的其他类型作品的类似法律。<br>
@@ -202,7 +593,7 @@ https://www.gnu.org/licenses/translations.html</a>.</p>
 　　“转发”作品指让他方能够制作或者接收副本的行为。仅仅通过计算机网络和用户交互，没有传输副本，则不算转发。<br>
 　　一个显示“适当的法律声明”的交互式用户界面应包括一个便捷而醒目的可视化特性：(1)显示适当的版权声明；(2)告知用户没有品质担保（提供了品质担保的情况除外），许可获得者可以在本协议约束下转发该作品，及查看本协议副本的途径。如果该界面提供一个命令列表，如菜单，其表项应符合上述规范。
 </p>
-<p>一、源码</p>
+<p id="gpl-term-1"><strong>一、源码</strong></p>
 <p>
 　　作品的源码指其可修改的首选形式，目标码指所有其他形式。<br>
 　　“标准接口”指标准化组织定义的官方标准中的接口，或针为某种编程语言设定的接口中为开发者广泛使用的接口。<br>
@@ -211,23 +602,23 @@ https://www.gnu.org/licenses/translations.html</a>.</p>
 　　相应的源码不必包含那些用户可以通过源码其他部分自动生成的内容。<br>
 　　源码形式作品的相应源码即其本身。
 </p>
-<p>二、基本许可</p>
+<p id="gpl-term-2"><strong>二、基本许可</strong></p>
 <p>
 　　本协议的一切授权都是对本程序的版权而言的，并且在所述条件都满足时不可撤销。本协议明确批准你不受限制地运行本程序的未修改版本。受保护作品的运行输出，仅当其内容构成一个受保护作品时，才会为本协议所约束。如版权法所赋予，本协议承认你正当使用或与之等价的权利。<br>
 　　只要你获得的许可仍有效，你可以制作、运行和传播那些你并不转发的受保护作品。只要你遵守本协议中关于转发你不占有版权的材料的条款，你可以向他人转发，仅仅以求对方为你做定制或向你提供运行这些作品的工具。那些为你制作或运行这些受保护作品的人，应该在你的指引和控制下，谨代表你工作，即禁止他们在双方关系之外制作任何你提供的受版权保护材料的副本。<br>
 　　仅当满足后文所述条件时，其他各种情况下的转发才是允许的。不允许再授权行为，而第十条的存在使再授权变得没有必要。
 </p>
-<p>三、保护用户的合法权益免受反破解法限制</p>
+<p id="gpl-term-3"><strong>三、保护用户的合法权益免受反破解法限制</strong></p>
 <p>
 　　在任何满足1996年12月20日通过的WIPO版权条约第11章要求的法律，或类似的禁止或限制技术手段破解的法律下，受保护作品不应该视为有效技术手段的一部分。<br>
 　　当你转发一个受保护作品时，你将失去任何通过法律途径限制技术手段破解的权力，乃至于通过行使本协议所予权利实现的破解。你即已表明无心通过限制用户操作或修改受保护作品来确保你或第三方关于禁止技术手段破解的法定权利。
 </p>
-<p>四、转发完整副本</p>
+<p id="gpl-term-4"><strong>四、转发完整副本</strong></p>
 <p>
 　　你可以通过任何媒介发布你接收到的本程序的完整源码副本，但要做到：为每一个副本醒目而恰当地发布版权；完整地保留关于本协议及按第七条加入的非许可性条款；完整地保留免责声明；给接收者附上一份本协议的副本。<br>
 　　你可以免费或收费转发，也可以选择提供技术支持或品质担保以换取收入。
 </p>
-<p>五、转发修改过的源码版本</p>
+<p id="gpl-term-5"><strong>五、转发修改过的源码版本</strong></p>
 <p>
 　　你可以以源码形式转发基于本程序的作品或修改的内容，除满足第四条外还需要满足以下几点要求：<br>
 　　a)该作品必须带有醒目的修改声明及相应的日期。<br>
@@ -236,7 +627,7 @@ https://www.gnu.org/licenses/translations.html</a>.</p>
 　　d)如果该作品有交互式用户界面，则其必须显示适当的法律声明。然而，当本程序有交互式用户界面却不显示适当的法律声明时，你的作品也不必。<br>
 一个在存储或分发媒介上的受保护作品和其他分离的单体作品的联合作品，在既不是该受保护作品的自然扩展，也不以构筑更大的程序为目的，并且自身及其产生的版权并非用于限制单体作品给予联合作品用户的访问及其他合法权利时，称为“聚合体”。在聚合作品中包含受保护作品并不会使本协议影响聚合作品的其他部分。
 </p>
-<p>六、以非源码形式转发</p>
+<p id="gpl-term-6"><strong>六、以非源码形式转发</strong></p>
 <p>
 　　你可以如第四条和第五条所述那样以目标码形式转发受保护作品，同时在本协议规范下以如下方式之一转发机器可读的对应源码：<br>
 　　a)目标码通过实体产品（涵盖某种实体分发媒介）转发时，通过常用于软件交换的耐用型实体媒介随同转发相应的源码。<br>
@@ -250,7 +641,7 @@ https://www.gnu.org/licenses/translations.html</a>.</p>
 　　要求提供安装信息并不要求为修改或安装的作品，以及其载体产品继续提供技术支持、品质担保和升级。当修改本身对网络运行有实质上的负面影响，或违背了网络通信协议和规则时，可以拒绝其联网。<br>
 　　根据本条发布的源码及安装信息，必须以公共的文件格式（并且存在可用的空开源码的处理工具）存在，同时不得对解压、阅读和复制设置任何密码。
 </p>
-<p>七、附加条款</p>
+<p id="gpl-term-7"><strong>七、附加条款</strong></p>
 <p>
 　　“附加许可”用于补充本协议，以允许一些例外情况。合乎适用法律的对整个程序适用的附加许可，应该被视为本协议的内容。如果附加许可作用于程序的某部分，则该部分受此附加许可约束，而其他部分不受其影响。<br>
 　　当你转发本程序时，你可以选择性删除副本或其部分的附加条款。（附加条款可以写明在某些情况下要求你修改时删除该条款。）在你拥有或可授予恰当版权许可的受保护作品中，你可以在你添加的材料上附加许可。<br>
@@ -265,24 +656,24 @@ https://www.gnu.org/licenses/translations.html</a>.</p>
 　　如果你根据本条向受保护作品添加了调控，你必须在相关的源文件中加入对应的声明，或者指出哪里可以找到它们。<br>
 　　附加条款，不管是许可性的还是非许可性的，可以以独立的书面协议出现，也可以声明为例外情况，两种做法都可以实现上述要求。
 </p>
-<p>八、终止授权</p>
+<p id="gpl-term-8"><strong>八、终止授权</strong></p>
 <p>
 　　除非在本协议明确授权下，你不得传播或修改受保护作品。其他任何传播或修改受保护作品的企图都是无效的，并将自动中止你通过本协议获得的权利（包括第十一条第3段中提到的专利授权）。<br>
 　　然而，当你不再违反本协议时，你从特定版权持有人处获得的授权恢复：(1)暂时恢复，直到版权持有人明确终止；(2)永久恢复，如果版权持有人没能在60天内以合理的方式指出你的侵权行为。<br>
 　　再者，如果你第一次收到了特定版权持有人关于你违反本协议（对任意作品）的通告，且在收到通告后30天内改正，那你可以继续享此有授权。<br>
 　　当你享有的权利如本条所述被中止时，已经从你那根据本协议获得授权的他方的权利不会因此中止。在你的权利恢复之前，你没有资格凭第十条获得同一材料的授权。
 </p>
-<p>九、持有副本无需接受协议</p>
+<p id="gpl-term-9"><strong>九、持有副本无需接受协议</strong></p>
 <p>
 　　你不必为接收或运行本程序而接受本协议。类似的，仅仅因点对点传输接收到副本引发的对受保护作品的辅助性传播，并不要求接受本协议。但是，除本协议外没有什么可以授权你传播或修改任何受保护作品。如果你不接受本协议，这些行为就侵犯了版权。因此，一旦修改和传播一个受保护作品，就表明你接受本协议。
 </p>
-<p>十、对下游接收者的自动授权</p>
+<p id="gpl-term-10"><strong>十、对下游接收者的自动授权</strong></p>
 <p>
 　　每当你转发一个受保护作品，其接收者自动获得来自初始授权人的授权，依照本协议可以运行、修改和传播此作。你没有要求第三方遵守该协议的义务。<br>
 　　“实体事务”指转移一个组织的控制权或全部资产、或拆分或合并组织的事务。如果实体事务导致一个受保护作品的传播，则事务中各收到作品副本方，都有获得前利益相关者享有或可以如前段所述提供的对该作品的任何授权，以及从前利益相关者处获得并拥有相应的源码的权利，如果前利益相关者享有或可以通过合理的努力获得此源码。<br>
 　　你不可以对本协议所授权利的行使施以进一步的限制。例如，你不可以索要授权费或版税，或就行使本协议所授权利征收其他费用；你也不能发起诉讼（包括交互诉讼和反诉），宣称制作、使用、零售、批发、引进本程序或其部分的行为侵犯了任何专利。
 </p>
-<p>十一、专利</p>
+<p id="gpl-term-11"><strong>十一、专利</strong></p>
 <p>
 　　“贡献人”指通过本协议对本程序或其派生作品进行使用认证的版权持有人。授权作品成为贡献人的“贡献者版”。<br>
 　　贡献人的“实质专利权限”指其拥有或掌控的，无论是已获得的还是将获得的全部专利权限中，可能被通过某种本协议允许的方式制作、使用或销售其贡献者版作品的行为侵犯的部分，不包括仅有修改其贡献者版作品才构成侵犯的部分。“掌控”所指包括享有和本协议相一致的专利再授权的权利。<br>
@@ -293,30 +684,30 @@ https://www.gnu.org/licenses/translations.html</a>.</p>
 　　如果某专利在其涵盖范围内，不包含本协议专门赋予的一项或多项权利，禁止行使它们或以不行使它们为前提，则该专利是“歧视性”的。如果你和软件发布行业的第三方有合作，合作要求你就转发受保护作品的情况向其付费，并授予作品接收方歧视性专利，而且该专利(a)与你转发的副本（或在此基础上制作的副本）有关，或针对包含该受保护作品的产品或联合作品，你不得转发本程序，除非参加此项合作或取得该专利早于2007年3月28日。<br>
 　　本协议的任何部分不应被解释成在排斥或限制任何暗含的授权，或者其他在适用法律下对抗侵权的措施。
 </p>
-<p>十二、不得牺牲他人的自由</p>
+<p id="gpl-term-12"><strong>十二、不得牺牲他人的自由</strong></p>
 <p>
 　　即便你面临与本协议条款冲突的条件（来自于法庭要求、协议或其他），那也不能成为你违背本协议的理由。倘若你不能在转发受保护作品时同时满足本协议和其他文件的要求，你就不能转发本程序。例如，当你同意了某些要求你就再转发问题向你的转发对象收取版税的条款时，唯一能同时满足它和本协议要求的做法便是不转发本程序。
 </p>
-<p>十三、和GNU Affero通用公共许可协议一起使用</p>
+<p id="gpl-term-13"><strong>十三、和GNU Affero通用公共许可协议一起使用</strong></p>
 <p>
 　　尽管已存在本协议的一些条款，你可以将任何受保护作品与以GNU Affero通用公共许可协议管理的作品关联或组合成一个联合作品，并转发。本协议对其中的受保护作品部分仍然有效，但GNU Affero通用公共许可协议第十三条的关于网络交互的特别要求适用于整个联合作品。
 </p>
-<p>十四、本协议的修订版</p>
+<p id="gpl-term-14"><strong>十四、本协议的修订版</strong></p>
 <p>
 　　自由软件联盟可能会不定时发布GNU通用公共许可协议的修订版或新版。新版将秉承当前版本的精神，但对问题或事项的描述细节不尽相同。<br>
 　　每一版都会有不同的版本号，如果本程序指定其使用的GNU通用公共许可协议的版本“或任何更新的版本”，你可以选择遵守该版本或者任何更新的版本的条款。如果本程序没有指定协议版本，你可以选用自由软件联盟发布的任意版本的GNU通用公共许可协议。<br>
 　　如果本程序指定代理来决定将来那个GNU通用公共许可协议版本适用，则该代理的公开声明将指导你选择协议版本。<br>
 　　新的版本可能会给予你额外或不同的许可。但是，任何作者或版权持有人的义务，不会因为你选择新的版本而增加。
 </p>
-<p>十五、不提供品质担保</p>
+<p id="gpl-term-15"><strong>十五、不提供品质担保</strong></p>
 <p>
 　　本程序在适用法律范围内不提供品质担保。除非另作书面声明，版权持有人及其他程序提供者“概”不提供任何显式或隐式的品质担保，品质担保所指包括而不仅限于有经济价值和适合特定用途的保证。全部风险，如程序的质量和性能问题，皆由你承担。若程序出现缺陷，你将承担所有必要的修复和更正服务的费用。
 </p>
-<p>十六、责任范围</p>
+<p id="gpl-term-16"><strong>十六、责任范围</strong></p>
 <p>
 　　除非适用法律或书面协议要求，任何版权持有人或本程序按本协议可能存在的第三方修改和再发布者，都不对你的损失负有责任，包括由于使用或者不能使用本程序造成的任何一般的、特殊的、偶发的或重大的损失（包括而不仅限于数据丢失、数据失真、你或第三方的后续损失、其他程序无法与本程序协同运作），即使那些人声称会对此负责
 </p>
-<p>十七、第十五条和第十六条的解释</p>
+<p id="gpl-term-17"><strong>十七、第十五条和第十六条的解释</strong></p>
 <p>
 　　如果上述免责声明和责任范围声明不为地方法律所支持，上诉法庭应采用与之最接近的关于放弃本程序相关民事责任的地方法律，除非本程序附带收费的品质担保或责任许诺。
 </p>
@@ -367,11 +758,19 @@ https://www.gnu.org/licenses/translations.html</a>.</p>
 
 </div>
 
-<!-- 返回顶部按钮 -->
 <button id="back-to-top" onclick="scrollToTop()">↑</button>
 
+<div id="context-menu">
+  <button onclick="contextCopy()">复制</button>
+  <button onclick="contextSelectAll()">全选</button>
+  <div class="divider"></div>
+  <button onclick="contextDownloadHTML()">下载HTML</button>
+  <button onclick="contextDownloadTXT()">下载TXT</button>
+</div>
+
 <script>
-// 返回顶部功能
+history.scrollRestoration = 'manual';
+
 function scrollToTop() {
   window.scrollTo({
     top: 0,
@@ -379,15 +778,154 @@ function scrollToTop() {
   });
 }
 
-// 滚动时显示/隐藏返回顶部按钮
-window.addEventListener('scroll', function() {
+let scrollTimeout;
+
+function checkVisibility() {
+  const elements = document.querySelectorAll('#doc h1, #doc h2, #doc p');
+  const windowHeight = window.innerHeight;
+  
+  elements.forEach(function(el) {
+    if (el.classList.contains('visible')) return;
+    
+    const rect = el.getBoundingClientRect();
+    if (rect.top < windowHeight * 0.9) {
+      el.classList.add('visible');
+    }
+  });
+  
   const backToTopBtn = document.getElementById('back-to-top');
   if (window.scrollY > 300) {
     backToTopBtn.classList.add('show');
   } else {
     backToTopBtn.classList.remove('show');
   }
+}
+
+window.addEventListener('scroll', function() {
+  if (scrollTimeout) clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(function() {
+    requestAnimationFrame(checkVisibility);
+  }, 16);
 });
+
+window.addEventListener('DOMContentLoaded', function() {
+  window.scrollTo(0, 0);
+  setTimeout(function() {
+    window.scrollTo(0, 0);
+  }, 100);
+});
+
+window.onload = function() {
+  setTimeout(function() {
+    window.scrollTo(0, 0);
+    checkVisibility();
+  }, 50);
+};
+
+// 右键菜单功能
+const contextMenu = document.getElementById('context-menu');
+
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+  const rect = contextMenu.getBoundingClientRect();
+  let x = e.clientX;
+  let y = e.clientY;
+  
+  if (x + rect.width > window.innerWidth) {
+    x = window.innerWidth - rect.width - 10;
+  }
+  if (y + rect.height > window.innerHeight) {
+    y = window.innerHeight - rect.height - 10;
+  }
+  
+  contextMenu.style.left = x + 'px';
+  contextMenu.style.top = y + 'px';
+  contextMenu.classList.add('show');
+});
+
+document.addEventListener('click', function(e) {
+  if (!contextMenu.contains(e.target)) {
+    contextMenu.classList.remove('show');
+  }
+});
+
+function contextCopy() {
+  const selection = window.getSelection();
+  if (selection.toString()) {
+    navigator.clipboard.writeText(selection.toString()).then(function() {
+      contextMenu.classList.remove('show');
+    });
+  }
+}
+
+function contextSelectAll() {
+  const doc = document.getElementById('doc');
+  const range = document.createRange();
+  range.selectNodeContents(doc);
+  const selection = window.getSelection();
+  selection.removeAllRanges();
+  selection.addRange(range);
+  contextMenu.classList.remove('show');
+}
+
+function contextDownloadHTML() {
+  const doc = document.getElementById('doc');
+  const clone = doc.cloneNode(true);
+  const wrapper = document.createElement('div');
+  wrapper.appendChild(clone);
+  
+  const htmlContent = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GNU通用公共许可协议+kgdream软件许可协议</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; max-width: 860px; margin: 0 auto; padding: 40px; line-height: 2; color: #475569; }
+h1 { text-align: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 20px; }
+h2 { border-left: 4px solid #2563eb; padding-left: 12px; margin: 20px 0 10px; }
+p { text-indent: 2em; margin-bottom: 12px; }
+a { color: #2563eb; }
+</style>
+</head>
+<body>
+${wrapper.innerHTML}
+</body>
+</html>`;
+  
+  downloadFile(htmlContent, 'license.html', 'text/html');
+}
+
+function contextDownloadTXT() {
+  const doc = document.getElementById('doc');
+  let text = '';
+  
+  const elements = doc.querySelectorAll('h1, h2, p');
+  elements.forEach(function(el) {
+    if (el.tagName === 'H1') {
+      text += '\n' + el.textContent + '\n\n';
+    } else if (el.tagName === 'H2') {
+      text += '\n' + el.textContent + '\n\n';
+    } else {
+      text += el.textContent + '\n\n';
+    }
+  });
+  
+  downloadFile(text, 'license.txt', 'text/plain');
+}
+
+function downloadFile(content, filename, type) {
+  const blob = new Blob([content], { type: type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  contextMenu.classList.remove('show');
+}
 </script>
 
 </body>
