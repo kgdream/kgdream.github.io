@@ -1,2601 +1,357 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>千克官方网站 - 千克之梦 KGDream | 极简无广告的开源起始页与工具</title>
-  <meta name="description" content="千克之梦（KGDream）官网：主打作品「千克起始页」——极简、无广告、开源的浏览器起始页；另有 MC服务器启动器、kgBing壁纸、KG收银、仿MacOS主题等 10 款免费开源小工具，支持蓝奏云/123云盘/迅雷云盘下载。" />
-  <meta name="keywords" content="千克起始页,KGDream,千克之梦,起始页,新标签页,开源工具,kgBing壁纸,KG收银" />
-  <meta name="robots" content="index,follow" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="千克之梦 KGDream" />
-  <meta property="og:title" content="千克官方网站 - 千克之梦 KGDream" />
-  <meta property="og:description" content="极简、无广告、开源的浏览器起始页，及 10 款免费开源小工具。" />
-  <meta property="og:image" content="favicon.png" />
-  <link rel="icon" href="favicon.png" type="image/png" />
-  <style>
-    /* 无障碍：系统开启“减少动态效果”时，停用所有 CSS 过渡与动画 */
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-    }
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      background: #000000;
-    }
-    body {
-      overflow-x: hidden;
-      overflow-y: auto;
-      scroll-snap-type: y proximity;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-    }
-    /* SEO：真实文字内容（解决“整站 JS 渲染、Bing 抓不到”）。视觉上隐藏但保留在 DOM 中，
-       用标准 screen-reader 技术而非 display:none，避免被搜索引擎判定为隐藏作弊 */
-    .seo-content {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-      white-space: nowrap;
-      border: 0;
-    }
-    /* 触屏设备：强制逐屏吸附。proximity 模式下手机快速一甩会带惯性冲过多个界面，
-       mandatory 保证每次滑动只停在相邻的吸附点，节奏可控 */
-    /* 关闭滚动锚定：防止介绍文字解密/截图加载引起的高度变化拽偏滚动位置。
-       「一滑直冲页尾」由下方 onScroll 内的瞬移护栏拦截回弹 */
-    html, body { overflow-anchor: none; }
-    @media (pointer: coarse) {
-      body { scroll-snap-type: y mandatory; }
-    }
-    /* ===== 安卓专属兼容（不影响桌面/iOS）：动态视口 dvh 修复定位与大幅跳动，并修正介绍文本描边 ===== */
-    .android .snap-page,
-    .android .black-screen,
-    .android .screen-c,
-    .android .screen-down,
-    .android .screen-about,
-    .android .screen-privacy {
-      height: 100dvh;
-    }
-    .android body.at-home .pill-nav { top: calc(100dvh - 120px); }
-    .android .wheel-desc {
-      -webkit-text-stroke: 0;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
-    }
-    #bg {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      display: block;
-      z-index: 0;
-      opacity: 0;
-      transition: opacity 1.2s ease;
-    }
-    /* 滚动占位 + snap 吸附点：8 屏高，驱动 主页(1)→软件介绍/轮盘(2)→起始页体验(1)→下载(1)→关于(1)→许可协议(1) */
-    .snap-page {
-      height: 100vh;
-      scroll-snap-align: start;
-      pointer-events: none;
-    }
-    /* 向下滚动平滑进入的软件介绍界面：背景透明，露出主页的网格 canvas，与主页背景一致 */
-    .black-screen {
-      position: fixed;
-      inset: 0;
-      height: 100vh;
-      background: transparent;
-      transform: translateY(100%);
-      z-index: 10;
-      transform-origin: center center;
-      will-change: transform;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s ease;
-    }
-    .black-screen.active {
-      transform: translateY(0%);
-    }
-    .black-screen.dim {
-      transform: translateY(0%) scale(0.90);
-      filter: brightness(0.78);
-    }
-    /* 进入软件介绍后，隐藏主页专属元素，避免透过透明背景“漏出来” */
-    body.mode-intro .home-cards,
-    body.mode-intro .decrypt-text,
-    body.mode-intro .home-title,
-    body.mode-intro .scroll-hint {
-      visibility: hidden;
-      pointer-events: none;
-    }
-    /* 第 3 界面：起始页体验（内嵌当前域名 /x.html），滑入覆盖软件介绍 */
-    .screen-c {
-      position: fixed;
-      inset: 0;
-      height: 100vh;
-      background: #000;
-      transform: translateY(100%);
-      z-index: 11;
-      transform-origin: center center;
-      will-change: transform;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s ease;
-    }
-    .screen-c.active {
-      transform: translateY(0%);
-    }
-    .screen-c.dim {
-      transform: translateY(0%) scale(0.90);
-      filter: brightness(0.78);
-    }
-    .exp-split {
-      display: flex;
-      width: 100%;
-      height: 100%;
-      position: relative;
-      overflow: hidden;
-    }
-    .exp-pane {
-      height: 100%;
-      flex: 0 0 50%;
-      position: relative;
-      will-change: transform;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .exp-pane iframe {
-      width: 100%;
-      height: 100%;
-      border: 0;
-      display: block;
-      pointer-events: none; /* 过渡阶段滚动穿透到父页面，走原生滚动 */
-    }
-    /* 进入动画：左半从左滑入、右半从右滑入 */
-    .exp-pane--left { transform: translateX(-100%); }
-    .exp-pane--right { flex: 1 1 0; transform: translateX(100%); }
-    .screen-c.active .exp-pane--left,
-    .screen-c.active .exp-pane--right { transform: translateX(0); }
-    /* 中间对比滑块 */
-    .exp-divider {
-      flex: 0 0 4px;
-      align-self: stretch;
-      background: rgba(255,255,255,.55);
-      cursor: ew-resize;
-      position: relative;
-      z-index: 6;
-      touch-action: none;
-    }
-    .exp-divider::after {
-      content: "";
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: #fff;
-      box-shadow: 0 2px 12px rgba(0,0,0,.45);
-    }
-    .exp-divider::before {
-      content: "\21C4";
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 1;
-      font-size: 16px;
-      line-height: 1;
-      color: #222;
-      pointer-events: none;
-    }
-    .exp-label {
-      position: absolute;
-      top: 14px;
-      padding: 4px 10px;
-      font-size: 12px;
-      letter-spacing: .08em;
-      border-radius: 999px;
-      background: rgba(0,0,0,.4);
-      color: #fff;
-      pointer-events: none;
-      z-index: 5;
-    }
-    .exp-label--l { left: 14px; }
-    .exp-label--r { right: 14px; }
-    /* 手机：上下排列 + 从上/下进入 */
-    @media (max-width: 640px) {
-      .exp-split { flex-direction: column; }
-      .exp-pane { width: 100%; height: auto; flex: 0 0 50%; }
-      .exp-pane--left { transform: translateY(-100%); }
-      .exp-pane--right { transform: translateY(100%); }
-      .screen-c.active .exp-pane--left,
-      .screen-c.active .exp-pane--right { transform: translateY(0); }
-      .exp-divider {
-        flex: 0 0 4px;
-        width: 100%;
-        cursor: ns-resize;
-      }
-      .exp-divider::after, .exp-divider::before { left: 50%; }
-    }
-    /* 第 4 界面：下载 */
-    .screen-down {
-      position: fixed;
-      inset: 0;
-      height: 100vh;
-      background: #000;
-      transform: translateY(100%);
-      z-index: 12;
-      transform-origin: center center;
-      will-change: transform;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s ease;
-    }
-    .screen-down.active {
-      transform: translateY(0%);
-    }
-    .screen-down.dim {
-      transform: translateY(0%) scale(0.90);
-      filter: brightness(0.78);
-    }
-    /* 下载界面 - 流动菜单（参考 下载界面.txt：FlowingMenu，纯文本无图片，共 3 项） */
-    .dl-wrap {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: min(92vw, 980px);
-      text-align: center;
-    }
-    .dl-head {
-      margin: 0 0 18px;
-      font: 700 clamp(16px, 3vw, 26px)/1 '幼圆', 'YouYuan', -apple-system, 'Segoe UI', system-ui, sans-serif;
-      letter-spacing: .3em;
-      color: rgba(255,255,255,.7);
-    }
-    /* 提取码小字 */
-    .dl-code {
-      margin: clamp(10px, 2vh, 18px) 0 0;
-      font: 600 clamp(12px, 1.6vw, 15px)/1.4 '幼圆', 'YouYuan', -apple-system, 'Segoe UI', system-ui, sans-serif;
-      letter-spacing: .04em;
-      color: rgba(255,255,255,.55);
-    }
-    /* 同意条款 + 许可链接 */
-    .dl-consent {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: .5em;
-      margin-top: clamp(14px, 3vh, 26px);
-      font: 600 clamp(12px, 1.6vw, 15px)/1.4 '幼圆', 'YouYuan', -apple-system, 'Segoe UI', system-ui, sans-serif;
-      color: #fff;
-    }
-    .dl-check {
-      display: inline-flex;
-      align-items: center;
-      gap: .5em;
-      cursor: pointer;
-      user-select: none;
-    }
-    .dl-check input {
-      position: absolute;
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-    .dl-check__box {
-      width: 18px;
-      height: 18px;
-      border: 2px solid rgba(255,255,255,.7);
-      border-radius: 4px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      transition: background .15s, border-color .15s;
-      flex: none;
-    }
-    .dl-check input:checked + .dl-check__box {
-      background: #4ea3ff;
-      border-color: #4ea3ff;
-    }
-    .dl-check input:checked + .dl-check__box::after {
-      content: '';
-      width: 5px;
-      height: 10px;
-      border: solid #fff;
-      border-width: 0 2px 2px 0;
-      transform: rotate(45deg) translateY(-1px);
-    }
-    .dl-check__txt { color: #fff; }
-    .dl-conn { color: rgba(255,255,255,.85); }
-    .dl-license {
-      color: #4ea3ff;
-      text-decoration: none;
-      cursor: pointer;
-    }
-    .dl-license:hover { text-decoration: underline; }
-    /* 未勾选时点链接的抖动提示 */
-    .dl-link.dl-shake { animation: dlShake .4s ease; }
-    @keyframes dlShake {
-      0%, 100% { transform: translateX(0); }
-      20% { transform: translateX(-6px); }
-      40% { transform: translateX(6px); }
-      60% { transform: translateX(-4px); }
-      80% { transform: translateX(4px); }
-    }
-    .dl-menu {
-      border-top: 1px solid rgba(255,255,255,.25);
-      border-bottom: 1px solid rgba(255,255,255,.25);
-    }
-    .dl-item {
-      position: relative;
-      border-bottom: 1px solid rgba(255,255,255,.18);
-      overflow: hidden;
-    }
-    .dl-item:last-child { border-bottom: 0; }
-    .dl-link {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: clamp(39px, 9vh, 82px);
-      font: 800 clamp(14px, 2.5vw, 28px)/1 '幼圆', 'YouYuan', -apple-system, 'Segoe UI', system-ui, sans-serif;
-      letter-spacing: .04em;
-      color: #fff;
-      text-decoration: none;
-    }
-    .dl-marquee {
-      position: absolute;
-      inset: 0;
-      z-index: 3;
-      background: #fff;
-      overflow: hidden;
-      transform: translateY(101%);
-      transition: transform .6s cubic-bezier(.4, 0, .2, 1);
-      pointer-events: none;
-    }
-    .dl-marquee__track {
-      display: flex;
-      align-items: center;
-      height: 100%;
-      width: max-content;
-      animation: dlMarquee 15s linear infinite;
-    }
-    .dl-marquee__group { display: flex; flex: none; }
-    .dl-marquee__part {
-      flex: none;
-      padding: 0 .35em;
-      font: 800 clamp(14px, 2.5vw, 28px)/1 '幼圆', 'YouYuan', -apple-system, 'Segoe UI', system-ui, sans-serif;
-      color: #120F17;
-      white-space: nowrap;
-    }
-    @keyframes dlMarquee {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-    /* 每次进入下载界面：3 个下载源自动滑入展示一次（0.5s） */
-    .dl-item.dl-auto .dl-marquee {
-      animation: dlAuto 1.5s ease both;
-    }
-    @keyframes dlAuto {
-      0% { transform: translateY(101%); }
-      30% { transform: translateY(0); }
-      70% { transform: translateY(0); }
-      100% { transform: translateY(101%); }
-    }
-    @media (max-width: 640px) {
-      .dl-link, .dl-marquee__part { font-size: 15px; }
-    }
-    .screen-down iframe {
-      width: 100%;
-      height: 100%;
-      border: 0;
-      display: block;
-    }
-    /* 第 5 界面：关于（全黑） */
-    .screen-about {
-      position: fixed;
-      inset: 0;
-      height: 100vh;
-      background: #000;
-      transform: translateY(100%);
-      z-index: 13;
-      transform-origin: center center;
-      will-change: transform;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 6vw;
-    }
-    .screen-about.active {
-      transform: translateY(0%);
-    }
-    .screen-about.dim {
-      transform: translateY(0%) scale(0.90);
-      filter: brightness(0.78);
-    }
-    /* 粒子背景画布（覆盖在纯黑底之上，内容之下） */
-    .bg-canvas {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      display: block;
-    }
-    .about-inner {
-      position: relative;
-      z-index: 1;
-    }
-    .about-inner {
-      width: min(92vw, 760px);
-      max-height: 92vh;
-      display: flex;
-      flex-direction: column;
-      padding: 4vh 0;
-    }
-    .about-scroll {
-      flex: 1 1 auto;
-      min-height: 0;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    .about-foot {
-      flex: none;
-      margin-top: clamp(18px, 3vh, 30px);
-      transform: translateY(-60%);
-    }
-    /* 关于正文（干净文字，无 glitch） */
-    .about-story {
-      margin: 0 0 clamp(22px, 4vh, 38px);
-      text-align: left;
-      font: 400 clamp(13px, 2vw, 18px)/1.75 '幼圆', 'YouYuan', -apple-system, 'Segoe UI', system-ui, sans-serif;
-      color: rgba(255,255,255,.82);
-    }
-    .about-story p {
-      margin: 0 0 .9em;
-    }
-    .about-story p:last-child { margin-bottom: 0; }
-    .about-subhead {
-      margin: 0 0 clamp(14px, 2.5vh, 24px);
-      font: 700 clamp(18px, 3vw, 26px)/1 '幼圆', 'YouYuan', -apple-system, 'Segoe UI', system-ui, sans-serif;
-      letter-spacing: .15em;
-      color: #4ea3ff;
-      text-align: center;
-    }
-    .about-title {
-      margin: 0 0 .5em;
-      font: 800 clamp(34px, 7vw, 68px)/1 '幼圆', 'YouYuan', -apple-system, 'Segoe UI', system-ui, sans-serif;
-      letter-spacing: .25em;
-      color: #fff;
-    }
-    .about-contact {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: clamp(7px, 1.5vh, 14px);
-      font: 400 clamp(8px, 1.5vw, 13px)/1.5 '幼圆', 'YouYuan', -apple-system, 'Segoe UI', system-ui, sans-serif;
-      color: rgba(255,255,255,.85);
-    }
-    .about-contact li {
-      display: flex;
-      align-items: baseline;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: .4em;
-    }
-    .about-label {
-      color: #4ea3ff;
-      font-weight: 700;
-    }
-    /* Glitch 文字（参考 联系方式文字.txt：青/红错位阴影，悬停触发） */
-    .about-glitch {
-      position: relative;
-      display: inline-block;
-      color: #fff;
-    }
-    .about-glitch::before,
-    .about-glitch::after {
-      content: attr(data-text);
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      pointer-events: none;
-    }
-    .about-glitch::before {
-      text-shadow: 5px 0 cyan;
-      --before-duration: 2s;
-      animation: aboutGlitchBefore var(--before-duration) steps(2, end) infinite;
-    }
-    .about-glitch::after {
-      text-shadow: -5px 0 red;
-      --after-duration: 3s;
-      animation: aboutGlitchAfter var(--after-duration) steps(2, end) infinite;
-    }
-    @keyframes aboutGlitchBefore {
-      0%   { transform: translate(0); }
-      25%  { transform: translate(-2px, 1px); }
-      50%  { transform: translate(1px, -1px); }
-      75%  { transform: translate(-1px, -1px); }
-      100% { transform: translate(2px, 1px); }
-    }
-    @keyframes aboutGlitchAfter {
-      0%   { transform: translate(0); }
-      25%  { transform: translate(2px, -1px); }
-      50%  { transform: translate(-1px, 1px); }
-      75%  { transform: translate(1px, 1px); }
-      100% { transform: translate(-2px, -1px); }
-    }
-    /* 第 6 界面：许可协议（内嵌 /t.html） */
-    .screen-privacy {
-      position: fixed;
-      inset: 0;
-      height: 100vh;
-      background: #fff;
-      transform: translateY(100%);
-      z-index: 14;
-      transform-origin: center center;
-      will-change: transform;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .screen-privacy.active {
-      transform: translateY(0%);
-    }
-    .screen-privacy iframe {
-      width: 100%;
-      height: 100%;
-      border: 0;
-      display: block;
-      pointer-events: none; /* 默认穿透；仅“完完全全下滑到位”后由 JS 切为 auto，才允许滚动内嵌内容 */
-    }
-    /* 首屏底部细微的滚动提示（高级感） */
-    .scroll-hint {
-      position: fixed;
-      left: 50%;
-      bottom: 28px;
-      transform: translateX(-50%);
-      color: rgba(255, 255, 255, 0.4);
-      font: 300 12px/1.4 '幼圆', 'YouYuan', -apple-system, "Segoe UI", system-ui, sans-serif;
-      letter-spacing: 0.35em;
-      z-index: 5;
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-    /* ===== 软件介绍界面：选项轮盘（复刻 轮盘.txt 的 OptionWheel）===== */
-    .intro-content {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 0 0 0 2vw;
-    }
-    .wheel-wrap {
-      position: relative;
-      width: 420px;
-      max-width: 86vw;
-      margin-left: 0;
-      z-index: 3; /* 高于居中截图(z-index:1)，左侧轮盘字体可遮挡图片 */
-    }
-    /* 轮盘屏障：透明层盖住轮盘，拦截触摸/指针/滚轮事件，使用户无法转动轮盘；
-       touch-action:pan-y 保证竖直滑动仍交给页面正常滚动，其余行为一概不变 */
-    .wheel-shield {
-      position: absolute;
-      inset: 0;
-      z-index: 30;
-      background: transparent;
-      touch-action: pan-y;
-    }
-    /* 轮盘介绍文案（解密乱码动画，参考 文字展示示例.txt）
-       固定位于整个界面最底下，强制一行；字号随浏览器宽度用 vw 缩放（宽度变小字也变小），
-       保证始终完整显示在一行内、绝不截断 */
-    .wheel-desc {
-      margin: 0;
-      width: 100%;
-      text-align: center;
-      font: 700 clamp(13px, 2.2vw, 30px)/1.3 'Microsoft YaHei', -apple-system, 'Segoe UI', system-ui, sans-serif;
-      color: #fff;
-      letter-spacing: 0.03em;
-      white-space: nowrap;
-      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
-      pointer-events: none;
-    }
-    /* 轮盘页码 / 进度指示：当前第几个 / 总共几个，例如 03 / 10；位于介绍文字上方 */
-    .wheel-counter {
-      display: flex;
-      align-items: baseline;
-      gap: .35em;
-      font: 700 clamp(18px, 3.4vw, 30px)/1 'Microsoft YaHei', -apple-system, 'Segoe UI', system-ui, sans-serif;
-      letter-spacing: .12em;
-      text-shadow: 0 2px 12px rgba(0, 0, 0, .6);
-      user-select: none;
-      pointer-events: none;
-      white-space: nowrap;
-    }
-    .wheel-counter__cur { color: #4ea3ff; }
-    .wheel-counter__sep,
-    .wheel-counter__total { color: rgba(255, 255, 255, .5); }
-    .option-wheel {
-      position: relative;
-      width: 100%;
-      height: 420px;
-      overflow: hidden;
-      /* 手势策略：默认允许垂直平移（touch-action: pan-y）。
-         由 JS 按触点所在区域（中央屏障带 / 上下渐隐区）决定是转轮盘还是放行页面滚动，
-         桌面与手机统一走这套分区逻辑，不靠禁用 */
-      touch-action: pan-y;
-      user-select: none;
-      cursor: default;
-      --ow-text-color: #8a8a8a;
-      --ow-active-color: #ffffff;
-      --ow-font-size: 2.2rem;
-      --ow-inset: 90px;
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 var(--ow-inset), #000 calc(100% - var(--ow-inset)), transparent 100%);
-      mask-image: linear-gradient(to bottom, transparent 0, #000 var(--ow-inset), #000 calc(100% - var(--ow-inset)), transparent 100%);
-    }
-    .option-wheel__item {
-      position: absolute;
-      top: 50%;
-      left: 0;
-      font-size: var(--ow-font-size);
-      font-weight: 700;
-      color: var(--ow-text-color);
-      white-space: nowrap;
-      /* 软件名称描边：深色描边让文字在亮色截图上也清晰可读（描边置于填充之下） */
-      -webkit-text-stroke: 1px rgba(0, 0, 0, 0.55);
-      paint-order: stroke fill;
-      will-change: transform, opacity, filter;
-      transform: translate(0, -50%);
-    }
-    .option-wheel__item--selected { color: var(--ow-active-color); }
-    /* 软件截图：放回介绍文字原先的位置（界面正中），置于轮盘之后，允许左侧轮盘字体遮挡 */
-    .intro-shot {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.98);
-      max-width: 58vw;
-      max-height: 58vh;
-      border-radius: 12px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-      opacity: 0;
-      transition: opacity 0.35s, transform 0.35s;
-      object-fit: contain;
-      background: rgba(255, 255, 255, 0.04);
-      cursor: zoom-in;
-      pointer-events: auto;
-      z-index: 1; /* 低于轮盘(wheel-wrap)，左侧轮盘字体可遮挡图片 */
-    }
-    .intro-shot.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-    /* ===== 介绍屏：软件截图 + 平台提示，定位在右下角，绝不遮挡中央轮盘与文字 ===== */
-    /* 底部块：在 black-screen 的 flex 纵向布局中自然落在页面最下方（页面底下），
-       与上部轮盘区上下分离，不会再遮挡中央文字 */
-    /* 底部块：固定在界面最下方。结构：上排[页数][平台提示]，下排[介绍文字一行] */
-    .intro-foot {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 2.4vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      z-index: 8;
-      pointer-events: none;
-      transition: opacity 0.35s;
-    }
-    .intro-foot.hide { opacity: 0; }
-    /* 上排：页数在左、平台提示紧邻其右侧 */
-    .intro-meta {
-      display: flex;
-      align-items: baseline;
-      gap: 14px;
-    }
-    /* 平台提示：仅用字体颜色区分三种类型，无边框、无底色，置于页数右侧 */
-    .intro-plat {
-      font: 700 clamp(18px, 3.4vw, 30px)/1 'Microsoft YaHei', -apple-system, system-ui, sans-serif;
-      letter-spacing: 0.04em;
-      opacity: 0;
-      transition: opacity 0.35s;
-      white-space: nowrap;
-      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
-    }
-    .intro-plat.show { opacity: 1; }
-    .intro-plat[data-p="win"]     { color: #4ea3ff; }
-    .intro-plat[data-p="android"] { color: #3DDC84; }
-    .intro-plat[data-p="sys"]     { color: #C792EA; }
-    .intro-plat[data-p="web"]     { color: #FF9F43; }
-    /* 截图点击放大灯箱 */
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      z-index: 60;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 4vh 4vw;
-      background: rgba(0, 0, 0, 0.88);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s;
-      cursor: zoom-out;
-    }
-    .lightbox.show { opacity: 1; visibility: visible; }
-    .lightbox img {
-      max-width: 92vw;
-      max-height: 92vh;
-      border-radius: 12px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-    }
-    /* ===== ReactBits GlassSurface（真实 SVG 滤镜玻璃，非 fallback） ===== */
-    .glass-surface {
-      display: inline-block;
-      position: relative;
-      overflow: hidden;
-      border-radius: inherit;
-      transition: all .2s ease-in-out;
-      box-sizing: border-box;
-    }
-    .glass-surface__filter {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-    .glass-surface__content {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: inherit;
-      overflow: hidden;
-    }
-    .glass-surface--svg {
-      background: light-dark(hsl(0 0% 100% / var(--glass-frost, 0)), hsl(0 0% 0% / var(--glass-frost, 0)));
-      backdrop-filter: var(--filter-id, url(#glass-filter)) saturate(var(--glass-saturation, 1));
-      -webkit-backdrop-filter: var(--filter-id, url(#glass-filter)) saturate(var(--glass-saturation, 1));
-      box-shadow:
-        0 0 2px 1px light-dark(color-mix(in oklch, black, transparent 85%), color-mix(in oklch, white, transparent 65%)) inset,
-        0 0 10px 4px light-dark(color-mix(in oklch, black, transparent 90%), color-mix(in oklch, white, transparent 85%)) inset,
-        0 4px 16px rgba(17, 17, 26, .05),
-        0 8px 24px rgba(17, 17, 26, .05),
-        0 16px 56px rgba(17, 17, 26, .05),
-        0 4px 16px rgba(17, 17, 26, .05) inset,
-        0 8px 24px rgba(17, 17, 26, .05) inset,
-        0 16px 56px rgba(17, 17, 26, .05) inset;
-    }
-    .glass-surface--fallback {
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(13.8px) saturate(1.8) brightness(1.1);
-      -webkit-backdrop-filter: blur(13.8px) saturate(1.8) brightness(1.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      box-shadow:
-        0 8px 32px 0 rgba(31, 38, 135, 0.2),
-        0 2px 16px 0 rgba(31, 38, 135, 0.1),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.4),
-        inset 0 -1px 0 0 rgba(255, 255, 255, 0.2);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<link rel="icon" href="favicon.png" type="image/png">
+<meta name="msvalidate.01" content="1C8007CD476107B772DA7C2109C582CE">
+<meta name="robots" content="index,follow">
+<meta name="description" content="千克之梦 KGDream 官网：极简无广告的开源起始页，及多款免费开源小工具。">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#f2efe9;font-family:-apple-system,"Segoe UI",sans-serif;overflow-x:hidden;scroll-snap-type:y mandatory;transition:background-color 1.1s ease}
+.page{height:100vh;scroll-snap-align:start;display:flex;align-items:center;justify-content:center;opacity:0;position:relative}
+.page::after{content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%)}
+.page:nth-of-type(1)::after{width:100%;height:1px;background:rgba(47,62,78,.18)}
+.page:nth-of-type(2)::after{width:70%;height:1px;background:repeating-linear-gradient(90deg,#6f9a78 0 8px,transparent 8px 16px)}
+.page:nth-of-type(3)::after{width:85%;height:2px;background:rgba(90,125,153,.28)}
+.page:nth-of-type(4)::after{width:60%;height:1px;background:#cf9a68}
+.page:nth-of-type(5)::after{width:90%;height:1px;background:linear-gradient(90deg,transparent,#8b7aa8,transparent)}
+.page:nth-of-type(6)::after{width:75%;height:1px;background:repeating-linear-gradient(90deg,#b97a7a 0 3px,transparent 3px 9px)}
+.home.active{opacity:1}
+.home-wrap{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transform:translateY(-30px);pointer-events:none}
+.home-deco{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.blob{position:absolute;border-radius:50%;opacity:.55}
+.b1{width:120px;height:120px;background:#ffe0b2;top:15%;left:11%;animation:float1 7s ease-in-out infinite}
+.b2{width:82px;height:82px;background:#c8e6c9;top:23%;right:13%;animation:float2 9s ease-in-out infinite}
+.b3{width:58px;height:58px;background:#bbdefb;bottom:24%;left:19%;animation:float2 8s ease-in-out infinite}
+.b4{width:70px;height:70px;background:#f8c8d8;bottom:30%;right:17%;animation:float1 10s ease-in-out infinite}
+@keyframes float1{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+@keyframes float2{0%,100%{transform:translateY(0)}50%{transform:translateY(18px)}}
+.home-btns{position:absolute;left:0;right:0;bottom:88px;z-index:6;display:flex;gap:16px;flex-wrap:nowrap;justify-content:center}
+.home-btn{padding:10px 22px;border-radius:15px;font-size:.95rem;letter-spacing:.04em;color:#2f3e4e;text-decoration:none;background:rgba(255,255,255,0.45);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,0.7);box-shadow:inset 0 1px 0 rgba(255,255,255,0.85),0 6px 20px rgba(0,0,0,0.08);opacity:0;transform:translateY(22px);transition:opacity .5s ease,transform .5s cubic-bezier(.22,.61,.36,1),background .25s,color .25s}
+.home-btn.show{opacity:1;transform:translateY(0)}
 
-    /* ===== 药丸导航：顶部全局置顶（ReactBits GlassSurface 真实玻璃） ===== */
-    .pill-nav {
-      position: fixed;
-      top: 18px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 30;
-      transition: top 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      gap: 4px;
-      padding: 10px 12px;
-      /* 背景/磨砂/阴影/圆角由 .glass-surface--svg（ReactBits 真实玻璃）提供，此处不再重复 */
-      border-radius: 999px;
-      /* 以下变量完完全全照搬 液态玻璃示例.txt 的定义 */
-      --pill-bg: #ffffff;
-      --pill-color: #111111;
-      --hover-bg: #3b82f6;
-      --hover-color: #ffffff;
-      --item-rot: 0deg;
-      --base: #ffffff;
-      --pill-text: #111111;
-      --hover-text: #120F17;
-    }
-    .pill-track {
-      position: relative;
-      display: flex;
-      padding: 4px;
-      background: transparent;
-      border-radius: 999px;
-    }
-    .pill {
-      position: relative;
-      z-index: 1;
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 36px;
-      padding: 0 18px;
-      border-radius: 999px;
-      color: var(--pill-color);
-      font: 500 14px/1 '幼圆', 'YouYuan', -apple-system, "Segoe UI", system-ui, sans-serif;
-      letter-spacing: 0.04em;
-      text-decoration: none;
-      white-space: nowrap;
-      /* 文字描边：白描边 + stroke 先绘，深色文字在玻璃后的复杂背景上更清晰 */
-      -webkit-text-stroke: 0.8px rgba(255, 255, 255, 0.9);
-      paint-order: stroke fill;
-      transition: color 0.25s ease, background 0.25s ease;
-    }
-    .pill:hover {
-      background: var(--hover-bg);
-      color: var(--hover-color);
-    }
-    /* 滑块：随整页滚动条进度在导航轨道上从左向右连续滑动（亮玻璃上用柔和深色，清晰可见） */
-    .pill-thumb {
-      position: absolute;
-      top: 4px;
-      bottom: 4px;
-      left: 0;
-      width: 16%;
-      background: rgba(17, 17, 17, 0.12);
-      -webkit-backdrop-filter: blur(4px);
-      backdrop-filter: blur(4px);
-      border-radius: 999px;
-      z-index: 0;
-      pointer-events: none;
-      transition: left 0.08s linear;
-    }
-    /* 原来的界面滑块：随当前所在界面跳变定位，白色高亮块垫在文字下 */
-    .pill-marker {
-      position: absolute;
-      top: 4px;
-      bottom: 4px;
-      left: 4px;
-      width: 80px;
-      background: var(--base);
-      border-radius: 999px;
-      z-index: 0;
-      pointer-events: none;
-      transition: left 0.12s ease, width 0.12s ease;
-    }
-    /* 当前界面项文字在白色滑块上变为深色，清晰可读 */
-    .pill.is-active { color: var(--hover-text); }
-    /* 主页：导航栏移到卡片下方；进入其它界面时回到顶部原位置 */
-    body.at-home .pill-nav { top: calc(100vh - 120px); }
+.home-btn:active{background:rgba(47,62,78,0.85);color:#f2efe9}
+.hb1,.hb2,.hb3,.hb4{color:#2f3e4e}
+.home .logo{width:110px;height:110px;object-fit:contain;opacity:0;padding:14px;box-sizing:border-box;border-radius:26px;background:rgba(255,255,255,0.5);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,0.7);box-shadow:inset 0 1px 0 rgba(255,255,255,0.85),0 6px 24px rgba(0,0,0,0.08)}
+.home .brand{font-size:2.6rem;font-weight:700;letter-spacing:.18em;color:#2f3e4e;opacity:0;max-width:0;overflow:hidden;white-space:nowrap;transform:translateX(60px)}
+.home.active .brand{animation:brandIn .5s ease .3s both}
+.home.played .brand{animation:none;opacity:1;max-width:360px;transform:translateX(0)}
+.home-tag{font-size:1.05rem;font-weight:600;letter-spacing:.18em;color:#5a6b7a;margin-top:14px;opacity:0}
+.home.active .home-tag{animation:tagIn .45s ease .55s both}
+.home.played .home-tag{animation:none;opacity:1}
+@keyframes tagIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes logoPop{from{opacity:0;transform:translate(var(--dx,0px),var(--dy,0px)) scale(0)}to{opacity:1;transform:translate(0,0) scale(1)}}
+@keyframes brandIn{from{opacity:0;max-width:0;transform:translateX(60px)}to{opacity:1;max-width:360px;transform:translateX(0)}}
+.page h1{font-size:3rem;font-weight:300;letter-spacing:.12em;color:#2f3e4e;position:relative;padding-bottom:28px}
+.page h1::after{content:"";position:absolute;left:50%;bottom:0;transform:translateX(-50%)}
+.page:nth-of-type(1) h1::after{width:56px;height:2px;background:#2f3e4e}
+.page:nth-of-type(2) h1::after{width:150px;height:1px;background:#6f9a78}
+.page:nth-of-type(3) h1::after{width:120px;height:1px;background:repeating-linear-gradient(90deg,#5a7d99 0 7px,transparent 7px 14px)}
+.page:nth-of-type(4) h1::after{width:90px;height:3px;border-radius:2px;background:#cf9a68}
+.page:nth-of-type(5) h1::after{width:140px;height:2px;background:linear-gradient(90deg,transparent,#8b7aa8,transparent)}
+.page:nth-of-type(6) h1::after{width:110px;height:1px;background:repeating-linear-gradient(90deg,#b97a7a 0 2px,transparent 2px 8px)}
+.anim-fade.active{animation:fade .7s ease both}
+.anim-right.active{animation:fromRight .7s cubic-bezier(.22,.61,.36,1) both}
+.anim-bottom.active{animation:fromBottom .7s cubic-bezier(.22,.61,.36,1) both}
+.anim-top.active{animation:fromTop .7s cubic-bezier(.22,.61,.36,1) both}
+.anim-zoom.active{animation:zoomIn .7s cubic-bezier(.22,.61,.36,1) both}
+.anim-rotate.active{animation:rotateIn .8s cubic-bezier(.22,.61,.36,1) both}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes fromRight{from{opacity:0;transform:translateX(90px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fromBottom{from{opacity:0;transform:translateY(90px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fromTop{from{opacity:0;transform:translateY(-90px)}to{opacity:1;transform:translateY(0)}}
+@keyframes zoomIn{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:scale(1)}}
+@keyframes rotateIn{from{opacity:0;transform:rotate(-8deg) scale(.9)}to{opacity:1;transform:rotate(0) scale(1)}}
+.nav{position:fixed;left:0;right:0;top:0;display:flex;justify-content:center;transform:translateY(10px);z-index:100;transition:transform .6s cubic-bezier(.22,.61,.36,1);pointer-events:none}
+.nav.at-top{transform:translateY(10px)}
+.nav-inner{pointer-events:auto;display:flex;gap:4px;justify-content:space-between;width:calc(100% - 48px);max-width:1280px;margin:0 auto;padding:10px 28px;border-radius:20px;background:rgba(255,255,255,0.5);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,0.7);box-shadow:inset 0 1px 0 rgba(255,255,255,0.85),0 6px 24px rgba(0,0,0,0.08);opacity:0;transform:translateY(60px) scale(.9);transition:border-radius .6s ease,background .6s ease,box-shadow .6s ease,padding .6s ease,margin .5s ease}
+.nav-logo{display:flex;align-items:center;gap:0;opacity:1;transform:translateX(0)}
+.nav-btns{display:flex;gap:4px}
+.nav.at-top .nav-logo{display:flex}
+.nav-logo img{width:34px;height:34px;object-fit:contain;opacity:1;margin-right:10px;transition:width .5s ease,opacity .4s ease,margin .5s ease}
+.nav-logo b{font-size:1.15rem;font-weight:600;letter-spacing:.16em;color:#2f3e4e;max-width:220px;opacity:1;overflow:hidden;white-space:nowrap;margin-right:10px;transition:max-width .5s ease,opacity .4s ease,margin .5s ease}
+.nav-tag{font-style:normal;font-size:.95rem;font-weight:400;letter-spacing:.05em;color:#2f3e4e;max-width:0;opacity:0;overflow:hidden;white-space:nowrap;transition:max-width .5s ease,opacity .4s ease}
+.nav.on-home .nav-logo img{width:0;opacity:0;margin-right:0}
+.nav.on-home .nav-logo b{max-width:0;opacity:0;margin-right:0}
+.nav.on-home .nav-tag{max-width:480px;opacity:1}
+.nav.at-top .nav-inner{width:calc(100% - 48px);max-width:1280px;margin:0 auto;border-radius:20px;padding:10px 28px;justify-content:space-between;background:rgba(255,255,255,0.5);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,0.7);box-shadow:inset 0 1px 0 rgba(255,255,255,0.85),0 6px 24px rgba(0,0,0,0.08)}
+.nav.at-top .nav-logo{opacity:1;transform:translateX(0);animation:navLogoIn .7s cubic-bezier(.22,.61,.36,1) both}
+@keyframes navLogoIn{from{opacity:0;transform:translateX(-50px)}to{opacity:1;transform:translateX(0)}}
+.nav.ready .nav-inner{animation:navPop .5s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes navPop{from{opacity:0;transform:translateY(60px) scale(.85)}to{opacity:1;transform:translateY(0) scale(1)}}
+.nav button{padding:10px 18px;border:none;background:transparent;border-radius:15px;cursor:pointer;font-size:.95rem;letter-spacing:.06em;color:#2f3e4e;transition:padding .6s cubic-bezier(.22,.61,.36,1),background .25s,color .25s}
+.nav.at-top button{padding:10px 18px}
 
-    /* ===== 循环文字展示：导航下、卡片上的解密文字（复刻 文字展示示例.txt）===== */
-    .decrypt-text {
-      position: fixed;
-      top: max(64px, calc(50% - 222px));
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 7;
-      font: 600 27px/1.3 '幼圆', 'YouYuan', -apple-system, "Segoe UI", system-ui, sans-serif;
-      letter-spacing: 0.06em;
-      color: #fff;
-      text-align: center;
-      white-space: nowrap;
-      pointer-events: none;
-      text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
-      transition: opacity 0.4s ease;
-    }
-    /* 主页大标题：千克之梦 KGDream（含 favicon），字号比循环文字大 50% */
-    .home-title {
-      position: fixed;
-      top: max(16px, calc(50% - 300px));
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 7;
-      display: flex;
-      align-items: center;
-      gap: 0.45em;
-      font: 700 40px/1 '幼圆', 'YouYuan', -apple-system, "Segoe UI", system-ui, sans-serif;
-      letter-spacing: 0.04em;
-      color: #fff;
-      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
-      pointer-events: none;
-      white-space: nowrap;
-    }
-    .home-title__icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 9px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
-    }
-    .home-title__text em {
-      font-style: normal;
-      color: #4ea3ff;
-    }
+.nav button.on{background:rgba(47,62,78,0.85);color:#f2efe9}
+.nav.scrolling{transform:translateY(calc(50vh - 30px))}
+.nav.scrolling .nav-inner{width:auto;max-width:none;justify-content:center;margin-left:auto;margin-right:14px;flex-direction:column;gap:6px;padding:7px;border-radius:18px;background:rgba(255,255,255,0.5);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,0.7);box-shadow:inset 0 1px 0 rgba(255,255,255,0.85),0 6px 24px rgba(0,0,0,0.12)}
+.nav.scrolling button{padding:6px;font-size:0;background:transparent;border:none;box-shadow:none;backdrop-filter:none}
+.nav.scrolling button svg{margin:0}
+.nav.scrolling .nav-logo{display:none}
+.nav.scrolling .nav-btns{flex-direction:column;gap:6px}
+@media(max-width:640px){.nav button{padding:8px 10px;font-size:.8rem}}
+.home-btn{display:inline-flex;align-items:center}
+.nav button{display:inline-flex;align-items:center}
+.home-btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;margin-right:7px;flex:none}
+.nav button svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;margin-right:6px;flex:none}
+.intro-side{position:absolute;left:0;right:0;bottom:26px;display:flex;flex-direction:row;gap:12px;justify-content:center;z-index:3}
+.intro-tab{padding:10px 22px;border-radius:12px;background:rgba(255,255,255,0.5);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,0.7);box-shadow:inset 0 1px 0 rgba(255,255,255,0.85),0 4px 16px rgba(0,0,0,0.06);font-size:.92rem;letter-spacing:.05em;color:#2f3e4e;text-align:center;cursor:pointer;transition:transform .2s ease,background .25s ease}
 
-    /* ===== 导航滑块：随滚动从上到下、滑块从左到右（无级）===== */
-    /* ===== 纯文字卡片：主页上的 5 张，复刻 BounceCards 弹性推开 + 每卡不同字体色 ===== */
-    .home-cards {
-      position: fixed;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 6;
-      pointer-events: none;
-    }
-    .cards {
-      position: relative;
-      width: 640px;
-      height: 240px;
-      pointer-events: auto;
-    }
-    .card {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 160px;
-      height: 206px;
-      margin: -103px 0 0 -80px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-start;
-      border-radius: 22px;
-      box-sizing: border-box;
-      border: 1.5px solid rgba(255, 255, 255, 0.28);
-      /* ReactBits GlassSurface 真实 glass（同导航栏）：透明磨砂 + 折射 + 多层柔影 */
-      --glass-frost: 0.18;
-      --glass-saturation: 1.35;
-      --filter-id: url(#glass-filter-card);
-      color: #fff;
-      font: 600 20px/1.4 '幼圆', 'YouYuan', -apple-system, "Segoe UI", system-ui, sans-serif;
-      text-align: left;
-      writing-mode: vertical-rl;
-      text-orientation: upright;
-      text-decoration: none;
-      padding: 16px;
-      box-shadow:
-        0 0 2px 1px light-dark(color-mix(in oklch, black, transparent 85%), color-mix(in oklch, white, transparent 65%)) inset,
-        0 0 10px 4px light-dark(color-mix(in oklch, black, transparent 90%), color-mix(in oklch, white, transparent 85%)) inset,
-        0 4px 16px rgba(17, 17, 26, .05),
-        0 8px 24px rgba(17, 17, 26, .05),
-        0 16px 56px rgba(17, 17, 26, .05),
-        0 4px 16px rgba(17, 17, 26, .05) inset,
-        0 8px 24px rgba(17, 17, 26, .05) inset,
-        0 16px 56px rgba(17, 17, 26, .05) inset;
-      transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
-      will-change: transform;
-    }
-    /* 每卡不同的字体颜色（卡片底色统一，不改动） */
-    .card:nth-child(1) { color: #6C5CE7; }
-    .card:nth-child(2) { color: #00B894; }
-    .card:nth-child(3) { color: #0984E3; }
-    .card:nth-child(4) { color: #E17055; }
-    .card:nth-child(5) { color: #E84393; }
-    .card:hover {
-      --glass-frost: 0.28;
-      box-shadow:
-        0 0 2px 1px light-dark(color-mix(in oklch, black, transparent 80%), color-mix(in oklch, white, transparent 60%)) inset,
-        0 0 14px 5px light-dark(color-mix(in oklch, black, transparent 85%), color-mix(in oklch, white, transparent 80%)) inset,
-        0 10px 30px rgba(17, 17, 26, .12),
-        0 18px 50px rgba(17, 17, 26, .12),
-        0 10px 30px rgba(17, 17, 26, .12) inset,
-        0 18px 50px rgba(17, 17, 26, .12) inset;
-    }
+.intro-tab.on{background:rgba(47,62,78,0.85);color:#f2efe9}
+.intro-main{position:absolute;left:14px;right:14px;top:112px;bottom:96px;display:flex;flex-direction:column;min-height:0;padding:18px;border-radius:20px;background:rgba(255,255,255,0.35);backdrop-filter:blur(18px) saturate(180%);-webkit-backdrop-filter:blur(18px) saturate(180%);border:1px solid rgba(255,255,255,0.6);box-shadow:inset 0 1px 0 rgba(255,255,255,0.7),0 8px 32px rgba(0,0,0,0.08)}
+.intro-panel{display:none;flex:1;flex-direction:column;min-height:0}
+.intro-panel.on{display:flex}
+.web-frame{flex:1;min-height:0;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.08)}
+.web-frame iframe{width:100%;height:100%;border:0;display:block}
+.web-tabs,.soft-tabs{display:flex;gap:6px;margin-top:14px;justify-content:center;flex-wrap:wrap}
+.web-tabs button,.soft-tabs button{padding:6px 13px;border-radius:11px;border:1px solid rgba(255,255,255,.7);background:rgba(255,255,255,.5);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#2f3e4e;font-size:.8rem;cursor:pointer;transition:background .2s,transform .15s;white-space:nowrap}
 
-    /* 安卓 / 移动端适配：竖向堆叠，取消散开位移，宽高自适应 */
-    @media (max-width: 640px) {
-      .option-wheel { --ow-font-size: 1.7rem; }
-      .wheel-wrap { max-width: 92vw; }
-      .wheel-desc {
-        /* 水平居中由 .intro-foot 的 flex（align-items:center)负责。
-           此处绝不能再用 left/translateX 定位：本元素无 position，
-           left 不生效而 translateX 会把整块文字推离中心（安卓端偏位的根源） */
-        max-width: 92vw;
-        font-size: 22px;
-        line-height: 1.45;
-        text-align: center;
-        /* 手机端允许自动换行，不再强制单行（避免长介绍文字溢出/截断） */
-        white-space: normal;
-        word-break: break-word;
-        overflow-wrap: anywhere;
-      }
-      .cards {
-        width: 90vw;
-        height: 220px;
-      }
-      .card {
-        margin: -63.5px 0 0 -46px;
-        width: 92px;
-        height: 127px;
-        font-size: 14px;
-        padding: 9px;
-      }
-      .pill-nav { top: 12px; padding: 8px 10px; }
-      .pill { height: 36px; padding: 0 14px; font-size: 13px; }
-      .decrypt-text { top: max(56px, calc(50% - 252px)); font-size: 19px; letter-spacing: 0.04em; white-space: normal; max-width: 88vw; text-align: center; }
-      .home-title { top: max(14px, calc(50% - 312px)); font-size: 28px; gap: 0.4em; }
-      .home-title__icon { width: 28px; height: 28px; border-radius: 7px; }
-      .intro-foot { bottom: 1.4vh; gap: 4px; }
-      .intro-shot { max-height: 38vh; max-width: 86vw; }
-    }
-  </style>
+.web-tabs button.on,.soft-tabs button.on{background:rgba(47,62,78,.85);color:#f2efe9}
+.soft-view{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;overflow:hidden;padding:0 10px}
+.soft-view-img{max-width:78%;max-height:58%;object-fit:contain;border-radius:16px;box-shadow:0 6px 24px rgba(0,0,0,.1)}
+.soft-view-info{max-width:80%;display:flex;flex-direction:column;align-items:center;text-align:center}
+.soft-view-info h3{font-size:1.3rem;color:#2f3e4e;margin-bottom:10px}
+.soft-view-info p{font-size:.88rem;color:#7a8894;line-height:1.7}
+
+.soft-grid{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-content:start;padding:2px}
+.soft-card{display:flex;flex-direction:column;background:rgba(255,255,255,.5);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.7);border-radius:16px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.05)}
+.soft-card img{width:100%;height:112px;object-fit:cover;background:rgba(255,255,255,.4);display:block}
+.soft-body{padding:12px 14px;display:flex;flex-direction:column;flex:1}
+.soft-body h3{font-size:.95rem;color:#2f3e4e;margin-bottom:5px}
+.soft-body p{font-size:.8rem;color:#7a8894;line-height:1.55;flex:1;margin-bottom:10px}
+.soft-btn{text-align:center;padding:8px;border-radius:10px;background:rgba(47,62,78,.85);color:#f2efe9;text-decoration:none;font-size:.82rem}
+@media(max-width:640px){.intro-main{left:10px;right:10px;top:96px;bottom:92px}}
+@media(max-width:640px){.intro-side{bottom:16px;gap:10px;padding:0 12px}.intro-tab{padding:9px 18px;font-size:.85rem}}
+@media(max-width:640px){
+.page h1{font-size:1.9rem;letter-spacing:.08em;padding-bottom:18px}
+.home-wrap{transform:translateY(-10px)}
+.home .logo{width:82px;height:82px;padding:10px;border-radius:20px}
+.home .brand{font-size:1.7rem;letter-spacing:.12em}
+.home-tag{font-size:.85rem;letter-spacing:.1em;margin-top:10px}
+.home-btns{bottom:70px;z-index:6;flex-wrap:wrap;gap:10px;padding:0 14px}
+.home-btn{flex:0 0 calc(50% - 5px);justify-content:center;padding:11px 10px;font-size:.82rem}
+.home-btn svg{width:15px;height:15px;margin-right:5px}
+.nav-inner{width:calc(100% - 20px);padding:8px 12px;border-radius:16px}
+.nav-logo b{display:none}
+.nav-tag{display:none}
+.nav-logo img,.nav.on-home .nav-logo img{width:26px;height:26px;opacity:1;margin-right:0}
+.nav-btns{gap:2px}
+.nav button,.nav.at-top button{padding:9px;border-radius:12px;font-size:0}
+.nav button svg{width:18px;height:18px;margin:0}
+.intro-tab{padding:9px 18px;font-size:.85rem}
+}
+.home-carousel{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(760px,94vw);height:min(440px,56vh);border-radius:18px;z-index:0;pointer-events:auto;background:rgba(255,255,255,0.5);backdrop-filter:blur(14px) saturate(160%);-webkit-backdrop-filter:blur(14px) saturate(160%);border:1px solid rgba(255,255,255,0.7);box-shadow:inset 0 1px 0 rgba(255,255,255,0.7),0 8px 28px rgba(0,0,0,0.08);overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:transform .2s ease,box-shadow .2s ease,opacity .7s ease}
+
+.home.carousel-in .home-carousel{opacity:1}
+.home-carousel img{max-width:100%;max-height:100%;object-fit:contain;opacity:1;transition:opacity .45s ease}
+.home-carousel video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.home-carousel img.fade{opacity:0}
+@media(max-width:640px){.home-carousel{position:relative;left:auto;top:auto;transform:none;margin-top:14px}}
+.home .logo,.home .brand,.home .home-tag{position:relative;z-index:2}
+.car-dots{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:3}
+.car-dot{width:8px;height:8px;border-radius:50%;background:rgba(47,62,78,0.25);cursor:pointer;transition:background .2s,transform .2s}
+.car-dot.on{background:rgba(47,62,78,0.85);transform:scale(1.25)}
+.car-count{position:absolute;bottom:10px;right:14px;font-size:.78rem;color:#5a6b7a;z-index:3}
+.home .logo,.home .brand,.home .home-tag,.brand-box{pointer-events:none;transition:opacity .35s ease}
+.brand-box{position:relative;z-index:2;display:inline-flex;flex-direction:column;align-items:center;padding:8px 20px;border-radius:16px;background:rgba(255,255,255,0.5);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,0.7);box-shadow:inset 0 1px 0 rgba(255,255,255,0.85),0 6px 24px rgba(0,0,0,0.08)}
+.home.hide-logo .logo,.home.hide-logo .brand-box{opacity:0!important}
+.dl-wrap{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;padding:0 20px;max-width:920px}
+.dl-wrap h1{font-size:3.8rem;font-weight:800;letter-spacing:.14em;color:#2f3e4e;padding-bottom:34px}
+.dl-sub{font-size:1.05rem;color:#5a6b7a;text-align:center;line-height:1.7;margin-top:6px;max-width:560px}
+.dl-row{display:flex;gap:22px;margin-top:44px;flex-wrap:wrap;justify-content:center}
+.dl-card{display:flex;flex-direction:column;align-items:center;gap:8px;padding:34px 60px;border-radius:22px;background:rgba(255,255,255,0.5);backdrop-filter:blur(18px) saturate(180%);-webkit-backdrop-filter:blur(18px) saturate(180%);border:1px solid rgba(255,255,255,0.7);box-shadow:inset 0 1px 0 rgba(255,255,255,0.85),0 8px 30px rgba(0,0,0,0.09);color:#2f3e4e;text-decoration:none}
+
+.dl-card b{font-size:1.4rem;font-weight:800;letter-spacing:.06em}
+.dl-card span{font-size:.82rem;opacity:.9}
+
+.dl-note{margin-top:36px;font-size:.85rem;color:#8a97a3;text-align:center;line-height:1.8}
+@media(max-width:640px){.dl-wrap h1{font-size:2.4rem;padding-bottom:20px}.dl-card{padding:22px 34px}.dl-row{gap:14px;margin-top:28px}.dl-card b{font-size:1.1rem}}
+.dl-agree{display:flex;align-items:center;gap:8px;margin-top:30px;font-size:.9rem;color:#5a6b7a;cursor:pointer;user-select:none}
+.dl-agree input{width:17px;height:17px;cursor:pointer;accent-color:#2f3e4e}
+.dl-agree a{color:#2f3e4e;text-decoration:underline}
+.dl-row.locked{opacity:.4;pointer-events:none;filter:grayscale(.5)}
+.ab-wrap{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr auto;gap:22px;width:100%;max-width:1180px;padding:0 24px;height:calc(100vh - 200px);box-sizing:border-box}
+.ab-col{min-width:0;min-height:0;display:flex;flex-direction:column;background:rgba(255,255,255,0.5);backdrop-filter:blur(18px) saturate(180%);-webkit-backdrop-filter:blur(18px) saturate(180%);border:1px solid rgba(255,255,255,0.7);box-shadow:inset 0 1px 0 rgba(255,255,255,0.85),0 8px 30px rgba(0,0,0,0.08);border-radius:20px;padding:20px 24px;overflow-y:auto}
+.ab-col h2{font-size:1.5rem;font-weight:700;color:#2f3e4e;letter-spacing:.08em;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(47,62,78,0.15);flex:none}
+.ab-col p{font-size:.9rem;line-height:1.85;color:#5a6b7a;margin-bottom:9px}
+.ab-clause p{font-size:.82rem}
+@media(max-width:640px){.ab-wrap{grid-template-columns:1fr;grid-template-rows:auto;height:auto;max-height:calc(100vh - 160px);overflow-y:auto;gap:14px;padding:0 14px}.ab-col{overflow:visible}.ab-foot{grid-column:auto}}
+.car-name{position:absolute;bottom:10px;left:14px;font-size:.9rem;font-weight:800;color:#fff;-webkit-text-stroke:1.2px rgba(30,40,55,0.9);text-shadow:0 2px 8px rgba(0,0,0,0.45);z-index:3}
+.ab-foot{grid-column:1 / -1;padding:16px 20px;text-align:center;font-size:.88rem;color:#5a6b7a;background:rgba(255,255,255,0.5);backdrop-filter:blur(18px) saturate(180%);-webkit-backdrop-filter:blur(18px) saturate(180%);border:1px solid rgba(255,255,255,0.7);border-radius:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.85),0 6px 24px rgba(0,0,0,0.08)}
+.ab-foot b{color:#2f3e4e;margin-right:8px}
+
+.car-arrow{position:absolute;top:calc(50% - 19px);width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,0.7);background:rgba(255,255,255,0.5);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#2f3e4e;font-size:1.3rem;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center;line-height:1;padding:0}
+.car-prev{left:12px}
+.car-next{right:12px}
+@keyframes carFade{from{opacity:0}to{opacity:1}}
+@keyframes carSlideL{from{opacity:0;transform:translateX(46px)}to{opacity:1;transform:translateX(0)}}
+@keyframes carSlideR{from{opacity:0;transform:translateX(-46px)}to{opacity:1;transform:translateX(0)}}
+@keyframes carZoom{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:scale(1)}}
+@keyframes carRot{from{opacity:0;transform:rotate(-7deg) scale(.9)}to{opacity:1;transform:rotate(0) scale(1)}}
+.nav-inner,.nav.at-top .nav-inner{width:calc(100% - 48px);max-width:1280px;margin:0 auto;padding:10px 28px;border-radius:20px;background:rgba(255,255,255,0.5);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,0.7);box-shadow:inset 0 1px 0 rgba(255,255,255,0.85),0 6px 24px rgba(0,0,0,0.08);gap:4px;justify-content:space-between}
+.nav-logo{background:none;border-radius:0;width:auto;height:auto;display:flex;align-items:center;gap:0;overflow:visible;flex:none}
+.nav-logo img{width:34px;height:34px;margin:0 10px 0 0;border-radius:0;background:none}
+.nav-logo b{display:block;font-size:1.15rem;font-weight:600;letter-spacing:.16em;color:#2f3e4e;max-width:220px;opacity:1;overflow:hidden;white-space:nowrap}
+.nav-btns{gap:4px}
+.nav button{padding:10px 18px;border:none;background:transparent;border-radius:15px;font-size:.95rem;font-weight:400;letter-spacing:.06em;color:#2f3e4e}
+.nav button.on{background:rgba(47,62,78,0.85);color:#f2efe9}
+.page.home{background:linear-gradient(120deg,#f2efe9,#e6efe4,#f0e9ee,#f2efe9);background-size:300% 300%;animation:bgDrift 16s ease-in-out infinite}
+@keyframes bgDrift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.nav.scrolling{transform:translateY(calc(50vh - 30px))}
+.nav.at-top.scrolling .nav-inner{width:auto;max-width:none;margin:0 14px 0 auto;flex-direction:column;gap:6px;padding:7px;border-radius:18px;justify-content:center}
+.nav.scrolling .nav-logo{display:none}
+.nav.scrolling .nav-btns{flex-direction:column;gap:6px}
+.nav.scrolling button{padding:6px;font-size:0;background:transparent;border:none;box-shadow:none}
+.web-frame{position:relative}
+.web-frame.fullscreen{position:fixed;inset:0;z-index:9999;border-radius:0;background:#fff;max-height:none}
+.frame-exit{display:none;position:absolute;top:12px;right:12px;z-index:21;padding:8px 18px;border-radius:10px;border:none;background:rgba(47,62,78,0.85);color:#f2efe9;cursor:pointer;font-size:.85rem}
+.web-frame.fullscreen .frame-exit{display:block}
+.frame-logo{position:absolute;top:10px;left:10px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.92);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:20;box-shadow:0 2px 10px rgba(0,0,0,0.25)}
+.frame-logo img{width:22px;height:22px}
+.set-home{background:rgba(47,62,78,0.85)!important;color:#f2efe9!important}
+#whiteout{position:fixed;inset:0;background:#fff;z-index:99999}
+body>.web-frame.fullscreen,.web-frame.fullscreen{position:fixed!important;left:0!important;top:0!important;right:0!important;bottom:0!important;width:100vw!important;height:100vh!important;z-index:99999!important;border-radius:0!important;margin:0!important;padding:0!important;background:#fff!important}
+.web-frame.fullscreen iframe{width:100%!important;height:100%!important;border:0!important}
+</style>
 </head>
 <body>
-  <!-- SEO 静态内容区：整站正文由 JS 渲染，爬虫抓不到；
-       此处用视觉隐藏（非 display:none）的静态文本镜像全部关键内容，供搜索引擎建立索引 -->
-  <style>
-    .seo-content {
-      position: absolute;
-      width: 1px; height: 1px;
-      margin: -1px; padding: 0; border: 0;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-      clip-path: inset(50%);
-    }
-  </style>
-  <section class="seo-content">
-    <h1>千克之梦 KGDream - 千克官方网站</h1>
-    <p>千克之梦（KGDream）是个人开发者「千克」的软件官网，主打作品为「千克起始页」——一款极简、无广告、开源的浏览器起始页（新标签页）。所有软件均免费，下载包内含完整源代码，支持蓝奏云、123云盘、迅雷云盘下载。</p>
-    <h2>软件列表（共 10 款）</h2>
-    <ul>
-      <li><h3>我的世界服务器启动器</h3><p>一键开服，联机无忧。点一下就能把服务器开起来，朋友秒进，联机从未如此简单。</p></li>
-      <li><h3>kgBing壁纸</h3><p>自动抓取必应每日美图。每天自动换一张必应首页的高清壁纸，桌面永远不重样。</p></li>
-      <li><h3>KG收银</h3><p>极简快捷，小白也能用的收银台。界面干净，操作直观，没有复杂流程，打开就能收银。</p></li>
-      <li><h3>Windows10&amp;11仿MacOS</h3><p>让Win系统变身高颜值Mac。一键应用，窗口、任务栏、菜单全仿Mac，电脑瞬间变样。</p></li>
-      <li><h3>门铃</h3><p>跨端推送响应，取代传统实体门铃。手机实时接收门铃通知，人在哪都能知道谁在门口。</p></li>
-      <li><h3>KGDream chrome扩展</h3><p>极简起始页，告别杂乱无章。没有广告，没有推送，只有你想看到的快捷方式。</p></li>
-      <li><h3>KgPan</h3><p>电脑传文件，跨设备极速互传。手机电脑之间直接传文件，不用数据线，速度飞快。</p></li>
-      <li><h3>Kg跃点网络优先切换</h3><p>改跃点，提网速。调一下网络跃点，让数据走最快的路，网速明显提升。</p></li>
-      <li><h3>千克Windows壁纸Pro</h3><p>超多源壁纸软件，C#新架构。聚合多个壁纸源，C#重写后更轻更快，壁纸随便换。</p></li>
-      <li><h3>起始页（千克起始页）</h3><p>极简起始页，让浏览回归纯粹。没有干扰，只有你收藏的站点，支持完整版与精简版在线体验。</p></li>
-    </ul>
-    <h2>千克起始页在线体验</h2>
-    <p>提供「千克起始页」完整版与「千克起始页精简版」两个版本的在线对比体验，均为极简、无广告的浏览器起始页。</p>
-    <h2>软件下载</h2>
-    <p>全部软件可通过蓝奏云、123云盘、迅雷云盘（提取码 qkzm）免费下载，压缩包内包含软件本体及完整源代码（开源）。</p>
-    <h2>联系千克</h2>
-    <p>邮箱：kuang45@outlook.com、wocao23@outlook.com、2051356281@qq.com；抖音：bblpro（千克有多少吨）；QQ：2051356281@qq.com。</p>
-  </section>
-  <!-- 顶部全局置顶的药丸导航（ReactBits GlassSurface 真实 SVG 滤镜玻璃） -->
-  <nav class="pill-nav glass-surface glass-surface--svg" aria-label="主导航"
-       style="--glass-frost:0.12; --glass-saturation:1.35; --filter-id:url(#glass-filter-nav)">
-    <svg class="glass-surface__filter" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="none">
-      <defs>
-        <filter id="glass-filter-nav" color-interpolation-filters="sRGB" x="-20%" y="-20%" width="140%" height="140%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.006 0.009" numOctaves="2" seed="6" stitchTiles="stitch" result="noise"/>
-          <feDisplacementMap in="SourceGraphic" in2="noise" xChannelSelector="R" yChannelSelector="G" id="gs-red" scale="14" result="dispRed"/>
-          <feColorMatrix in="dispRed" type="matrix" values="1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0" result="red"/>
-          <feDisplacementMap in="SourceGraphic" in2="noise" xChannelSelector="R" yChannelSelector="G" id="gs-green" scale="9" result="dispGreen"/>
-          <feColorMatrix in="dispGreen" type="matrix" values="0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0" result="green"/>
-          <feDisplacementMap in="SourceGraphic" in2="noise" xChannelSelector="R" yChannelSelector="G" id="gs-blue" scale="4" result="dispBlue"/>
-          <feColorMatrix in="dispBlue" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0" result="blue"/>
-          <feBlend in="red" in2="green" mode="screen" result="rg"/>
-          <feBlend in="rg" in2="blue" mode="screen" result="output"/>
-          <feGaussianBlur in="output" stdDeviation="0.69"/>
-        </filter>
-      </defs>
-    </svg>
-    <div class="pill-track">
-      <span class="pill-thumb"></span>
-      <span class="pill-marker"></span>
-      <a class="pill" href="#home" data-target="top">主页</a>
-      <a class="pill" href="#intro" data-target="black">介绍</a>
-      <a class="pill" href="#exp" data-target="c">体验</a>
-      <a class="pill" href="#down" data-target="down">下载</a>
-      <a class="pill" href="#about" data-target="about">关于</a>
-      <a class="pill" href="#privacy" data-target="privacy">协议</a>
-    </div>
-  </nav>
-  <div class="home-title">
-    <img class="home-title__icon" src="favicon.png" alt="" />
-    <span class="home-title__text">千克之梦 <em>KGDream</em></span>
-  </div>
-  <div class="decrypt-text" aria-live="polite"></div>
-  <canvas id="bg"></canvas>
-  <!-- 主页上的 4 张纯文字卡片（ReactBits GlassSurface 真实玻璃，同导航栏） -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <defs>
-      <filter id="glass-filter-card" color-interpolation-filters="sRGB" x="-20%" y="-20%" width="140%" height="140%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.006 0.009" numOctaves="2" seed="6" stitchTiles="stitch" result="noise"/>
-        <feDisplacementMap in="SourceGraphic" in2="noise" xChannelSelector="R" yChannelSelector="G" scale="14" result="dispRed"/>
-        <feColorMatrix in="dispRed" type="matrix" values="1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0" result="red"/>
-        <feDisplacementMap in="SourceGraphic" in2="noise" xChannelSelector="R" yChannelSelector="G" scale="9" result="dispGreen"/>
-        <feColorMatrix in="dispGreen" type="matrix" values="0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0" result="green"/>
-        <feDisplacementMap in="SourceGraphic" in2="noise" xChannelSelector="R" yChannelSelector="G" scale="4" result="dispBlue"/>
-        <feColorMatrix in="dispBlue" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0" result="blue"/>
-        <feBlend in="red" in2="green" mode="screen" result="rg"/>
-        <feBlend in="rg" in2="blue" mode="screen" result="output"/>
-        <feGaussianBlur in="output" stdDeviation="0.35"/>
-      </filter>
-    </defs>
-  </svg>
-  <div class="home-cards">
-    <div class="cards">
-      <a class="card glass-surface glass-surface--svg" href="x.html">千克起始页</a>
-      <a class="card glass-surface glass-surface--svg" href="lite.html">千克起始页精简版</a>
-      <a class="card glass-surface glass-surface--svg" href="#down" data-target="down">下载</a>
-      <a class="card glass-surface glass-surface--svg" href="#privacy" data-target="privacy">协议</a>
-      <a class="card glass-surface glass-surface--svg" href="e.html">极简搜索</a>
-    </div>
-  </div>
-  <div class="snap-page"></div>
-  <div class="snap-page"></div>
-  <div class="snap-page"></div>
-  <div class="snap-page"></div>
-  <div class="snap-page"></div>
-  <div class="snap-page"></div>
-  <div class="snap-page"></div>
-  <div class="snap-page"></div>
-  <!-- SEO：静态可抓取内容（Bing 不执行 JS 也能读到真实文字）；视觉隐藏但保留在 DOM 中 -->
-  <section class="seo-content" aria-label="千克之梦 KGDream 软件总览">
-    <h1>千克之梦 KGDream 官方网站 — 免费开源小工具总览</h1>
-    <p>千克之梦（KGDream）主打极简、无广告、开源的浏览器起始页，并提供 10 款免费开源小工具，支持 Windows、安卓与网页端，可通过蓝奏云、123云盘、迅雷云盘下载，均包含源代码。</p>
-    <ul>
-      <li><strong>我的世界服务器启动器</strong>（Windows）：一键开服，联机无忧。点一下就能把服务器开起来，朋友秒进，联机从未如此简单。</li>
-      <li><strong>kgBing壁纸</strong>（Windows）：自动抓取必应每日美图。每天自动换一张必应首页的高清壁纸，桌面永远不重样。</li>
-      <li><strong>KG收银</strong>（Windows）：极简快捷，小白也能用的收银台。界面干净，操作直观，没有复杂流程，打开就能收银。</li>
-      <li><strong>Windows10&amp;11仿MacOS</strong>（系统）：让Win系统变身高颜值Mac。一键应用，窗口、任务栏、菜单全仿Mac，电脑瞬间变样。</li>
-      <li><strong>门铃</strong>（安卓）：跨端推送响应，取代传统实体门铃。手机实时接收门铃通知，人在哪都能知道谁在门口。</li>
-      <li><strong>KGDreamchrome扩展</strong>（网页）：极简起始页，告别杂乱无章。没有广告，没有推送，只有你想看到的快捷方式。</li>
-      <li><strong>KgPan</strong>（Windows）：电脑传文件，跨设备极速互传。手机电脑之间直接传文件，不用数据线，速度飞快。</li>
-      <li><strong>Kg跃点网络优先切换</strong>（Windows）：改跃点，提网速。调一下网络跃点，让数据走最快的路，网速明显提升。</li>
-      <li><strong>千克Windows壁纸Pro</strong>（Windows）：超多源壁纸软件，C#新架构。聚合多个壁纸源，C#重写后更轻更快，壁纸随便换。</li>
-      <li><strong>起始页</strong>（网页）：极简起始页，让浏览回归纯粹。没有干扰，只有你收藏的站点，下滑开始体验。</li>
-    </ul>
-    <p>下载方式：蓝奏云 / 123云盘 / 迅雷云盘，安装包均附带源代码。更多内容见网站「下载」「关于」「协议」等页面。</p>
-  </section>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "千克之梦 KGDream 软件列表",
-    "description": "千克之梦（KGDream）提供的 10 款免费开源小工具。",
-    "itemListElement": [
-      {"@type":"ListItem","position":1,"item":{"@type":"SoftwareApplication","name":"我的世界服务器启动器","operatingSystem":"Windows","applicationCategory":"UtilitiesApplication","description":"一键开服，联机无忧。点一下就能把服务器开起来，朋友秒进，联机从未如此简单。","image":"IndexData/MC服务器启动器.png"}},
-      {"@type":"ListItem","position":2,"item":{"@type":"SoftwareApplication","name":"kgBing壁纸","operatingSystem":"Windows","applicationCategory":"MultimediaApplication","description":"自动抓取必应每日美图。每天自动换一张必应首页的高清壁纸，桌面永远不重样。","image":"IndexData/壁纸.png"}},
-      {"@type":"ListItem","position":3,"item":{"@type":"SoftwareApplication","name":"KG收银","operatingSystem":"Windows","applicationCategory":"BusinessApplication","description":"极简快捷，小白也能用的收银台。界面干净，操作直观，没有复杂流程，打开就能收银。","image":"IndexData/收银.png"}},
-      {"@type":"ListItem","position":4,"item":{"@type":"SoftwareApplication","name":"Windows10&11仿MacOS","operatingSystem":"Windows","applicationCategory":"CustomApplication","description":"让Win系统变身高颜值Mac。一键应用，窗口、任务栏、菜单全仿Mac，电脑瞬间变样。","image":"IndexData/windows11仿mac.png"}},
-      {"@type":"ListItem","position":5,"item":{"@type":"SoftwareApplication","name":"门铃","operatingSystem":"Android","applicationCategory":"CommunicationApplication","description":"跨端推送响应，取代传统实体门铃。手机实时接收门铃通知，人在哪都能知道谁在门口。","image":"IndexData/门铃.png"}},
-      {"@type":"ListItem","position":6,"item":{"@type":"SoftwareApplication","name":"KGDreamchrome扩展","operatingSystem":"Web","applicationCategory":"BrowserApplication","description":"极简起始页，告别杂乱无章。没有广告，没有推送，只有你想看到的快捷方式。","image":"IndexData/KGDream chrome扩展.png"}},
-      {"@type":"ListItem","position":7,"item":{"@type":"SoftwareApplication","name":"KgPan","operatingSystem":"Windows","applicationCategory":"UtilitiesApplication","description":"电脑传文件，跨设备极速互传。手机电脑之间直接传文件，不用数据线，速度飞快。","image":"IndexData/kgNAS.png"}},
-      {"@type":"ListItem","position":8,"item":{"@type":"SoftwareApplication","name":"Kg跃点网络优先切换","operatingSystem":"Windows","applicationCategory":"UtilitiesApplication","description":"改跃点，提网速。调一下网络跃点，让数据走最快的路，网速明显提升。","image":"IndexData/Kg跃点网络优先切换.png"}},
-      {"@type":"ListItem","position":9,"item":{"@type":"SoftwareApplication","name":"千克Windows壁纸Pro","operatingSystem":"Windows","applicationCategory":"MultimediaApplication","description":"超多源壁纸软件，C#新架构。聚合多个壁纸源，C#重写后更轻更快，壁纸随便换。","image":"IndexData/壁纸pro版本.png"}},
-      {"@type":"ListItem","position":10,"item":{"@type":"SoftwareApplication","name":"起始页","operatingSystem":"Web","applicationCategory":"BrowserApplication","description":"极简起始页，让浏览回归纯粹。没有干扰，只有你收藏的站点，下滑开始体验。","image":"IndexData/起始页.png"}}
-    ]
-  }
-  </script>
-
-  <section class="black-screen">
-    <div class="intro-content">
-      <div class="wheel-wrap">
-        <div class="option-wheel" id="genreWheel" role="listbox" tabindex="0" aria-label="选项轮盘"></div>
-        <!-- 屏障：覆盖轮盘，阻止用户转动（不改变其他任何行为） -->
-        <div class="wheel-shield" aria-hidden="true"></div>
-      </div>
-      <!-- 截图置于正中（原介绍文字位置），左侧轮盘字体可遮挡之 -->
-      <img class="intro-shot" id="introShot" alt="" />
-    </div>
-    <!-- 底部：上排[页数][平台提示(右侧)]，下排[介绍文字一行] -->
-    <div class="intro-foot hide" id="introFoot">
-      <div class="intro-meta">
-        <div class="wheel-counter" id="wheelCounter" aria-hidden="true">
-          <span class="wheel-counter__cur" id="wheelCur">01</span>
-          <span class="wheel-counter__sep">/</span>
-          <span class="wheel-counter__total" id="wheelTotal">10</span>
-        </div>
-        <span class="intro-plat" id="introPlat"></span>
-      </div>
-      <div class="wheel-desc" id="wheelDesc" aria-live="polite"></div>
-    </div>
-  </section>
-  <section class="screen-c">
-    <div class="exp-split" id="expSplit">
-      <div class="exp-pane exp-pane--left" id="expLeft">
-        <iframe id="expFrameX" src="x.html" title="起始页体验-千克起始页"></iframe>
-        <span class="exp-label exp-label--l">千克起始页</span>
-      </div>
-      <div class="exp-divider" id="expDivider"></div>
-      <div class="exp-pane exp-pane--right" id="expRight">
-        <iframe id="expFrameLite" src="lite.html" title="起始页体验-千克起始页精简版"></iframe>
-        <span class="exp-label exp-label--r">千克起始页精简版</span>
-      </div>
-    </div>
-  </section>
-  <section class="screen-down" id="download">
-    <canvas class="bg-canvas"></canvas>
-    <div class="dl-wrap">
-      <h2 class="dl-head">请选择您的下载选项</h2>
-      <div class="dl-menu" id="dlMenu">
-        <div class="dl-item">
-          <a class="dl-link" href="https://qkzm.lanzouu.com/b0188grk4b" target="_blank" rel="noopener" data-text="蓝奏云">蓝奏云</a>
-          <div class="dl-marquee"><div class="dl-marquee__track">
-            <div class="dl-marquee__group"></div><div class="dl-marquee__group"></div>
-          </div></div>
-        </div>
-        <div class="dl-item">
-          <a class="dl-link" href="https://1823501963.share.123pan.cn/123pan/jE4Fjv-OZpyh" target="_blank" rel="noopener" data-text="123云盘">123云盘</a>
-          <div class="dl-marquee"><div class="dl-marquee__track">
-            <div class="dl-marquee__group"></div><div class="dl-marquee__group"></div>
-          </div></div>
-        </div>
-        <div class="dl-item">
-          <a class="dl-link" href="https://pan.xunlei.com/s/VP-dnJ769WRxqwHAirDl7H3oA1?pwd=kp7a#" target="_blank" rel="noopener" data-text="迅雷云盘">迅雷云盘</a>
-          <div class="dl-marquee"><div class="dl-marquee__track">
-            <div class="dl-marquee__group"></div><div class="dl-marquee__group"></div>
-          </div></div>
-        </div>
-      </div>
-      <p class="dl-code">提取码：qkzm</p>
-      <div class="dl-consent">
-        <label class="dl-check">
-          <input type="checkbox" id="dlAgree">
-          <span class="dl-check__box"></span>
-          <span class="dl-check__txt">确认并同意</span>
-        </label>
-        <a class="dl-license" href="#privacy" data-target="privacy">《协议》</a>
-        <span class="dl-conn">与</span>
-        <a class="dl-license" href="#privacy" data-target="privacy">《GNU通用公共许可证》</a>
-      </div>
-    </div>
-  </section>
-  <section class="screen-about" id="about">
-    <canvas class="bg-canvas"></canvas>
-    <div class="about-inner">
-      <h2 class="about-title">关于千克起始页</h2>
-      <div class="about-scroll">
-        <div class="about-story">
-          <p>做一套真正干净、好用、不烦人的工具。</p>
-          <p>极简、无广告、开源，这是从一开始就没打算妥协的三件事。</p>
-          <p>为什么做？<br>因为市面上不是没有同类工具，就是不好用；好用的要付费，免费的不是捆绑就是找不到。与其等一个完美的工具出现，不如自己手搓一个。</p>
-          <p>一切的开始，其实很简单——<br>嫌弃浏览器主页不够好看，就动手写了一个起始页。<br>后来发现，这种“嫌弃”能延伸到很多地方：壁纸、收银、传文件、服务器启动器……<br>于是就有了这一堆系列。</p>
-          <p>千克起始页不是什么大平台，<br>只是一个开发者对自己日常需求的诚实回应。</p>
-          <p>如果你也在用，我很感谢你。<br>虽然现在可能还没什么人用，但这份感谢是真的。</p>
-          <p>贡献者就我一个，<br>但背后还有神秘的好人。<br>帮了我很多。</p>
-          <p>谢谢选择我</p>
-        </div>
-      </div>
-      <div class="about-foot">
-        <h3 class="about-subhead">联系方式</h3>
-        <ul class="about-contact">
-          <li><span class="about-label">邮箱：</span><span class="about-glitch" data-text="kuang45@outlook.com, wocao23@outlook.com, 2051356281@qq.com">kuang45@outlook.com, wocao23@outlook.com, 2051356281@qq.com</span></li>
-          <li><span class="about-label">抖音：</span><span class="about-glitch" data-text="bblpro（千克有多少吨）">bblpro（千克有多少吨）</span></li>
-          <li><span class="about-label">QQ：</span><span class="about-glitch" data-text="2051356281@qq.com">2051356281@qq.com</span></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-  <section class="screen-privacy">
-    <iframe id="privacyFrame" src="t.html" title="许可协议"></iframe>
-  </section>
-  <div class="scroll-hint">SCROLL</div>
-
-  <script>
-    // 无障碍：系统开启“减少动态效果”时，跳过持续型 JS 动画（保留静态画面）
-    const REDUCED_MOTION = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    // ===== 背景：ShapeGrid（来自 背景示例.txt，纯 JS 实现）=====
-    const canvas = document.getElementById('bg');
-    const ctx = canvas.getContext('2d');
-
-    // 配置（与示例一致；hoverTrailAmount=0 即“鼠标一次只影响一个方块”）
-    const direction = 'right';
-    const speed = 0.5;
-    const borderColor = '#999';
-    const squareSize = 60;
-    const hoverFillColor = '#222';
-    const shape = 'square';        // square | hexagon | triangle | circle
-    const hoverTrailAmount = 0;
-
-    const isHex = shape === 'hexagon';
-    const isTri = shape === 'triangle';
-    const hexHoriz = squareSize * 1.5;
-    const hexVert = squareSize * Math.sqrt(3);
-
-    const gridOffset = { x: 0, y: 0 };
-    let hoveredSquare = null;
-    const trailCells = [];
-    const cellOpacities = new Map();
-
-    const cw = () => window.innerWidth;
-    const ch = () => window.innerHeight;
-
-    function resizeCanvas() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.floor(cw() * dpr);
-      canvas.height = Math.floor(ch() * dpr);
-      canvas.style.width = cw() + 'px';
-      canvas.style.height = ch() + 'px';
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-
-    function drawHex(cx, cy, size) {
-      ctx.beginPath();
-      for (let i = 0; i < 6; i++) {
-        const angle = (Math.PI / 3) * i;
-        const vx = cx + size * Math.cos(angle);
-        const vy = cy + size * Math.sin(angle);
-        if (i === 0) ctx.moveTo(vx, vy);
-        else ctx.lineTo(vx, vy);
-      }
-      ctx.closePath();
-    }
-
-    function drawCircle(cx, cy, size) {
-      ctx.beginPath();
-      ctx.arc(cx, cy, size / 2, 0, Math.PI * 2);
-      ctx.closePath();
-    }
-
-    function drawTriangle(cx, cy, size, flip) {
-      ctx.beginPath();
-      if (flip) {
-        ctx.moveTo(cx, cy + size / 2);
-        ctx.lineTo(cx + size / 2, cy - size / 2);
-        ctx.lineTo(cx - size / 2, cy - size / 2);
-      } else {
-        ctx.moveTo(cx, cy - size / 2);
-        ctx.lineTo(cx + size / 2, cy + size / 2);
-        ctx.lineTo(cx - size / 2, cy + size / 2);
-      }
-      ctx.closePath();
-    }
-
-    function drawGrid() {
-      ctx.clearRect(0, 0, cw(), ch());
-
-      if (isHex) {
-        const colShift = Math.floor(gridOffset.x / hexHoriz);
-        const offsetX = ((gridOffset.x % hexHoriz) + hexHoriz) % hexHoriz;
-        const offsetY = ((gridOffset.y % hexVert) + hexVert) % hexVert;
-        const cols = Math.ceil(cw() / hexHoriz) + 3;
-        const rows = Math.ceil(ch() / hexVert) + 3;
-        for (let col = -2; col < cols; col++) {
-          for (let row = -2; row < rows; row++) {
-            const cx = col * hexHoriz + offsetX;
-            const cy = row * hexVert + ((col + colShift) % 2 !== 0 ? hexVert / 2 : 0) + offsetY;
-            const cellKey = `${col},${row}`;
-            const alpha = cellOpacities.get(cellKey);
-            if (alpha) {
-              ctx.globalAlpha = alpha;
-              drawHex(cx, cy, squareSize);
-              ctx.fillStyle = hoverFillColor;
-              ctx.fill();
-              ctx.globalAlpha = 1;
-            }
-            drawHex(cx, cy, squareSize);
-            ctx.strokeStyle = borderColor;
-            ctx.stroke();
-          }
-        }
-      } else if (isTri) {
-        const halfW = squareSize / 2;
-        const colShift = Math.floor(gridOffset.x / halfW);
-        const rowShift = Math.floor(gridOffset.y / squareSize);
-        const offsetX = ((gridOffset.x % halfW) + halfW) % halfW;
-        const offsetY = ((gridOffset.y % squareSize) + squareSize) % squareSize;
-        const cols = Math.ceil(cw() / halfW) + 4;
-        const rows = Math.ceil(ch() / squareSize) + 4;
-        for (let col = -2; col < cols; col++) {
-          for (let row = -2; row < rows; row++) {
-            const cx = col * halfW + offsetX;
-            const cy = row * squareSize + squareSize / 2 + offsetY;
-            const flip = ((col + colShift + row + rowShift) % 2 + 2) % 2 !== 0;
-            const cellKey = `${col},${row}`;
-            const alpha = cellOpacities.get(cellKey);
-            if (alpha) {
-              ctx.globalAlpha = alpha;
-              drawTriangle(cx, cy, squareSize, flip);
-              ctx.fillStyle = hoverFillColor;
-              ctx.fill();
-              ctx.globalAlpha = 1;
-            }
-            drawTriangle(cx, cy, squareSize, flip);
-            ctx.strokeStyle = borderColor;
-            ctx.stroke();
-          }
-        }
-      } else if (shape === 'circle') {
-        const offsetX = ((gridOffset.x % squareSize) + squareSize) % squareSize;
-        const offsetY = ((gridOffset.y % squareSize) + squareSize) % squareSize;
-        const cols = Math.ceil(cw() / squareSize) + 3;
-        const rows = Math.ceil(ch() / squareSize) + 3;
-        for (let col = -2; col < cols; col++) {
-          for (let row = -2; row < rows; row++) {
-            const cx = col * squareSize + squareSize / 2 + offsetX;
-            const cy = row * squareSize + squareSize / 2 + offsetY;
-            const cellKey = `${col},${row}`;
-            const alpha = cellOpacities.get(cellKey);
-            if (alpha) {
-              ctx.globalAlpha = alpha;
-              drawCircle(cx, cy, squareSize);
-              ctx.fillStyle = hoverFillColor;
-              ctx.fill();
-              ctx.globalAlpha = 1;
-            }
-            drawCircle(cx, cy, squareSize);
-            ctx.strokeStyle = borderColor;
-            ctx.stroke();
-          }
-        }
-      } else {
-        const offsetX = ((gridOffset.x % squareSize) + squareSize) % squareSize;
-        const offsetY = ((gridOffset.y % squareSize) + squareSize) % squareSize;
-        const cols = Math.ceil(cw() / squareSize) + 3;
-        const rows = Math.ceil(ch() / squareSize) + 3;
-        for (let col = -2; col < cols; col++) {
-          for (let row = -2; row < rows; row++) {
-            const sx = col * squareSize + offsetX;
-            const sy = row * squareSize + offsetY;
-            const cellKey = `${col},${row}`;
-            const alpha = cellOpacities.get(cellKey);
-            if (alpha) {
-              ctx.globalAlpha = alpha;
-              ctx.fillStyle = hoverFillColor;
-              ctx.fillRect(sx, sy, squareSize, squareSize);
-              ctx.globalAlpha = 1;
-            }
-            ctx.strokeStyle = borderColor;
-            ctx.strokeRect(sx, sy, squareSize, squareSize);
-          }
-        }
-      }
-
-      // 与示例一致的径向渐变（中心透明 -> 边缘黑）
-      const gradient = ctx.createRadialGradient(
-        cw() / 2, ch() / 2, 0,
-        cw() / 2, ch() / 2,
-        Math.sqrt(cw() ** 2 + ch() ** 2) / 2
-      );
-      gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, cw(), ch());
-    }
-
-    let requestRef;
-    function updateAnimation() {
-      const effectiveSpeed = Math.max(speed, 0.1);
-      const wrapX = isHex ? hexHoriz * 2 : squareSize;
-      const wrapY = isHex ? hexVert : isTri ? squareSize * 2 : squareSize;
-      switch (direction) {
-        case 'right':     gridOffset.x = (gridOffset.x - effectiveSpeed + wrapX) % wrapX; break;
-        case 'left':      gridOffset.x = (gridOffset.x + effectiveSpeed + wrapX) % wrapX; break;
-        case 'up':        gridOffset.y = (gridOffset.y + effectiveSpeed + wrapY) % wrapY; break;
-        case 'down':      gridOffset.y = (gridOffset.y - effectiveSpeed + wrapY) % wrapY; break;
-        case 'diagonal':
-          gridOffset.x = (gridOffset.x - effectiveSpeed + wrapX) % wrapX;
-          gridOffset.y = (gridOffset.y - effectiveSpeed + wrapY) % wrapY;
-          break;
-      }
-      updateCellOpacities();
-      drawGrid();
-      requestRef = requestAnimationFrame(updateAnimation);
-    }
-
-    function updateCellOpacities() {
-      const targets = new Map();
-      if (hoveredSquare) targets.set(`${hoveredSquare.x},${hoveredSquare.y}`, 1);
-      if (hoverTrailAmount > 0) {
-        for (let i = 0; i < trailCells.length; i++) {
-          const t = trailCells[i];
-          const key = `${t.x},${t.y}`;
-          if (!targets.has(key)) {
-            targets.set(key, (trailCells.length - i) / (trailCells.length + 1));
-          }
-        }
-      }
-      for (const [key] of targets) {
-        if (!cellOpacities.has(key)) cellOpacities.set(key, 0);
-      }
-      for (const [key, opacity] of cellOpacities) {
-        const target = targets.get(key) || 0;
-        const next = opacity + (target - opacity) * 0.15;
-        if (next < 0.005) cellOpacities.delete(key);
-        else cellOpacities.set(key, next);
-      }
-    }
-
-    function handleMouseMove(event) {
-      const rect = canvas.getBoundingClientRect();
-      const mouseX = event.clientX - rect.left;
-      const mouseY = event.clientY - rect.top;
-
-      if (isHex) {
-        const colShift = Math.floor(gridOffset.x / hexHoriz);
-        const offsetX = ((gridOffset.x % hexHoriz) + hexHoriz) % hexHoriz;
-        const offsetY = ((gridOffset.y % hexVert) + hexVert) % hexVert;
-        const adjustedX = mouseX - offsetX;
-        const adjustedY = mouseY - offsetY;
-        const col = Math.round(adjustedX / hexHoriz);
-        const rowOffset = (col + colShift) % 2 !== 0 ? hexVert / 2 : 0;
-        const row = Math.round((adjustedY - rowOffset) / hexVert);
-        if (!hoveredSquare || hoveredSquare.x !== col || hoveredSquare.y !== row) {
-          if (hoveredSquare && hoverTrailAmount > 0) {
-            trailCells.unshift({ ...hoveredSquare });
-            if (trailCells.length > hoverTrailAmount) trailCells.length = hoverTrailAmount;
-          }
-          hoveredSquare = { x: col, y: row };
-        }
-      } else if (isTri) {
-        const halfW = squareSize / 2;
-        const offsetX = ((gridOffset.x % halfW) + halfW) % halfW;
-        const offsetY = ((gridOffset.y % squareSize) + squareSize) % squareSize;
-        const adjustedX = mouseX - offsetX;
-        const adjustedY = mouseY - offsetY;
-        const col = Math.round(adjustedX / halfW);
-        const row = Math.floor(adjustedY / squareSize);
-        if (!hoveredSquare || hoveredSquare.x !== col || hoveredSquare.y !== row) {
-          if (hoveredSquare && hoverTrailAmount > 0) {
-            trailCells.unshift({ ...hoveredSquare });
-            if (trailCells.length > hoverTrailAmount) trailCells.length = hoverTrailAmount;
-          }
-          hoveredSquare = { x: col, y: row };
-        }
-      } else if (shape === 'circle') {
-        const offsetX = ((gridOffset.x % squareSize) + squareSize) % squareSize;
-        const offsetY = ((gridOffset.y % squareSize) + squareSize) % squareSize;
-        const adjustedX = mouseX - offsetX;
-        const adjustedY = mouseY - offsetY;
-        const col = Math.round(adjustedX / squareSize);
-        const row = Math.round(adjustedY / squareSize);
-        if (!hoveredSquare || hoveredSquare.x !== col || hoveredSquare.y !== row) {
-          if (hoveredSquare && hoverTrailAmount > 0) {
-            trailCells.unshift({ ...hoveredSquare });
-            if (trailCells.length > hoverTrailAmount) trailCells.length = hoverTrailAmount;
-          }
-          hoveredSquare = { x: col, y: row };
-        }
-      } else {
-        const offsetX = ((gridOffset.x % squareSize) + squareSize) % squareSize;
-        const offsetY = ((gridOffset.y % squareSize) + squareSize) % squareSize;
-        const adjustedX = mouseX - offsetX;
-        const adjustedY = mouseY - offsetY;
-        const col = Math.floor(adjustedX / squareSize);
-        const row = Math.floor(adjustedY / squareSize);
-        if (!hoveredSquare || hoveredSquare.x !== col || hoveredSquare.y !== row) {
-          if (hoveredSquare && hoverTrailAmount > 0) {
-            trailCells.unshift({ ...hoveredSquare });
-            if (trailCells.length > hoverTrailAmount) trailCells.length = hoverTrailAmount;
-          }
-          hoveredSquare = { x: col, y: row };
-        }
-      }
-    }
-
-    function handleMouseLeave() {
-      if (hoveredSquare && hoverTrailAmount > 0) {
-        trailCells.unshift({ ...hoveredSquare });
-        if (trailCells.length > hoverTrailAmount) trailCells.length = hoverTrailAmount;
-      }
-      hoveredSquare = null;
-    }
-
-    // 向下滚动：纯黑界面由下往上平滑覆盖（进入高级纯黑界面）
-    const blackScreen = document.querySelector('.black-screen');
-    const screenC = document.querySelector('.screen-c');
-    const screenDown = document.querySelector('.screen-down');
-    const screenPriv = document.querySelector('.screen-privacy');
-    const screenAbout = document.querySelector('.screen-about');
-    const scrollHint = document.querySelector('.scroll-hint');
-    // 标记“是否完完全全下滑到了许可协议界面”：只有该标志为真，才允许滚动隐私内容
-    let privacyArrived = false;
-    // 标记“是否完完全全下滑到了起始页体验界面”：只有该标志为真，才允许 iframe 内交互 / 滚动边界转发
-    let expArrived = false;
-    // 当前主页面滚动位置与界面，供“带派不老铁”按主页面进度显示
-    let curSection = 0, curY = 0;
-    // 瞬移护栏：强制吸附下单次滚动事件的合法位移远小于一屏；
-    // 超过 1.6 屏即为浏览器「重新吸附直冲页尾」异常（动态视口+动量的已知问题），立刻弹回最近一屏
-    const COARSE = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-    let lastGuardY = null;
-    const pillThumb = document.querySelector('.pill-thumb');
-    const pillMarker = document.querySelector('.pill-marker');
-    const pillTrack = document.querySelector('.pill-track');
-    function onScroll() {
-      const vh = window.innerHeight;
-      const y = window.scrollY;
-      // 瞬移护栏：仅触屏生效。首次事件只记录基准；之后若单次事件位移超 1.6 屏，
-      // 判定为非法瞬移，无动画弹回最近的 snap-page 顶部并结束本次处理
-      if (COARSE) {
-        if (lastGuardY === null) { lastGuardY = y; }
-        else if (Math.abs(y - lastGuardY) > vh * 1.6) {
-          const nearest = Math.max(0, Math.min(7, Math.round(y / vh))) * vh;
-          lastGuardY = nearest;
-          if (Math.abs(nearest - y) > 2) { window.scrollTo(0, nearest); return; }
-          return;
-        } else { lastGuardY = y; }
-      }
-      // 滑块随整页滚动进度在导航轨道上从左向右滑动
-      if (pillThumb) {
-        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = maxScroll > 0 ? Math.min(1, Math.max(0, y / maxScroll)) : 0;
-        pillThumb.style.left = (progress * 84) + '%';
-      }
-      // 根据 snap 区域判定当前界面（0=主页 1=软件介绍 2=起始页体验 3=下载 4=关于 5=许可协议）
-      let section;
-      if (y < vh) section = 0;
-      else if (y < 3 * vh) section = 1;   // 软件介绍/轮盘：占两屏，停住并随滚动旋转
-      else if (y < 4 * vh) section = 2;
-      else if (y < 5 * vh) section = 3;
-      else if (y < 6 * vh) section = 4;
-      else section = 5;
-      curY = y;
-      // 刚进入下载界面时，自动播放 3 个下载源的一次性动画
-      if (section === 3 && curSection !== 3) triggerDlAuto();
-      curSection = section;
-      // 通过 CSS 类切换驱动界面滑入/覆盖动画（CSS transition 0.6s），无 scroll-progress 中间态
-      blackScreen.classList.toggle('active', section >= 1);
-      blackScreen.classList.toggle('dim', section >= 2);
-      if (screenC) {
-        screenC.classList.toggle('active', section >= 2);
-        screenC.classList.toggle('dim', section >= 3);
-      }
-      // 起始页体验：滑入到位后允许 iframe 交互（否则里面点不了任何东西）
-      expArrived = section >= 2;
-      if (screenC) {
-        screenC.querySelectorAll('iframe').forEach(ef => {
-          ef.style.pointerEvents = expArrived ? 'auto' : 'none';
-        });
-      }
-      // 进入软件介绍后隐藏主页专属元素（背景透明，避免漏出）
-      document.body.classList.toggle('mode-intro', section >= 1);
-      // 离开介绍屏时收起底部截图与平台提示，避免残留到其它界面
-      const introFoot = document.getElementById('introFoot');
-      if (introFoot) introFoot.classList.toggle('hide', section !== 1);
-      // 主页时把导航栏放到卡片下方，其它界面回到顶部原位置
-      document.body.classList.toggle('at-home', section === 0);
-      if (screenDown) {
-        screenDown.classList.toggle('active', section >= 3);
-        screenDown.classList.toggle('dim', section >= 4);
-      }
-      if (screenAbout) {
-        screenAbout.classList.toggle('active', section >= 4);
-        screenAbout.classList.toggle('dim', section >= 5);
-      }
-      if (screenPriv) {
-        screenPriv.classList.toggle('active', section >= 5);
-      }
-      // 隐私界面：滑入到位后才允许 iframe 交互
-      privacyArrived = section >= 5;
-      if (screenPriv) {
-        const pf = screenPriv.querySelector('iframe');
-        if (pf) pf.style.pointerEvents = privacyArrived ? 'auto' : 'none';
-      }
-      if (scrollHint) scrollHint.style.opacity = section === 0 ? '1' : '0';
-      // 界面滑块：随当前所在界面跳变定位并高亮对应项
-      const curTarget = section === 5 ? 'privacy' : section === 4 ? 'about' : section === 3 ? 'down' : section === 2 ? 'c' : section === 1 ? 'black' : 'top';
-      document.querySelectorAll('.pill-nav .pill').forEach(el => {
-        el.classList.toggle('is-active', el.dataset.target === curTarget);
-      });
-      const activePill = document.querySelector(`.pill-nav .pill[data-target="${curTarget}"]`);
-      if (pillTrack && pillMarker && activePill) {
-        const trackRect = pillTrack.getBoundingClientRect();
-        const pillRect = activePill.getBoundingClientRect();
-        pillMarker.style.left = (pillRect.left - trackRect.left) + 'px';
-        pillMarker.style.width = pillRect.width + 'px';
-      }
-      // 轮盘随滚动进度旋转：在软件介绍屏 y∈[vh,3vh] 内，frac 由 0 平滑转到 1
-      if (window.__wheelSetFrac && section === 1) {
-        const wf = Math.min(1, Math.max(0, (y - vh) / (2 * vh)));
-        window.__wheelSetFrac(wf);
-      }
-    }
-
-    // 进入下载界面时，3 个下载源自动滑入展示一次（0.5s）
-    function triggerDlAuto() {
-      const items = document.querySelectorAll('#dlMenu .dl-item');
-      items.forEach(el => {
-        el.classList.remove('dl-auto');
-        void el.offsetWidth; // 强制重排以重启动画
-        el.classList.add('dl-auto');
-        el.addEventListener('animationend', () => el.classList.remove('dl-auto'), { once: true });
-      });
-    }
-
-    // 安卓专属：检测并标记，后续仅安卓分支生效（桌面/iOS 完全不受影响）
-    const isAndroid = /Android/i.test(navigator.userAgent);
-    if (isAndroid) document.documentElement.classList.add('android');
-
-    // 滚动到指定界面（主页 / 软件介绍 / 起始页体验 / 下载 / 许可协议）
-    function scrollToTarget(target) {
-      // 安卓：动态视口下直接用真实 snap-page 元素定位，避免 100vh 计算错位与大幅跳跃
-      if (isAndroid) {
-        const idx = target === 'privacy' ? 6 : target === 'about' ? 5
-          : target === 'down' ? 4 : target === 'c' ? 3 : target === 'black' ? 1 : 0;
-        const pages = document.querySelectorAll('.snap-page');
-        if (pages[idx]) { pages[idx].scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
-      }
-      const vh = window.innerHeight;
-      const top = target === 'privacy' ? vh * 6 : target === 'about' ? vh * 5
-                : target === 'down' ? vh * 4 : target === 'c' ? vh * 3 : target === 'black' ? vh : 0;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
-
-    // 药丸导航：点击平滑滚动到对应界面（高亮块精确对齐到当前药丸）
-    document.querySelectorAll('.pill').forEach(el => {
-      el.addEventListener('click', e => {
-        e.preventDefault();
-        scrollToTarget(el.dataset.target);
-      });
-    });
-
-    // 玻璃：Safari/Firefox 不支持 backdrop-filter:url()，统一回退到 --fallback 磨砂（导航+卡片）
-    (function () {
-      const t = document.createElement('div');
-      t.style.backdropFilter = 'url(#glass-filter-nav)';
-      if (t.style.backdropFilter === '') {
-        document.querySelectorAll('.glass-surface.glass-surface--svg').forEach(el => {
-          el.classList.remove('glass-surface--svg');
-          el.classList.add('glass-surface--fallback');
-        });
-      }
-    })();
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-
-    // 初始化
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    canvas.addEventListener('mousemove', handleMouseMove);
-    canvas.addEventListener('mouseleave', handleMouseLeave);
-    if (!REDUCED_MOTION) requestRef = requestAnimationFrame(updateAnimation);
-    // 黑 -> 背景 渐变（canvas 透明度淡入）
-    requestAnimationFrame(() => requestAnimationFrame(() => { canvas.style.opacity = '1'; }));
-
-    // ===== 许可协议 iframe 滚动边界处理：到达边界时传递给父页面滚动 =====
-    (function() {
-      const frame = document.getElementById('privacyFrame');
-      if (!frame) return;
-      frame.addEventListener('load', function onLoad() {
-        // 移除 load 事件避免重复绑定
-        frame.removeEventListener('load', onLoad);
-        try {
-          const iw = frame.contentWindow;
-          if (!iw || !iw.document) return;
-          iw.addEventListener('wheel', function(e) {
-            if (typeof privacyArrived === 'undefined' || !privacyArrived) return;
-            const st = iw.scrollY;
-            const sh = iw.document.documentElement.scrollHeight;
-            const ch = iw.innerHeight;
-            const atTop = st <= 0;
-            const atBottom = st + ch >= sh - 1;
-            // 在滚动边界处，将滚动事件转发给父页面
-            if ((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)) {
-              e.preventDefault();
-              window.scrollBy(0, e.deltaY);
-            }
-          }, { passive: false });
-        } catch(e) {
-          // 跨域或其他错误，静默处理
-        }
-      });
-      // 如果 iframe 已经加载完毕（缓存），手动触发 load 回调
-      try {
-        if (frame.contentDocument && frame.contentDocument.readyState === 'complete') {
-          frame.dispatchEvent(new Event('load'));
-        }
-      } catch(e) {}
-    })();
-
-    // ===== 起始页体验 iframe 交互 + 滚动边界处理：到达边界时传递给父页面滚动 =====
-    (function() {
-      const setupExpFrame = (frame) => {
-        if (!frame) return;
-        const onLoad = function() {
-          frame.removeEventListener('load', onLoad);
-          try {
-            const iw = frame.contentWindow;
-            if (!iw || !iw.document) return;
-            const atBound = (dy) => {
-              if (typeof expArrived === 'undefined' || !expArrived) return false;
-              const st = iw.scrollY;
-              const sh = iw.document.documentElement.scrollHeight;
-              const ch = iw.innerHeight;
-              const atTop = st <= 0;
-              const atBottom = st + ch >= sh - 1;
-              return (atTop && dy < 0) || (atBottom && dy > 0);
-            };
-            // 桌面：鼠标滚轮在边界处转发给父页面
-            iw.addEventListener('wheel', function(e) {
-              if (atBound(e.deltaY)) {
-                e.preventDefault();
-                window.scrollBy(0, e.deltaY);
-              }
-            }, { passive: false });
-            // 安卓 / 触摸：在滚动边界把触摸滚动转给父页面
-            let ty = 0;
-            iw.addEventListener('touchstart', e => { ty = e.touches[0].clientY; }, { passive: true });
-            iw.addEventListener('touchmove', e => {
-              const cy = e.touches[0].clientY;
-              const dy = ty - cy; // >0：手指上滑，内容向底部方向滚动
-              if (atBound(dy)) {
-                e.preventDefault();
-                window.scrollBy(0, dy > 0 ? 80 : -80);
-              }
-            }, { passive: false });
-          } catch(e) {
-            // 跨域或其他错误，静默处理
-          }
-        };
-        frame.addEventListener('load', onLoad);
-        // 如果 iframe 已经加载完毕（缓存），手动触发 load 回调
-        try {
-          if (frame.contentDocument && frame.contentDocument.readyState === 'complete') {
-            frame.dispatchEvent(new Event('load'));
-          }
-        } catch(e) {}
-      };
-      document.querySelectorAll('.screen-c iframe').forEach(setupExpFrame);
-    })();
-
-    // ===== 起始页体验：中间对比滑块（拖动调整两侧宽度，桌面左右 / 手机上下）=====
-    (function () {
-      const split = document.getElementById('expSplit');
-      const left = document.getElementById('expLeft');
-      const divider = document.getElementById('expDivider');
-      if (!split || !left || !divider) return;
-      const iframes = split.querySelectorAll('iframe');
-      let dragging = false;
-      const isVertical = () => window.matchMedia('(max-width: 640px)').matches;
-      const setRatio = (clientX, clientY) => {
-        const rect = split.getBoundingClientRect();
-        let ratio = isVertical()
-          ? (clientY - rect.top) / rect.height
-          : (clientX - rect.left) / rect.width;
-        ratio = Math.min(0.9, Math.max(0.1, ratio));
-        left.style.flexBasis = (ratio * 100) + '%';
-      };
-      const start = (e) => {
-        dragging = true;
-        divider.classList.add('dragging');
-        // 拖动期间禁用 iframe 指针事件，确保父页面能持续收到鼠标/触摸移动
-        iframes.forEach(f => { f.style.pointerEvents = 'none'; });
-        if (e.cancelable) e.preventDefault();
-      };
-      const move = (e) => {
-        if (!dragging) return;
-        const pt = e.touches ? e.touches[0] : e;
-        setRatio(pt.clientX, pt.clientY);
-        if (e.cancelable) e.preventDefault();
-      };
-      const end = () => {
-        if (!dragging) return;
-        dragging = false;
-        divider.classList.remove('dragging');
-        // 恢复为进入后的可交互状态
-        iframes.forEach(f => { f.style.pointerEvents = (typeof expArrived !== 'undefined' && expArrived) ? 'auto' : 'none'; });
-      };
-      divider.addEventListener('mousedown', start);
-      window.addEventListener('mousemove', move);
-      window.addEventListener('mouseup', end);
-      divider.addEventListener('touchstart', start, { passive: false });
-      window.addEventListener('touchmove', move, { passive: false });
-      window.addEventListener('touchend', end);
-    })();
-
-    // ===== 下载界面：流动菜单（复刻 下载界面.txt 的 FlowingMenu，仅文本无图片）=====
-    (function () {
-      const menu = document.getElementById('dlMenu');
-      if (!menu) return;
-      const items = menu.querySelectorAll('.dl-item');
-      const fillGroups = (item) => {
-        const text = item.dataset.text || item.querySelector('.dl-link').textContent.trim();
-        item.querySelectorAll('.dl-marquee__group').forEach(group => {
-          group.innerHTML = '';
-          const probe = document.createElement('span');
-          probe.className = 'dl-marquee__part';
-          probe.textContent = text;
-          group.appendChild(probe);
-          const w = probe.offsetWidth || 200;
-          const needed = Math.max(2, Math.ceil(window.innerWidth / w) + 2);
-          for (let i = 1; i < needed; i++) group.appendChild(probe.cloneNode(true));
-        });
-      };
-      items.forEach(fillGroups);
-      window.addEventListener('resize', () => items.forEach(fillGroups));
-      // 鼠标靠近上 / 下边缘进入时，跑马灯从对应方向滑入（离场同理）
-      items.forEach(item => {
-        const marquee = item.querySelector('.dl-marquee');
-        item.addEventListener('mouseenter', (e) => {
-          const rect = item.getBoundingClientRect();
-          const fromTop = (e.clientY - rect.top) < rect.height / 2;
-          marquee.style.transition = 'none';
-          marquee.style.transform = fromTop ? 'translateY(-101%)' : 'translateY(101%)';
-          void marquee.offsetWidth; // 强制回流后再过渡
-          marquee.style.transition = '';
-          marquee.style.transform = 'translateY(0)';
-        });
-        item.addEventListener('mouseleave', (e) => {
-          const rect = item.getBoundingClientRect();
-          const toTop = (e.clientY - rect.top) < rect.height / 2;
-          marquee.style.transform = toTop ? 'translateY(-101%)' : 'translateY(101%)';
-        });
-      });
-      // 未勾选“确认并同意”时，禁止点击下载链接跳转（抖动提示）
-      const agree = document.getElementById('dlAgree');
-      items.forEach(item => {
-        const link = item.querySelector('.dl-link');
-        if (!link) return;
-        link.addEventListener('click', (e) => {
-          if (!agree || !agree.checked) {
-            e.preventDefault();
-            link.classList.remove('dl-shake');
-            void link.offsetWidth;
-            link.classList.add('dl-shake');
-          }
-        });
-      });
-      // 蓝色许可链接：点击平滑滚动到许可协议界面
-      document.querySelectorAll('.dl-license').forEach(a => {
-        a.addEventListener('click', (e) => {
-          e.preventDefault();
-          if (window.scrollToTarget) window.scrollToTarget(a.dataset.target || 'privacy');
-        });
-      });
-    })();
-  </script>
-
-  <script>
-    // ===== 卡片：复刻 卡片.txt 的 BounceCards 弹性推开交互 =====
-    (function () {
-      const cards = Array.from(document.querySelectorAll('.home-cards .card'));
-      // 与示例一致的初始散开变换（rotate + translateX），幅度随屏宽缩放（窄屏缩小，避免超出）
-      let base = [];
-      let pushScale = 1;
-      function computeBase() {
-        const w = window.innerWidth;
-        pushScale = Math.min(1, w / 640);
-        if (w <= 640) {
-          // 安卓：重叠散开（上 2 下 3 金字塔），x 幅度随屏宽缩放
-          base = [
-            `translateY(-66px) rotate(8deg) translateX(${-70 * pushScale}px)`,
-            `translateY(-66px) rotate(-8deg) translateX(${70 * pushScale}px)`,
-            `translateY(66px) rotate(8deg) translateX(${-100 * pushScale}px)`,
-            'translateY(66px) rotate(0deg) translateX(0px)',
-            `translateY(66px) rotate(-8deg) translateX(${100 * pushScale}px)`
-          ];
-        } else {
-          // 桌面：5 张一排重叠散开（间距 120px，与原扇形规则一致）
-          base = [
-            'rotate(8deg) translateX(-240px)',
-            'rotate(4deg) translateX(-120px)',
-            'rotate(0deg) translateX(0px)',
-            'rotate(-4deg) translateX(120px)',
-            'rotate(-8deg) translateX(240px)'
-          ];
-        }
-      }
-      computeBase();
-      cards.forEach((card, i) => { card.style.transform = base[i]; });
-
-      // 带 data-target 的卡片（下载 / 许可协议）：点击平滑滚动到对应内嵌界面，
-      // 其余卡片（千克起始页 等）保持原链接跳转到外部页面。
-      cards.forEach((card) => {
-        const t = card.dataset.target;
-        if (t) {
-          card.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (window.scrollToTarget) window.scrollToTarget(t);
-          });
-        }
-      });
-
-      // 对应示例 getNoRotationTransform：保留位移，旋转归零（被悬停的卡片摆正）
-      const noRotate = t =>
-        /rotate\([\s\S]*?\)/.test(t)
-          ? t.replace(/rotate\([\s\S]*?\)/, 'rotate(0deg)')
-          : (t === 'none' ? 'rotate(0deg)' : `${t} rotate(0deg)`);
-
-      // 对应示例 getPushedTransform：在原有位移上再叠加偏移（其余卡片被推开）
-      const pushTranslate = (t, dx) => {
-        const m = t.match(/translateX\(([-0-9.]+)px\)/);
-        if (m) {
-          const x = parseFloat(m[1]) + dx;
-          return t.replace(/translateX\(([-0-9.]+)px\)/, `translateX(${x}px)`);
-        }
-        return t === 'none' ? `translateX(${dx}px)` : `${t} translateX(${dx}px)`;
-      };
-
-      cards.forEach((card, i) => {
-        card.addEventListener('mouseenter', () => {
-          cards.forEach((c, j) => {
-            if (j === i) c.style.transform = noRotate(base[i]);
-            else c.style.transform = pushTranslate(base[j], (j < i ? -160 : 160) * pushScale);
-          });
-        });
-        card.addEventListener('mouseleave', () => {
-          cards.forEach((c, j) => { c.style.transform = base[j]; });
-        });
-      });
-
-      // 窗口尺寸变化时重算散开幅度（桌面与安卓都保持重叠散开）
-      window.addEventListener('resize', () => {
-        computeBase();
-        cards.forEach((c, j) => { c.style.transform = base[j]; });
-      });
-    })();
-
-    // ===== 选项轮盘：复刻 轮盘.txt 的 OptionWheel（原生移植）=====
-    (function () {
-      const wheelEl = document.getElementById('genreWheel');
-      if (!wheelEl) return;
-
-      // 资源基址：自动适配 GitHub Pages 子目录 / “同名文件夹”嵌套部署。
-      // 例：站点实际在 user.github.io/repo/repo/，但页面以 user.github.io/repo/ 访问，
-      // 相对路径会解析到外层空目录导致图片 404；下面用两种基址自愈。
-      const ASSET_BASE = location.pathname.replace(/[^/]*$/, '');
-      const ASSET_SEG = ASSET_BASE.replace(/^\/+|\/+$/g, '').split('/').pop() || '';
-
-      // 轮盘旋转由页面滚动位置驱动（渐进式滚动），无需状态机/整屏跳跃。
-      // 映射范围跳过首尾空白占位页：frac=0 → 我的世界(1)，frac=1 → 起始页(L-2)，
-      // 因此从导航点击「介绍」进入时，轮盘停在「我的世界服务器启动器」而非占位页。
-      window.__wheelSetFrac = function (frac) {
-        // 滚动全程覆盖所有格子（含头尾空白占位页），否则占位页永远不可见
-        const first = 0, last = items.length - 1;
-        applyTarget(first + frac * (last - first), false);
-      };
-
-      // 头部 2 个、尾部 3 个为空白占位页（无名称/介绍/截图/提示）；真实软件共 10 款，页数恒为 10
-      const WHEEL_LEAD = 2;   // 头部空白占位页数量
-      const WHEEL_TRAIL = 3;  // 尾部空白占位页数量
-      const items = ['', '', '我的世界服务器启动器', 'kgBing壁纸', 'KG收银', 'Windows10&11仿MacOS', '门铃', 'KGDreamchrome扩展', 'KgPan', 'Kg跃点网络优先切换', '千克Windows壁纸Pro', '起始页', '', '', ''];
-      // 各软件对应截图（IndexData 文件夹）
-      const shots = [
-        '',
-        '',
-        'IndexData/MC服务器启动器.png',
-        'IndexData/壁纸.png',
-        'IndexData/收银.png',
-        'IndexData/windows11仿mac.png',
-        'IndexData/门铃.png',
-        'IndexData/KGDream chrome扩展.png',
-        'IndexData/kgNAS.png',
-        'IndexData/Kg跃点网络优先切换.png',
-        'IndexData/壁纸pro版本.png',
-        'IndexData/起始页.png',
-        '',
-        '',
-        ''
-      ];
-      // 适用平台：Windows10&11仿MacOS=系统，门铃=安卓，KGDream扩展与起始页=网页，其余=Windows；首尾空白项=''
-      const platMap = ['', '', 'win', 'win', 'win', 'sys', 'android', 'web', 'win', 'win', 'win', 'web', '', '', ''];
-      const platText = { win: 'Windows', android: '安卓', sys: '系统', web: '网页' };
-      const footEl = document.getElementById('introFoot');
-      const shotEl = document.getElementById('introShot');
-      const platEl = document.getElementById('introPlat');
-      if (shotEl) {
-        shotEl.addEventListener('click', () => {
-          if (window.__openShot) window.__openShot(shotEl.src);
-        });
-      }
-      // 截图加载：依次尝试“当前目录”与“再深一层同名目录”两种基址，
-      // 兼容 GitHub Pages 把站点放在与仓库同名的子文件夹里导致的路径错位。
-      function loadShot(el, idx) {
-        if (!shots[idx]) return;
-        const path = shots[idx];
-        const cands = [ASSET_BASE + path];
-        if (ASSET_SEG) cands.push(ASSET_BASE + ASSET_SEG + '/' + path);
-        let i = 0;
-        const next = () => {
-          if (i >= cands.length) {
-            console.warn('[截图加载失败] 已尝试多种路径均失败，请确认 IndexData 文件夹已上传且文件名（含中文/大小写）完全匹配：', path);
-            el.classList.remove('show');
-            return;
-          }
-          const url = cands[i++];
-          el.onerror = next;
-          el.src = url;
-        };
-        next();
-      }
-      function showSoftInfo(idx) {
-        const isEmpty = items[idx] === '';
-        if (shotEl) {
-          if (isEmpty || !shots[idx]) {
-            // 空白占位页：不显示截图，且禁止点击放大
-            shotEl.classList.remove('show');
-            shotEl.removeAttribute('src');
-            shotEl.style.pointerEvents = 'none';
-          } else {
-            loadShot(shotEl, idx);
-            shotEl.alt = items[idx] + ' 截图';
-            shotEl.style.pointerEvents = 'auto';
-            shotEl.classList.add('show');
-            // 切换图片：从左到右扫描揭示动画（clip 由右 100% 擦除到 0，叠加一道亮度扫光）
-            if (shotEl.animate) {
-              shotEl.animate([
-                { clipPath: 'inset(0 100% 0 0)', filter: 'brightness(2)' },
-                { clipPath: 'inset(0 55% 0 0)', filter: 'brightness(1.5)', offset: 0.55 },
-                { clipPath: 'inset(0 0 0 0)', filter: 'brightness(1)' }
-              ], { duration: 480, easing: 'cubic-bezier(0.4, 0, 0.2, 1)' });
-            }
-          }
-        }
-        if (platEl) {
-          if (isEmpty || !platMap[idx]) {
-            // 空白占位页：无平台提示
-            platEl.classList.remove('show');
-            platEl.textContent = '';
-          } else {
-            const p = platMap[idx];
-            platEl.dataset.p = p;
-            platEl.textContent = platText[p];
-            platEl.classList.add('show');
-          }
-        }
-        if (footEl) footEl.classList.remove('hide');
-      }
-      // 页码 / 进度指示：初始化总数，并在切换时更新当前序号
-      const wheelCurEl = document.getElementById('wheelCur');
-      const wheelTotalEl = document.getElementById('wheelTotal');
-      // 总页数 = 真实软件数（不含首尾共 5 个空白占位页），即 15 - 5 = 10
-      if (wheelTotalEl) wheelTotalEl.textContent = String(items.length - WHEEL_LEAD - WHEEL_TRAIL).padStart(2, '0');
-      // 页码显示：头部占位页显示 01，尾部占位页显示 10；
-      // 真实项页码 = 下标 - 头部占位数 + 1（我的世界=01 … 起始页=10）
-      function pageLabel(i) {
-        if (i < WHEEL_LEAD) return '01';
-        if (i >= items.length - WHEEL_TRAIL) return String(items.length - WHEEL_LEAD - WHEEL_TRAIL).padStart(2, '0');
-        return String(i - WHEEL_LEAD + 1).padStart(2, '0');
-      }
-      // 与轮盘项一一对应的右侧介绍文案（参考 文字展示示例.txt 的解密文字风格）
-      const descs = [
-        '',
-        '',
-        '一键开服，联机无忧。\n点一下就能把服务器开起来，朋友秒进，联机从未如此简单。',
-        '自动抓取必应每日美图。\n每天自动换一张必应首页的高清壁纸，桌面永远不重样。',
-        '极简快捷，小白也能用的收银台。\n界面干净，操作直观，没有复杂流程，打开就能收银。',
-        '让Win系统变身高颜值Mac。\n一键应用，窗口、任务栏、菜单全仿Mac，电脑瞬间变样。',
-        '跨端推送响应，取代传统实体门铃。\n手机实时接收门铃通知，人在哪都能知道谁在门口。',
-        '极简起始页，告别杂乱无章。\n没有广告，没有推送，只有你想看到的快捷方式。',
-        '电脑传文件，跨设备极速互传。\n手机电脑之间直接传文件，不用数据线，速度飞快。',
-        '改跃点，提网速。\n调一下网络跃点，让数据走最快的路，网速明显提升。',
-        '超多源壁纸软件，C#新架构。\n聚合多个壁纸源，C#重写后更轻更快，壁纸随便换。',
-        '极简起始页，让浏览回归纯粹。\n没有干扰，只有你收藏的站点，下滑开始体验。',
-        '',
-        '',
-        ''
-      ];
-
-      // 右侧介绍文案的解密乱码动画（参考 文字展示示例.txt 的 DecryptedText 效果）
-      const wheelDescEl = document.getElementById('wheelDesc');
-      const DESC_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+';
-      const DESC_STABLE = /[\s，。：、！？；]/; // 标点/空格保持原样，只乱码文字
-      let descTimer = null;
-      function decryptDesc(text) {
-        if (!wheelDescEl) return;
-        if (REDUCED_MOTION) { wheelDescEl.textContent = text; return; }
-        if (descTimer) clearTimeout(descTimer);
-        const total = text.length;
-        let frame = 0;
-        const maxFrames = 22;        // 与主页解密文字一致：共 22 帧
-        const step = () => {
-          const revealed = Math.floor((frame / maxFrames) * total);
-          let out = '';
-          for (let i = 0; i < total; i++) {
-            const ch = text[i];
-            if (DESC_STABLE.test(ch) || i < revealed) out += ch;
-            else out += DESC_CHARS[(Math.random() * DESC_CHARS.length) | 0];
-          }
-          wheelDescEl.textContent = out;
-          frame++;
-          if (frame <= maxFrames) descTimer = setTimeout(step, 90); // 与主页一致：每帧 90ms
-          else wheelDescEl.textContent = text;
-        };
-        step();
-      }
-
-      // 配置：轮盘左对齐锚定后改为向右卷曲（side=right），选中项在左、其余项向右展开，避免被左侧裁切
-      const side = 'right';
-      const fontSizeRem = 2.6;
-      const spacing = 1.4;
-      const curve = 1;
-      const tilt = 6;
-      const blur = 2;
-      const fade = 0.25;
-      const minOpacity = 0.05;
-      const smoothing = 200;
-      const loop = false;
-      const draggable = true;
-
-      const remPx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
-      const rowH = Math.max(fontSizeRem * spacing * remPx, 1);
-
-      let pos = 0, target = WHEEL_LEAD, selected = -1; // 初始对准「我的世界服务器启动器」（首个真实项）
-      let raf = null, last = 0;
-      const itemEls = [];
-
-      items.forEach((label, i) => {
-        const el = document.createElement('div');
-        const on = i === selected;
-        el.className = 'option-wheel__item' + (on ? ' option-wheel__item--selected' : '');
-        el.setAttribute('role', 'option');
-        el.setAttribute('aria-selected', on ? 'true' : 'false');
-        el.textContent = label;
-        el.addEventListener('click', () => handleItemClick(i));
-        wheelEl.appendChild(el);
-        itemEls.push(el);
-      });
-
-      function runFrame(now) {
-        const dt = Math.min((now - last) / 1000, 0.05);
-        last = now;
-        const tau = Math.max(smoothing, 1) / 1000;
-        const k = 1 - Math.exp(-dt / tau);
-        let next = pos + (target - pos) * k;
-        if (Math.abs(target - next) < 0.001) next = target;
-        pos = next;
-
-        const n = items.length;
-        const mirror = side === 'right' ? -1 : 1;
-        const tiltRad = (tilt * Math.PI) / 180;
-        const R = tiltRad > 0.0005 ? rowH / tiltRad : 0;
-        for (let i = 0; i < n; i++) {
-          const el = itemEls[i];
-          let d = i - pos;
-          if (loop && n > 1) {
-            d = ((d % n) + n) % n;
-            if (d > n / 2) d -= n;
-          }
-          const dist = Math.abs(d);
-          let x = 0, y = d * rowH, rot = 0;
-          if (R > 0) {
-            const ang = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, d * tiltRad));
-            y = R * Math.sin(ang);
-            x = -mirror * R * (1 - Math.cos(ang)) * curve;
-            rot = (mirror * ang * 180) / Math.PI;
-          }
-          el.style.transform = `translate(${x.toFixed(2)}px, calc(${y.toFixed(2)}px - 50%)) rotate(${rot.toFixed(3)}deg)`;
-          el.style.opacity = String(Math.max(minOpacity, 1 - dist * fade));
-          el.style.filter = blur > 0 ? `blur(${(dist * blur).toFixed(2)}px)` : 'none';
-        }
-        raf = next === target ? null : requestAnimationFrame(runFrame);
-      }
-      function startLoop() {
-        if (raf != null) return;
-        last = performance.now();
-        raf = requestAnimationFrame(runFrame);
-      }
-      function applyTarget(value, snap) {
-        let v = value;
-        if (!loop) v = Math.min(Math.max(v, 0), Math.max(items.length - 1, 0));
-        if (snap) v = Math.round(v);
-        target = v;
-        const idx = ((Math.round(v) % items.length) + items.length) % items.length;
-        if (idx !== selected) {
-          selected = idx;
-          if (wheelCurEl) wheelCurEl.textContent = pageLabel(idx);
-          itemEls.forEach((el, i) => {
-            const on = i === idx;
-            el.classList.toggle('option-wheel__item--selected', on);
-            el.setAttribute('aria-selected', on ? 'true' : 'false');
-          });
-          // 选中项改变时，右侧介绍用解密乱码动画重新揭示（参考 文字展示示例.txt）
-          if (wheelDescEl) decryptDesc(descs[idx]);
-          // 同步切换底部截图与彩色平台提示
-          showSoftInfo(idx);
-        }
-        startLoop();
-      }
-
-      // 分区屏障：以轮盘垂直中线为中心、上下各 (height/2 - 90px) 的“中央带”为可拖拽区（转轮盘），
-      // 上下渐隐区为放行区（滑动直接滚动页面切屏）。鼠标整轮可拖；触摸仅中央带可拖，最贴合“治根”。
-      let drag = null, dragMoved = false, captureMode = false;
-      function onPointerDown(e) {
-        const rect = wheelEl.getBoundingClientRect();
-        const cy = (rect.top + rect.bottom) / 2;
-        const coreBand = Math.max(0, rect.height / 2 - 90); // 与 --ow-inset 一致的中央屏障带半径
-        const inCore = Math.abs(e.clientY - cy) <= coreBand;
-        captureMode = (e.pointerType === 'mouse') ? true : inCore; // 鼠标整轮可拖；触摸仅中央带
-        drag = {
-          y: e.clientY, start: target, id: e.pointerId,
-          atTop: Math.round(target) <= 0,
-          atBottom: Math.round(target) >= items.length - 1
-        };
-        dragMoved = false;
-        if (captureMode) {
-          wheelEl.classList.add('option-wheel--dragging');
-          try { wheelEl.setPointerCapture(e.pointerId); } catch (_) {}
-        }
-      }
-      function onPointerMove(e) {
-        if (!drag || !captureMode) return;
-        const dy = e.clientY - drag.y;
-        if (!dragMoved && Math.abs(dy) > 4) dragMoved = true;
-        if (!dragMoved) return;
-        // 拖到边界仍继续同向拖拽时，屏障放行：释放给页面滚动（进入上一屏/下一屏）
-        const beyond = (dy > 0 && drag.atTop) || (dy < 0 && drag.atBottom);
-        if (beyond) {
-          captureMode = false;
-          wheelEl.classList.remove('option-wheel--dragging');
-          try { wheelEl.releasePointerCapture(drag.id); } catch (_) {}
-          return;
-        }
-        applyTarget(drag.start - dy / rowH, false);
-      }
-      // 触摸需在 touchmove 真正阻止默认滚动（pointer 事件受 touch-action 限制，pan-y 下需手动 preventDefault）
-      wheelEl.addEventListener('touchmove', function (e) {
-        if (drag && captureMode) e.preventDefault();
-      }, { passive: false });
-      function onPointerUp() {
-        if (!drag) return;
-        const wasCapture = captureMode;
-        drag = null;
-        dragMoved = false;
-        captureMode = false;
-        wheelEl.classList.remove('option-wheel--dragging');
-        if (wasCapture) applyTarget(target, true);
-      }
-      function handleItemClick(index) {
-        if (dragMoved) return;
-        // 点击某项 -> 直接切换转盘选中项，不滚动页面
-        applyTarget(index, true);
-      }
-      function onKeyDown(e) {
-        let delta = null;
-        if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') delta = -1;
-        else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') delta = 1;
-        if (delta == null) return;
-        e.preventDefault();
-        applyTarget(Math.round(target) + delta, true);
-      }
-
-      wheelEl.addEventListener('pointerdown', onPointerDown);
-      wheelEl.addEventListener('pointermove', onPointerMove);
-      wheelEl.addEventListener('pointerup', onPointerUp);
-      wheelEl.addEventListener('pointercancel', onPointerUp);
-      wheelEl.addEventListener('keydown', onKeyDown);
-
-      // 鼠标滚轮：像手拖动那样逐步对准（吸附到相邻项）；到达边界时放行页面滚动以进入上下屏
-      let wheelAccum = 0;
-      wheelEl.addEventListener('wheel', function (e) {
-        const dir = e.deltaY > 0 ? 1 : -1;
-        const atEdge = (dir > 0 && Math.round(target) >= items.length - 1) ||
-                       (dir < 0 && Math.round(target) <= 0);
-        if (atEdge) return; // 边界处不拦截，交给页面滚动（上一屏/下一屏）
-        e.preventDefault();
-        wheelAccum += e.deltaY;
-        if (Math.abs(wheelAccum) >= 40) {
-          applyTarget(Math.round(target) + (wheelAccum > 0 ? 1 : -1), true);
-          wheelAccum = 0;
-        }
-      }, { passive: false });
-
-      applyTarget(target, false);
-    })();
-
-    // ===== 循环文字展示：复刻 文字展示示例.txt 的 DecryptedText 解密动画 =====
-    (function () {
-      const phrases = ['欢迎来到KG Dream官网', '下滑更多介绍', '选择您的服务', '开源好用的工具'];
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+';
-      const el = document.querySelector('.decrypt-text');
-      if (!el) return;
-      let phraseIndex = 0;
-
-      // 对应示例的 decrypt：乱码字符逐字揭示为真实文字（sequential 从左到右）
-      function decryptTo(text, done) {
-        if (REDUCED_MOTION) { el.textContent = text; if (done) done(); return; }
-        const total = text.length;
-        let frame = 0;
-        const maxFrames = 22;
-        const step = () => {
-          const revealed = Math.floor((frame / maxFrames) * total);
-          let out = '';
-          for (let i = 0; i < total; i++) {
-            const ch = text[i];
-            if (ch === ' ') { out += ' '; continue; }
-            out += i < revealed ? ch : chars[Math.floor(Math.random() * chars.length)];
-          }
-          el.textContent = out;
-          frame++;
-          if (frame <= maxFrames) setTimeout(step, 90);
-          else { el.textContent = text; if (done) done(); }
-        };
-        step();
-      }
-
-      // 循环切换三句文案
-      function loop() {
-        decryptTo(phrases[phraseIndex], () => {
-          setTimeout(() => {
-            phraseIndex = (phraseIndex + 1) % phrases.length;
-            loop();
-          }, 3500);
-        });
-      }
-      loop();
-    })();
-  </script>
-
-  <script type="module">
-  (async () => {
-    let ogl;
-    try {
-      ogl = await import('https://esm.sh/ogl@1.0.11');
-    } catch (e) {
-      console.warn('粒子背景（OGL）加载失败，保持纯黑背景：', e);
-      return;
-    }
-    const { Renderer, Camera, Geometry, Program, Mesh } = ogl;
-
-    const defaultColors = ['#ffffff', '#ffffff', '#ffffff'];
-    const hexToRgb = hex => {
-      hex = hex.replace(/^#/, '');
-      if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
-      const int = parseInt(hex.slice(0, 6), 16);
-      return [((int >> 16) & 255) / 255, ((int >> 8) & 255) / 255, (int & 255) / 255];
-    };
-    const vertex = `
-      attribute vec3 position;
-      attribute vec4 random;
-      attribute vec3 color;
-
-      uniform mat4 modelMatrix;
-      uniform mat4 viewMatrix;
-      uniform mat4 projectionMatrix;
-      uniform float uTime;
-      uniform float uSpread;
-      uniform float uBaseSize;
-      uniform float uSizeRandomness;
-
-      varying vec4 vRandom;
-      varying vec3 vColor;
-
-      void main() {
-        vRandom = random;
-        vColor = color;
-
-        vec3 pos = position * uSpread;
-        pos.z *= 10.0;
-
-        vec4 mPos = modelMatrix * vec4(pos, 1.0);
-        float t = uTime;
-        mPos.x += sin(t * random.z + 6.28 * random.w) * mix(0.1, 1.5, random.x);
-        mPos.y += sin(t * random.y + 6.28 * random.x) * mix(0.1, 1.5, random.w);
-        mPos.z += sin(t * random.w + 6.28 * random.y) * mix(0.1, 1.5, random.z);
-
-        vec4 mvPos = viewMatrix * mPos;
-
-        if (uSizeRandomness == 0.0) {
-          gl_PointSize = uBaseSize;
-        } else {
-          gl_PointSize = (uBaseSize * (1.0 + uSizeRandomness * (random.x - 0.5))) / length(mvPos.xyz);
-        }
-
-        gl_Position = projectionMatrix * mvPos;
-      }
-    `;
-    const fragment = `
-      precision highp float;
-
-      uniform float uTime;
-      uniform float uAlphaParticles;
-      varying vec4 vRandom;
-      varying vec3 vColor;
-
-      void main() {
-        vec2 uv = gl_PointCoord.xy;
-        float d = length(uv - vec2(0.5));
-
-        if(uAlphaParticles < 0.5) {
-          if(d > 0.5) {
-            discard;
-          }
-          gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), 1.0);
-        } else {
-          float circle = smoothstep(0.5, 0.4, d) * 0.8;
-          gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), circle);
-        }
-      }
-    `;
-
-    function initParticles(canvas) {
-      if (REDUCED_MOTION) return;
-      const container = canvas.parentElement;
-      if (!container) return;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const renderer = new Renderer({ canvas, dpr, depth: false, alpha: true });
-      const gl = renderer.gl;
-      gl.clearColor(0, 0, 0, 0);
-
-      const camera = new Camera(gl, { fov: 15 });
-      camera.position.set(0, 0, 20);
-
-      const resize = () => {
-        const w = container.clientWidth || window.innerWidth;
-        const h = container.clientHeight || window.innerHeight;
-        renderer.setSize(w, h);
-        camera.perspective({ aspect: gl.canvas.width / gl.canvas.height });
-      };
-      window.addEventListener('resize', resize);
-      resize();
-
-      const count = 200;
-      const positions = new Float32Array(count * 3);
-      const randoms = new Float32Array(count * 4);
-      const colors = new Float32Array(count * 3);
-      for (let i = 0; i < count; i++) {
-        let x, y, z, len;
-        do {
-          x = Math.random() * 2 - 1; y = Math.random() * 2 - 1; z = Math.random() * 2 - 1;
-          len = x * x + y * y + z * z;
-        } while (len > 1 || len === 0);
-        const r = Math.cbrt(Math.random());
-        positions.set([x * r, y * r, z * r], i * 3);
-        randoms.set([Math.random(), Math.random(), Math.random(), Math.random()], i * 4);
-        const col = hexToRgb(defaultColors[Math.floor(Math.random() * defaultColors.length)]);
-        colors.set(col, i * 3);
-      }
-      const geometry = new Geometry(gl, {
-        position: { size: 3, data: positions },
-        random: { size: 4, data: randoms },
-        color: { size: 3, data: colors },
-      });
-      const program = new Program(gl, {
-        vertex, fragment,
-        uniforms: {
-          uTime: { value: 0 },
-          uSpread: { value: 10 },
-          uBaseSize: { value: 100 * dpr },
-          uSizeRandomness: { value: 1 },
-          uAlphaParticles: { value: 0 },
-        },
-        transparent: true,
-        depthTest: false,
-      });
-      const particles = new Mesh(gl, { mode: gl.POINTS, geometry, program });
-
-      const screen = canvas.closest('.screen-down, .screen-about');
-      let raf, lastTime = performance.now(), elapsed = 0;
-      const update = t => {
-        raf = requestAnimationFrame(update);
-        if (!screen || !screen.classList.contains('active')) { lastTime = t; return; }
-        const delta = t - lastTime; lastTime = t;
-        elapsed += delta * 0.1;
-        program.uniforms.uTime.value = elapsed * 0.001;
-        particles.rotation.x = Math.sin(elapsed * 0.0002) * 0.1;
-        particles.rotation.y = Math.cos(elapsed * 0.0005) * 0.15;
-        particles.rotation.z += 0.001;
-        renderer.render({ scene: particles, camera });
-      };
-      raf = requestAnimationFrame(update);
-    }
-
-    document.querySelectorAll('.bg-canvas').forEach(initParticles);
-  })();
-  </script>
-<!-- 截图点击放大灯箱 -->
-<div class="lightbox" id="lightbox" aria-hidden="true">
-  <img id="lightboxImg" alt="软件截图大图" />
+<section class="page home" data-bg="#f2efe9">
+<div class="home-deco"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span></div>
+<div class="home-wrap">
+<div class="home-carousel" id="homeCarousel"><img id="carouselImg" src="IndexData/%E8%B5%B7%E5%A7%8B%E9%A1%B5.png" alt=""><video id="carouselVid" autoplay muted loop playsinline style="display:none"></video><div class="car-dots" id="carDots"></div><button class="car-arrow car-prev" id="carPrev">‹</button><button class="car-arrow car-next" id="carNext">›</button><span class="car-name" id="carName">千克起始页</span><span class="car-count" id="carCount">1 / 10</span></div>
 </div>
+<div class="home-btns">
+<a class="home-btn hb1" href="x.html"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/></svg>进入起始页</a>
+<a class="home-btn hb2" href="lite.html"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg>精简起始页</a>
+<a class="home-btn hb3" href="#" id="goDownload"><svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M8 11l4 4 4-4"/><path d="M4 21h16"/></svg>我要下载</a>
+<a class="home-btn hb4" href="t.html"><svg viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4"/><path d="M9 13h6M9 17h6"/></svg>看一眼协议</a>
+</div>
+</section>
+<section class="page anim-right" data-bg="#e4ece2">
+<div class="intro-side">
+<div class="intro-tab on" data-cat="web">网页</div>
+<div class="intro-tab" data-cat="soft">软件</div>
+</div>
+<div class="intro-main">
+<div class="intro-panel on" id="panel-web">
+<div class="web-frame" id="webFrame"><iframe id="webframe" src="x.html"></iframe><div class="frame-logo" id="frameLogo"><img src="favicon.png" alt=""></div></div>
+<div class="web-tabs">
+<button class="on" data-src="x.html">起始页</button>
+<button data-src="lite.html">精简起始页</button>
+<button data-src="bc.html">便签</button>
+<button data-src="e.html">极简搜索</button>
+<button class="set-home" id="setHome">设为主页</button>
+</div>
+</div>
+<div class="intro-panel" id="panel-soft">
+<div class="soft-view">
+<img id="simg" class="soft-view-img" src="IndexData/%E8%B5%B7%E5%A7%8B%E9%A1%B5.png">
+<div class="soft-view-info"><h3 id="sname">千克起始页</h3><p id="sdesc">极简起始页，让浏览回归纯粹。没有干扰，只有你收藏的站点。</p></div>
+</div>
+<div class="soft-tabs"><button class="sb" data-i="0" on>千克起始页</button><button class="sb" data-i="1">KGDream chrome扩展</button><button class="sb" data-i="2">我的世界服务器启动器</button><button class="sb" data-i="3">kgBing壁纸</button><button class="sb" data-i="4">千克Windows壁纸Pro</button><button class="sb" data-i="5">KG收银</button><button class="sb" data-i="6">门铃</button><button class="sb" data-i="7">Windows仿MacOS</button><button class="sb" data-i="8">Kg跃点网络优先切换</button><button class="sb" data-i="9">KgPan</button></div>
+</div>
+</div>
+</section>
+<section class="page anim-top" data-bg="#f1e7dc">
+<div class="dl-wrap">
+<h1>下载</h1>
+<label class="dl-agree"><input type="checkbox" id="dlAgree">我已阅读并同意<a href="#" id="goClause">《附加条款》</a></label>
+<div class="dl-row locked" id="dlRow">
+<a class="dl-card" href="https://qkzm.lanzouu.com/b0188grk4b" target="_blank"><b>蓝奏云</b><span>点击前往</span></a>
+<a class="dl-card" href="https://1823501963.share.123pan.cn/123pan/jE4Fjv-OZpyh" target="_blank"><b>123云盘</b><span>点击前往</span></a>
+<a class="dl-card" href="https://pan.xunlei.com/s/VP-dnJ769WRxqwHAirDl7H3oA1?pwd=kp7a" target="_blank"><b>迅雷云盘</b><span>提取码 kp7a</span></a>
+</div>
+<p class="dl-note">提取码：qkzm（蓝奏云 / 123云盘）　·　安装包均附带源代码</p>
+</div>
+</section>
+<section class="page anim-zoom" data-bg="#e9e3ee">
+<div class="ab-wrap">
+<div class="ab-col ab-clause"><h2>附加条款</h2><p>本附加条款是《GNU 通用公共许可证》（GPL-3.0）不可分割的组成部分，本软件依据 GPL-3.0 发布。</p><p>作者声明：允许对本软件进行任何形式的更改与再分发。</p><p>无论是修改源码、重命名、更换图标、二次开发，还是作为新项目发布，均被允许，无需事先征得作者同意，也无需保留原作者署名。</p><p>你可以自由地：</p><p>（a）以任何名称、任何品牌重新命名本软件或其衍生作品；</p><p>（b）以任何方式宣传、发布、分发本软件或其衍生作品；</p><p>（c）将本软件或其衍生作品用于任何用途，包括个人、教育、商业用途；</p><p>（d）删除或不提及原始作者的名称与署名信息；</p><p>（e）将衍生作品作为全新独立项目继续开发。</p><p>本软件按原样提供，不提供任何品质担保。作者不对使用本软件产生的任何后果负责。</p><p>完整许可条款见《GNU 通用公共许可证》第 3 版：<a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank">https://www.gnu.org/licenses/gpl-3.0.html</a></p></div>
+<div class="ab-col ab-about">
+<h2>关于</h2>
+<p>关于千克起始页</p><p>做一套真正干净、好用、不烦人的工具。</p><p>极简、无广告、开源，这是从一开始就没打算妥协的三件事。</p><p>为什么做？</p><p>因为市面上不是没有同类工具，就是不好用；好用的要付费，免费的不是捆绑就是找不到。与其等一个完美的工具出现，不如自己手搓一个。</p><p>一切的开始，其实很简单——</p><p>嫌弃浏览器主页不够好看，就动手写了一个起始页。</p><p>后来发现，这种“嫌弃”能延伸到很多地方：壁纸、收银、传文件、服务器启动器……</p><p>于是就有了这一堆系列。</p><p>千克起始页不是什么大平台，</p><p>只是一个开发者对自己日常需求的诚实回应。</p><p>如果你也在用，我很感谢你。</p><p>虽然现在可能还没什么人用，但这份感谢是真的。</p><p>贡献者就我一个，</p><p>但背后还有神秘的好人。</p><p>帮了我很多。</p><p>谢谢选择我</p></div>
+<div class="ab-foot"><b>联系方式</b>　邮箱：wocao23@outlook.com, kuang45@outlook.com　·　抖音：bblpro</div>
+</div>
+</section>
+<nav class="nav"><div class="nav-inner">
+<span class="nav-logo"><img src="favicon.png" alt=""><b>KGDREAM</b></span>
+<span class="nav-btns">
+<button class="on"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/></svg>主页</button>
+<button><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg>介绍</button>
+<button><svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M8 11l4 4 4-4"/><path d="M4 21h16"/></svg>下载</button>
+<button><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.6 2.2c-.7.4-1.1 1-1.1 1.8"/><path d="M12 17h.01"/></svg>关于</button>
+</span>
+</div></nav>
 <script>
-  // 截图灯箱：点击介绍屏缩略图放大查看，点击任意处关闭
-  (function () {
-    const lb = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lightboxImg');
-    if (!lb || !lbImg) return;
-    window.__openShot = function (src) {
-      if (!src) return;
-      lbImg.src = src;
-      lb.classList.add('show');
-      lb.setAttribute('aria-hidden', 'false');
-    };
-    lb.addEventListener('click', function () {
-      lb.classList.remove('show');
-      lb.setAttribute('aria-hidden', 'true');
-    });
-  })();
+const pages=[...document.querySelectorAll('.page')];
+const nav=document.querySelector('.nav');
+const navBtns=[...document.querySelectorAll('.nav button')];
+const homeBtns=[...document.querySelectorAll('.home-btn')];
+let homeInit=false;
+const obs=new IntersectionObserver(es=>{
+es.forEach(e=>{
+if(e.isIntersecting){
+e.target.classList.add('active');
+if(e.target.classList.contains('home')&&!homeInit){homeInit=true;setTimeout(()=>e.target.classList.add('played'),1100);homeBtns.forEach((b,i)=>setTimeout(()=>b.classList.add('show'),600+i*130));setTimeout(()=>e.target.classList.add('carousel-in'),1000);}
+}else e.target.classList.remove('active');
+if(e.isIntersecting&&e.intersectionRatio>0.55){
+document.body.style.backgroundColor=e.target.dataset.bg;
+const i=pages.indexOf(e.target);
+nav.classList.add('at-top');
+navBtns.forEach((b,j)=>b.classList.toggle('on',j===i));
+}
+});
+},{threshold:[0,0.55,0.8]});
+pages.forEach(p=>obs.observe(p));
+document.body.style.backgroundColor=pages[0].dataset.bg;
+navBtns.forEach((b,i)=>b.addEventListener('click',()=>{nav.classList.add('scrolling');pages[i].scrollIntoView({behavior:'smooth'});clearTimeout(window.__scb);window.__scb=setTimeout(()=>nav.classList.remove('scrolling'),1500);}));
+let sct;window.addEventListener('scroll',()=>{if(!nav.classList.contains('scrolling'))return;clearTimeout(sct);sct=setTimeout(()=>nav.classList.remove('scrolling'),160);},{passive:true});
+setTimeout(()=>nav.classList.add('ready'),700);
+(function(){const lg=document.querySelector('.home .logo');if(!lg)return;const r=lg.getBoundingClientRect();const dx=window.innerWidth/2-(r.left+r.width/2);const dy=window.innerHeight/2-(r.top+r.height/2);lg.style.transform='translate('+dx+'px,'+dy+'px) scale(0)';lg.style.opacity='0';lg.offsetHeight;requestAnimationFrame(function(){lg.style.transition='transform .9s cubic-bezier(.22,.9,.3,1.15),opacity .25s ease';lg.style.transform='translate(0,0) scale(1)';lg.style.opacity='1';});})();
+document.querySelectorAll('.intro-tab').forEach(function(t){t.addEventListener('click',function(){document.querySelectorAll('.intro-tab').forEach(function(x){x.classList.remove('on')});t.classList.add('on');var c=t.dataset.cat;document.querySelectorAll('.intro-panel').forEach(function(p){p.classList.remove('on')});document.getElementById('panel-'+c).classList.add('on');});});
+document.querySelectorAll('.web-tabs button').forEach(function(b){b.addEventListener('click',function(){if(!b.dataset.src)return;document.querySelectorAll('.web-tabs button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');document.getElementById('webframe').src=b.dataset.src;});});
+var softData=[{"n": "千克起始页", "i": "IndexData/%E8%B5%B7%E5%A7%8B%E9%A1%B5.png", "d": "极简起始页，让浏览回归纯粹。没有干扰，只有你收藏的站点。"}, {"n": "KGDream chrome扩展", "i": "IndexData/KGDream%20chrome%E6%89%A9%E5%B1%95.png", "d": "极简起始页，告别杂乱无章。没有广告，没有推送。"}, {"n": "我的世界服务器启动器", "i": "IndexData/MC%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%AF%E5%8A%A8%E5%99%A8.png", "d": "一键开服，联机无忧。点一下就能把服务器开起来。"}, {"n": "kgBing壁纸", "i": "IndexData/%E5%A3%81%E7%BA%B8.png", "d": "自动抓取必应每日美图，桌面永远不重样。"}, {"n": "千克Windows壁纸Pro", "i": "IndexData/%E5%A3%81%E7%BA%B8pro%E7%89%88%E6%9C%AC.png", "d": "超多源壁纸软件，C#新架构，更轻更快。"}, {"n": "KG收银", "i": "IndexData/%E6%94%B6%E9%93%B6.png", "d": "极简快捷，小白也能用的收银台。"}, {"n": "门铃", "i": "IndexData/%E9%97%A8%E9%93%83.png", "d": "跨端推送响应，取代传统实体门铃。"}, {"n": "Windows仿MacOS", "i": "IndexData/windows11%E4%BB%BFmac.png", "d": "让Win系统变身高颜值Mac，一键应用。"}, {"n": "Kg跃点网络优先切换", "i": "IndexData/Kg%E8%B7%83%E7%82%B9%E7%BD%91%E7%BB%9C%E4%BC%98%E5%85%88%E5%88%87%E6%8D%A2.png", "d": "改跃点，提网速，让数据走最快的路。"}, {"n": "KgPan", "i": "IndexData/kgNAS.png", "d": "电脑传文件，跨设备极速互传。"}];document.querySelectorAll(".soft-tabs button").forEach(function(b){b.addEventListener("click",function(){document.querySelectorAll(".soft-tabs button").forEach(function(x){x.classList.remove("on")});b.classList.add("on");var k=+b.dataset.i;document.getElementById("simg").src=softData[k].i;document.getElementById("sname").textContent=softData[k].n;document.getElementById("sdesc").textContent=softData[k].d;});});var carImgs=[
+{i:"IndexData/%E8%B5%B7%E5%A7%8B%E9%A1%B5.png",n:"千克起始页",k:0,t:"img",dur:3000},
+{i:"IndexData/KGDream%20chrome%E6%89%A9%E5%B1%95.png",n:"KGDream chrome扩展",k:1,t:"img",dur:3000},
+{i:"IndexData/MC%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%AF%E5%8A%A8%E5%99%A8.png",n:"我的世界服务器启动器",k:2,t:"img",dur:3000},
+{i:"IndexData/%E5%A3%81%E7%BA%B8.png",n:"kgBing壁纸",k:3,t:"img",dur:3000},
+{i:"IndexData/%E5%A3%81%E7%BA%B8pro%E7%89%88%E6%9C%AC.png",n:"千克Windows壁纸Pro",k:4,t:"img",dur:3000},
+{i:"IndexData/%E6%94%B6%E9%93%B6.png",n:"KG收银",k:5,t:"img",dur:3000},
+{i:"IndexData/%E9%97%A8%E9%93%83.png",n:"门铃",k:6,t:"img",dur:3000},
+{i:"IndexData/windows11%E4%BB%BFmac.png",n:"Windows仿MacOS",k:7,t:"img",dur:3000},
+{i:"IndexData/Kg%E8%B7%83%E7%82%B9%E7%BD%91%E7%BB%9C%E4%BC%98%E5%85%88%E5%88%87%E6%8D%A2.png",n:"Kg跃点网络优先切换",k:8,t:"img",dur:3000},
+{i:"IndexData/kgNAS.png",n:"KgPan",k:9,t:"img",dur:3000},
+{i:"https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/videos/Homepage_Gameplay-Trailer_MC-OV_1080x720.webm",n:"Minecraft",u:"https://www.minecraft.net",t:"vid",dur:10000},
+{i:"https://www.yuanshen.com/medias/bg.3e78e808.mp4",n:"原神",u:"https://www.yuanshen.com/#/",t:"vid",dur:10000},
+];
+var carAnims=["carFade","carSlideL","carSlideR","carZoom","carRot"];
+var carI=0,carTimer=null;
+function carGo(n){carI=n;var it=carImgs[n];var img=document.getElementById("carouselImg"),vid=document.getElementById("carouselVid");if(it.t==="vid"){img.style.display="none";vid.style.display="block";vid.src=it.i;try{vid.load();vid.play();}catch(e){}}else{vid.style.display="none";try{vid.pause();}catch(e){}img.style.display="block";img.src=it.i;img.style.animation="none";void img.offsetWidth;var a=carAnims[Math.floor(Math.random()*5)];img.style.animation=a+" .55s ease both";}var ds=document.getElementById("carDots").children;for(var i=0;i<ds.length;i++){ds[i].className="car-dot"+(i===n?" on":"");}var cc=document.getElementById("carCount");if(cc)cc.textContent=(n+1)+" / "+carImgs.length;var cn=document.getElementById("carName");if(cn)cn.textContent=it.n;clearTimeout(carTimer);carTimer=setTimeout(function(){carGo((carI+1)%carImgs.length);},it.dur||3000);}
+var dw=document.getElementById("carDots");carImgs.forEach(function(_,i){var d=document.createElement("span");d.className="car-dot"+(i===0?" on":"");d.addEventListener("click",function(e){e.stopPropagation();carGo(i);});dw.appendChild(d);});
+var cp=document.getElementById("carPrev"),cnx=document.getElementById("carNext");if(cp)cp.addEventListener("click",function(e){e.stopPropagation();carGo((carI-1+carImgs.length)%carImgs.length);});if(cnx)cnx.addEventListener("click",function(e){e.stopPropagation();carGo((carI+1)%carImgs.length);});
+document.getElementById("homeCarousel").addEventListener("click",function(){var it=carImgs[carI];if(it.t==="vid"){window.open(it.u,"_blank");}else{var k=it.k;pages[1].scrollIntoView({behavior:"smooth"});document.querySelectorAll(".intro-tab").forEach(function(x){x.classList.remove("on")});document.querySelector(".intro-tab[data-cat=soft]").classList.add("on");document.querySelectorAll(".intro-panel").forEach(function(pp){pp.classList.remove("on")});document.getElementById("panel-soft").classList.add("on");var bs=document.querySelectorAll(".soft-tabs button");bs.forEach(function(b){b.classList.remove("on")});if(bs[k]){bs[k].classList.add("on");}document.getElementById("simg").src=softData[k].i;document.getElementById("sname").textContent=softData[k].n;document.getElementById("sdesc").textContent=softData[k].d;}});
+carGo(0);
+(function(){var hc=document.getElementById("homeCarousel");var hp=document.querySelector(".page.home");if(!hc||!hp)return;hc.addEventListener("mouseenter",function(){hp.classList.add("hide-logo");});hc.addEventListener("mouseleave",function(){hp.classList.remove("hide-logo");});})();
+(function(){var gd=document.getElementById("goDownload");if(gd)gd.addEventListener("click",function(e){e.preventDefault();pages[2].scrollIntoView({behavior:"smooth"});});})();
+(function(){var da=document.getElementById("dlAgree"),dr=document.getElementById("dlRow");if(da&&dr){da.addEventListener("change",function(){dr.classList.toggle("locked",!da.checked);});}})();
+document.querySelectorAll('button,.home-btn,.intro-tab,.dl-card,.home-carousel').forEach(function(el){if(el.closest('.nav'))return;
+el.style.willChange='transform';
+var tx=0,ty=0,sc=1,vx=0,vy=0,vs=0,gx=0,gy=0,gs=1,raf=null;
+var base=(el.classList.contains('home-carousel')&&getComputedStyle(el).position==='absolute')?'translate(-50%,-50%) ':'';
+function ap(){el.style.transform=base+'perspective(800px) rotateX('+ty.toFixed(2)+'deg) rotateY('+tx.toFixed(2)+'deg) scale('+sc.toFixed(3)+')';}
+function stp(){var k=0.12,d=(el.classList.contains('home-carousel')||el.classList.contains('nav-inner'))?0.9:0.74;vx=(vx+(gx-tx)*k)*d;vy=(vy+(gy-ty)*k)*d;vs=(vs+(gs-sc)*k)*d;tx+=vx;ty+=vy;sc+=vs;ap();if(Math.abs(vx)>0.01||Math.abs(vy)>0.01||Math.abs(vs)>0.001||Math.abs(gx-tx)>0.01||Math.abs(gy-ty)>0.01||Math.abs(gs-sc)>0.001){raf=requestAnimationFrame(stp);}else{tx=gx;ty=gy;sc=gs;ap();raf=null;}}
+function kk(){if(!raf)raf=requestAnimationFrame(stp);}
+el.addEventListener('mousemove',function(e){var r=el.getBoundingClientRect();var ox=e.clientX-r.left-r.width/2;var oy=e.clientY-r.top-r.height/2;gy=(oy/(r.height/2))*-14;gx=(ox/(r.width/2))*14;kk();});
+el.addEventListener('mouseenter',function(){gs=1.08;kk();});
+el.addEventListener('mouseleave',function(){gx=0;gy=0;gs=1;kk();});
+});
+(function(){var gc=document.getElementById("goClause");if(gc)gc.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();pages[3].scrollIntoView({behavior:"smooth"});});})();
+(function(){var wf=document.getElementById('webframe');var fl=document.getElementById('frameLogo');var sh=document.getElementById('setHome');var wfr=document.getElementById('webFrame');if(!wf||!wfr)return;var wparent=wfr.parentNode;var wnext=wfr.nextSibling;function enter(){document.body.appendChild(wfr);wfr.classList.add('fullscreen');document.body.style.overflow='hidden';}function exit(){wfr.classList.remove('fullscreen');document.body.style.overflow='';if(wparent)wparent.insertBefore(wfr,wnext);}var saved=localStorage.getItem('kgHome');if(saved){wf.src=saved;enter();}if(sh)sh.addEventListener('click',function(e){e.stopPropagation();localStorage.setItem('kgHome',wf.src);enter();});if(fl)fl.addEventListener('click',function(e){e.stopPropagation();localStorage.removeItem('kgHome');wf.src='x.html';exit();});})();
+(function(){var logo=document.querySelector('.nav-logo');if(!logo)return;var times=[];logo.style.cursor='pointer';logo.addEventListener('click',function(){var now=Date.now();times=times.filter(function(t){return now-t<5000;});times.push(now);if(times.length>=3){times=[];var w=document.createElement('div');w.id='whiteout';document.body.appendChild(w);setTimeout(function(){if(w.parentNode)w.parentNode.removeChild(w);window.location.href='https://www.yuanshen.com/#/';},4000);}});})();
 </script>
 </body>
 </html>
