@@ -32,4 +32,10 @@
        <changefreq>daily</changefreq>
        <priority>0.4096</priority>
   </url>
+    <url>
+       <loc>https://qkzm.cc.cd/e</loc>
+       <lastmod>2026-08-21T11:36:44+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.4095</priority>
+  </url>
 </urlset>
