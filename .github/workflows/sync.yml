@@ -1,0 +1,31 @@
+name: Sync x.html to kgdream-tw
+
+on:
+  push:
+    paths:
+      - 'x.html'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout kgdream.github.io
+        uses: actions/checkout@v3
+
+      - name: Checkout kgdream-tw
+        uses: actions/checkout@v3
+        with:
+          repository: kgdream/kgdream-tw
+          token: ${{ secrets.SYNC_TOKEN }}
+          path: kgdream-tw
+
+      - name: Copy x.html to index.html
+        run: cp x.html kgdream-tw/index.html
+
+      - name: Commit and Push to kgdream-tw
+        run: |
+          cd kgdream-tw
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add index.html
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto sync from x.html" && git push)
