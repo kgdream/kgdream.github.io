@@ -4,7 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>极简搜索</title>
+<meta name="description" content="千克双起始页，集成百度、必应、谷歌等多引擎搜索、搜索建议与历史记录。">
+<meta name="keywords" content="极简搜索,起始页,新标签页,多引擎搜索,百度,必应,谷歌">
+<meta name="msvalidate.01" content="1C8007CD476107B772DA7C2109C582CE">
 <link rel="icon" type="image/png" href="favicon.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"极简搜索","url":"https://qkzm.cc.cd/e","inLanguage":"zh-CN"}
+</script>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { height: 100%; }
@@ -19,7 +25,7 @@
   .wrap {
     width: min(620px, 94vw);
     position: relative;
-    transform: translateY(-20px);
+    top: -20px;
   }
   /* ---------- 搜索栏 ---------- */
   .bar {
@@ -62,17 +68,76 @@
   }
   #kw::placeholder { color: #999; }
   #go {
+    position: relative;
+    z-index: 100;
+    flex: none;
+    min-width: 96px;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: none;
     border-left: 2px solid #000;
     background: #000;
     color: #fff;
-    padding: 0 28px;
     font-size: 15px;
     letter-spacing: 4px;
     text-indent: 4px;
     cursor: pointer;
+    transition: background-color .15s ease, color .15s ease;
   }
   #go:hover { background: #fff; color: #000; }
+  /* 输入框为空时：搜索按钮变成黑色箭头，点击进入旧版主页 */
+  #go.empty {
+    background: #fff;
+    color: #000;
+    letter-spacing: 0;
+    text-indent: 0;
+  }
+  #go.empty:hover { background: #000; color: #fff; }
+  #go .go-text { display: inline; }
+  #go .chev {
+    display: none;
+    width: 11px;
+    height: 11px;
+    border-top: 2px solid currentColor;
+    border-right: 2px solid currentColor;
+    margin-left: 2px;
+    transform: rotate(225deg);
+    transition: transform .38s cubic-bezier(.22, .61, .36, 1);
+  }
+  #go.empty .go-text { display: none; }
+  #go.empty .chev { display: block; }
+  /* 内嵌界面时：搜索按钮浮到左上角，变成液态玻璃圆钮（点击返回主界面） */
+  body.embed-open #go {
+    position: fixed;
+    left: 18px;
+    top: 18px;
+    width: 48px;
+    height: 48px;
+    min-width: 0;
+    padding: 0;
+    border: 1px solid rgba(255,255,255,.55);
+    border-radius: 50%;
+    background: rgba(255,255,255,.28);
+    color: #333;
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
+    backdrop-filter: blur(14px) saturate(180%);
+    box-shadow: 0 6px 18px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.75), inset 0 -1px 0 rgba(255,255,255,.25);
+    letter-spacing: 0;
+    text-indent: 0;
+    transition: background-color .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  body.embed-open #go:hover,
+  body.embed-open #go:focus-visible {
+    opacity: 1;
+    border-color: rgba(255,255,255,.9);
+    color: #000;
+    background: rgba(255,255,255,.55);
+    box-shadow: 0 10px 26px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.95), inset 0 -1px 0 rgba(255,255,255,.35);
+  }
+  body.embed-open #go .go-text { display: none; }
+  body.embed-open #go .chev { display: block; transform: rotate(45deg); }
   /* 清空按钮：有文字时显示，位于输入框与搜索按钮之间 */
   #clear {
     border: none;
@@ -207,6 +272,8 @@
   /* 输入框聚焦时整条搜索栏微微抬起，阴影加深 */
   .bar { transition: transform .18s ease, box-shadow .18s ease; }
   .bar:focus-within { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 #000; }
+  /* 内嵌时搜索栏被遮住，禁掉它的 transform，避免破坏按钮的 fixed 定位 */
+  body.embed-open .bar { transform: none !important; }
   /* 所有交互元素统一黑白过渡 */
   #engineBtn, #go, #clear, #clearHist, .del,
   #engineMenu li, #suggest li, #history li.h-item {
@@ -230,36 +297,6 @@
   body.embed-open .embed { transform: translateX(0); }
   #embedFrame { display: block; width: 100%; height: 100%; border: none; background: #fff; }
   /* 右下角常驻切换按钮：箭头样式，两层界面之上都不消失 */
-  #toggleEmbed {
-    position: fixed;
-    right: 18px;
-    bottom: 18px;
-    z-index: 100;
-    width: 48px;
-    height: 48px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #000;
-    background: #fff;
-    color: #000;
-    cursor: pointer;
-    box-shadow: 4px 4px 0 #000;
-    transition: background-color .15s ease, color .15s ease;
-  }
-  #toggleEmbed:hover { background: #000; color: #fff; }
-  /* 纯 CSS 箭头：默认朝左（回旧版＝后退），展开后转成朝右（返回新版） */
-  #toggleEmbed .chev {
-    width: 11px;
-    height: 11px;
-    border-top: 2px solid currentColor;
-    border-right: 2px solid currentColor;
-    margin-right: -4px; /* 箭头视觉居中修正 */
-    transform: rotate(225deg);
-    transition: transform .38s cubic-bezier(.22, .61, .36, 1);
-  }
-  body.embed-open #toggleEmbed .chev { transform: rotate(45deg); }
 </style>
 </head>
 <body>
@@ -274,7 +311,7 @@
     </div>
     <input id="kw" type="text" autocomplete="off" autofocus placeholder="输入关键词">
     <button id="clear" type="button" class="hidden" title="清空">&times;</button>
-    <button id="go" type="button">搜索</button>
+    <button id="go" type="button" class="empty" title="打开旧版主页"><span class="go-text">搜索</span><i class="chev"></i></button>
   </div>
 
   <ul id="suggest" class="panel hidden"></ul>
@@ -285,7 +322,6 @@
 <div id="embed" class="embed">
   <iframe id="embedFrame" title="旧版主页"></iframe>
 </div>
-<button id="toggleEmbed" type="button" title="旧版主页"><i class="chev"></i></button>
 
 <script>
 /* ================= 搜索引擎 ================= */
@@ -379,7 +415,7 @@ function doSearch(text) {
   hideHistory();
   window.open(ENGINES[cur].url + encodeURIComponent(text), '_blank');
 }
-goBtn.addEventListener('click', function() { doSearch(kw.value); });
+
 
 /* ================= 搜索建议（JSONP） ================= */
 var timer = null;
@@ -451,6 +487,7 @@ kw.addEventListener('mousedown', function() {
 /* 清空按钮：有文字才显示，点击清空并回到历史面板 */
 function updateClear() {
   clearBtn.classList.toggle('hidden', !kw.value);
+  syncGoLabel();
 }
 clearBtn.addEventListener('mousedown', function(e) { e.preventDefault(); }); // 不让输入框失焦
 clearBtn.addEventListener('click', function(e) {
@@ -598,24 +635,51 @@ document.addEventListener('mousedown', function(e) {
   }
 });
 /* ================= 旧版主页切换（右侧滑入 / 滑出返回） ================= */
-var toggleEmbedBtn = document.getElementById('toggleEmbed');
 var embedBox   = document.getElementById('embed');
 var embedFrame = document.getElementById('embedFrame');
 var embedLoaded = false;
+var EMBED_KEY = 'jianjian_embed_open';
 
-toggleEmbedBtn.addEventListener('click', function(e) {
-  e.stopPropagation();
+function syncGoLabel() {
+  var empty = kw.value.trim() === '';
+  goBtn.classList.toggle('empty', empty);
+  goBtn.title = empty ? '打开旧版主页' : '搜索';
+}
+
+/* 刷新后保持上次状态：内嵌界面刷新仍在内嵌，主界面刷新仍在主界面 */
+(function restoreEmbedState() {
+  var wasOpen = false;
+  try { wasOpen = localStorage.getItem(EMBED_KEY) === '1'; } catch (e) {}
+  if (!wasOpen) return;
+  embedBox.style.transition = 'none';
+  document.body.classList.add('embed-open');
+  embedFrame.src = 'x.html';
+  embedLoaded = true;
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() { embedBox.style.transition = ''; });
+  });
+})();
+
+goBtn.addEventListener('click', function() {
+  if (kw.value.trim() !== '') {
+    doSearch(kw.value);
+    return;
+  }
   var opening = !document.body.classList.contains('embed-open');
   if (opening && !embedLoaded) {
     embedFrame.src = 'x.html';
     embedLoaded = true;
   }
   document.body.classList.toggle('embed-open', opening);
-  toggleEmbedBtn.title = opening ? '返回极简搜索' : '打开旧版主页';
+  syncGoLabel();
+  try { localStorage.setItem(EMBED_KEY, opening ? '1' : '0'); } catch (e) {}
 });
 
 /* 初始化 */
 setEngine(cur);
+syncGoLabel();
+if (document.body.classList.contains('embed-open')) syncGoLabel();
 </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"a835634032954826ac1ab07c156424af","r":1,"spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
