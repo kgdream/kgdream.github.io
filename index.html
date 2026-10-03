@@ -112,7 +112,13 @@ body{margin:0;background:#f2efe9;font-family:-apple-system,"Segoe UI",sans-serif
 
 .web-tabs button.on,.soft-tabs button.on{background:rgba(47,62,78,.85);color:#f2efe9}
 .soft-view{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;overflow:hidden;padding:0 10px}
-.soft-view-img{max-width:78%;max-height:58%;object-fit:contain;border-radius:16px;box-shadow:0 6px 24px rgba(0,0,0,.1)}
+.soft-view-img{max-width:78%;max-height:58%;object-fit:contain;border-radius:16px;box-shadow:0 6px 24px rgba(0,0,0,.1);cursor:zoom-in}
+.img-lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:99999;opacity:0;pointer-events:none;transition:opacity .3s ease;cursor:zoom-out}
+.img-lightbox.on{opacity:1;pointer-events:auto}
+.img-lightbox img{max-width:92vw;max-height:92vh;object-fit:contain;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.6);cursor:default;animation:lbIn .3s cubic-bezier(.22,.61,.36,1) both}
+@keyframes lbIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+.img-lightbox .lb-close{position:absolute;top:22px;right:26px;width:44px;height:44px;border:none;border-radius:50%;background:rgba(255,255,255,.18);color:#fff;font-size:22px;line-height:44px;text-align:center;cursor:pointer;padding:0;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:background .2s}
+.img-lightbox .lb-close:hover{background:rgba(255,255,255,.35)}
 .soft-view-info{max-width:80%;display:flex;flex-direction:column;align-items:center;text-align:center}
 .soft-view-info h3{font-size:1.3rem;color:#2f3e4e;margin-bottom:10px}
 .soft-view-info p{font-size:.88rem;color:#7a8894;line-height:1.7}
@@ -252,10 +258,10 @@ body>.web-frame.fullscreen,.web-frame.fullscreen{position:fixed!important;left:0
 </div>
 <div class="intro-panel" id="panel-soft">
 <div class="soft-view">
-<img id="simg" class="soft-view-img" src="IndexData/%E8%B5%B7%E5%A7%8B%E9%A1%B5.png">
+<img id="simg" class="soft-view-img" src="IndexData/%E8%B5%B7%E5%A7%8B%E9%A1%B5.png" onclick="var L=document.getElementById('imgLightbox');if(L){document.getElementById('lbImg').src=this.src;L.classList.add('on');}">
 <div class="soft-view-info"><h3 id="sname">千克起始页</h3><p id="sdesc">极简起始页，让浏览回归纯粹。没有干扰，只有你收藏的站点。</p></div>
 </div>
-<div class="soft-tabs"><button class="sb" data-i="0" on>千克起始页</button><button class="sb" data-i="1">KGDream chrome扩展</button><button class="sb" data-i="2">我的世界服务器启动器</button><button class="sb" data-i="3">kgBing壁纸</button><button class="sb" data-i="4">千克Windows壁纸Pro</button><button class="sb" data-i="5">KG收银</button><button class="sb" data-i="6">门铃</button><button class="sb" data-i="7">Windows仿MacOS</button><button class="sb" data-i="8">Kg跃点网络优先切换</button><button class="sb" data-i="9">KgPan</button><button class="sb" data-i="10">KGCode</button></div>
+<div class="soft-tabs"><button class="sb" data-i="0" on>千克起始页</button><button class="sb" data-i="1">KGDream chrome扩展</button><button class="sb" data-i="2">我的世界服务器启动器</button><button class="sb" data-i="3">kgBing壁纸</button><button class="sb" data-i="4">千克Windows壁纸Pro</button><button class="sb" data-i="5">KG收银</button><button class="sb" data-i="6">门铃</button><button class="sb" data-i="7">Windows仿MacOS</button><button class="sb" data-i="8">Kg跃点网络优先切换</button><button class="sb" data-i="9">KgPan</button><button class="sb" data-i="10">KGCode</button><button class="sb" data-i="11">MC服务器启动器-CLI</button></div>
 </div>
 </div>
 </section>
@@ -277,7 +283,7 @@ body>.web-frame.fullscreen,.web-frame.fullscreen{position:fixed!important;left:0
 <div class="ab-col ab-about">
 <h2>关于</h2>
 <p>关于千克起始页</p><p>做一套真正干净、好用、不烦人的工具。</p><p>极简、无广告、开源，这是从一开始就没打算妥协的三件事。</p><p>为什么做？</p><p>因为市面上不是没有同类工具，就是不好用；好用的要付费，免费的不是捆绑就是找不到。与其等一个完美的工具出现，不如自己手搓一个。</p><p>一切的开始，其实很简单——</p><p>嫌弃浏览器主页不够好看，就动手写了一个起始页。</p><p>后来发现，这种“嫌弃”能延伸到很多地方：壁纸、收银、传文件、服务器启动器……</p><p>于是就有了这一堆系列。</p><p>千克起始页不是什么大平台，</p><p>只是一个开发者对自己日常需求的诚实回应。</p><p>如果你也在用，我很感谢你。</p><p>虽然现在可能还没什么人用，但这份感谢是真的。</p><p>贡献者就我一个，</p><p>但背后还有神秘的好人。</p><p>帮了我很多。</p><p>谢谢选择我</p></div>
-<div class="ab-foot"><b>联系方式</b>　邮箱：wocao23@outlook.com, kuang45@outlook.com　·　抖音：bblpro</div>
+<div class="ab-foot"><b>联系方式</b>　邮箱：<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c8bfa7aba9a7fafb88a7bdbca4a7a7a3e6aba7a5">[email&#160;protected]</a>, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="87ecf2e6e9e0b3b2c7e8f2f3ebe8e8eca9e4e8ea">[email&#160;protected]</a>　·　抖音：bblpro</div>
 </div>
 </section>
 <nav class="nav"><div class="nav-inner">
@@ -289,6 +295,7 @@ body>.web-frame.fullscreen,.web-frame.fullscreen{position:fixed!important;left:0
 <button><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.6 2.2c-.7.4-1.1 1-1.1 1.8"/><path d="M12 17h.01"/></svg>关于</button>
 </span>
 </div></nav>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script>
 const pages=[...document.querySelectorAll('.page')];
 const nav=document.querySelector('.nav');
@@ -317,7 +324,7 @@ setTimeout(()=>nav.classList.add('ready'),700);
 (function(){const lg=document.querySelector('.home .logo');if(!lg)return;const r=lg.getBoundingClientRect();const dx=window.innerWidth/2-(r.left+r.width/2);const dy=window.innerHeight/2-(r.top+r.height/2);lg.style.transform='translate('+dx+'px,'+dy+'px) scale(0)';lg.style.opacity='0';lg.offsetHeight;requestAnimationFrame(function(){lg.style.transition='transform .9s cubic-bezier(.22,.9,.3,1.15),opacity .25s ease';lg.style.transform='translate(0,0) scale(1)';lg.style.opacity='1';});})();
 document.querySelectorAll('.intro-tab').forEach(function(t){t.addEventListener('click',function(){document.querySelectorAll('.intro-tab').forEach(function(x){x.classList.remove('on')});t.classList.add('on');var c=t.dataset.cat;document.querySelectorAll('.intro-panel').forEach(function(p){p.classList.remove('on')});document.getElementById('panel-'+c).classList.add('on');});});
 document.querySelectorAll('.web-tabs button').forEach(function(b){b.addEventListener('click',function(){if(!b.dataset.src)return;document.querySelectorAll('.web-tabs button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');document.getElementById('webframe').src=b.dataset.src;});});
-var softData=[{"n": "千克起始页", "i": "IndexData/%E8%B5%B7%E5%A7%8B%E9%A1%B5.png", "d": "极简起始页，让浏览回归纯粹。没有干扰，只有你收藏的站点。"}, {"n": "KGDream chrome扩展", "i": "IndexData/KGDream%20chrome%E6%89%A9%E5%B1%95.png", "d": "极简起始页，告别杂乱无章。没有广告，没有推送。"}, {"n": "我的世界服务器启动器", "i": "IndexData/MC%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%AF%E5%8A%A8%E5%99%A8.png", "d": "一键开服，联机无忧。点一下就能把服务器开起来。"}, {"n": "kgBing壁纸", "i": "IndexData/%E5%A3%81%E7%BA%B8.png", "d": "自动抓取必应每日美图，桌面永远不重样。"}, {"n": "千克Windows壁纸Pro", "i": "IndexData/%E5%A3%81%E7%BA%B8pro%E7%89%88%E6%9C%AC.png", "d": "超多源壁纸软件，C#新架构，更轻更快。"}, {"n": "KG收银", "i": "IndexData/%E6%94%B6%E9%93%B6.png", "d": "极简快捷，小白也能用的收银台。"}, {"n": "门铃", "i": "IndexData/%E9%97%A8%E9%93%83.png", "d": "跨端推送响应，取代传统实体门铃。"}, {"n": "Windows仿MacOS", "i": "IndexData/windows11%E4%BB%BFmac.png", "d": "让Win系统变身高颜值Mac，一键应用。"}, {"n": "Kg跃点网络优先切换", "i": "IndexData/Kg%E8%B7%83%E7%82%B9%E7%BD%91%E7%BB%9C%E4%BC%98%E5%85%88%E5%88%87%E6%8D%A2.png", "d": "改跃点，提网速，让数据走最快的路。"}, {"n": "KgPan", "i": "IndexData/kgNAS.png", "d": "电脑传文件，跨设备极速互传。"}, {"n": "KGCode", "i": "IndexData/KGCode.png", "d": "极简好用，吊打所有付费，无限 token，接近高端 Agent。"}];document.querySelectorAll(".soft-tabs button").forEach(function(b){b.addEventListener("click",function(){document.querySelectorAll(".soft-tabs button").forEach(function(x){x.classList.remove("on")});b.classList.add("on");var k=+b.dataset.i;document.getElementById("simg").src=softData[k].i;document.getElementById("sname").textContent=softData[k].n;document.getElementById("sdesc").textContent=softData[k].d;});});var carImgs=[
+var softData=[{"n": "千克起始页", "i": "IndexData/%E8%B5%B7%E5%A7%8B%E9%A1%B5.png", "d": "极简起始页，让浏览回归纯粹。没有干扰，只有你收藏的站点。"}, {"n": "KGDream chrome扩展", "i": "IndexData/KGDream%20chrome%E6%89%A9%E5%B1%95.png", "d": "极简起始页，告别杂乱无章。没有广告，没有推送。"}, {"n": "我的世界服务器启动器", "i": "IndexData/MC%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%AF%E5%8A%A8%E5%99%A8.png", "d": "一键开服，联机无忧。点一下就能把服务器开起来。"}, {"n": "kgBing壁纸", "i": "IndexData/%E5%A3%81%E7%BA%B8.png", "d": "自动抓取必应每日美图，桌面永远不重样。"}, {"n": "千克Windows壁纸Pro", "i": "IndexData/%E5%A3%81%E7%BA%B8pro%E7%89%88%E6%9C%AC.png", "d": "超多源壁纸软件，C#新架构，更轻更快。"}, {"n": "KG收银", "i": "IndexData/%E6%94%B6%E9%93%B6.png", "d": "极简快捷，小白也能用的收银台。"}, {"n": "门铃", "i": "IndexData/%E9%97%A8%E9%93%83.png", "d": "跨端推送响应，取代传统实体门铃。"}, {"n": "Windows仿MacOS", "i": "IndexData/windows11%E4%BB%BFmac.png", "d": "让Win系统变身高颜值Mac，一键应用。"}, {"n": "Kg跃点网络优先切换", "i": "IndexData/Kg%E8%B7%83%E7%82%B9%E7%BD%91%E7%BB%9C%E4%BC%98%E5%85%88%E5%88%87%E6%8D%A2.png", "d": "改跃点，提网速，让数据走最快的路。"}, {"n": "KgPan", "i": "IndexData/kgNAS.png", "d": "电脑传文件，跨设备极速互传。"}, {"n": "KGCode", "i": "IndexData/KGCode.png", "d": "极简好用，吊打所有付费，无限 token，接近高端 Agent。"}, {"n": "MC服务器启动器-CLI", "i": "IndexData/MC%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%AF%E5%8A%A8%E5%99%A8-CLI.png", "d": "命令行版开服利器，纯终端操作，轻量高效，适合追求极简与自动化的服主。"}];document.querySelectorAll(".soft-tabs button").forEach(function(b){b.addEventListener("click",function(){document.querySelectorAll(".soft-tabs button").forEach(function(x){x.classList.remove("on")});b.classList.add("on");var k=+b.dataset.i;document.getElementById("simg").src=softData[k].i;document.getElementById("sname").textContent=softData[k].n;document.getElementById("sdesc").textContent=softData[k].d;});});var carImgs=[
 {i:"IndexData/%E8%B5%B7%E5%A7%8B%E9%A1%B5.png",n:"千克起始页",k:0,t:"img",dur:3000},
 {i:"IndexData/KGDream%20chrome%E6%89%A9%E5%B1%95.png",n:"KGDream chrome扩展",k:1,t:"img",dur:3000},
 {i:"IndexData/MC%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%AF%E5%8A%A8%E5%99%A8.png",n:"我的世界服务器启动器",k:2,t:"img",dur:3000},
@@ -328,7 +335,7 @@ var softData=[{"n": "千克起始页", "i": "IndexData/%E8%B5%B7%E5%A7%8B%E9%A1%
 {i:"IndexData/windows11%E4%BB%BFmac.png",n:"Windows仿MacOS",k:7,t:"img",dur:3000},
 {i:"IndexData/Kg%E8%B7%83%E7%82%B9%E7%BD%91%E7%BB%9C%E4%BC%98%E5%85%88%E5%88%87%E6%8D%A2.png",n:"Kg跃点网络优先切换",k:8,t:"img",dur:3000},
 {i:"IndexData/kgNAS.png",n:"KgPan",k:9,t:"img",dur:3000},
-{i:"IndexData/KGCode.png",n:"KGCode",k:10,t:"img",dur:3000},{i:"https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/videos/Homepage_Gameplay-Trailer_MC-OV_1080x720.webm",n:"Minecraft",u:"https://www.minecraft.net",t:"vid",dur:10000},
+{i:"IndexData/KGCode.png",n:"KGCode",k:10,t:"img",dur:3000},{i:"IndexData/MC%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%AF%E5%8A%A8%E5%99%A8-CLI.png",n:"MC服务器启动器-CLI",k:11,t:"img",dur:3000},{i:"https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/videos/Homepage_Gameplay-Trailer_MC-OV_1080x720.webm",n:"Minecraft",u:"https://www.minecraft.net",t:"vid",dur:10000},
 {i:"https://www.yuanshen.com/medias/bg.3e78e808.mp4",n:"原神",u:"https://www.yuanshen.com/#/",t:"vid",dur:10000},
 ];
 var carAnims=["carFade","carSlideL","carSlideR","carZoom","carRot"];
@@ -357,5 +364,6 @@ el.addEventListener('mouseleave',function(){gx=0;gy=0;gs=1;kk();});
 (function(){var wf=document.getElementById('webframe');var fl=document.getElementById('frameLogo');var sh=document.getElementById('setHome');var wfr=document.getElementById('webFrame');if(!wf||!wfr)return;var wparent=wfr.parentNode;var wnext=wfr.nextSibling;function enter(){document.body.appendChild(wfr);wfr.classList.add('fullscreen');document.body.style.overflow='hidden';}function exit(){wfr.classList.remove('fullscreen');document.body.style.overflow='';if(wparent)wparent.insertBefore(wfr,wnext);}var saved=localStorage.getItem('kgHome');if(saved){wf.src=saved;enter();}if(sh)sh.addEventListener('click',function(e){e.stopPropagation();localStorage.setItem('kgHome',wf.src);enter();});if(fl)fl.addEventListener('click',function(e){e.stopPropagation();localStorage.removeItem('kgHome');wf.src='x.html';exit();});})();
 (function(){var logo=document.querySelector('.nav-logo');if(!logo)return;var times=[];logo.style.cursor='pointer';logo.addEventListener('click',function(){var now=Date.now();times=times.filter(function(t){return now-t<5000;});times.push(now);if(times.length>=3){times=[];var w=document.createElement('div');w.id='whiteout';w.style.opacity='0';w.style.transition='opacity 3s ease';document.body.appendChild(w);void w.offsetWidth;w.style.opacity='1';setTimeout(function(){window.location.href='https://www.yuanshen.com/#/';},3000);setTimeout(function(){if(w.parentNode)w.parentNode.removeChild(w);},4000);}});})();
 </script>
+<div class="img-lightbox" id="imgLightbox" onclick="this.classList.remove('on')"><img id="lbImg" src="" alt="" onclick="event.stopPropagation()"><button class="lb-close" onclick="event.stopPropagation();document.getElementById('imgLightbox').classList.remove('on')">X</button></div>
 </body>
 </html>
