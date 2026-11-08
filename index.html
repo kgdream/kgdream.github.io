@@ -6,7 +6,7 @@
 <title>KG-千克之梦-KILOGRAMDREAM</title>
 <link rel="icon" href="favicon.png" type="image/png">
 <meta name="description" content="千克之梦 KGDream：极简无广告的开源起始页与多款免费开源小工具。">
-<meta name="theme-color" content="#f5f0e6">
+<meta name="theme-color" content="#faf7f2">
 <style>
 /* ============================================================
    KGDREAM 重构版
@@ -17,38 +17,43 @@
 
 /* ---------- 1. 主题变量 ---------- */
 :root{
-  --paper:#f5f0e6;          /* 页面底色：月白 */
-  --surface:#faf6ee;        /* 卡片底色：素纸 */
-  --surface-2:#f0eade;      /* 次级底色 */
-  --ink:#2f3a40;            /* 主文字：墨 */
-  --ink-soft:#6b757b;       /* 次级文字 */
-  --line:#d8cdb8;           /* 描边 */
-  --accent:#a8312a;         /* 点缀：朱砂 */
-  --accent-soft:rgba(168,49,42,.08);
-  --chip:#ece5d6;           /* 徽章底 */
+  --paper:#faf7f2;
+  --bg-image:radial-gradient(ellipse 70% 55% at 15% 12%,rgba(214,196,170,.35),transparent 70%),radial-gradient(ellipse 60% 50% at 85% 85%,rgba(200,186,162,.28),transparent 70%),linear-gradient(180deg,#fcfaf6 0%,#faf7f2 50%,#f6f1e8 100%);
+  --surface:#fdfbf7;        /* 卡片底色：素纸 */
+  --surface-2:#f3ede3;      /* 次级底色 */
+  --ink:#33302b;            /* 主文字：墨 */
+  --ink-soft:#78716a;       /* 次级文字 */
+  --line:#e2d9cb;           /* 描边 */
+  --accent:#a63a2e;         /* 点缀：朱砂 */
+  --accent-soft:rgba(166,58,46,.09);
+  --chip:#f2ece1;           /* 徽章底 */
   --shadow:0 1px 2px rgba(47,58,64,.06),0 4px 16px rgba(47,58,64,.05);
-  --radius:14px;
-  --radius-sm:10px;
+  --radius:8px;
+  --radius-sm:6px;
   --maxw:1180px;
 }
 html.dark-mode{
-  --paper:#1c2024;
-  --surface:#242a2f;
-  --surface-2:#2c3339;
-  --ink:#e8e3d8;
-  --ink-soft:#9aa4a0;
-  --line:#3a4249;
-  --accent:#d0604f;
-  --accent-soft:rgba(208,96,79,.12);
-  --chip:#313a41;
+  --paper:#1e1c1a;
+  --bg-image:radial-gradient(ellipse 70% 55% at 15% 12%,rgba(80,70,55,.45),transparent 70%),radial-gradient(ellipse 60% 50% at 85% 85%,rgba(70,62,50,.35),transparent 70%),linear-gradient(180deg,#211e1a 0%,#1e1c1a 50%,#1a1815 100%);
+  --surface:#282521;
+  --surface-2:#332f2a;
+  --ink:#e8e2d6;
+  --ink-soft:#a09889;
+  --line:#443e36;
+  --accent:#d47263;
+  --accent-soft:rgba(212,114,99,.14);
+  --chip:#38332d;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
 }
 
 /* ---------- 2. 基础重置 ---------- */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth}body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.055'/%3E%3C/svg%3E")}html.dark-mode body::before{opacity:.85}.hero-title,.poem-text,.section-title,.entry-name,.card-title{font-family:"Songti SC","Noto Serif SC","SimSun",serif}
+.hero-title,.poem-text,.section-title,.entry-name,.card-title{font-family:"Songti SC","Noto Serif SC","SimSun",serif}
 body{
-  background:var(--paper);
+  background-color:var(--paper);
+  background-image:var(--bg-image);
+  background-attachment:fixed;
   color:var(--ink);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Songti SC","Noto Serif SC",system-ui,sans-serif;
   line-height:1.7;
@@ -111,8 +116,14 @@ html.dark-mode .theme-btn .ic-sun{display:block}
   color:var(--accent);border:1px solid var(--accent);
   padding:2px 9px;border-radius:4px;margin-bottom:12px;
 }
-.hero-title{font-size:1.9rem;line-height:1.25;letter-spacing:.12em;font-weight:700}
-.hero-sub{margin-top:12px;color:var(--ink-soft);font-size:.95rem;letter-spacing:.04em}
+.hero-title{font-size:2.6rem;line-height:1.22;letter-spacing:.02em;font-weight:900;color:var(--ink)}
+.hero-title .hl{color:var(--accent)}
+.hero-sub{margin-top:14px;color:var(--ink-soft);font-size:1rem;line-height:1.85;letter-spacing:.01em}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.btn-pill{display:inline-flex;align-items:center;justify-content:center;padding:12px 28px;border-radius:999px;font-size:.95rem;font-weight:700;letter-spacing:.04em;transition:transform .18s ease,box-shadow .18s ease,background-color .18s ease}
+.btn-pill:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(194,24,91,.22)}
+.btn-solid{background:var(--accent);color:#fff}
+.btn-ghost{background:#fff;color:var(--accent);border:1px solid var(--line)}
 /* 诗词卡片 */
 .poem-card{
   margin-top:18px;padding:16px 20px;
@@ -218,7 +229,7 @@ html.dark-mode .carousel-btn{background:rgba(40,45,50,.85);color:#eee}
   display:flex;flex-direction:column;
   background:var(--surface);border:1px solid var(--line);
   border-radius:var(--radius);overflow:hidden;
-  box-shadow:var(--shadow);
+  box-shadow:0 1px 2px rgba(51,48,43,.05),0 3px 10px rgba(51,48,43,.04);
   transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
 }
 .soft-card:hover{
@@ -226,12 +237,15 @@ html.dark-mode .carousel-btn{background:rgba(40,45,50,.85);color:#eee}
   border-color:var(--accent);
   box-shadow:0 4px 10px rgba(47,58,64,.08),0 12px 28px rgba(47,58,64,.08);
 }
+.soft-card{position:relative}
+.soft-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);opacity:.85}
 .card-thumb{
   aspect-ratio:2.2/1;
   position:relative;background:var(--surface-2);
   overflow:hidden;cursor:zoom-in;
 }
-.card-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+.card-thumb img{width:100%;height:100%;object-fit:contain;transition:transform .35s ease}
+.card-thumb img.is-portrait{object-fit:cover}
 .soft-card:hover .card-thumb img{transform:scale(1.03)}
 .card-body{padding:10px 14px 12px;display:flex;flex-direction:column;gap:6px;flex:1}
 .card-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -342,11 +356,23 @@ html.dark-mode .chip.chip-windows{background:#22303f;color:#8fb8e0;border-color:
 .bottom-nav a:hover,.bottom-nav a:active{color:var(--accent);background:var(--accent-soft)}
 .bottom-nav svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
 
+/* ---------- 9.5 宽屏左右交替布局 ---------- */
+@media (min-width:769px){
+  .soft-grid{grid-template-columns:1fr;max-width:920px;margin:0 auto}
+  .soft-card{flex-direction:row;align-items:stretch}
+  .soft-card:nth-child(even){flex-direction:row-reverse}
+  .card-thumb{width:42%;flex:none;aspect-ratio:auto;min-height:170px;display:flex;align-items:center;justify-content:center;padding:10px}
+  .card-thumb img{height:auto;max-height:100%;object-fit:contain}
+  .card-thumb img.is-portrait{height:100%;object-fit:cover;padding:0}
+  .card-body{flex:1;justify-content:center;padding:18px 22px}
+  .card-title{font-size:1.15rem}
+}
+
 /* ---------- 10. 响应式 ---------- */
 /* 平板 */
 @media (max-width:1024px){
   .hero{grid-template-columns:1fr;gap:22px;padding:32px 18px 26px}
-  .hero-title{font-size:1.9rem}
+  .hero-title{font-size:2.1rem}
 }
 /* 手机 */
 @media (max-width:768px){
@@ -358,7 +384,7 @@ html.dark-mode .chip.chip-windows{background:#22303f;color:#8fb8e0;border-color:
   .section{padding:26px 14px}
   .section-title{font-size:1.15rem;margin-bottom:16px}
   .hero{padding:16px 14px 14px;min-height:auto}
-  .hero-title{font-size:1.4rem;letter-spacing:.06em}
+  .hero-title{font-size:1.7rem;letter-spacing:.01em}
   .hero-eyebrow{font-size:.7rem;letter-spacing:.2em}
   .poem-card{padding:16px 16px 16px 20px;margin-top:20px}
   .poem-text{font-size:1rem;line-height:1.9}
@@ -391,12 +417,19 @@ html.dark-mode .chip.chip-windows{background:#22303f;color:#8fb8e0;border-color:
   .card-title{font-size:1rem}
 }
 /* 减少动效偏好 */
+.mojang-splash{position:fixed;inset:0;z-index:9999;background:#E84A4D;display:flex;align-items:center;justify-content:center;transition:opacity .6s ease}
+.mojang-splash.is-hidden{opacity:0;pointer-events:none}
+.mojang-emblem{font-family:"Arial Black","Segoe UI Black",Impact,system-ui,sans-serif;font-size:clamp(48px,10vw,104px);font-weight:900;letter-spacing:-.02em;color:#fff;line-height:1;user-select:none;transform:translateY(-6vh)}
+.mojang-bar{position:absolute;left:50%;bottom:14%;transform:translateX(-50%);width:min(70vw,560px);height:18px;border:2px solid #fff;padding:2px;box-sizing:border-box}
+.mojang-bar-fill{height:100%;width:0;background:#fff;transition:width .2s linear}
+.mojang-title{display:none}
 @media (prefers-reduced-motion:reduce){
   *{animation:none;transition:none;scroll-behavior:auto}
 }
 </style>
 </head>
 <body>
+<div class="mojang-splash" id="mojangSplash"><div class="mojang-emblem">KILOGRAM</div><div class="mojang-bar"><div class="mojang-bar-fill" id="mojangBarFill"></div></div></div>
 
 <!-- ============ 顶部导航 ============ -->
 <header class="site-header">
@@ -421,8 +454,13 @@ html.dark-mode .chip.chip-windows{background:#22303f;color:#8fb8e0;border-color:
   <section class="hero" id="home">
     <div class="hero-text">
       <span class="hero-eyebrow">极简 · 无广告 · 开源</span>
-      <h1 class="hero-title">千克之梦<br>KGDREAM</h1>
-      <p class="hero-sub">一套干净、好用、不烦人的工具。</p>
+      <h1 class="hero-title">欢迎来到<br><span class="hl">BUGKILOGRAM</span></h1>
+      <p class="hero-sub">一套完全免费、开源的个人软件合集。持续更新，无广告、无推送、无捆绑，所有工具均可直接下载，源码公开在 GitHub。</p>
+      <div class="hero-actions">
+        <a class="btn-pill btn-solid" href="#entries">浏览全部工具</a>
+        <a class="btn-pill btn-ghost" href="#software">获取下载</a>
+        <a class="btn-pill btn-ghost" href="https://github.com/kgdream/kgdream.github.io" target="_blank" rel="noopener">GitHub</a>
+      </div>
 
       <!-- 诗词卡片：由 jinrishici API 动态填充 -->
       <div class="poem-card">
@@ -472,7 +510,7 @@ html.dark-mode .chip.chip-windows{background:#22303f;color:#8fb8e0;border-color:
       </div>
     </div>
 
-    <div class="pwd-tip"><span class="pwd-tip-key">提取码</span><strong>qkzm</strong><span class="pwd-tip-note">除迅雷云盘外，各网盘统一使用此提取码</span></div>
+    <div class="pwd-tip"><span class="pwd-tip-key">提取码</span><strong>qkzm</strong></div>
     <div class="soft-grid" id="softGrid"></div>
   </section>
 
@@ -571,7 +609,7 @@ html.dark-mode .chip.chip-windows{background:#22303f;color:#8fb8e0;border-color:
   });
 
   /* ---------- 2. 平台相关工具 ---------- */
-  var PLATFORM_LABEL = { windows: 'Windows', android: '安卓', system: '系统', web: '网页' };
+  var PLATFORM_LABEL = { windows: 'Windows', android: '安卓', system: '系统', web: '网页', game: 'Game' };
   var PLATFORM_CLASS = { windows: 'chip-windows', android: 'chip-android', system: 'chip-system', web: 'chip-web' };
   function platformOf(item) { return (item.name && item.name.indexOf('起始页') !== -1) ? 'web' : item.platform; }
   var PLATFORM_CLASS = { windows: 'chip-windows', android: 'chip-android', system: 'chip-system' };
@@ -632,6 +670,23 @@ html.dark-mode .chip.chip-windows{background:#22303f;color:#8fb8e0;border-color:
         '</article>';
     }).join('');
     bindDlLogos();
+    markPortraitImages();
+  }
+
+  // 标记竖图：宽高比小于 1 的图片加 is-portrait 类
+  function markPortraitImages() {
+    var imgs = document.querySelectorAll('.card-thumb img');
+    for (var i = 0; i < imgs.length; i++) {
+      (function (img) {
+        function check() {
+          if (img.naturalWidth && img.naturalHeight && img.naturalHeight > img.naturalWidth) {
+            img.classList.add('is-portrait');
+          }
+        }
+        if (img.complete) { check(); }
+        else { img.addEventListener('load', check); }
+      })(imgs[i]);
+    }
   }
 
   // 给下载图标绑定候选回退：多后缀 + icon.horse 兜底
@@ -690,11 +745,11 @@ html.dark-mode .chip.chip-windows{background:#22303f;color:#8fb8e0;border-color:
   });
   slides.push({
     type: 'vid', src: 'https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/videos/Homepage_Gameplay-Trailer_MC-OV_1080x720.webm',
-    name: 'Minecraft', platform: 'windows', duration: 10000
+    name: 'Minecraft', platform: 'game', duration: 10000
   });
   slides.push({
     type: 'vid', src: 'https://www.yuanshen.com/medias/bg.3e78e808.mp4',
-    name: '原神', platform: 'windows', duration: 10000
+    name: '原神', platform: 'game', duration: 10000
   });
 
   var slideIndex = 0;
@@ -733,7 +788,7 @@ html.dark-mode .chip.chip-windows{background:#22303f;color:#8fb8e0;border-color:
 
     // 更新文字
     carouselName.textContent = slide.name;
-    carouselChip.textContent = PLATFORM_LABEL[slide.platform] || 'Windows';
+    carouselChip.textContent = PLATFORM_LABEL[slide.platform] || 'Game';
 
     // 更新圆点
     carouselDots.querySelectorAll('button').forEach(function (d, i) {
@@ -873,6 +928,20 @@ html.dark-mode .chip.chip-windows{background:#22303f;color:#8fb8e0;border-color:
     }
   });
 
+})();
+</script>
+<script>
+(function(){
+  var fill=document.getElementById('mojangBarFill');
+  var splash=document.getElementById('mojangSplash');
+  if(!fill||!splash) return;
+  var p=0;
+  var maxBeforeLoad=90;
+  var t=setInterval(function(){
+    if(p<maxBeforeLoad){ p+=Math.random()*8+4; if(p>maxBeforeLoad) p=maxBeforeLoad; fill.style.width=p+'%'; }
+  },180);
+  function finish(){ clearInterval(t); fill.style.width='100%'; setTimeout(function(){ splash.classList.add('is-hidden'); },300); }
+  if(document.readyState==='complete'){ finish(); } else { window.addEventListener('load', finish); }
 })();
 </script>
 </body>
