@@ -5,7 +5,7 @@ var softData = [
     name: "KgPan",
     img: "IndexData/kgNAS.png",
     platform: "windows",
-    desc: "电脑之间传文件的工具，跨设备极速互传，不再受数据线束缚。",
+    desc: "局域网文件传输工具。同一网络下的电脑、手机之间可直接互传文件，无需数据线，也不必先上传云端再下载，大文件传输速度取决于局域网带宽。",
     links: {
       "123": "https://1823501963.share.123pan.cn/123pan/jE4Fjv-ttsVh?pwd=qkzm#",
       lanzou: "https://qkzm.lanzoum.com/b0188q1n7g",
@@ -17,7 +17,7 @@ var softData = [
     name: "KGDream chrome扩展",
     img: "IndexData/KGDream chrome扩展.png",
     platform: "windows",
-    desc: "Chrome 浏览器扩展版起始页，告别杂乱无章的新标签页。没有广告，没有推送，只有干净清爽的起点。",
+    desc: "Chrome 浏览器扩展版起始页，替换浏览器默认新标签页。没有广告、没有推送，打开新标签就是自己收藏的站点与常用工具。",
     note: "解压加载文件夹",
     links: {
       "123": "https://1823501963.share.123pan.cn/123pan/jE4Fjv-63djh?pwd=qkzm#",
@@ -30,7 +30,7 @@ var softData = [
     name: "Kg跃点网络优先切换",
     img: "IndexData/Kg跃点网络优先切换.png",
     platform: "windows",
-    desc: "一键调整网络跃点、优化线路优先级，提升网速，让数据走最快的路。",
+    desc: "一键调整网络跃点、优化线路优先级。当设备同时接入多个网络时，可指定数据优先走哪条线路，减少绕路，让网速更稳。",
     links: {
       "123": "https://1823501963.share.123pan.cn/123pan/jE4Fjv-fGEVh?pwd=qkzm#",
       lanzou: "https://qkzm.lanzoum.com/b0188q1nva",
@@ -42,7 +42,7 @@ var softData = [
     name: "千克KG Code",
     img: "IndexData/KGCode.png",
     platform: "windows",
-    desc: "极简好用，无限 token 不设限，能力接近高端 Agent。",
+    desc: "内置 AI 能力的代码工具，交互方式接近 Agent。不限制 token 用量，可用于日常编码、问答与自动化任务。",
     links: {
       "123": "https://1823501963.share.123pan.cn/123pan/jE4Fjv-aGEVh?pwd=qkzm#",
       lanzou: "https://qkzm.lanzoum.com/b0188q1gzc",
@@ -54,7 +54,7 @@ var softData = [
     name: "我的世界服务器启动器-CLI",
     img: "IndexData/MC服务器启动器-CLI.png",
     platform: "windows",
-    desc: "命令行版的开服利器，纯终端操作、轻量高效，适合追求极简与自动化的服主。",
+    desc: "命令行版 Minecraft 服务器启动器。纯终端操作，启动、配置、管理都在命令行完成，轻量高效，适合追求自动化与脚本化的服主。",
     links: {
       "123": "https://1823501963.share.123pan.cn/123pan/jE4Fjv-BGEVh?pwd=qkzm#",
       lanzou: "https://qkzm.lanzoum.com/b0188q1mxg",
@@ -66,7 +66,7 @@ var softData = [
     name: "kgBing壁纸",
     img: "IndexData/壁纸.png",
     platform: "windows",
-    desc: "自动抓取必应每日美图作为壁纸，每天自动更新，桌面永远不重样。",
+    desc: "自动抓取必应每日美图并设为桌面壁纸。每天自动更新，无需手动操作，桌面每天都是新图。",
     links: {
       "123": "https://1823501963.share.123pan.cn/123pan/jE4Fjv-3p5Vh?pwd=qkzm#",
       lanzou: "https://qkzm.lanzoum.com/b0188q1j3i",
@@ -78,7 +78,7 @@ var softData = [
     name: "我的世界服务器启动器",
     img: "IndexData/MC服务器启动器.png",
     platform: "windows",
-    desc: "Minecraft 服务器启动器，一键开服、联机无忧。不用敲命令、不用配环境，点一下就能把服务器开起来。",
+    desc: "Minecraft 服务器启动器图形版。一键开服、联机，不用敲命令、不用手动配环境，点几下就能把服务器跑起来，适合新手。",
     links: {
       "123": "https://1823501963.share.123pan.cn/123pan/jE4Fjv-hp5Vh?pwd=qkzm#",
       lanzou: "https://qkzm.lanzoum.com/b0188q1mzi",
@@ -90,7 +90,7 @@ var softData = [
     name: "KG收银",
     img: "IndexData/收银.png",
     platform: "windows",
-    desc: "极简快捷的收银台，操作直观、上手即会，新手小白也能轻松用起来。",
+    desc: "极简收银台工具。界面直观、操作快捷，商品录入、结算、挂单等常用功能集中在同一屏，新手也能快速上手。",
     links: {
       "123": "https://1823501963.share.123pan.cn/123pan/jE4Fjv-Hp5Vh?pwd=qkzm#",
       lanzou: "https://qkzm.lanzoum.com/b0188q1nba",
@@ -102,7 +102,7 @@ var softData = [
     name: "门铃",
     img: "IndexData/门铃.png",
     platform: "android",
-    desc: "跨端推送响应的门铃，用手机等设备就能接收，取代传统的实体门铃。",
+    desc: "跨设备推送门铃。按下端触发后，手机等设备即时收到推送提醒，用软件取代传统实体门铃。",
     links: {
       "123": "https://1823501963.share.123pan.cn/123pan/jE4Fjv-grvVh?pwd=qkzm#",
       lanzou: "https://qkzm.lanzoum.com/b0188q1o0f",
@@ -114,7 +114,7 @@ var softData = [
     name: "Windows10&11仿MacOS",
     img: "IndexData/windows11仿mac.png",
     platform: "system",
-    desc: "把 Windows 系统一键变身高颜值的 macOS 风格，主题美化一步到位。",
+    desc: "Windows 10/11 主题美化工具。一键套用 macOS 风格界面，圆角、Dock、图标等视觉元素一次到位，无需手动折腾。",
     links: {
       "123": "https://1823501963.share.123pan.cn/123pan/jE4Fjv-6dFVh?pwd=qkzm#"
     }
