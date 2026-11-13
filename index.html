@@ -124,6 +124,10 @@ html.dark-mode .theme-btn .ic-sun{display:block}
 .btn-pill:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(194,24,91,.22)}
 .btn-solid{background:var(--accent);color:#fff}
 .btn-ghost{background:#fff;color:var(--accent);border:1px solid var(--line)}
+.btn-line{background:transparent;color:var(--ink-soft);border:1px solid var(--line);font-weight:400;letter-spacing:.12em;font-size:.86rem;padding:9px 20px}
+.btn-line:hover{border-color:var(--accent);color:var(--accent);background:transparent}
+.btn-subtle{background:transparent;color:var(--ink-soft);border:1px solid var(--line);font-weight:400;letter-spacing:.12em;font-size:.86rem;padding:9px 20px}
+.btn-subtle:hover{border-color:var(--accent);color:var(--accent);background:transparent}
 /* 诗词卡片 */
 .poem-card{
   margin-top:18px;padding:16px 20px;
@@ -459,7 +463,12 @@ html.dark-mode .chip.chip-windows{background:#22303f;color:#8fb8e0;border-color:
       <div class="hero-actions">
         <a class="btn-pill btn-solid" href="#entries">浏览全部工具</a>
         <a class="btn-pill btn-ghost" href="#software">获取下载</a>
-        <a class="btn-pill btn-ghost" href="https://github.com/kgdream/kgdream.github.io" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn-pill btn-ghost" href="https://github.com/kgdream/kgdream.github.io/archive/HEAD.zip" target="_blank" rel="noopener">HTML下载</a>
+      </div>
+      <div class="hero-actions" style="margin-top:12px">
+        <a class="btn-pill btn-line" href="https://github.com/kgdream/BUGKILOGRAM/issues/new?template=bug_report.yml" target="_blank" rel="noopener">提 Bug / 报错</a>
+        <a class="btn-pill btn-subtle" href="https://github.com/kgdream/BUGKILOGRAM/issues/new?template=feature_request.yml" target="_blank" rel="noopener">提新功能 / 建议</a>
+        <a class="btn-pill btn-subtle" href="https://github.com/kgdream/BUGKILOGRAM/issues" target="_blank" rel="noopener">查看 Issue</a>
       </div>
 
       <!-- 诗词卡片：由 jinrishici API 动态填充 -->
@@ -490,7 +499,7 @@ html.dark-mode .chip.chip-windows{background:#22303f;color:#8fb8e0;border-color:
       <a class='entry-card' href='e.html'><span class='entry-num'>叁</span><span class='entry-name'>极简标签页</span><span class='entry-desc'>只剩一个搜索框</span></a>
       <a class='entry-card' href='bc.html'><span class='entry-num'>肆</span><span class='entry-name'>便签</span><span class='entry-desc'>随手记事</span></a>
       <a class='entry-card' href='t.html'><span class='entry-num'>伍</span><span class='entry-name'>看一眼协议</span><span class='entry-desc'>GPL-3.0 与附加条款</span></a>
-      <div class='entry-card'><span class='entry-num'>陆</span><span class='entry-name'>联系方式</span><span class='entry-desc' style='display:flex;flex-direction:column;gap:6px;margin-top:4px'><a href='mailto:hi@made.l.cd' style='color:var(--accent)'>hi@made.l.cd</a><a href='mailto:qq@made.l.cd' style='color:var(--accent)'>qq@made.l.cd</a></span></div>
+      <div class='entry-card'><span class='entry-num'>陆</span><span class='entry-name'>联系方式</span><span class='entry-desc' style='display:flex;flex-direction:column;gap:6px;margin-top:4px'><a href="/cdn-cgi/l/email-protection#462e2f062b272223682a682522" style='color:var(--accent)'><span class="__cf_email__" data-cfemail="a5cdcce5c8c4c1c08bc98bc6c1">[email&#160;protected]</span></a><a href="/cdn-cgi/l/email-protection#92e3e3d2fff3f6f7bcfebcf1f6" style='color:var(--accent)'><span class="__cf_email__" data-cfemail="98e9e9d8f5f9fcfdb6f4b6fbfc">[email&#160;protected]</span></a></span></div>
       <a class='entry-card' href='https://space.bilibili.com/3494363543898238' target='_blank' rel='noopener'><span class='entry-num'>柒</span><span class='entry-name'>哔哩哔哩</span><span class='entry-desc' style='display:flex;align-items:center;gap:10px;margin-top:8px'><img class='social-logo' src='https://www.bilibili.com/favicon.ico' alt='B站' data-host='www.bilibili.com'><span>主页</span></span></a>
       <a class='entry-card' href='https://www.douyin.com/user/MS4wLjABAAAAKuLiTRBe5BKSuGOrXTm5aciE0xnqzf3h_dfdV1s_3tmDa9oXB9ZAvJSwfrCpZ-ta' target='_blank' rel='noopener'><span class='entry-num'>捌</span><span class='entry-name'>抖音</span><span class='entry-desc' style='display:flex;align-items:center;gap:10px;margin-top:8px'><img class='social-logo' src='https://www.douyin.com/favicon.ico' alt='抖音' data-host='www.douyin.com'><span>主页</span></span></a>
     </div>
@@ -572,7 +581,7 @@ html.dark-mode .chip.chip-windows{background:#22303f;color:#8fb8e0;border-color:
 </div>
 
 <!-- 数据 -->
-<script src="data.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="data.js"></script>
 <script>
 /* ============================================================
    KGDREAM 交互逻辑
@@ -944,5 +953,6 @@ html.dark-mode .chip.chip-windows{background:#22303f;color:#8fb8e0;border-color:
   if(document.readyState==='complete'){ finish(); } else { window.addEventListener('load', finish); }
 })();
 </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"a835634032954826ac1ab07c156424af","r":1,"spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
