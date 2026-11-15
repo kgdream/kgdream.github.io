@@ -50,7 +50,7 @@ body[data-show-date="false"] #weatherDate{display:none !important;}
            here so text can be selected while debugging. When debug mode
            is off, the attribute is "false" and this rule does not apply,
            so the original restrictions remain. */
-body[data-debug="true"] *{user-select:text !important;-webkit-user-select:text !important;-moz-user-select:text !important;-ms-user-select:text !important;}body{background-color:#f0f0f0;min-height:100vh;width:100%;border:none;border-radius:0;display:flex;justify-content:center;align-items:center;font-family:'YouYuan',Arial,sans-serif;padding:20px;flex-direction:column;}.search-container{display:inline-block;position:relative;z-index:100;opacity:0;transform:scale(0.5);animation:searchBoxEntry 0.8s ease-out forwards;}@keyframes searchBoxEntry{from{opacity:0;transform:scale(0.5);}to{opacity:1;transform:scale(1);}}@keyframes rotateContainer360{from{transform:rotate(0deg);}to{transform:rotate(-360deg);}}@keyframes searchBoxExit{from{opacity:1;transform:scale(1);}to{opacity:0;transform:scale(0.5);}}.search-box{padding:12px 55px 12px 55px;font-size:14px;font-family:'YouYuan',Arial,sans-serif;border:none;border-radius:var(--global-radius);outline:none;width:var(--search-box-width,500px);max-width:100%;height:var(--search-box-height,auto);background:#F0F0F0;box-shadow:20px 20px 62px #cccccc,-20px -20px 62px #ffffff;transition:color 0.4s ease,box-shadow 0.3s ease,padding-left 0.2s ease;color:#000000;caret-color:#000000;}.settings-radio-grid{display:flex;flex-direction:column;gap:8px;}.settings-radio-grid > label{margin-bottom:0 !important;margin-top:0 !important;}@media (min-width:768px){.settings-radio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}}
+body[data-debug="true"] *{user-select:text !important;-webkit-user-select:text !important;-moz-user-select:text !important;-ms-user-select:text !important;}body{background-color:#f0f0f0;min-height:100vh;width:100%;border:none;border-radius:0;display:flex;justify-content:center;align-items:center;font-family:'YouYuan',Arial,sans-serif;padding:20px;flex-direction:column;}.search-container{display:inline-block;position:relative;z-index:100;opacity:0;transition:opacity 0.9s ease-out;}@keyframes searchBoxEntry{from{opacity:0;}to{opacity:1;}}@keyframes rotateContainer360{from{transform:rotate(0deg);}to{transform:rotate(-360deg);}}@keyframes searchBoxExit{from{opacity:1;transform:scale(1);}to{opacity:0;transform:scale(0.5);}}.search-box{padding:12px 55px 12px 55px;font-size:14px;font-family:'YouYuan',Arial,sans-serif;border:none;border-radius:var(--global-radius);outline:none;width:var(--search-box-width,500px);max-width:100%;height:var(--search-box-height,auto);background:#F0F0F0;box-shadow:20px 20px 62px #cccccc,-20px -20px 62px #ffffff;transition:color 0.4s ease,box-shadow 0.3s ease,padding-left 0.2s ease;color:#000000;caret-color:#000000;}.settings-radio-grid{display:flex;flex-direction:column;gap:8px;}.settings-radio-grid > label{margin-bottom:0 !important;margin-top:0 !important;}@media (min-width:768px){.settings-radio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}}
 /* Dock Bar Styles */
 .dock-item{display:flex;flex-direction:column;align-items:center;justify-content:center;width:56px;min-height:56px;border:none;background:transparent;border-radius:var(--global-radius);cursor:pointer;transition:transform 0.2s ease,background 0.2s ease;flex-shrink:0;padding:2px 0;}.dock-name{font-family:'YouYuan',Arial,sans-serif;font-size:10px;color:#666;margin-top:3px;max-width:56px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;line-height:1.2;}body[data-theme="dark"] .dock-name{color:#aaa;}.dock-item:hover{transform:scale(1.1);background:rgba(0,0,0,0.05);}.dock-icon{width:44px;height:44px;border-radius:var(--global-radius);display:flex;align-items:center;justify-content:center;background:transparent;box-shadow:none;}.dock-initial{color:white;font-size:18px;font-weight:bold;font-family:'YouYuan',Arial,sans-serif;display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:var(--global-radius);}
 /* Dark mode dock styles */
@@ -62,7 +62,7 @@ padding:12px 55px 12px 55px !important;color:#000000;}
 /* Explicit focus style: prevent any browser-default focus ring/outline
            from altering the box appearance. When focused without text, widen
            left padding to make room for the "使用xx搜索" hint. */
-.search-box:focus{outline:none;padding:12px 55px 12px 120px;}#engineHintInSearchBox{transition:opacity 0.2s ease;}#engineHintInSearchBox.hidden{opacity:0 !important;}@keyframes textFadeIn{from{opacity:0;}to{opacity:1;}}
+.search-box:focus{outline:none;padding:12px 55px 12px 55px;}#engineHintInSearchBox{transition:opacity 0.2s ease;}#engineHintInSearchBox.hidden{opacity:0 !important;}@keyframes textFadeIn{from{opacity:0;}to{opacity:1;}}
 /* Override for search buttons to preserve their positioning */
 .search-button.rotate{animation:searchButtonRotate360 0.6s ease;}@keyframes searchButtonRotate360{from{transform:translateY(-50%) rotate(0deg);}to{transform:translateY(-50%) rotate(-360deg);}}
 /* Input fade-in animation */
@@ -123,7 +123,7 @@ body[data-button-style="outline"] #favBtn,body[data-button-style="outline"] #dro
 /* Ensure containers keep their background to prevent stacking collapse */
 body[data-button-style="outline"] #favoritesModal,body[data-button-style="outline"] .search-container,body[data-button-style="outline"] .bottom-buttons-container{background:inherit !important;border:none !important;}
 /* Force stacking contexts on key containers */
-body[data-button-style="outline"] .search-container{isolation:isolate;}body[data-button-style="outline"] .bottom-buttons-container{isolation:isolate;}body[data-button-style="outline"] .poem-container{isolation:isolate;}
+body[data-button-style="outline"] .search-container{isolation:auto;}body[data-button-style="outline"] .bottom-buttons-container{isolation:isolate;}body[data-button-style="outline"] .poem-container{isolation:isolate;}
 /* Outline mode dark theme */
 body[data-theme="dark"][data-button-style="outline"] button,body[data-theme="dark"][data-button-style="outline"] input,body[data-theme="dark"][data-button-style="outline"] select,body[data-theme="dark"][data-button-style="outline"] .tab-btn,body[data-theme="dark"][data-button-style="outline"] .modal-content,body[data-theme="dark"][data-button-style="outline"] .settings-section h3,body[data-theme="dark"][data-button-style="outline"] .favorite-item,body[data-theme="dark"][data-button-style="outline"] .hot-news-container,body[data-theme="dark"][data-button-style="outline"] .search-hint,body[data-theme="dark"][data-button-style="outline"] .suggestions,body[data-theme="dark"][data-button-style="outline"] .search-history,body[data-theme="dark"][data-button-style="outline"] .engine-item,body[data-theme="dark"][data-button-style="outline"] #favSearchInput,body[data-theme="dark"][data-button-style="outline"] #addFavBtn,body[data-theme="dark"][data-button-style="outline"] .bottom-btn,body[data-theme="dark"][data-button-style="outline"] #dropdownMenu,body[data-theme="dark"][data-button-style="outline"] .modal-close-btn,body[data-theme="dark"][data-button-style="outline"] .text-result-modal,body[data-theme="dark"][data-button-style="outline"] .fav-add-btn,body[data-theme="dark"][data-button-style="outline"] .history-item,body[data-theme="dark"][data-button-style="outline"] .news-item{border-color:rgba(224,224,224,0.6) !important;}body[data-theme="dark"][data-button-style="outline"] div[style*="box-shadow"],body[data-theme="dark"][data-button-style="outline"] button[style*="box-shadow"],body[data-theme="dark"][data-button-style="outline"] input[style*="box-shadow"]{border-color:rgba(224,224,224,0.6) !important;}
 /* Outline mode: modal/dialog/dropdown containers must keep an opaque
@@ -159,11 +159,11 @@ body[data-theme="dark"][data-button-style="transparent"] button,body[data-theme=
 /* Border radius control via CSS variable */
 :root{--border-radius:var(--global-radius);}
 /* Wallpaper background mode - simplified, no overlay used */
-#wallpaperOverlay{display:none;}body[data-bg-mode="wallpaper"]{padding:0 !important;}body[data-bg-mode="wallpaper"] #mainContent{margin-top:-25vh;transition:margin-top 1s cubic-bezier(0.4,0,0.2,1) 0.5s;}body[data-bg-mode="wallpaper"] #timeDisplay{color:#ffffff !important;text-shadow:0 1px 3px rgba(0,0,0,0.5);}body:not([data-bg-mode="wallpaper"]) #mainContent{
+#wallpaperOverlay{display:none;}body[data-bg-mode="wallpaper"]{padding:0 !important;}body[data-bg-mode="wallpaper"] #mainContent{margin-top:-25vh;}body[data-bg-mode="wallpaper"] #timeDisplay{color:#ffffff !important;text-shadow:0 1px 3px rgba(0,0,0,0.5);}body:not([data-bg-mode="wallpaper"]) #mainContent{
 /* Nudge the whole stack up so the search box (below the clock /
                weather) sits at the viewport's vertical center instead of
                appearing slightly low. */
-margin-top:-30px;transition:margin-top 0.6s ease;}body[data-bg-mode="wallpaper"] .poem-content,body[data-bg-mode="wallpaper"] .poem-title,body[data-bg-mode="wallpaper"] .poem-author{
+margin-top:-30px;}body[data-bg-mode="wallpaper"] .poem-content,body[data-bg-mode="wallpaper"] .poem-title,body[data-bg-mode="wallpaper"] .poem-author{
 /* Keep original colors in wallpaper mode */
 }body[data-bg-mode="wallpaper"] #favBtn{
 /* Keep original colors in wallpaper mode */
@@ -242,7 +242,7 @@ button > svg,button > img,button > i,button > span,button svg,button img,button 
 button > svg,button > img,button > i,.engine-item > svg,.engine-item > img{flex-shrink:0;}
 .toggle-switch,.radio-switch{vertical-align:middle;flex-shrink:0;}
 /* 统一配置层：圆角/模糊分级变量（总调节跟随全部、单项独立覆盖） */
-:root{--radius-small:34px;--radius-large:34px;--radius-search:34px;--radius-poem:34px;--radius-dock:34px;--radius-fav:34px;--radius-eachFav:34px;--blur-small:none;--blur-large:none;--blur-search:none;--blur-poem:none;--blur-dock:none;--blur-fav:none;--blur-eachFav:none;}
+:root{--radius-small:34px;--radius-large:34px;--radius-search:34px;--radius-poem:34px;--radius-dock:34px;--radius-fav:34px;--radius-eachFav:34px;--blur-small:none;--blur-large:none;--blur-search:none;--blur-poem:none;--blur-dock:none;--blur-fav:none;--blur-eachFav:none;--radius-dropdown:var(--radius-search);--blur-dropdown:var(--blur-search);}
 .fav-actions button,.fav-dock-btn,button[onclick="renameCurrentFolder()"]{border-radius:var(--radius-small)!important;backdrop-filter:var(--blur-small)!important;-webkit-backdrop-filter:var(--blur-small)!important;}
 .settings-btn,.fav-add-btn,.tab-btn,.bottom-btn,.engine-item,#customConfirm button,#customPrompt button,#changelogExportBtn,#changelogCloseBtn{border-radius:var(--radius-large)!important;backdrop-filter:var(--blur-large)!important;-webkit-backdrop-filter:var(--blur-large)!important;}
 .search-container,.search-box,#searchInput,#dropdownMenu,.suggestions,.search-history{border-radius:var(--radius-search)!important;backdrop-filter:var(--blur-search)!important;-webkit-backdrop-filter:var(--blur-search)!important;}
@@ -413,6 +413,27 @@ html body #dropdownMenu#dropdownMenu > div{justify-content:center!important;text
 /* 全局字体描边开关：默认关闭。开启后只改文字的 text-shadow，不改颜色、不动图标与布局 */
 html body[data-global-font-stroke="on"] *:not(.kg-font-preview-black):not(.kg-font-preview-white){text-shadow:-1px -1px 0 rgba(255,255,255,.9),1px -1px 0 rgba(255,255,255,.9),-1px 1px 0 rgba(255,255,255,.9),1px 1px 0 rgba(255,255,255,.9)!important;}
 html body[data-global-font-stroke="on"][data-font-color="white"] *:not(.kg-font-preview-black):not(.kg-font-preview-white),html body[data-global-font-stroke="on"][data-theme="dark"] *:not(.kg-font-preview-black):not(.kg-font-preview-white){text-shadow:-1px -1px 0 rgba(0,0,0,.9),1px -1px 0 rgba(0,0,0,.9),-1px 1px 0 rgba(0,0,0,.9),1px 1px 0 rgba(0,0,0,.9)!important;}
+/* 搜索历史 / 搜索建议：模糊与圆角使用 dropdown 分级变量（默认跟随搜索框），
+   压过旧规则里写死的 --blur-search，保证独立滑块真实生效 */
+html body[data-button-style] .suggestions.suggestions,html body[data-button-style] .search-history.search-history,html body[data-button-style] #suggestions#suggestions,html body[data-button-style] #searchHistory#searchHistory{border-radius:var(--radius-dropdown,var(--radius-search))!important;backdrop-filter:var(--blur-dropdown,var(--blur-search))!important;-webkit-backdrop-filter:var(--blur-dropdown,var(--blur-search))!important;}
+html[data-kg-blur="on"] body[data-button-style] .suggestions.suggestions,html[data-kg-blur="on"] body[data-button-style] .search-history.search-history,html[data-kg-blur="on"] body[data-button-style] #suggestions#suggestions,html[data-kg-blur="on"] body[data-button-style] #searchHistory#searchHistory{backdrop-filter:var(--blur-dropdown,var(--blur-search))!important;-webkit-backdrop-filter:var(--blur-dropdown,var(--blur-search))!important;}
+/* 搜索历史 / 建议真毛玻璃：容器完全透明，不套任何背景图或遮罩，
+   只靠 backdrop-filter 模糊背后内容；祖先保持无 transform / isolation / filter */
+html body #mainContent#mainContent{transform:none!important;isolation:auto!important;filter:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;perspective:none!important;contain:none!important;will-change:auto!important;}
+html body #searchInput#searchInput{box-sizing:border-box!important;}
+html body #searchContainer#searchContainer{transform:none!important;isolation:auto!important;filter:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;perspective:none!important;contain:none!important;will-change:auto!important;transition:opacity .9s ease-out!important;}
+html body #searchHistory#searchHistory,html body #suggestions#suggestions{background:transparent!important;background-color:transparent!important;background-image:none!important;isolation:auto!important;filter:none!important;backdrop-filter:var(--blur-dropdown,var(--blur-search))!important;-webkit-backdrop-filter:var(--blur-dropdown,var(--blur-search))!important;}
+html body #searchHistory#searchHistory::before,html body #suggestions#suggestions::before{content:none!important;display:none!important;}
+body.kg-entry-ready .search-container{opacity:1!important;}
+html body[data-button-style] #searchHistory#searchHistory,html body[data-button-style] #suggestions#suggestions,html body[data-theme="dark"][data-button-style] #searchHistory#searchHistory,html body[data-theme="dark"][data-button-style] #suggestions#suggestions{background:transparent!important;background-color:transparent!important;background-image:none!important;}
+/* 固定窗口：收藏（含设置）/ 壁纸源 / 更新日志 / 扫一扫 由全屏铺满改为居中固定窗口 */
+html body[data-fixed-window="on"] #favoritesModal#favoritesModal,html body[data-fixed-window="on"] #wallpaperSourceModal#wallpaperSourceModal,html body[data-fixed-window="on"] #changelogModal#changelogModal,html body[data-fixed-window="on"] #scannerModal#scannerModal,html body[data-fixed-window="on"] #settingsPanel#settingsPanel{top:50%!important;left:50%!important;right:auto!important;bottom:auto!important;width:min(94vw,1200px)!important;height:auto!important;max-height:86vh!important;transform:translate(-50%,-50%)!important;border-radius:var(--global-radius)!important;box-shadow:0 20px 70px rgba(0,0,0,.4)!important;overflow-y:auto!important;}
+html body[data-fixed-window="on"] #changelogModal#changelogModal{background:var(--kg-panel-bg,#F0F0F0)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
+html body[data-fixed-window="on"] #favoritesModal #settingsContent{max-height:none!important;}
+/* 引擎提示改用 placeholder：光标落在提示文字左侧，不再被 120px 预留空位推到右边 */
+html body #searchInput#searchInput::placeholder{color:rgba(0,0,0,.45)!important;opacity:1!important;}
+html body[data-theme="dark"] #searchInput#searchInput::placeholder{color:rgba(255,255,255,.45)!important;}
+html body #engineHintInSearchBox#engineHintInSearchBox{display:none!important;}
 </style>
 </head>
 <body>
@@ -485,7 +506,7 @@ html body[data-global-font-stroke="on"][data-font-color="white"] *:not(.kg-font-
 </svg>
 </button>
 <input type="text" class="search-box" id="searchInput" placeholder=" " autocomplete="off" style="background: #F0F0F0; box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff;">
-<div id="engineHintInSearchBox" style="position: absolute; left: 15px; right: 0; top: 50%; transform: translateY(-50%); pointer-events: none; display: flex; justify-content: flex-start; align-items: center; font-family: 'YouYuan', Arial, sans-serif; transition: opacity 0.2s ease; z-index: -1;">
+<div id="engineHintInSearchBox" style="position: absolute; left: 15px; right: 0; top: 50%; transform: translateY(-50%); pointer-events: none; display: flex; justify-content: flex-start; align-items: center; font-family: 'YouYuan', Arial, sans-serif; transition: opacity 0.2s ease; z-index: 2;">
 <span id="engineHintText" style="font-family: 'YouYuan', Arial, sans-serif; font-size: 14px; color: rgba(0, 0, 0, 0.85);">使用百度搜索</span>
 </div>
 <!-- Clear input button (X) -->
@@ -861,6 +882,11 @@ html body[data-global-font-stroke="on"][data-font-color="white"] *:not(.kg-font-
 <input type="checkbox" id="showAllSettingsToggle" onchange="toggleAllSettings(this.checked)">
 <span class="toggle-slider"></span>
 <span style="font-family: 'YouYuan', Arial, sans-serif; font-size: 14px;">显示全部设置</span>
+</label>
+<label class="toggle-switch" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+<input type="checkbox" id="fixedWindowToggle" onchange="toggleFixedWindow(this.checked)">
+<span class="toggle-slider"></span>
+<span style="font-family: 'YouYuan', Arial, sans-serif; font-size: 14px;">固定窗口</span>
 </label>
 </div>
 </div>
@@ -1297,6 +1323,52 @@ Dock栏
 <!-- 界面样式 -->
 <div class="settings-section" style="margin-bottom: 30px;">
 <h3 style="font-family: 'YouYuan'; font-size: 18px; margin-bottom: 15px; border-bottom: none; padding-bottom: 10px; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; padding: 10px 15px;" data-advanced="true">五、界面样式</h3>
+<div style="margin-bottom: 20px;">
+<label style="display: block; font-family: 'YouYuan'; font-size: 14px; margin-bottom: 8px; font-weight: bold;">位置偏移（主页控件，单位 px）：</label>
+<div style="font-family: 'YouYuan'; font-size: 12px; color: #666; margin-bottom: 8px;">左右正数向右、上下正数向下；0 为原位</div>
+<div class="settings-radio-grid" style="margin-top: 8px; gap: 8px;">
+<div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px; flex-wrap: wrap;">
+<span style="min-width: 78px;">古诗</span>
+<span>左右</span><input type="range" id="kgOff_poem_x" min="-200" max="200" value="0" oninput="setUiOffset('poem','x',this.value)" style="flex: 1; min-width: 60px; cursor: pointer;"><span id="kgOff_poem_xOut" style="min-width: 40px;">0px</span>
+<span>上下</span><input type="range" id="kgOff_poem_y" min="-200" max="200" value="0" oninput="setUiOffset('poem','y',this.value)" style="flex: 1; min-width: 60px; cursor: pointer;"><span id="kgOff_poem_yOut" style="min-width: 40px;">0px</span>
+<button class="settings-btn" onclick="resetUiOffset('poem')" style="padding: 4px 10px; border: none; cursor: pointer; font-family: 'YouYuan'; font-size: 12px;">恢复</button>
+</div>
+<div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px; flex-wrap: wrap;">
+<span style="min-width: 78px;">搜索框</span>
+<span>左右</span><input type="range" id="kgOff_search_x" min="-200" max="200" value="0" oninput="setUiOffset('search','x',this.value)" style="flex: 1; min-width: 60px; cursor: pointer;"><span id="kgOff_search_xOut" style="min-width: 40px;">0px</span>
+<span>上下</span><input type="range" id="kgOff_search_y" min="-200" max="200" value="0" oninput="setUiOffset('search','y',this.value)" style="flex: 1; min-width: 60px; cursor: pointer;"><span id="kgOff_search_yOut" style="min-width: 40px;">0px</span>
+<button class="settings-btn" onclick="resetUiOffset('search')" style="padding: 4px 10px; border: none; cursor: pointer; font-family: 'YouYuan'; font-size: 12px;">恢复</button>
+</div>
+<div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px; flex-wrap: wrap;">
+<span style="min-width: 78px;">时间/天气/日期</span>
+<span>左右</span><input type="range" id="kgOff_time_x" min="-200" max="200" value="0" oninput="setUiOffset('time','x',this.value)" style="flex: 1; min-width: 60px; cursor: pointer;"><span id="kgOff_time_xOut" style="min-width: 40px;">0px</span>
+<span>上下</span><input type="range" id="kgOff_time_y" min="-200" max="200" value="0" oninput="setUiOffset('time','y',this.value)" style="flex: 1; min-width: 60px; cursor: pointer;"><span id="kgOff_time_yOut" style="min-width: 40px;">0px</span>
+<button class="settings-btn" onclick="resetUiOffset('time')" style="padding: 4px 10px; border: none; cursor: pointer; font-family: 'YouYuan'; font-size: 12px;">恢复</button>
+</div>
+<div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px; flex-wrap: wrap;">
+<span style="min-width: 78px;">下拉框</span>
+<span>左右</span><input type="range" id="kgOff_dropdown_x" min="-200" max="200" value="0" oninput="setUiOffset('dropdown','x',this.value)" style="flex: 1; min-width: 60px; cursor: pointer;"><span id="kgOff_dropdown_xOut" style="min-width: 40px;">0px</span>
+<span>上下</span><input type="range" id="kgOff_dropdown_y" min="-200" max="200" value="0" oninput="setUiOffset('dropdown','y',this.value)" style="flex: 1; min-width: 60px; cursor: pointer;"><span id="kgOff_dropdown_yOut" style="min-width: 40px;">0px</span>
+<button class="settings-btn" onclick="resetUiOffset('dropdown')" style="padding: 4px 10px; border: none; cursor: pointer; font-family: 'YouYuan'; font-size: 12px;">恢复</button>
+</div>
+</div>
+<button class="settings-btn" onclick="resetAllUiOffsets()" style="margin-top: 10px; padding: 8px 15px; border: none; cursor: pointer; font-family: 'YouYuan'; font-size: 13px;">全部恢复原位</button>
+</div>
+<div style="margin-bottom: 20px;">
+<label style="display: block; font-family: 'YouYuan'; font-size: 14px; margin-bottom: 8px; font-weight: bold;">搜索框尺寸（单位 px）：</label>
+<div style="font-family: 'YouYuan'; font-size: 12px; color: #666; margin-bottom: 8px;">调整搜索框的长度与高度，恢复默认回到原来的尺寸</div>
+<div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px; margin-bottom: 6px;">
+<span style="min-width: 42px;">长度</span>
+<input type="range" id="kgSearchBoxWidth" min="240" max="900" value="500" oninput="setSearchBoxSize('w',this.value)" style="flex: 1; min-width: 60px; cursor: pointer;">
+<span id="kgSearchBoxWidthOut" style="min-width: 40px;">500px</span>
+</div>
+<div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px; margin-bottom: 8px;">
+<span style="min-width: 42px;">高度</span>
+<input type="range" id="kgSearchBoxHeight" min="32" max="72" value="44" oninput="setSearchBoxSize('h',this.value)" style="flex: 1; min-width: 60px; cursor: pointer;">
+<span id="kgSearchBoxHeightOut" style="min-width: 40px;">44px</span>
+</div>
+<button class="settings-btn" onclick="resetSearchBoxSize()" style="padding: 8px 15px; border: none; cursor: pointer; font-family: 'YouYuan'; font-size: 13px;">恢复默认</button>
+</div>
 <div style="margin-bottom: 15px;">
 <label style="display: block; font-family: 'YouYuan'; font-size: 14px; margin-bottom: 8px; font-weight: bold;">圆角调节（总调节，以下全部跟随）：</label>
 <div style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: var(--global-radius); background: #F0F0F0;">
@@ -1664,6 +1736,7 @@ void modal.offsetWidth;
 // Fade in
 modal.style.opacity = '1';
 if (typeof applyPanelBgMode === 'function') applyPanelBgMode();
+if (typeof applyFixedWindow === 'function') applyFixedWindow();
 if (typeof window.kgSyncOverlay === 'function') window.kgSyncOverlay();
 console.log('Modal shown, display:', modal.style.display, 'opacity:', modal.style.opacity);
 }
@@ -2161,8 +2234,6 @@ if (typeof window.kgSyncDropdownSurfaces === 'function') window.kgSyncDropdownSu
 let currentEngineUrl = getCookie('searchEngine') || 'https://cn.bing.com/search?q='; // Default: Bing China
 // Update engine hint text in search box
 function updateEngineHint() {
-const engineHintText = document.getElementById('engineHintText');
-if (engineHintText) {
 // Get current engine name
 const engineItems = document.querySelectorAll('.engine-item');
 let engineName = 'Bing';
@@ -2171,8 +2242,10 @@ if (item.getAttribute('data-url') === currentEngineUrl) {
 engineName = item.textContent.trim();
 }
 });
-engineHintText.textContent = `使用${engineName}搜索`;
-}
+const engineHintText = document.getElementById('engineHintText');
+if (engineHintText) engineHintText.textContent = `使用${engineName}搜索`;
+const hintInput = document.getElementById('searchInput');
+if (hintInput) hintInput.placeholder = `使用${engineName}搜索`;
 }
 // Initialize engine hint
 updateEngineHint();
@@ -3428,7 +3501,11 @@ showAllSettings: localStorage.getItem('showAllSettings') || 'false',
 showTabButtons: localStorage.getItem('showTabButtons') !== 'false',
 focusZoomEnabled: localStorage.getItem('focusZoomEnabled') === 'true',
 weatherEnabled: localStorage.getItem('weatherEnabled') === 'true',
-weatherCity: localStorage.getItem('weatherCity') || ''
+weatherCity: localStorage.getItem('weatherCity') || '',
+uiOffsets: localStorage.getItem('uiOffsets') || '',
+uiSearchBox: localStorage.getItem('uiSearchBox') || '',
+currentWallpaperSourceId: localStorage.getItem('currentWallpaperSourceId') || '',
+fixedWindow: localStorage.getItem('fixedWindow') === 'on'
 };
 selectedData.settingsStorage = (function() {
 const o = {}, skip = {favorites:1,folders:1,dockItems:1,searchHistory:1,cachedSuggestions:1,cachedHotNews:1,weatherCache:1};
@@ -3518,7 +3595,11 @@ wallpaperLoopSec: localStorage.getItem('wallpaperLoopSec') || '300',
 panelBgColor: localStorage.getItem('panelBgColor') || '#FFFFFF',
 fontColorMode: localStorage.getItem('fontColorMode') || '',
 timeFontColorMode: localStorage.getItem('timeFontColorMode') || 'auto',
-dockSortMode: localStorage.getItem('dockSortMode') || ''
+dockSortMode: localStorage.getItem('dockSortMode') || '',
+uiOffsets: localStorage.getItem('uiOffsets') || '',
+uiSearchBox: localStorage.getItem('uiSearchBox') || '',
+currentWallpaperSourceId: localStorage.getItem('currentWallpaperSourceId') || '',
+fixedWindow: localStorage.getItem('fixedWindow') === 'on'
 },
 wallpaperSources: wallpaperSources,
 currentWallpaperSourceId: currentWallpaperSourceId,
@@ -3857,6 +3938,18 @@ localStorage.setItem('uiProfile', allData.settings.uiProfile);
 if (allData.settings.bgModePanel !== undefined) {
 localStorage.setItem('bgModePanel', allData.settings.bgModePanel);
 }
+if (allData.settings.uiOffsets !== undefined) {
+localStorage.setItem('uiOffsets', allData.settings.uiOffsets);
+}
+if (allData.settings.uiSearchBox !== undefined) {
+localStorage.setItem('uiSearchBox', allData.settings.uiSearchBox);
+}
+if (allData.settings.fixedWindow !== undefined) {
+localStorage.setItem('fixedWindow', allData.settings.fixedWindow ? 'on' : 'off');
+}
+if (allData.settings.currentWallpaperSourceId !== undefined && allData.settings.currentWallpaperSourceId) {
+localStorage.setItem('currentWallpaperSourceId', allData.settings.currentWallpaperSourceId);
+}
 if (allData.settings.textStroke !== undefined) {
 localStorage.setItem('textStroke', allData.settings.textStroke);
 }
@@ -4022,7 +4115,7 @@ renderFavorites();
 localStorage.removeItem('cachedSuggestions');
 localStorage.removeItem('cachedHotNews');
 } else if (cb.value === 'settings') {
-['uiProfile','bgModePanel','textStroke','showSeconds','themeMode','themeColor','buttonStyle','bgMode','bgColor','showTimeDisplay','showPoem','showScanner','highContrastMode','borderRadius','debugMode','demoMode','loadForeignIcons','cleanSearchMode','cleanSearchKeyword','privacyMode','showFavCreateTime','autoSortFavorites','noFavIcons','saveSearchHistory','showSearchSuggestions','cacheSuggestions','cacheDuration','showFavIcons','dockAlign','dropdownMode','urlDetectEnabled','globalFontStroke'].forEach(key => localStorage.removeItem(key));
+['uiProfile','bgModePanel','textStroke','showSeconds','themeMode','themeColor','buttonStyle','bgMode','bgColor','showTimeDisplay','showPoem','showScanner','highContrastMode','borderRadius','debugMode','demoMode','loadForeignIcons','cleanSearchMode','cleanSearchKeyword','privacyMode','showFavCreateTime','autoSortFavorites','noFavIcons','saveSearchHistory','showSearchSuggestions','cacheSuggestions','cacheDuration','showFavIcons','dockAlign','dropdownMode','urlDetectEnabled','globalFontStroke','uiOffsets','uiSearchBox','fixedWindow'].forEach(key => localStorage.removeItem(key));
 location.reload();
 } else if (cb.value === 'apiUrls') {
 localStorage.removeItem('apiUrls');
@@ -6369,6 +6462,7 @@ loadWallpaperOnce(getCurrentWallpaperUrl());
 return;
 }
 filterOverlay.style.backgroundImage = "url('" + img.src + "')";
+if (window.kgQueueDropdownSync) window.kgQueueDropdownSync();
 kgPlayWallpaperIn(filterOverlay);
 };
 img.onerror = function() {
@@ -7492,6 +7586,134 @@ menu.style.setProperty('-webkit-backdrop-filter', 'none', 'important');
 }
 document.querySelectorAll('input[name="dropdownMode"]').forEach(function(r) { r.checked = (r.value === v); });
 }
+/* ===== 主页控件位置偏移：用独立 translate 属性，不改定位也不参与 transform 动画 ===== */
+const KG_OFFSET_PARTS = {
+poem: ['.poem-container'],
+search: ['#searchContainer'],
+time: ['#timeDisplay', '#weatherDisplay'],
+dropdown: ['#dropdownMenu']
+};
+function kgGetOffsets() {
+let o = {};
+try { o = JSON.parse(localStorage.getItem('uiOffsets') || '{}') || {}; } catch(e) { o = {}; }
+Object.keys(KG_OFFSET_PARTS).forEach(function(k) {
+if (!o[k] || typeof o[k] !== 'object') o[k] = {x:0, y:0};
+});
+return o;
+}
+function applyUiOffsets() {
+const o = kgGetOffsets();
+Object.keys(KG_OFFSET_PARTS).forEach(function(k) {
+const v = o[k] || {x:0, y:0};
+const x = Number(v.x) || 0, y = Number(v.y) || 0;
+KG_OFFSET_PARTS[k].forEach(function(sel) {
+document.querySelectorAll(sel).forEach(function(el) {
+if (x || y) el.style.setProperty('translate', x + 'px ' + y + 'px', 'important');
+else el.style.removeProperty('translate');
+});
+});
+['x','y'].forEach(function(ax) {
+const val = ax === 'x' ? x : y;
+const inp = document.getElementById('kgOff_' + k + '_' + ax);
+if (inp) inp.value = val;
+const out = document.getElementById('kgOff_' + k + '_' + ax + 'Out');
+if (out) out.textContent = val + 'px';
+});
+});
+}
+function setUiOffset(part, ax, val) {
+const o = kgGetOffsets();
+o[part][ax] = Number(val) || 0;
+localStorage.setItem('uiOffsets', JSON.stringify(o));
+applyUiOffsets();
+}
+function resetUiOffset(part) {
+const o = kgGetOffsets();
+o[part] = {x:0, y:0};
+localStorage.setItem('uiOffsets', JSON.stringify(o));
+applyUiOffsets();
+}
+function resetAllUiOffsets() {
+localStorage.setItem('uiOffsets', '{}');
+applyUiOffsets();
+}
+/* ===== 固定窗口：收藏 / 壁纸源 / 更新日志 / 扫一扫 变成居中固定窗口 ===== */
+function toggleFixedWindow(on) {
+localStorage.setItem('fixedWindow', on ? 'on' : 'off');
+document.body.setAttribute('data-fixed-window', on ? 'on' : 'off');
+}
+function applyFixedWindow() {
+const on = localStorage.getItem('fixedWindow') === 'on';
+document.body.setAttribute('data-fixed-window', on ? 'on' : 'off');
+const cb = document.getElementById('fixedWindowToggle');
+if (cb) cb.checked = on;
+const ids = ['favoritesModal', 'wallpaperSourceModal', 'changelogModal', 'scannerModal', 'settingsPanel'];
+const props = ['top', 'left', 'right', 'bottom', 'width', 'height', 'max-height', 'transform', 'border-radius', 'box-shadow', 'overflow-y', 'z-index'];
+ids.forEach(function(id) {
+const el = document.getElementById(id);
+if (!el) return;
+if (!el.dataset.kgOrigFixed) {
+const o = {};
+props.forEach(function(p) { o[p] = el.style.getPropertyValue(p); });
+el.dataset.kgOrigFixed = JSON.stringify(o);
+}
+if (on) {
+el.style.setProperty('top', '50%', 'important');
+el.style.setProperty('left', '50%', 'important');
+el.style.setProperty('right', 'auto', 'important');
+el.style.setProperty('bottom', 'auto', 'important');
+el.style.setProperty('width', 'min(94vw,1200px)', 'important');
+el.style.setProperty('height', 'auto', 'important');
+el.style.setProperty('max-height', '86vh', 'important');
+el.style.setProperty('transform', 'translate(-50%,-50%)', 'important');
+el.style.setProperty('border-radius', 'var(--global-radius)', 'important');
+el.style.setProperty('box-shadow', '0 20px 70px rgba(0,0,0,.4)', 'important');
+el.style.setProperty('overflow-y', 'auto', 'important');
+} else {
+const orig = JSON.parse(el.dataset.kgOrigFixed || '{}');
+props.forEach(function(p) {
+if (orig[p]) el.style.setProperty(p, orig[p]);
+else el.style.removeProperty(p);
+});
+}
+});
+}
+/* ===== 搜索框尺寸：走 CSS 变量 --search-box-width / --search-box-height ===== */
+function kgGetSearchBoxSize() {
+let o = {};
+try { o = JSON.parse(localStorage.getItem('uiSearchBox') || '{}') || {}; } catch(e) { o = {}; }
+return o;
+}
+function applySearchBoxSize() {
+const o = kgGetSearchBoxSize();
+const root = document.documentElement;
+if (o.w) root.style.setProperty('--search-box-width', o.w + 'px');
+else root.style.removeProperty('--search-box-width');
+if (o.h) root.style.setProperty('--search-box-height', o.h + 'px');
+else root.style.removeProperty('--search-box-height');
+const inp = document.getElementById('searchInput');
+const defH = inp ? Math.round(inp.getBoundingClientRect().height) || 44 : 44;
+const wVal = Number(o.w) || 500;
+const hVal = Number(o.h) || defH;
+const wInp = document.getElementById('kgSearchBoxWidth');
+const hInp = document.getElementById('kgSearchBoxHeight');
+if (wInp) wInp.value = Math.min(900, Math.max(240, wVal));
+if (hInp) hInp.value = Math.min(72, Math.max(32, hVal));
+const wOut = document.getElementById('kgSearchBoxWidthOut');
+const hOut = document.getElementById('kgSearchBoxHeightOut');
+if (wOut) wOut.textContent = wVal + 'px';
+if (hOut) hOut.textContent = hVal + 'px';
+}
+function setSearchBoxSize(ax, val) {
+const o = kgGetSearchBoxSize();
+o[ax] = Number(val) || 0;
+localStorage.setItem('uiSearchBox', JSON.stringify(o));
+applySearchBoxSize();
+}
+function resetSearchBoxSize() {
+localStorage.removeItem('uiSearchBox');
+applySearchBoxSize();
+}
 /* ===== 全局字体描边开关：默认关闭，只在打开时写 body 属性 ===== */
 function applyGlobalFontStroke() {
 const on = localStorage.getItem('globalFontStroke') === 'on';
@@ -7508,9 +7730,12 @@ applyDockAlign();
 applyDropdownMode();
 applyFontColors();
 applyGlobalFontStroke();
+applyUiOffsets();
+applySearchBoxSize();
+applyFixedWindow();
 const cb = document.getElementById('urlDetectEnabled');
 if (cb) cb.checked = localStorage.getItem('urlDetectEnabled') !== 'false';
-window.addEventListener('load', function() { applyDockAlign(); applyDropdownMode(); applyFontColors(); applyGlobalFontStroke(); });
+window.addEventListener('load', function() { applyDockAlign(); applyDropdownMode(); applyFontColors(); applyGlobalFontStroke(); applyUiOffsets(); applySearchBoxSize(); applyFixedWindow(); setTimeout(function() { document.body.classList.add('kg-entry-ready'); }, 300); });
 })();
 function setShowSeconds(on) {
 localStorage.setItem('showSeconds', on ? 'true' : 'false');
@@ -7642,20 +7867,10 @@ kg
       try { var prof = kgGetProfile(); radiusTouched = prof.radius.global !== 34 || Object.keys(prof.radius.parts).length > 0; blurTouched = prof.blur.global !== 0 || Object.keys(prof.blur.parts).length > 0; } catch (e) {}
       try { b = kgVal('blur', part); } catch (e) {}
       el.setAttribute('data-kg-surf', '1');
-      el.style.setProperty('background', bg, 'important');
-      el.style.setProperty('background-color', bg.indexOf('gradient') >= 0 ? 'transparent' : bg, 'important');
       el.style.setProperty('box-shadow', sh, 'important');
       el.style.setProperty('color', 'inherit', 'important');
       if (radiusTouched) el.style.setProperty('border-radius', kgVal('radius', part) + 'px', 'important');
       else el.style.removeProperty('border-radius');
-      if (blurTouched || useBlur) {
-        var bf = b > 0 ? 'blur(' + b + 'px)' : 'none';
-        el.style.setProperty('backdrop-filter', bf, 'important');
-        el.style.setProperty('-webkit-backdrop-filter', bf, 'important');
-      } else {
-        el.style.removeProperty('backdrop-filter');
-        el.style.removeProperty('-webkit-backdrop-filter');
-      }
     });
   }
   window.kgSyncDropdownSurfaces = kgSyncDropdownSurfaces;
