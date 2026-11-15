@@ -255,11 +255,7 @@ button > svg,button > img,button > i,.engine-item > svg,.engine-item > img{flex-
 /* 修复搜索历史层：固定在输入框下方，输入内容时强制隐藏 */
 .search-history{top:100%!important;left:0!important;width:100%!important;right:auto!important;}
 .search-history.kg-hidden{display:none!important;}
-/* 背景设置分家：其他界面（收藏等）独立背景：无 / 纯色 / 主页的背景 */
-/* 「无」不附加任何覆盖，保持主题原有背景，不透到主页 */
-body[data-panel-bg="solid"] #favoritesModal,body[data-panel-bg="solid"] #wallpaperSourceModal,body[data-panel-bg="solid"] #scannerModal{background-color:var(--panel-solid-color,#F0F0F0)!important;background-image:none!important;}
-body[data-panel-bg="home"] #favoritesModal,body[data-panel-bg="home"] #wallpaperSourceModal,body[data-panel-bg="home"] #scannerModal{background-color:rgba(240,240,240,.28)!important;background-image:none!important;backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important;}
-body[data-theme="dark"][data-panel-bg="home"] #favoritesModal,body[data-theme="dark"][data-panel-bg="home"] #wallpaperSourceModal,body[data-theme="dark"][data-panel-bg="home"] #scannerModal{background-color:rgba(20,20,20,.35)!important;}
+/* 其他界面背景统一由文件末尾的唯一权威规则接管 */
 /* 新主题：透明模糊（青柠起始页风格） */
 body[data-button-style="blur"] button,body[data-button-style="blur"] .settings-btn,body[data-button-style="blur"] .tab-btn,body[data-button-style="blur"] .bottom-btn,body[data-button-style="blur"] .dock-item,body[data-button-style="blur"] .engine-item,body[data-button-style="blur"] .modal-close-btn,body[data-button-style="blur"] .fav-add-btn,body[data-button-style="blur"] .fav-dock-btn,body[data-button-style="blur"] .search-button,body[data-button-style="blur"] .fav-item,body[data-button-style="blur"] .folder-item,body[data-button-style="blur"] .settings-section h3,body[data-button-style="blur"] .modal-content,body[data-button-style="blur"] #dropdownMenu,body[data-button-style="blur"] .suggestions,body[data-button-style="blur"] .search-history{background:rgba(255,255,255,.28)!important;backdrop-filter:blur(18px) saturate(140%)!important;-webkit-backdrop-filter:blur(18px) saturate(140%)!important;border:1px solid rgba(255,255,255,.45)!important;box-shadow:0 4px 20px rgba(0,0,0,.08)!important;color:#222!important;}
 body[data-button-style="blur"] #favoritesModal,body[data-button-style="blur"] #wallpaperSourceModal,body[data-button-style="blur"] #scannerModal{background:rgba(255,255,255,.35)!important;backdrop-filter:blur(20px)!important;-webkit-backdrop-filter:blur(20px)!important;}
@@ -272,8 +268,12 @@ body[data-button-style="underline"] .tab-btn.active::after{transform:scaleX(1);}
 body[data-button-style="underline"] button::after,body[data-button-style="underline"] .tab-btn::after,body[data-button-style="underline"] .bottom-btn::after,body[data-button-style="underline"] .dock-item::after,body[data-button-style="underline"] .engine-item::after,body[data-button-style="underline"] .fav-item::after{content:'';position:absolute;left:8%;right:8%;bottom:0;height:2px;background:#2196F3;transform:scaleX(0);transform-origin:center;transition:transform .28s ease;pointer-events:none;}
 body[data-button-style="underline"] button:hover::after,body[data-button-style="underline"] .tab-btn:hover::after,body[data-button-style="underline"] .bottom-btn:hover::after,body[data-button-style="underline"] .dock-item:hover::after,body[data-button-style="underline"] .engine-item:hover::after,body[data-button-style="underline"] .fav-item:hover::after{transform:scaleX(1);}
 body[data-button-style="underline"] #appLaunchOverlay .launch-bg{background:rgba(255,255,255,.85)!important;opacity:1!important;}
-/* 收藏界面 tab 选中态：仅修正会变白的主题，拟物等保持原样 */
-body[data-button-style="glass"] .tab-btn.active,body[data-button-style="transparent"] .tab-btn.active,body[data-button-style="outline"] .tab-btn.active{background:#343434!important;color:#ffffff!important;}
+/* 收藏界面 tab 选中态：保持主题浅色底，图标固定深色，避免变成吞掉图标的纯黑圆 */
+html body .tab-btn.active.tab-btn.active{color:#222222!important;}
+html body .tab-btn.active.tab-btn.active svg{stroke:#222222!important;}
+html body[data-button-style="outline"] .tab-btn.active.tab-btn.active{background:#e8e8e8!important;}
+html body[data-theme="dark"] .tab-btn.active.tab-btn.active{background:#2a2a2a!important;color:#ffffff!important;}
+html body[data-theme="dark"] .tab-btn.active.tab-btn.active svg{stroke:#ffffff!important;}
 /* 减少拟物模式大块界面/按钮的光晕（保留拟物观感，仅缩小扩散），搜索框更弱 */
 body[data-button-style="neumorphism"]{--nm-glow:12px 12px 32px #cccccc,-12px -12px 32px #ffffff;--nm-glow-search:6px 6px 18px #cccccc,-6px -6px 18px #ffffff;}
 body[data-theme="dark"][data-button-style="neumorphism"]{--nm-glow:12px 12px 32px #2a2a2a,-12px -12px 32px #4a4a4a;--nm-glow-search:6px 6px 18px #2a2a2a,-6px -6px 18px #4a4a4a;}
@@ -317,7 +317,6 @@ body[data-button-style="underline"] .settings-btn:hover::after,body[data-button-
 body[data-theme="dark"][data-button-style="neumorphism"]{--kg-surf:#3a3a3a;--kg-shadow:12px 12px 32px #2a2a2a,-12px -12px 32px #4a4a4a;}
 body[data-elder-mode="true"]{--kg-surf:#ffffff;--kg-shadow:none;}
 body[data-button-style="neumorphism"] #searchInput,body[data-button-style="neumorphism"] .search-box{--kg-shadow:var(--nm-glow-search);}
-body[data-button-style="underline"] .dock-item::before,body[data-button-style="underline"] .dock-item::after{content:none!important;display:none!important;}
 html body[data-button-style] .fav-actions button,html body[data-button-style] .fav-dock-btn{border-radius:var(--radius-small)!important;}
 html body[data-button-style] .settings-btn,html body[data-button-style] .fav-add-btn,html body[data-button-style] .tab-btn,html body[data-button-style] .bottom-btn,html body[data-button-style] .engine-item,html body[data-button-style] #customConfirm button,html body[data-button-style] #customPrompt button,html body[data-button-style] #changelogExportBtn,html body[data-button-style] #changelogCloseBtn{border-radius:var(--radius-large)!important;}
 html body[data-button-style] .search-container,html body[data-button-style] .search-box,html body[data-button-style] #searchInput,html body[data-button-style] #dropdownMenu,html body[data-button-style] .suggestions,html body[data-button-style] .search-history{border-radius:var(--radius-search)!important;}
@@ -349,20 +348,71 @@ body[data-stroke-time="off"] #clockText,body[data-stroke-weather="off"] #weather
 #dockContainer .dock-icon{border-radius:0!important;background:transparent!important;background-color:transparent!important;box-shadow:none!important;border:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
 #dockContainer .dock-item,#dockContainer .dock-item:hover{background:transparent!important;box-shadow:none!important;}
 #dockContainer .dock-initial,#dockContainer .dock-icon img{border-radius:var(--radius-dock)!important;}
-/* 液态玻璃：设置面板不留白底（壁纸模式下最明显） */
-body[data-button-style="glass"] #settingsPanel,body[data-button-style="glass"] #settingsPanel div,body[data-button-style="glass"] .settings-section,body[data-button-style="glass"] .settings-section div,body[data-button-style="glass"] .settings-section h3{background:transparent!important;background-color:transparent!important;background-image:none!important;box-shadow:none!important;border:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
-body[data-theme="dark"][data-button-style="glass"] #settingsPanel div,body[data-theme="dark"][data-button-style="glass"] .settings-section div{background:transparent!important;background-image:none!important;box-shadow:none!important;}
+/* 液态玻璃：只清分组底色，绝不清调色盘内部元素 */
+html body[data-button-style="glass"] .settings-section,html body[data-button-style="glass"] .settings-section h3,html body[data-button-style="glass"] .settings-radio-grid,html body[data-theme="dark"][data-button-style="glass"] .settings-section,html body[data-theme="dark"][data-button-style="glass"] .settings-section h3,html body[data-theme="dark"][data-button-style="glass"] .settings-radio-grid{background:transparent!important;background-color:transparent!important;background-image:none!important;box-shadow:none!important;border:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
+html body[data-button-style="glass"] #colorWheel{background-image:conic-gradient(red, yellow, lime, cyan, blue, magenta, red)!important;background-color:transparent!important;}
+html body[data-button-style="glass"] #colorWheelCursor{border:2px solid #ffffff!important;}
+html body[data-button-style="glass"] #colorPickerPanel,html body[data-button-style="glass"] #customColorPicker,html body[data-button-style="glass"] #panelBgColorWrap{background:transparent!important;box-shadow:none!important;}
 /* 搜索框下拉框：隐藏 / 展开（展开时去掉框） */
 body[data-dropdown-mode="expanded"] #dropdownMenu{background:transparent!important;background-color:transparent!important;background-image:none!important;box-shadow:none!important;border:none!important;border-radius:0!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
 body[data-dropdown-mode="expanded"] #dropdownMenu > div:hover{background:rgba(128,128,128,.12)!important;}
 /* 进入其他界面时隐藏主页全部控件，彻底消除半透明背景下的透过 */
 body.kg-overlay-open #mainContent,body.kg-overlay-open .bottom-buttons-container,body.kg-overlay-open #dockContainer,body.kg-overlay-open #engineSelector,body.kg-overlay-open #searchHistory,body.kg-overlay-open #suggestions{opacity:0!important;visibility:hidden!important;pointer-events:none!important;animation:none!important;transition:none!important;}
 /* 编辑模式：Dock 栏在其他界面之上也显示 */
-body.kg-dock-edit #dockContainer{display:flex!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;transform:none!important;z-index:10001!important;}
-body.kg-overlay-open.kg-dock-edit #dockContainer{opacity:1!important;visibility:visible!important;pointer-events:auto!important;}
 .kg-dock-tools{display:flex!important;align-items:center;justify-content:center;gap:4px;}
 .kg-dock-tools button{font-family:'YouYuan',Arial,sans-serif;font-size:12px;padding:4px 8px;border:none!important;border-radius:8px;background:rgba(40,120,255,.18)!important;color:inherit;cursor:pointer;white-space:nowrap;}
 .kg-multi-selected{outline:2px solid #2b7cff;outline-offset:-2px;}
+/* 无=纯白 / 纯色=独立取色 / 主页的背景=透过，见末尾权威规则 */
+/* 深色模式：每个主题各自的表面与阴影，不再统一退化成深色拟物 */
+body[data-theme="dark"][data-button-style="neumorphism"]{--kg-surf:#3a3a3a;--kg-shadow:12px 12px 32px #2a2a2a,-12px -12px 32px #4a4a4a;}
+body[data-theme="dark"][data-button-style="outline"]{--kg-surf:#2c2c2c;--kg-shadow:none;}
+body[data-theme="dark"][data-button-style="rounded"]{--kg-surf:#333333;--kg-shadow:0 4px 18px rgba(0,0,0,.45);}
+body[data-theme="dark"][data-button-style="glass"]{--kg-surf:rgba(60,60,60,.3);--kg-shadow:0 0 0 1px rgba(255,255,255,.14) inset,0 8px 32px rgba(0,0,0,.4);}
+body[data-theme="dark"][data-button-style="blur"]{--kg-surf:rgba(50,50,50,.32);--kg-shadow:none;}
+body[data-theme="dark"][data-button-style="transparent"]{--kg-surf:transparent;--kg-shadow:none;}
+body[data-theme="dark"][data-button-style="underline"]{--kg-surf:#2c2c2c;--kg-shadow:none;}
+body[data-theme="dark"][data-button-style]:not([data-button-style="neumorphism"]) [style*="#F0F0F0"],body[data-theme="dark"][data-button-style]:not([data-button-style="neumorphism"]) [style*="#f0f0f0"]{background:var(--kg-surf)!important;box-shadow:var(--kg-shadow)!important;}
+/* 字体颜色：黑 / 白切换作用于全站文字（描边仍只加在设置项那两个字上） */
+html body[data-font-color="white"],html body[data-font-color="white"] *{color:#ffffff!important;}
+html body[data-font-color="black"],html body[data-font-color="black"] *{color:#000000!important;}
+/* 壁纸模式原本把时钟强制刷白，字体颜色设置必须能压过它 */
+html body[data-bg-mode="wallpaper"][data-font-color="black"] #timeDisplay{color:#000000!important;}
+html body[data-bg-mode="wallpaper"][data-font-color="white"] #timeDisplay{color:#ffffff!important;}
+/* Dock 编辑模式：每个软件自带上移 / 下移 */
+.kg-dock-move{display:flex;gap:2px;margin-top:2px;justify-content:center;}
+.kg-dock-move button{font-family:'YouYuan',Arial,sans-serif;font-size:10px;padding:1px 5px;border:none!important;border-radius:6px;background:rgba(40,120,255,.18)!important;color:inherit;cursor:pointer;line-height:1.4;}
+/* 其他界面纯色取色控件显隐由 applyPanelBgMode() 接管 */
+/* 深色模式：所有非拟物主题一律用自身令牌，清掉旧拟物阴影残留 */
+html body[data-theme="dark"][data-button-style]:not([data-button-style="neumorphism"]) [style*="box-shadow"]{background:var(--kg-surf)!important;box-shadow:var(--kg-shadow)!important;}
+html body[data-theme="dark"][data-button-style]:not([data-button-style="neumorphism"]) [style*="inset"][style*="box-shadow"]{box-shadow:var(--kg-shadow-inset)!important;}
+html body[data-theme="dark"][data-button-style]:not([data-button-style="neumorphism"]) .settings-section h3,html body[data-theme="dark"][data-button-style]:not([data-button-style="neumorphism"]) .tab-btn,html body[data-theme="dark"][data-button-style]:not([data-button-style="neumorphism"]) .modal-content{background:var(--kg-surf)!important;box-shadow:var(--kg-shadow)!important;}
+/* 液态玻璃：设置面板不留深色遮挡块 */
+/* 液态玻璃：调色盘与取色控件保持原样 */
+/* 搜索框下划线主题：真实可见边线，聚焦变蓝 */
+body[data-button-style="underline"] .search-box,body[data-button-style="underline"] #searchInput,body[data-button-style="underline"] #dropdownMenu{border-bottom:2px solid #c9c9c9!important;transition:border-color .28s ease!important;}
+body[data-button-style="underline"] #searchInput:focus,body[data-button-style="underline"] .search-box:focus-within{border-bottom-color:#2196F3!important;}
+body[data-theme="dark"][data-button-style="underline"] .search-box,body[data-theme="dark"][data-button-style="underline"] #searchInput,body[data-theme="dark"][data-button-style="underline"] #dropdownMenu{border-bottom-color:#5a5a5a!important;}
+/* 描边只加在「字体颜色：黑 / 白」这两个选项字上，页面所有文字都不描边 */
+.kg-font-preview-black.kg-font-preview-black{color:#000000!important;text-shadow:-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff!important;}
+.kg-font-preview-white.kg-font-preview-white{color:#ffffff!important;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000!important;}
+/* ===== 其他界面背景：唯一权威规则（ID 双写压过全部主题/深色/主页模式旧规则） ===== */
+html body #favoritesModal#favoritesModal,html body #wallpaperSourceModal#wallpaperSourceModal,html body #changelogModal#changelogModal,html body #scannerModal#scannerModal,html body #settingsPanel#settingsPanel{background:var(--kg-panel-bg,#FFFFFF)!important;background-color:var(--kg-panel-bg,#FFFFFF)!important;background-image:none!important;}
+/* 主页的背景（透过）时，其他界面模糊滑块必须生效，不再被背景规则强制关掉 */
+html body[data-panel-bg="home"] #favoritesModal#favoritesModal,html body[data-panel-bg="home"] #wallpaperSourceModal#wallpaperSourceModal,html body[data-panel-bg="home"] #changelogModal#changelogModal,html body[data-panel-bg="home"] #scannerModal#scannerModal{backdrop-filter:var(--blur-fav)!important;-webkit-backdrop-filter:var(--blur-fav)!important;}
+/* 主页的背景：直接透过，收藏界面内部层一并透明 */
+html body[data-panel-bg="home"] #favoritesModal > div,html body[data-panel-bg="home"] #settingsPanel > div,html body[data-panel-bg="home"] #settingsPanel .settings-section,html body[data-panel-bg="home"] #settingsPanel .settings-section h3,html body[data-panel-bg="home"] #settingsPanel .settings-radio-grid{background:transparent!important;background-color:transparent!important;box-shadow:none!important;}
+/* 调色盘：主页或其他界面选纯色时都保持可见 */
+html body[data-bg-mode="solid"] #customColorPicker,html body[data-panel-bg="solid"] #customColorPicker{display:block!important;}
+/* ===== 深色模式：无=深色底，非拟物主题不再出现拟物阴影 ===== */
+html body[data-theme="dark"][data-panel-bg="none"]{--kg-panel-bg:#2a2a2a;}
+html body[data-theme="dark"] #settingsContent .settings-section,html body[data-theme="dark"] #settingsContent .settings-radio-grid{background:transparent!important;background-color:transparent!important;box-shadow:none!important;}
+html body[data-theme="dark"][data-button-style]:not([data-button-style="neumorphism"]) [style*="20px 20px 62px"],html body[data-theme="dark"][data-button-style]:not([data-button-style="neumorphism"]) [style*="15px 15px 40px"],html body[data-theme="dark"][data-button-style]:not([data-button-style="neumorphism"]) .tab-btn,html body[data-theme="dark"][data-button-style]:not([data-button-style="neumorphism"]) .settings-section h3,html body[data-theme="dark"][data-button-style]:not([data-button-style="neumorphism"]) .settings-btn,html body[data-theme="dark"][data-button-style]:not([data-button-style="neumorphism"]) .fav-add-btn,html body[data-theme="dark"][data-button-style]:not([data-button-style="neumorphism"]) .bottom-btn,html body[data-theme="dark"][data-button-style]:not([data-button-style="neumorphism"]) .ui,html body[data-theme="dark"][data-button-style]:not([data-button-style="neumorphism"]) .modal-content,html body[data-theme="dark"][data-button-style]:not([data-button-style="neumorphism"]) .favorite-item,html body[data-theme="dark"][data-button-style]:not([data-button-style="neumorphism"]) .hot-news-container,html body[data-theme="dark"][data-button-style]:not([data-button-style="neumorphism"]) .search-hint{background:var(--kg-surf)!important;background-color:var(--kg-surf)!important;box-shadow:var(--kg-shadow)!important;}
+/* 搜索框下拉栏：整栏与内部选项水平居中 */
+html body #dropdownMenu#dropdownMenu{left:0!important;right:0!important;width:100%!important;margin-left:auto!important;margin-right:auto!important;justify-content:center!important;align-items:center!important;flex-wrap:wrap!important;gap:8px!important;text-align:center!important;}
+html body #dropdownMenu#dropdownMenu > div{justify-content:center!important;text-align:center!important;}
+/* 全局字体描边开关：默认关闭。开启后只改文字的 text-shadow，不改颜色、不动图标与布局 */
+html body[data-global-font-stroke="on"] *:not(.kg-font-preview-black):not(.kg-font-preview-white){text-shadow:-1px -1px 0 rgba(255,255,255,.9),1px -1px 0 rgba(255,255,255,.9),-1px 1px 0 rgba(255,255,255,.9),1px 1px 0 rgba(255,255,255,.9)!important;}
+html body[data-global-font-stroke="on"][data-font-color="white"] *:not(.kg-font-preview-black):not(.kg-font-preview-white),html body[data-global-font-stroke="on"][data-theme="dark"] *:not(.kg-font-preview-black):not(.kg-font-preview-white){text-shadow:-1px -1px 0 rgba(0,0,0,.9),1px -1px 0 rgba(0,0,0,.9),-1px 1px 0 rgba(0,0,0,.9),1px 1px 0 rgba(0,0,0,.9)!important;}
 </style>
 </head>
 <body>
@@ -872,6 +922,10 @@ body.kg-overlay-open.kg-dock-edit #dockContainer{opacity:1!important;visibility:
 主页的背景
 </label>
 </div>
+<div id="panelBgColorWrap" style="display: none; align-items: center; gap: 8px; margin: 0 0 10px 30px; font-family: 'YouYuan'; font-size: 13px;">
+<span>其他界面纯色：</span>
+<input type="color" id="panelBgColorInput" value="#FFFFFF" oninput="setPanelBgColor(this.value)" style="width: 44px; height: 26px; border: none; cursor: pointer; background: transparent;">
+</div>
 <div id="wallpaperSourceManagerBtn" style="display: none; margin-left: 30px; margin-bottom: 10px;">
 <button onclick="openWallpaperSourceModal()" class="settings-btn" style="padding: 8px 15px; border: none; border-radius: var(--global-radius); box-shadow: 20px 20px 62px #cccccc, -20px -20px 62px #ffffff; background: #F0F0F0; cursor: pointer; font-family: 'YouYuan'; font-size: 13px; display: flex; align-items: center; gap: 5px;">
 壁纸来源管理
@@ -1030,8 +1084,8 @@ Dock栏
 </label>
 <div style="display: flex; align-items: center; gap: 8px; margin-left: auto; font-size: 12px;">
 <span>对齐：</span>
-<label style="display: flex; align-items: center; gap: 2px; cursor: pointer;"><input type="radio" name="dockAlign" value="left" onchange="setDockAlign('left')" style="cursor: pointer; width: 12px; height: 12px;">靠左</label>
-<label style="display: flex; align-items: center; gap: 2px; cursor: pointer;"><input type="radio" name="dockAlign" value="center" checked onchange="setDockAlign('center')" style="cursor: pointer; width: 12px; height: 12px;">居中</label>
+<label style="display: flex; align-items: center; gap: 2px; cursor: pointer;"><span class="radio-switch"><input type="radio" name="dockAlign" value="left" onchange="setDockAlign('left')"><span class="radio-slider"></span></span>靠左</label>
+<label style="display: flex; align-items: center; gap: 2px; cursor: pointer;"><span class="radio-switch"><input type="radio" name="dockAlign" value="center" checked onchange="setDockAlign('center')"><span class="radio-slider"></span></span>居中</label>
 </div>
 </div>
 </div>
@@ -1057,6 +1111,48 @@ Dock栏
 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
 <label class="toggle-switch"><input type="checkbox" id="disableAllAnim" onchange="toggleDisableAllAnim()"><span class="toggle-slider"></span></label>
 <span style="font-family: 'YouYuan'; font-size: 14px;">禁止所有动画</span>
+</div>
+</div>
+<div class="kg-group-title">字体与可读性</div>
+<div style="margin-bottom: 15px;">
+<div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px; flex-wrap: wrap;">
+<span style="font-family: 'YouYuan'; font-size: 14px;">字体颜色：</span>
+<label class="settings-label" style="display: flex; align-items: center; gap: 5px; font-family: 'YouYuan'; font-size: 13px; cursor: pointer;">
+<span class="radio-switch"><input type="radio" name="fontColorMode" value="black" checked onchange="setFontColorMode('black')"><span class="radio-slider"></span></span>
+<span class="kg-font-preview-black">黑</span>
+</label>
+<label class="settings-label" style="display: flex; align-items: center; gap: 5px; font-family: 'YouYuan'; font-size: 13px; cursor: pointer;">
+<span class="radio-switch"><input type="radio" name="fontColorMode" value="white" onchange="setFontColorMode('white')"><span class="radio-slider"></span></span>
+<span class="kg-font-preview-white">白</span>
+</label>
+</div>
+<div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px; flex-wrap: wrap;">
+<span style="font-family: 'YouYuan'; font-size: 14px;">时钟 / 日期 / 天气字体：</span>
+<label class="settings-label" style="display: flex; align-items: center; gap: 5px; font-family: 'YouYuan'; font-size: 13px; cursor: pointer;">
+<span class="radio-switch"><input type="radio" name="timeFontColorMode" value="auto" checked onchange="setTimeFontColorMode('auto')"><span class="radio-slider"></span></span>跟随
+</label>
+<label class="settings-label" style="display: flex; align-items: center; gap: 5px; font-family: 'YouYuan'; font-size: 13px; cursor: pointer;">
+<span class="radio-switch"><input type="radio" name="timeFontColorMode" value="black" onchange="setTimeFontColorMode('black')"><span class="radio-slider"></span></span>黑
+</label>
+<label class="settings-label" style="display: flex; align-items: center; gap: 5px; font-family: 'YouYuan'; font-size: 13px; cursor: pointer;">
+<span class="radio-switch"><input type="radio" name="timeFontColorMode" value="white" onchange="setTimeFontColorMode('white')"><span class="radio-slider"></span></span>白
+</label>
+</div>
+<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+<label class="toggle-switch"><input type="checkbox" id="globalFontStrokeToggle" onchange="setGlobalFontStroke(this.checked)"><span class="toggle-slider"></span></label>
+<span style="font-family: 'YouYuan'; font-size: 14px;">全局字体描边</span>
+</div>
+</div>
+<div class="kg-group-title">搜索框</div>
+<div style="margin-bottom: 15px;">
+<div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px; flex-wrap: wrap;">
+<span style="font-family: 'YouYuan'; font-size: 14px;">搜索框下拉框：</span>
+<label class="settings-label" style="display: flex; align-items: center; gap: 5px; font-family: 'YouYuan'; font-size: 13px; cursor: pointer;">
+<span class="radio-switch"><input type="radio" name="dropdownMode" value="hidden" onchange="setDropdownMode('hidden')"><span class="radio-slider"></span></span>隐藏
+</label>
+<label class="settings-label" style="display: flex; align-items: center; gap: 5px; font-family: 'YouYuan'; font-size: 13px; cursor: pointer;">
+<span class="radio-switch"><input type="radio" name="dropdownMode" value="expanded" checked onchange="setDropdownMode('expanded')"><span class="radio-slider"></span></span>展开
+</label>
 </div>
 </div>
 </div>
@@ -1137,13 +1233,6 @@ Dock栏
 </div>
 </div>
 <div style="margin-bottom: 15px;">
-<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap;">
-<span style="font-family: 'YouYuan'; font-size: 14px;">搜索框下拉框：</span>
-<label style="display: flex; align-items: center; gap: 4px; font-family: 'YouYuan'; font-size: 13px; cursor: pointer;"><input type="radio" name="dropdownMode" value="hidden" onchange="setDropdownMode('hidden')" style="cursor: pointer; width: 12px; height: 12px;">隐藏</label>
-<label style="display: flex; align-items: center; gap: 4px; font-family: 'YouYuan'; font-size: 13px; cursor: pointer;"><input type="radio" name="dropdownMode" value="expanded" checked onchange="setDropdownMode('expanded')" style="cursor: pointer; width: 12px; height: 12px;">展开</label>
-</div>
-</div>
-<div style="margin-bottom: 15px;">
 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
 <label class="toggle-switch"><input type="checkbox" id="urlDetectEnabled" checked onchange="localStorage.setItem('urlDetectEnabled', this.checked)"><span class="toggle-slider"></span></label>
 <span style="font-family: 'YouYuan'; font-size: 14px;">网址智能识别（按浏览器规则判断网址 / 搜索）</span>
@@ -1216,14 +1305,9 @@ Dock栏
 </div>
 <div class="settings-radio-grid" style="margin-top: 8px; gap: 6px;">
 <div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px;">
-<span style="min-width: 68px;">小按钮</span>
-<input type="range" id="kgRadius_small" data-kg-range data-kg-type="radius" data-kg-part="small" min="0" max="60" value="34" oninput="kgSetPart('radius','small',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
-<span id="kgRadius_smallOut" style="min-width: 34px;">34px</span>
-</div>
-<div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px;">
-<span style="min-width: 68px;">大按钮</span>
-<input type="range" id="kgRadius_large" data-kg-range data-kg-type="radius" data-kg-part="large" min="0" max="60" value="34" oninput="kgSetPart('radius','large',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
-<span id="kgRadius_largeOut" style="min-width: 34px;">34px</span>
+<span style="min-width: 68px;">按钮</span>
+<input type="range" id="kgRadius_button" data-kg-range data-kg-type="radius" data-kg-part="button" min="0" max="60" value="34" oninput="kgSetPart('radius','button',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
+<span id="kgRadius_buttonOut" style="min-width: 34px;">34px</span>
 </div>
 <div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px;">
 <span style="min-width: 68px;">搜索框</span>
@@ -1246,14 +1330,9 @@ Dock栏
 <span id="kgRadius_favOut" style="min-width: 34px;">34px</span>
 </div>
 <div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px;">
-<span style="min-width: 68px;">搜索历史</span>
-<input type="range" id="kgRadius_history" data-kg-range data-kg-type="radius" data-kg-part="history" min="0" max="60" value="34" oninput="kgSetPart('radius','history',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
-<span id="kgRadius_historyOut" style="min-width: 34px;">34px</span>
-</div>
-<div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px;">
-<span style="min-width: 68px;">搜索建议</span>
-<input type="range" id="kgRadius_suggestion" data-kg-range data-kg-type="radius" data-kg-part="suggestion" min="0" max="60" value="34" oninput="kgSetPart('radius','suggestion',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
-<span id="kgRadius_suggestionOut" style="min-width: 34px;">34px</span>
+<span style="min-width: 68px;">历史/建议</span>
+<input type="range" id="kgRadius_dropdown" data-kg-range data-kg-type="radius" data-kg-part="dropdown" min="0" max="60" value="34" oninput="kgSetPart('radius','dropdown',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
+<span id="kgRadius_dropdownOut" style="min-width: 34px;">34px</span>
 </div>
 </div>
 </div>
@@ -1265,14 +1344,9 @@ Dock栏
 </div>
 <div class="settings-radio-grid" style="margin-top: 8px; gap: 6px;">
 <div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px;">
-<span style="min-width: 68px;">小按钮</span>
-<input type="range" id="kgBlur_small" data-kg-range data-kg-type="blur" data-kg-part="small" min="0" max="40" value="0" oninput="kgSetPart('blur','small',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
-<span id="kgBlur_smallOut" style="min-width: 34px;">0px</span>
-</div>
-<div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px;">
-<span style="min-width: 68px;">大按钮</span>
-<input type="range" id="kgBlur_large" data-kg-range data-kg-type="blur" data-kg-part="large" min="0" max="40" value="0" oninput="kgSetPart('blur','large',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
-<span id="kgBlur_largeOut" style="min-width: 34px;">0px</span>
+<span style="min-width: 68px;">按钮</span>
+<input type="range" id="kgBlur_button" data-kg-range data-kg-type="blur" data-kg-part="button" min="0" max="40" value="0" oninput="kgSetPart('blur','button',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
+<span id="kgBlur_buttonOut" style="min-width: 34px;">0px</span>
 </div>
 <div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px;">
 <span style="min-width: 68px;">搜索框</span>
@@ -1300,14 +1374,9 @@ Dock栏
 <span id="kgBlur_eachFavOut" style="min-width: 34px;">0px</span>
 </div>
 <div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px;">
-<span style="min-width: 68px;">搜索历史</span>
-<input type="range" id="kgBlur_history" data-kg-range data-kg-type="blur" data-kg-part="history" min="0" max="40" value="0" oninput="kgSetPart('blur','history',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
-<span id="kgBlur_historyOut" style="min-width: 34px;">0px</span>
-</div>
-<div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px;">
-<span style="min-width: 68px;">搜索建议</span>
-<input type="range" id="kgBlur_suggestion" data-kg-range data-kg-type="blur" data-kg-part="suggestion" min="0" max="40" value="0" oninput="kgSetPart('blur','suggestion',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
-<span id="kgBlur_suggestionOut" style="min-width: 34px;">0px</span>
+<span style="min-width: 68px;">历史/建议</span>
+<input type="range" id="kgBlur_dropdown" data-kg-range data-kg-type="blur" data-kg-part="dropdown" min="0" max="40" value="0" oninput="kgSetPart('blur','dropdown',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
+<span id="kgBlur_dropdownOut" style="min-width: 34px;">0px</span>
 </div>
 </div>
 </div>
@@ -1379,7 +1448,7 @@ API 地址配置
 <div style="font-family: 'YouYuan'; font-size: 14px; line-height: 1.8;">
 <p><strong>产品名称：</strong>千克之梦 (HelloKG)</p>
 <p><strong>版本号：</strong>v2.5</p>
-<p><strong>更新日期：</strong>2026-11-14</p>
+<p><strong>更新日期：</strong>2026-11-15</p>
 <!-- 联系信息已按需求移除 -->
 </div>
 </div>
@@ -1594,6 +1663,7 @@ modal.style.display = 'block';
 void modal.offsetWidth;
 // Fade in
 modal.style.opacity = '1';
+if (typeof applyPanelBgMode === 'function') applyPanelBgMode();
 if (typeof window.kgSyncOverlay === 'function') window.kgSyncOverlay();
 console.log('Modal shown, display:', modal.style.display, 'opacity:', modal.style.opacity);
 }
@@ -2042,9 +2112,14 @@ el.style.boxShadow = `20px 20px 62px ${darkShadow}, -20px -20px 62px ${lightShad
 // Apply theme to inline styles (fixes hardcoded light colors in dark mode)
 function applyThemeToInlineStyles() {
 const isDark = document.body.getAttribute('data-theme') === 'dark';
+const kgStyle = document.body.getAttribute('data-button-style');
+if (isDark && kgStyle !== 'neumorphism') {
+if (typeof window.kgSyncDropdownSurfaces === 'function') window.kgSyncDropdownSurfaces();
+return;
+}
 const allElements = document.querySelectorAll('*');
 allElements.forEach(el => {
-if (el.id === 'searchHistory' || el.id === 'suggestions') return;
+if (el.id === 'searchHistory' || el.id === 'suggestions' || el.id === 'favoritesModal' || el.id === 'wallpaperSourceModal' || el.id === 'changelogModal' || el.id === 'scannerModal') return;
 const style = el.getAttribute('style');
 if (!style) return;
 const kgSurf = el.getAttribute('data-kg-surf');
@@ -2361,6 +2436,10 @@ searchBtnIconFallback.style.display = 'none';
 urlBtnIcon.style.display = 'block';
 } else {
 urlBtnIcon.style.display = 'none';
+/* 从网址图标切回时恢复搜索引擎图标：favicon 加载失败则用放大镜兜底 */
+const imgFailed = searchBtnIcon.complete && searchBtnIcon.naturalWidth === 0;
+searchBtnIcon.style.display = imgFailed ? 'none' : 'block';
+searchBtnIconFallback.style.display = imgFailed ? 'block' : 'none';
 }
 }
 if (keyword && isFocused) {
@@ -3337,6 +3416,7 @@ showFavIcons: localStorage.getItem('showFavIcons') !== 'false',
 dockAlign: localStorage.getItem('dockAlign') || 'center',
 dropdownMode: localStorage.getItem('dropdownMode') || 'expanded',
 urlDetectEnabled: localStorage.getItem('urlDetectEnabled') !== 'false',
+globalFontStroke: localStorage.getItem('globalFontStroke') === 'on',
 enableLaunchAnim: localStorage.getItem('enableLaunchAnim') !== 'false',
 disableAllAnim: localStorage.getItem('disableAllAnim') === 'true',
 wallpaperBlur: localStorage.getItem('wallpaperBlur') || '0',
@@ -3350,15 +3430,25 @@ focusZoomEnabled: localStorage.getItem('focusZoomEnabled') === 'true',
 weatherEnabled: localStorage.getItem('weatherEnabled') === 'true',
 weatherCity: localStorage.getItem('weatherCity') || ''
 };
+selectedData.settingsStorage = (function() {
+const o = {}, skip = {favorites:1,folders:1,dockItems:1,searchHistory:1,cachedSuggestions:1,cachedHotNews:1,weatherCache:1};
+for (let i = 0; i < localStorage.length; i++) {
+const k = localStorage.key(i);
+if (!k || skip[k]) continue;
+try { o[k] = localStorage.getItem(k); } catch(e) {}
+}
+return o;
+})();
 selectedData.wallpaperSources = wallpaperSources;
 selectedData.currentWallpaperSourceId = currentWallpaperSourceId;
 } else if (cb.value === 'apiUrls') {
 selectedData.apiUrls = apiUrls;
 } else if (cb.value === 'engine') {
-selectedData.searchEngine = localStorage.getItem('searchEngine') || 'https://cn.bing.com/search?q=';
+selectedData.searchEngine = getCookie('searchEngine') || localStorage.getItem('searchEngine') || 'https://cn.bing.com/search?q=';
 selectedData.customEngines = JSON.parse(localStorage.getItem('customEngines') || '[]');
 } else if (cb.value === 'cookies') {
-selectedData.cookiesNote = 'Cookie数据无法导出，请使用浏览器开发者工具手动导出';
+selectedData.searchEngineCookie = getCookie('searchEngine');
+selectedData.cookiesNote = '已导出本页使用的搜索引擎 Cookie；其它站点 Cookie 请用浏览器开发者工具导出';
 }
 });
 const dataStr = JSON.stringify(selectedData, null, 2);
@@ -3404,6 +3494,7 @@ showFavIcons: localStorage.getItem('showFavIcons') !== 'false',
 dockAlign: localStorage.getItem('dockAlign') || 'center',
 dropdownMode: localStorage.getItem('dropdownMode') || 'expanded',
 urlDetectEnabled: localStorage.getItem('urlDetectEnabled') !== 'false',
+globalFontStroke: localStorage.getItem('globalFontStroke') === 'on',
 enableLaunchAnim: localStorage.getItem('enableLaunchAnim') !== 'false',
 disableAllAnim: localStorage.getItem('disableAllAnim') === 'true',
 wallpaperBlur: localStorage.getItem('wallpaperBlur') || '0',
@@ -3422,12 +3513,17 @@ showDate: localStorage.getItem('showDate') === 'true',
 uiProfile: localStorage.getItem('uiProfile') || '',
 bgModePanel: localStorage.getItem('bgModePanel') || 'none',
 textStroke: localStorage.getItem('textStroke') || '',
-showSeconds: localStorage.getItem('showSeconds') !== 'false'
+showSeconds: localStorage.getItem('showSeconds') !== 'false',
+wallpaperLoopSec: localStorage.getItem('wallpaperLoopSec') || '300',
+panelBgColor: localStorage.getItem('panelBgColor') || '#FFFFFF',
+fontColorMode: localStorage.getItem('fontColorMode') || '',
+timeFontColorMode: localStorage.getItem('timeFontColorMode') || 'auto',
+dockSortMode: localStorage.getItem('dockSortMode') || ''
 },
 wallpaperSources: wallpaperSources,
 currentWallpaperSourceId: currentWallpaperSourceId,
 apiUrls: apiUrls,
-searchEngine: localStorage.getItem('searchEngine') || 'https://cn.bing.com/search?q=',
+searchEngine: getCookie('searchEngine') || localStorage.getItem('searchEngine') || 'https://cn.bing.com/search?q=',
 customEngines: JSON.parse(localStorage.getItem('customEngines') || '[]'),
 localStorage: (function() { const o = {}; for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); try { o[k] = localStorage.getItem(k); } catch(e) {} } return o; })()
 };
@@ -3442,7 +3538,7 @@ URL.revokeObjectURL(url);
 }
 // ===================== Changelog (更新日志) =====================
 // 每次发布更新时，请修改此处的发布日期（格式 YYYY-MM-DD）
-const RELEASE_DATE = "2026-11-14";
+const RELEASE_DATE = "2026-11-15";
 const CHANGELOG_FALLBACK = [
 "千克之梦 (HelloKG) v2.5 更新日志（2026-11-14）",
 "",
@@ -3619,6 +3715,10 @@ const el = document.getElementById('cacheDuration');
 if (el) el.value = allData.settings.cacheDuration;
 localStorage.setItem('cacheDuration', allData.settings.cacheDuration);
 }
+if (allData.settings.globalFontStroke !== undefined) {
+localStorage.setItem('globalFontStroke', allData.settings.globalFontStroke ? 'on' : 'off');
+}
+if (typeof applyGlobalFontStroke === 'function') applyGlobalFontStroke();
 if (allData.settings.privacyMode !== undefined) {
 const el = document.getElementById('privacyMode');
 if (el) el.checked = allData.settings.privacyMode;
@@ -3829,6 +3929,9 @@ localStorage.setItem('wallpaperBrightness', allData.settings.wallpaperBrightness
 if (allData.settings.wallpaperLoopSec !== undefined) {
 localStorage.setItem('wallpaperLoopSec', allData.settings.wallpaperLoopSec);
 }
+['panelBgColor','fontColorMode','timeFontColorMode','uiProfile','bgModePanel','textStroke','showSeconds','showDockName','neverShowChangelog','lastChangelogDate','showDate','dockSortMode'].forEach(function(k) {
+if (allData.settings[k] !== undefined) localStorage.setItem(k, allData.settings[k]);
+});
 }
 // Restore wallpaper sources
 if (allData.wallpaperSources && Array.isArray(allData.wallpaperSources)) {
@@ -3841,6 +3944,10 @@ localStorage.setItem('currentWallpaperSourceId', currentWallpaperSourceId);
 }
 if (allData.searchEngine) {
 localStorage.setItem('searchEngine', allData.searchEngine);
+if (typeof setCookie === 'function') setCookie('searchEngine', allData.searchEngine, 365);
+}
+if (allData.searchEngineCookie) {
+if (typeof setCookie === 'function') setCookie('searchEngine', allData.searchEngineCookie, 365);
 }
 if (allData.customEngines && Array.isArray(allData.customEngines)) {
 localStorage.setItem('customEngines', JSON.stringify(allData.customEngines));
@@ -3852,6 +3959,12 @@ apiUrls[key] = allData.apiUrls[key];
 localStorage.setItem('apiUrl_' + key, allData.apiUrls[key]);
 });
 hotNewsApiUrl = apiUrls.hotNews;
+}
+// 选择导出里的设置快照
+if (allData.settingsStorage && typeof allData.settingsStorage === 'object') {
+Object.keys(allData.settingsStorage).forEach(function(k) {
+try { localStorage.setItem(k, allData.settingsStorage[k]); } catch(e) {}
+});
 }
 // 全量恢复 localStorage，覆盖备份格式之后新增的所有设置
 if (allData.localStorage && typeof allData.localStorage === 'object') {
@@ -3909,7 +4022,7 @@ renderFavorites();
 localStorage.removeItem('cachedSuggestions');
 localStorage.removeItem('cachedHotNews');
 } else if (cb.value === 'settings') {
-['uiProfile','bgModePanel','textStroke','showSeconds','themeMode','themeColor','buttonStyle','bgMode','bgColor','showTimeDisplay','showPoem','showScanner','highContrastMode','borderRadius','debugMode','demoMode','loadForeignIcons','cleanSearchMode','cleanSearchKeyword','privacyMode','showFavCreateTime','autoSortFavorites','noFavIcons','saveSearchHistory','showSearchSuggestions','cacheSuggestions','cacheDuration','showFavIcons','dockAlign','dropdownMode','urlDetectEnabled'].forEach(key => localStorage.removeItem(key));
+['uiProfile','bgModePanel','textStroke','showSeconds','themeMode','themeColor','buttonStyle','bgMode','bgColor','showTimeDisplay','showPoem','showScanner','highContrastMode','borderRadius','debugMode','demoMode','loadForeignIcons','cleanSearchMode','cleanSearchKeyword','privacyMode','showFavCreateTime','autoSortFavorites','noFavIcons','saveSearchHistory','showSearchSuggestions','cacheSuggestions','cacheDuration','showFavIcons','dockAlign','dropdownMode','urlDetectEnabled','globalFontStroke'].forEach(key => localStorage.removeItem(key));
 location.reload();
 } else if (cb.value === 'apiUrls') {
 localStorage.removeItem('apiUrls');
@@ -4407,17 +4520,17 @@ const color = getUrlColor(item.url);
 const faviconUrl = getFavicon(item.url);
 const showFavIcons = document.getElementById('showFavIconsToggle')?.checked !== false;
 const showDockName = localStorage.getItem('showDockName') === 'true';
-                html += `<button class="dock-item" data-dock-index="${di}" onclick="openDockUrl('${item.url.replace(/'/g, "\\'")}', this)" title="${item.name}">
+                html += `<div class="dock-item" data-dock-index="${di}" onclick="openDockUrl('${item.url.replace(/'/g, "\\'")}', this)" title="${item.name}">
                             <div class="dock-icon">
                                 ${showFavIcons && faviconUrl ? `<img src="${faviconUrl}" data-cands='${JSON.stringify(getFaviconCandidates(item.url))}' data-i="0" onerror="var c=JSON.parse(this.getAttribute('data-cands')||'[]');var i=parseInt(this.getAttribute('data-i')||'0',10)+1;if(i<c.length){this.setAttribute('data-i',i);this.src=c[i];}else{this.style.display='none';this.nextElementSibling.style.display='flex';}" style="display: block; width: 100%; height: 100%; object-fit: contain; border-radius: var(--global-radius);" alt="">` : ''}
                                 <div class="dock-initial" style="background-color: ${color}; display: ${(!showFavIcons || !faviconUrl) ? 'flex' : 'none'};">${initials}</div>
                             </div>
                             ${showDockName ? `<span class="dock-name">${item.name}</span>` : ''}
-                        </button>`;
+                        ${document.body.classList.contains('kg-dock-edit') ? `<div class="kg-dock-move"><button onclick="event.stopPropagation(); kgMoveDockItem(${di}, -1)" title="上移">上</button><button onclick="event.stopPropagation(); kgMoveDockItem(${di}, 1)" title="下移">下</button></div>` : ''}
+                        </div>`;
 });
 if (document.body.classList.contains('kg-dock-edit')) {
 html += `<div class="dock-item kg-dock-tools"><button onclick="event.stopPropagation(); kgDockSort()" title="排序">排序</button></div>`;
-html += `<div class="dock-item kg-dock-tools"><button onclick="event.stopPropagation(); kgDockMoveSelected(-1)" title="上移">上</button><button onclick="event.stopPropagation(); kgDockMoveSelected(1)" title="下移">下</button></div>`;
 }
 scrollArea.innerHTML = html;
 // Desktop: mouse wheel scrolls the dock horizontally
@@ -4509,6 +4622,12 @@ if (!urls.length) return false;
 kgClearSelection();
 urls.forEach(function(u, i) { setTimeout(function() { window.open(u, '_blank'); }, i * 120); });
 return true;
+}
+function kgMoveDockItem(i, dir) {
+const j = i + dir;
+if (i < 0 || j < 0 || j >= dockItems.length) return;
+const tmp = dockItems[i]; dockItems[i] = dockItems[j]; dockItems[j] = tmp;
+saveDockItems();
 }
 function kgDockSort() {
 if (!dockItems.length) return;
@@ -5787,6 +5906,7 @@ document.body.style.setProperty('color-scheme', isDark ? 'dark' : 'light');
 document.body.style.setProperty('-webkit-color-scheme', isDark ? 'dark' : 'light');
 // Keep weather display color in sync with theme
 if (typeof applyWeatherTheme === 'function') applyWeatherTheme();
+if (typeof applyPanelBgMode === 'function') applyPanelBgMode();
 }
 // Listen for system theme changes
 if (window.matchMedia) {
@@ -6045,9 +6165,9 @@ const source = wallpaperSources.find(s => s.id === currentWallpaperSourceId);
 const url = source ? source.url : (apiUrls.bingWallpaper || 'https://bing.img.run/1920x1080.php');
 // For base64 data URIs, do not append cache-busting query
 if (url.indexOf('data:') === 0) return url;
-// Add timestamp to bypass cache and ensure fresh image
+// 生成唯一参数，彻底绕过浏览器 / CDN 缓存，避免复用缓存里的低清压缩图
 const separator = url.indexOf('?') > -1 ? '&' : '?';
-return url + separator + '_t=' + Date.now();
+return url + separator + '_t=' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
 }
 // Loop an iframe wallpaper by recreating the iframe after a user-
 // configured interval. Prefers a per-source loopSec (each wallpaper
@@ -6235,8 +6355,19 @@ document.addEventListener('keydown', wallpaperVideoInteractionHandler);
 return;
 }
 // image or base64 — use background-image on the overlay
+// 壁纸接口偶尔会返回低分辨率图 / 缓存的压缩图，铺满屏幕就会糊成一片。
+// 这里检测实际图片宽度，明显偏低时自动重新取一张（最多两次）。
+const isDataUri = url.indexOf('data:') === 0;
+const minWallpaperWidth = Math.max(1280, window.innerWidth);
+let hqRetry = 0;
+const loadWallpaperOnce = function(src) {
 const img = new Image();
 img.onload = function() {
+if (!isDataUri && hqRetry < 2 && img.naturalWidth > 0 && img.naturalWidth < minWallpaperWidth * 0.85) {
+hqRetry++;
+loadWallpaperOnce(getCurrentWallpaperUrl());
+return;
+}
 filterOverlay.style.backgroundImage = "url('" + img.src + "')";
 kgPlayWallpaperIn(filterOverlay);
 };
@@ -6257,7 +6388,9 @@ nameEl.style.color = '#666';
 }, 3000);
 }
 };
-img.src = url;
+img.src = src;
+};
+loadWallpaperOnce(url);
 }
 function refreshWallpaper() {
 const nameEl = document.getElementById('currentWallpaperName');
@@ -7123,7 +7256,7 @@ setTimeout(runThemeInline, 80);
 });
 
 /* ===== 统一界面配置层：圆角/模糊 总调节 + 单项独立覆盖 ===== */
-const KG_UI_PARTS = ['small','large','search','poem','dock','fav','eachFav','history','suggestion'];
+const KG_UI_PARTS = ['small','large','button','search','poem','dock','fav','eachFav','dropdown'];
 function kgGetProfile() {
 let p = {};
 try { p = JSON.parse(localStorage.getItem('uiProfile') || '{}') || {}; } catch(e) { p = {}; }
@@ -7147,7 +7280,14 @@ if (blurTouched) root.setAttribute('data-kg-blur', 'on'); else root.removeAttrib
 if (typeof kgSyncDropdownSurfaces === "function") kgSyncDropdownSurfaces();
 }
 function kgVal(type, part) {
-const p = kgGetProfile(), v = p[type].parts[part];
+if (part === 'small' || part === 'large') part = 'button';
+const p = kgGetProfile();
+if (part === 'dropdown') {
+const d = p[type].parts.dropdown;
+if (d !== undefined && d !== null && !isNaN(d)) return Number(d);
+return kgVal(type, 'search');
+}
+const v = p[type].parts[part];
 return (v === undefined || v === null || isNaN(v)) ? p[type].global : Number(v);
 }
 function kgSaveProfile(p) {
@@ -7229,12 +7369,24 @@ const pick = document.getElementById('customColorPicker');
 if (pick) pick.style.display = (currentBgMode === 'solid' || mode === 'solid') ? 'block' : 'none';
 }
 }
+function setPanelBgColor(v) {
+localStorage.setItem('panelBgColor', v);
+applyPanelBgMode();
+}
 function applyPanelBgMode() {
 if (!localStorage.getItem('bgModePanel')) localStorage.setItem('bgModePanel', 'none');
 const mode = localStorage.getItem('bgModePanel') || 'none';
-document.body.setAttribute('data-panel-bg', mode);
-const isDarkPanel = document.body.getAttribute('data-theme') === 'dark';
-document.documentElement.style.setProperty('--panel-solid-color', localStorage.getItem('bgColor') || (isDarkPanel ? '#343434' : '#F0F0F0'));
+if (document.body.getAttribute('data-panel-bg') !== mode) document.body.setAttribute('data-panel-bg', mode);
+/* 独立变量：主页取色器 changeBgColor() 只写 --panel-solid-color，不碰这里 */
+const color = localStorage.getItem('panelBgColor') || '#FFFFFF';
+document.documentElement.style.setProperty('--kg-panel-solid', color);
+const isDark = document.body.getAttribute('data-theme') === 'dark';
+const bg = mode === 'none' ? (isDark ? '#2a2a2a' : '#FFFFFF') : (mode === 'solid' ? color : 'transparent');
+document.documentElement.style.setProperty('--kg-panel-bg', bg);
+const picker = document.getElementById('panelBgColorInput');
+if (picker && picker.value !== color) picker.value = color;
+const wrap = document.getElementById('panelBgColorWrap');
+if (wrap) wrap.style.display = mode === 'solid' ? 'flex' : 'none';
 }
 function toggleColorPicker() {
 const panel = document.getElementById('colorPickerPanel');
@@ -7247,6 +7399,7 @@ if (codeInput) codeInput.dispatchEvent(new Event('blur'));
 }
 (function() {
 applyPanelBgMode();
+window.addEventListener('load', applyPanelBgMode);
 const mode = localStorage.getItem('bgModePanel') || 'none';
 document.querySelectorAll('input[name="bgModePanel"]').forEach(function(r) { if (r.value === mode) r.checked = true; });
 })();
@@ -7268,7 +7421,10 @@ function applyStrokeSettings() {
 const st = kgStrokeState();
 const root = document.documentElement;
 Object.keys(st).forEach(function(part) {
-root.style.setProperty('--stroke-' + part, st[part] ? '1.2px #ffffff' : '0px transparent');
+const gColor = localStorage.getItem('fontColorMode') || 'black';
+const tColor = localStorage.getItem('timeFontColorMode') || 'auto';
+const strokeColor = ((tColor === 'auto' ? gColor : tColor) === 'white') ? '#000000' : '#ffffff';
+root.style.setProperty('--stroke-' + part, st[part] ? '1.2px ' + strokeColor : '0px transparent');
 document.body.setAttribute('data-stroke-' + part, st[part] ? 'on' : 'off');
 });
 const t = document.getElementById('strokeTimeToggle');
@@ -7279,14 +7435,36 @@ if (w) w.checked = st.weather;
 if (d) d.checked = st.date;
 }
 window.applyStrokeSettings = applyStrokeSettings;
+/* ===== 字体颜色 ===== */
+function applyFontColors() {
+const g = localStorage.getItem('fontColorMode');
+const t = localStorage.getItem('timeFontColorMode') || 'auto';
+if (g) document.body.setAttribute('data-font-color', g); else document.body.removeAttribute('data-font-color');
+const eff = (t === 'auto' ? (g || (localStorage.getItem('bgMode') === 'wallpaper' ? 'white' : 'black')) : t);
+const c = eff === 'white' ? '#ffffff' : '#000000';
+['clockText','weatherTemp','weatherDesc','weatherCity','weatherDate'].forEach(function(id) {
+const el = document.getElementById(id);
+if (el) el.style.setProperty('color', c, 'important');
+});
+document.querySelectorAll('input[name="fontColorMode"]').forEach(function(r) { r.checked = (r.value === (g || 'black')); });
+document.querySelectorAll('input[name="timeFontColorMode"]').forEach(function(r) { r.checked = (r.value === t); });
+if (typeof applyStrokeSettings === 'function') applyStrokeSettings();
+}
+function setFontColorMode(v) { localStorage.setItem('fontColorMode', v); applyFontColors(); }
+function setTimeFontColorMode(v) { localStorage.setItem('timeFontColorMode', v); applyFontColors(); }
 /* ===== Dock 对齐 / 下拉框模式 ===== */
 function setDockAlign(v) { localStorage.setItem('dockAlign', v); applyDockAlign(); }
 function applyDockAlign() {
 const v = localStorage.getItem('dockAlign') || 'center';
 const dock = document.getElementById('dockContainer');
-if (dock) dock.style.justifyContent = v === 'left' ? 'flex-start' : 'center';
+if (dock) {
+dock.style.justifyContent = v === 'left' ? 'flex-start' : 'center';
+dock.style.boxSizing = 'border-box';
+dock.style.paddingLeft = v === 'left' ? (window.innerWidth <= 768 ? '16px' : '32px') : '0';
+}
 document.querySelectorAll('input[name="dockAlign"]').forEach(function(r) { r.checked = (r.value === v); });
 }
+window.addEventListener('resize', applyDockAlign);
 function setDropdownMode(v) { localStorage.setItem('dropdownMode', v); applyDropdownMode(); }
 function applyDropdownMode() {
 const v = localStorage.getItem('dropdownMode') || 'expanded';
@@ -7314,12 +7492,25 @@ menu.style.setProperty('-webkit-backdrop-filter', 'none', 'important');
 }
 document.querySelectorAll('input[name="dropdownMode"]').forEach(function(r) { r.checked = (r.value === v); });
 }
+/* ===== 全局字体描边开关：默认关闭，只在打开时写 body 属性 ===== */
+function applyGlobalFontStroke() {
+const on = localStorage.getItem('globalFontStroke') === 'on';
+if (on) document.body.setAttribute('data-global-font-stroke','on'); else document.body.removeAttribute('data-global-font-stroke');
+const cb2 = document.getElementById('globalFontStrokeToggle');
+if (cb2) cb2.checked = on;
+}
+function setGlobalFontStroke(on) {
+localStorage.setItem('globalFontStroke', on ? 'on' : 'off');
+applyGlobalFontStroke();
+}
 (function() {
 applyDockAlign();
 applyDropdownMode();
+applyFontColors();
+applyGlobalFontStroke();
 const cb = document.getElementById('urlDetectEnabled');
 if (cb) cb.checked = localStorage.getItem('urlDetectEnabled') !== 'false';
-window.addEventListener('load', function() { applyDockAlign(); applyDropdownMode(); });
+window.addEventListener('load', function() { applyDockAlign(); applyDropdownMode(); applyFontColors(); applyGlobalFontStroke(); });
 })();
 function setShowSeconds(on) {
 localStorage.setItem('showSeconds', on ? 'true' : 'false');
@@ -7443,7 +7634,7 @@ kg
     var bg = (cs.getPropertyValue('--kg-surf') || '').trim() || 'transparent';
     var sh = (cs.getPropertyValue('--kg-shadow') || '').trim() || 'none';
     var useBlur = document.documentElement.getAttribute('data-kg-blur') === 'on';
-    [['#searchHistory', 'history'], ['#suggestions', 'suggestion']].forEach(function (pair) {
+    [['#searchHistory', 'dropdown'], ['#suggestions', 'dropdown']].forEach(function (pair) {
       var el = document.querySelector(pair[0]);
       if (!el) return;
       var part = pair[1];
