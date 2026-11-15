@@ -1,41 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/css" href="https://www.xml-sitemaps.com/css/sitemap.css"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-
-  <url>
-       <loc>https://qkzm.cc.cd/</loc>
-       <lastmod>2026-08-21T11:36:44+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>1.0000</priority>
-  </url>
-  <url>
-       <loc>https://qkzm.cc.cd/x</loc>
-       <lastmod>2026-08-21T11:36:44+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
-  </url>
-  <url>
-       <loc>https://qkzm.cc.cd/lite</loc>
-       <lastmod>2026-08-21T11:36:44+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
-  </url>
-  <url>
-       <loc>https://qkzm.cc.cd/t</loc>
-       <lastmod>2026-08-21T11:36:44+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.6400</priority>
-  </url>
-  <url>
-       <loc>https://qkzm.cc.cd/bc</loc>
-       <lastmod>2026-08-21T11:36:44+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.4096</priority>
-  </url>
-    <url>
-       <loc>https://qkzm.cc.cd/e</loc>
-       <lastmod>2026-08-21T11:36:44+00:00</lastmod>
-       <changefreq>daily</changefreq>
-       <priority>0.4095</priority>
-  </url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!--  Created By http://www.zhetao.com/sitemapcreator,  URLs: 6 Generated at: 2026-11-15 15:18:18  -->
+<url>
+<loc>https://kgdream.github.io/</loc>
+<priority>1.00</priority>
+</url>
+<url>
+<loc>https://kgdream.github.io/x.html</loc>
+<priority>1.00</priority>
+</url>
+<url>
+<loc>https://kgdream.github.io/lite.html</loc>
+<priority>1.00</priority>
+</url>
+<url>
+<loc>https://kgdream.github.io/e.html</loc>
+<priority>1.00</priority>
+</url>
+<url>
+<loc>https://kgdream.github.io/bc.html</loc>
+<priority>1.00</priority>
+</url>
+<url>
+<loc>https://kgdream.github.io/t.html</loc>
+<priority>1.00</priority>
+</url>
 </urlset>
