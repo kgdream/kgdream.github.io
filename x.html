@@ -23,24 +23,14 @@
 -ms-overflow-style:none; /* IE/Edge */
 }*::-webkit-scrollbar{display:none; /* Chrome/Safari */
 }#timeDisplay{opacity:0;animation:timeWeatherEntry 0.8s ease-out 0.2s forwards;}
-/* Weather entry animation - same as clock. Only runs when shown
-           (display switches from none -> flex), so it stays hidden when
-           disabled and animates in like the clock on enable/page load.
-           Uses opacity-only (no transform) so no stacking context is left
-           behind after the animation — this keeps mix-blend-mode working
-           against the real background for the inverse-color text. */
+/* 天气入场动画：与时钟一致，仅在显示时播放；只用 opacity 不残留层叠上下文，保证 mix-blend-mode 生效。 */
 #weatherDisplay{opacity:0;animation:timeWeatherEntry 0.8s ease-out 0.2s forwards;}@keyframes timeWeatherEntry{from{opacity:0;}to{opacity:1;}}
-/* Time & weather TEXT: black fill + white outline (黑色字体白色描边).
-           Independent of light/dark mode — always readable on any background.
-           paint-order keeps the crisp black fill on top of the white stroke. */
+/* 时间天气文字：黑色填充+白色描边，不随明暗主题变化；paint-order 保证黑字压在白描边之上。 */
 #clockText,#weatherTemp,#weatherDesc,#weatherCity,#weatherDate{color:#000000;paint-order:stroke fill;}
 #clockText{-webkit-text-stroke:var(--stroke-time,1.2px #ffffff);}
 #weatherTemp,#weatherDesc,#weatherCity{-webkit-text-stroke:var(--stroke-weather,1.2px #ffffff);}
 #weatherDate{-webkit-text-stroke:var(--stroke-date,1.2px #ffffff);}
-/* Responsive date display next to weather.
-           Default (narrow): only weather is shown, date hidden.
-           Medium: weather + weekday (星期).
-           Wide: weather + full date (2026年8月20日 星期四). */
+/* 日期响应式显示：窄屏隐藏、中屏显示星期、宽屏显示完整日期。 */
 #weatherDate{display:none !important;}#weatherDate .date-full{display:none;}#weatherDate .date-weekday{display:inline;}@media (min-width:560px){
 /* Medium screens show weekday only */
 #weatherDate{display:inline !important;}#weatherDate .date-full{display:none;}#weatherDate .date-weekday{display:inline;}}@media (min-width:768px){
@@ -48,23 +38,15 @@
 #weatherDate{display:inline !important;}#weatherDate .date-full{display:inline;}#weatherDate .date-weekday{display:none;}}
 /* When the user explicitly turns the date off via settings, force hide */
 body[data-show-date="false"] #weatherDate{display:none !important;}
-/* Debug mode lifts the text-selection restriction everywhere.
-           The inline user-select:none on various elements is overridden
-           here so text can be selected while debugging. When debug mode
-           is off, the attribute is "false" and this rule does not apply,
-           so the original restrictions remain. */
+/* 调试模式：开启时解除文字选择限制，关闭时保持原样。 */
 body[data-debug="true"] *{user-select:text !important;-webkit-user-select:text !important;-moz-user-select:text !important;-ms-user-select:text !important;}body{background-color:#f0f0f0;min-height:100vh;width:100%;border:none;border-radius:0;display:flex;justify-content:center;align-items:center;font-family:'YouYuan',Arial,sans-serif;padding:20px;flex-direction:column;}.search-container{display:inline-block;position:relative;z-index:100;opacity:0;transition:opacity 0.9s ease-out;}@keyframes searchBoxEntry{from{opacity:0;}to{opacity:1;}}@keyframes rotateContainer360{from{transform:rotate(0deg);}to{transform:rotate(-360deg);}}@keyframes searchBoxExit{from{opacity:1;transform:scale(1);}to{opacity:0;transform:scale(0.5);}}.search-box{padding:12px 55px 12px 55px;font-size:14px;font-family:'YouYuan',Arial,sans-serif;border:none;border-radius:var(--global-radius);outline:none;width:var(--search-box-width,500px);max-width:100%;height:var(--search-box-height,auto);background:#F0F0F0;box-shadow:20px 20px 62px #cccccc,-20px -20px 62px #ffffff;transition:color 0.4s ease,box-shadow 0.3s ease,padding-left 0.2s ease;color:#000000;caret-color:#000000;}.settings-radio-grid{display:flex;flex-direction:column;gap:8px;}.settings-radio-grid > label{margin-bottom:0 !important;margin-top:0 !important;}@media (min-width:768px){.settings-radio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}}
 /* Dock Bar Styles */
 .dock-item{display:flex;flex-direction:column;align-items:center;justify-content:center;width:56px;min-height:56px;border:none;background:transparent;border-radius:var(--global-radius);cursor:pointer;transition:transform 0.2s ease,background 0.2s ease;flex-shrink:0;padding:2px 0;}.dock-name{font-family:'YouYuan',Arial,sans-serif;font-size:10px;color:#666;margin-top:3px;max-width:56px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;line-height:1.2;}body[data-theme="dark"] .dock-name{color:#aaa;}.dock-item:hover{transform:scale(1.1);background:rgba(0,0,0,0.05);}.dock-icon{width:44px;height:44px;border-radius:var(--global-radius);display:flex;align-items:center;justify-content:center;background:transparent;box-shadow:none;}.dock-initial{color:white;font-size:18px;font-weight:bold;font-family:'YouYuan',Arial,sans-serif;display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:var(--global-radius);}
 /* Dark mode dock styles */
 body[data-theme="dark"] .dock-item:hover{background:rgba(255,255,255,0.1);}body[data-theme="dark"] .dock-icon{background:transparent;box-shadow:none;}.search-box.has-text{
-/* Keep padding/size identical to default state. Do NOT animate opacity
-               on the whole input — the large box-shadow would fade out and back in,
-               making the box look like it changes size. */
+/* 保持内边距与尺寸不变，不对整个输入框做透明度动画，避免阴影导致视觉上忽大忽小。 */
 padding:12px 55px 12px 55px !important;color:#000000;}
-/* Explicit focus style: prevent any browser-default focus ring/outline
-           from altering the box appearance. When focused without text, widen
-           left padding to make room for the "使用xx搜索" hint. */
+/* 显式聚焦样式：去掉浏览器默认焦点框；空内容聚焦时加宽左内边距容纳「使用xx搜索」提示。 */
 .search-box:focus{outline:none;padding:12px 55px 12px 55px;}#engineHintInSearchBox{transition:opacity 0.2s ease;}#engineHintInSearchBox.hidden{opacity:0 !important;}@keyframes textFadeIn{from{opacity:0;}to{opacity:1;}}
 /* Override for search buttons to preserve their positioning */
 .search-button.rotate{animation:searchButtonRotate360 0.6s ease;}@keyframes searchButtonRotate360{from{transform:translateY(-50%) rotate(0deg);}to{transform:translateY(-50%) rotate(-360deg);}}
@@ -129,16 +111,9 @@ body[data-button-style="outline"] #favoritesModal,body[data-button-style="outlin
 body[data-button-style="outline"] .search-container{isolation:auto;}body[data-button-style="outline"] .bottom-buttons-container{isolation:isolate;}body[data-button-style="outline"] .poem-container{isolation:isolate;}
 /* Outline mode dark theme */
 body[data-theme="dark"][data-button-style="outline"] button,body[data-theme="dark"][data-button-style="outline"] input,body[data-theme="dark"][data-button-style="outline"] select,body[data-theme="dark"][data-button-style="outline"] .tab-btn,body[data-theme="dark"][data-button-style="outline"] .modal-content,body[data-theme="dark"][data-button-style="outline"] .settings-section h3,body[data-theme="dark"][data-button-style="outline"] .favorite-item,body[data-theme="dark"][data-button-style="outline"] .hot-news-container,body[data-theme="dark"][data-button-style="outline"] .search-hint,body[data-theme="dark"][data-button-style="outline"] .suggestions,body[data-theme="dark"][data-button-style="outline"] .search-history,body[data-theme="dark"][data-button-style="outline"] .engine-item,body[data-theme="dark"][data-button-style="outline"] #favSearchInput,body[data-theme="dark"][data-button-style="outline"] #addFavBtn,body[data-theme="dark"][data-button-style="outline"] .bottom-btn,body[data-theme="dark"][data-button-style="outline"] #dropdownMenu,body[data-theme="dark"][data-button-style="outline"] .modal-close-btn,body[data-theme="dark"][data-button-style="outline"] .text-result-modal,body[data-theme="dark"][data-button-style="outline"] .fav-add-btn,body[data-theme="dark"][data-button-style="outline"] .history-item,body[data-theme="dark"][data-button-style="outline"] .news-item{border-color:rgba(224,224,224,0.6) !important;}body[data-theme="dark"][data-button-style="outline"] div[data-kg-nm],body[data-theme="dark"][data-button-style="outline"] button[data-kg-nm],body[data-theme="dark"][data-button-style="outline"] input[data-kg-nm]{border-color:rgba(224,224,224,0.6) !important;}
-/* Outline mode: modal/dialog/dropdown containers must keep an opaque
-           background so the page underneath does not show through (prevents
-           "see-through" on dialogs). The generic transparent rule above is
-           overridden here for any element that needs to occlude. */
+/* 线框模式：弹窗与下拉容器保持不透明背景，覆盖通用透明规则，避免透视。 */
 body[data-button-style="outline"] #wallpaperSourceModal,body[data-button-style="outline"] #favoritesModal,body[data-button-style="outline"] #scannerModal,body[data-button-style="outline"] #dropdownMenu,body[data-button-style="outline"] .suggestions,body[data-button-style="outline"] .search-history,body[data-button-style="outline"] #settingsPanel,body[data-button-style="outline"] #settingsModal,body[data-button-style="outline"] .modal-content,body[data-button-style="outline"] #changelogModal > div,body[data-button-style="outline"] #addWallpaperSourceModal > div,body[data-button-style="outline"] #customEngineModal > div,body[data-button-style="outline"] #folderModal > div,body[data-button-style="outline"] #scanTextModal > div,body[data-button-style="outline"] #customConfirm > div,body[data-button-style="outline"] #customPrompt > div,body[data-button-style="outline"] .text-result-modal > div,body[data-button-style="outline"] .settings-section{background:#F0F0F0 !important;background-color:#F0F0F0 !important;}body[data-theme="dark"][data-button-style="outline"] #wallpaperSourceModal,body[data-theme="dark"][data-button-style="outline"] #favoritesModal,body[data-theme="dark"][data-button-style="outline"] #scannerModal,body[data-theme="dark"][data-button-style="outline"] #dropdownMenu,body[data-theme="dark"][data-button-style="outline"] .suggestions,body[data-theme="dark"][data-button-style="outline"] .search-history,body[data-theme="dark"][data-button-style="outline"] #settingsPanel,body[data-theme="dark"][data-button-style="outline"] #settingsModal,body[data-theme="dark"][data-button-style="outline"] .modal-content,body[data-theme="dark"][data-button-style="outline"] #changelogModal > div,body[data-theme="dark"][data-button-style="outline"] #addWallpaperSourceModal > div,body[data-theme="dark"][data-button-style="outline"] #customEngineModal > div,body[data-theme="dark"][data-button-style="outline"] #folderModal > div,body[data-theme="dark"][data-button-style="outline"] #scanTextModal > div,body[data-theme="dark"][data-button-style="outline"] #customConfirm > div,body[data-theme="dark"][data-button-style="outline"] #customPrompt > div,body[data-theme="dark"][data-button-style="outline"] .text-result-modal > div,body[data-theme="dark"][data-button-style="outline"] .settings-section{background:#2a2a2a !important;background-color:#2a2a2a !important;}
-/* Rounded + Glass modes: modal/dialog/dropdown containers must keep an
-           opaque background so the page underneath does not show through.
-           The generic semi-transparent rules above (div[data-kg-nm]
-           getting rgba backgrounds) would otherwise make center dialogs
-           see-through. These IDs win by specificity (ID > attribute). */
+/* 圆角/玻璃模式：弹窗与下拉容器保持不透明背景，靠 ID 特异度覆盖通用半透明规则，避免透视。 */
 body[data-button-style="rounded"] #wallpaperSourceModal,body[data-button-style="rounded"] #favoritesModal,body[data-button-style="rounded"] #scannerModal,body[data-button-style="rounded"] #dropdownMenu,body[data-button-style="rounded"] .suggestions,body[data-button-style="rounded"] .search-history,body[data-button-style="rounded"] #settingsPanel,body[data-button-style="rounded"] .modal-content,body[data-button-style="rounded"] #changelogModal > div,body[data-button-style="rounded"] #addWallpaperSourceModal > div,body[data-button-style="rounded"] #customEngineModal > div,body[data-button-style="rounded"] #folderModal > div,body[data-button-style="rounded"] #scanTextModal > div,body[data-button-style="rounded"] #customConfirm > div,body[data-button-style="rounded"] #customPrompt > div,body[data-button-style="rounded"] .text-result-modal > div,body[data-button-style="rounded"] .settings-section,body[data-button-style="glass"] #wallpaperSourceModal,body[data-button-style="glass"] #favoritesModal,body[data-button-style="glass"] #scannerModal,body[data-button-style="glass"] #dropdownMenu,body[data-button-style="glass"] .suggestions,body[data-button-style="glass"] .search-history,body[data-button-style="glass"] #settingsPanel,body[data-button-style="glass"] .modal-content,body[data-button-style="glass"] #changelogModal > div,body[data-button-style="glass"] #addWallpaperSourceModal > div,body[data-button-style="glass"] #customEngineModal > div,body[data-button-style="glass"] #folderModal > div,body[data-button-style="glass"] #scanTextModal > div,body[data-button-style="glass"] #customConfirm > div,body[data-button-style="glass"] #customPrompt > div,body[data-button-style="glass"] .text-result-modal > div,body[data-button-style="glass"] .settings-section{background:#F0F0F0 !important;background-color:#F0F0F0 !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;}body[data-theme="dark"][data-button-style="rounded"] #wallpaperSourceModal,body[data-theme="dark"][data-button-style="rounded"] #favoritesModal,body[data-theme="dark"][data-button-style="rounded"] #scannerModal,body[data-theme="dark"][data-button-style="rounded"] #dropdownMenu,body[data-theme="dark"][data-button-style="rounded"] .suggestions,body[data-theme="dark"][data-button-style="rounded"] .search-history,body[data-theme="dark"][data-button-style="rounded"] #settingsPanel,body[data-theme="dark"][data-button-style="rounded"] .modal-content,body[data-theme="dark"][data-button-style="rounded"] #changelogModal > div,body[data-theme="dark"][data-button-style="rounded"] #addWallpaperSourceModal > div,body[data-theme="dark"][data-button-style="rounded"] #customEngineModal > div,body[data-theme="dark"][data-button-style="rounded"] #folderModal > div,body[data-theme="dark"][data-button-style="rounded"] #scanTextModal > div,body[data-theme="dark"][data-button-style="rounded"] #customConfirm > div,body[data-theme="dark"][data-button-style="rounded"] #customPrompt > div,body[data-theme="dark"][data-button-style="rounded"] .text-result-modal > div,body[data-theme="dark"][data-button-style="rounded"] .settings-section,body[data-theme="dark"][data-button-style="glass"] #wallpaperSourceModal,body[data-theme="dark"][data-button-style="glass"] #favoritesModal,body[data-theme="dark"][data-button-style="glass"] #scannerModal,body[data-theme="dark"][data-button-style="glass"] #dropdownMenu,body[data-theme="dark"][data-button-style="glass"] .suggestions,body[data-theme="dark"][data-button-style="glass"] .search-history,body[data-theme="dark"][data-button-style="glass"] #settingsPanel,body[data-theme="dark"][data-button-style="glass"] .modal-content,body[data-theme="dark"][data-button-style="glass"] #changelogModal > div,body[data-theme="dark"][data-button-style="glass"] #addWallpaperSourceModal > div,body[data-theme="dark"][data-button-style="glass"] #customEngineModal > div,body[data-theme="dark"][data-button-style="glass"] #folderModal > div,body[data-theme="dark"][data-button-style="glass"] #scanTextModal > div,body[data-theme="dark"][data-button-style="glass"] #customConfirm > div,body[data-theme="dark"][data-button-style="glass"] #customPrompt > div,body[data-theme="dark"][data-button-style="glass"] .text-result-modal > div,body[data-theme="dark"][data-button-style="glass"] .settings-section{background:#2a2a2a !important;background-color:#2a2a2a !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;}
 /* Rounded mode - no neumorphism, just rounded corners with darker background */
 body[data-button-style="rounded"] button,body[data-button-style="rounded"] input,body[data-button-style="rounded"] select,body[data-button-style="rounded"] .tab-btn,body[data-button-style="rounded"] .modal-content,body[data-button-style="rounded"] .settings-section h3,body[data-button-style="rounded"] .favorite-item,body[data-button-style="rounded"] .hot-news-container,body[data-button-style="rounded"] .search-hint,body[data-button-style="rounded"] .suggestions,body[data-button-style="rounded"] .search-history,body[data-button-style="rounded"] .engine-item,body[data-button-style="rounded"] #favSearchInput,body[data-button-style="rounded"] #addFavBtn,body[data-button-style="rounded"] .bottom-btn,body[data-button-style="rounded"] #dropdownMenu,body[data-button-style="rounded"] .modal-close-btn,body[data-button-style="rounded"] .text-result-modal,body[data-button-style="rounded"] .fav-add-btn{box-shadow:none !important;border:none !important;border-radius:var(--global-radius) !important;background:rgba(200,200,200,0.4) !important;}body[data-button-style="rounded"] div[data-kg-nm],body[data-button-style="rounded"] button[data-kg-nm],body[data-button-style="rounded"] input[data-kg-nm]{box-shadow:none !important;border:none !important;border-radius:var(--global-radius) !important;background:rgba(200,200,200,0.3) !important;}body[data-button-style="rounded"] #favBtn,body[data-button-style="rounded"] #dropdownMenuBtn,body[data-button-style="rounded"] #searchBtn{background:transparent !important;box-shadow:none !important;border:none !important;}body[data-button-style="rounded"] button:hover,body[data-button-style="rounded"] .tab-btn:hover{opacity:0.8 !important;}body[data-button-style="rounded"] .tab-btn.active{opacity:1 !important;}
@@ -148,12 +123,7 @@ body[data-theme="dark"][data-button-style="rounded"] button,body[data-theme="dar
 body[data-button-style="glass"] button,body[data-button-style="glass"] input,body[data-button-style="glass"] select,body[data-button-style="glass"] .tab-btn,body[data-button-style="glass"] .modal-content,body[data-button-style="glass"] .settings-section h3,body[data-button-style="glass"] .favorite-item,body[data-button-style="glass"] .hot-news-container,body[data-button-style="glass"] .search-hint,body[data-button-style="glass"] .suggestions,body[data-button-style="glass"] .search-history,body[data-button-style="glass"] .engine-item,body[data-button-style="glass"] #favSearchInput,body[data-button-style="glass"] #addFavBtn,body[data-button-style="glass"] .bottom-btn,body[data-button-style="glass"] #dropdownMenu,body[data-button-style="glass"] .modal-close-btn,body[data-button-style="glass"] .text-result-modal,body[data-button-style="glass"] .fav-add-btn{box-shadow:0 0 0 1px rgba(255,255,255,0.5) inset,0 8px 32px rgba(0,0,0,0.15),0 2px 8px rgba(0,0,0,0.1) !important;border:none !important;border-radius:var(--global-radius) !important;background:linear-gradient( 135deg,rgba(255,255,255,0.65) 0%,rgba(255,255,255,0.45) 50%,rgba(255,255,255,0.55) 100% ) !important;backdrop-filter:blur(3px) saturate(120%) brightness(1.02) !important;-webkit-backdrop-filter:blur(3px) saturate(120%) brightness(1.02) !important;color:inherit !important;text-shadow:0 1px 2px rgba(255,255,255,0.5) !important;}body[data-button-style="glass"] div[data-kg-nm],body[data-button-style="glass"] button[data-kg-nm],body[data-button-style="glass"] input[data-kg-nm]{box-shadow:0 0 0 1px rgba(255,255,255,0.5) inset,0 8px 32px rgba(0,0,0,0.15),0 2px 8px rgba(0,0,0,0.1) !important;border:none !important;border-radius:var(--global-radius) !important;background:linear-gradient( 135deg,rgba(255,255,255,0.65) 0%,rgba(255,255,255,0.45) 50%,rgba(255,255,255,0.55) 100% ) !important;backdrop-filter:blur(4px) saturate(120%) brightness(1.02) !important;-webkit-backdrop-filter:blur(4px) saturate(120%) brightness(1.02) !important;color:inherit !important;text-shadow:0 1px 2px rgba(255,255,255,0.5) !important;}body[data-button-style="glass"] button:hover,body[data-button-style="glass"] .tab-btn:hover{background:linear-gradient( 135deg,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.3) 50%,rgba(255,255,255,0.4) 100% ) !important;}body[data-button-style="glass"] .tab-btn.active{background:linear-gradient( 135deg,rgba(255,255,255,0.6) 0%,rgba(255,255,255,0.4) 50%,rgba(255,255,255,0.5) 100% ) !important;}body[data-button-style="glass"] #favBtn,body[data-button-style="glass"] #dropdownMenuBtn,body[data-button-style="glass"] #searchBtn{background:transparent !important;box-shadow:none !important;border:none !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;}
 /* Glass mode in dark theme */
 body[data-theme="dark"][data-button-style="glass"] button,body[data-theme="dark"][data-button-style="glass"] input,body[data-theme="dark"][data-button-style="glass"] select,body[data-theme="dark"][data-button-style="glass"] .tab-btn,body[data-theme="dark"][data-button-style="glass"] .modal-content,body[data-theme="dark"][data-button-style="glass"] .settings-section h3,body[data-theme="dark"][data-button-style="glass"] .favorite-item,body[data-theme="dark"][data-button-style="glass"] .hot-news-container,body[data-theme="dark"][data-button-style="glass"] .search-hint,body[data-theme="dark"][data-button-style="glass"] .suggestions,body[data-theme="dark"][data-button-style="glass"] .search-history,body[data-theme="dark"][data-button-style="glass"] .engine-item,body[data-theme="dark"][data-button-style="glass"] #favSearchInput,body[data-theme="dark"][data-button-style="glass"] #addFavBtn,body[data-theme="dark"][data-button-style="glass"] .bottom-btn,body[data-theme="dark"][data-button-style="glass"] #dropdownMenu,body[data-theme="dark"][data-button-style="glass"] .modal-close-btn,body[data-theme="dark"][data-button-style="glass"] .text-result-modal,body[data-theme="dark"][data-button-style="glass"] .fav-add-btn{background:linear-gradient( 135deg,rgba(255,255,255,0.25) 0%,rgba(255,255,255,0.15) 50%,rgba(255,255,255,0.2) 100% ) !important;box-shadow:0 0 0 1px rgba(255,255,255,0.2) inset,0 8px 32px rgba(0,0,0,0.4),0 2px 8px rgba(0,0,0,0.3) !important;}body[data-theme="dark"][data-button-style="glass"] div[data-kg-nm],body[data-theme="dark"][data-button-style="glass"] button[data-kg-nm],body[data-theme="dark"][data-button-style="glass"] input[data-kg-nm]{background:linear-gradient( 135deg,rgba(255,255,255,0.25) 0%,rgba(255,255,255,0.15) 50%,rgba(255,255,255,0.2) 100% ) !important;box-shadow:0 0 0 1px rgba(255,255,255,0.2) inset,0 8px 32px rgba(0,0,0,0.4),0 2px 8px rgba(0,0,0,0.3) !important;}body[data-theme="dark"][data-button-style="glass"] button:hover,body[data-theme="dark"][data-button-style="glass"] .tab-btn:hover{background:linear-gradient( 135deg,rgba(255,255,255,0.2) 0%,rgba(255,255,255,0.12) 50%,rgba(255,255,255,0.16) 100% ) !important;}body[data-theme="dark"][data-button-style="glass"] .tab-btn.active{background:linear-gradient( 135deg,rgba(255,255,255,0.25) 0%,rgba(255,255,255,0.15) 50%,rgba(255,255,255,0.2) 100% ) !important;}
-/* Mobile fix for glass mode: backdrop-filter is notoriously buggy on
-           mobile (causes a "mysterious rectangle" flickering/covering content
-           as the backdrop is re-sampled every frame, especially with a video/
-           iframe wallpaper behind it). On small screens, disable backdrop-filter
-           entirely and bump the background alpha so elements stay readable
-           while still looking glass-like. */
+/* 移动端玻璃模式修复：小屏关闭 backdrop-filter 并提高背景不透明度，避免闪烁方块。 */
 @media (max-width:768px){body[data-button-style="glass"] button,body[data-button-style="glass"] input,body[data-button-style="glass"] select,body[data-button-style="glass"] .tab-btn,body[data-button-style="glass"] .modal-content,body[data-button-style="glass"] .settings-section h3,body[data-button-style="glass"] .favorite-item,body[data-button-style="glass"] .hot-news-container,body[data-button-style="glass"] .search-hint,body[data-button-style="glass"] .suggestions,body[data-button-style="glass"] .search-history,body[data-button-style="glass"] .engine-item,body[data-button-style="glass"] #favSearchInput,body[data-button-style="glass"] #addFavBtn,body[data-button-style="glass"] .bottom-btn,body[data-button-style="glass"] #dropdownMenu,body[data-button-style="glass"] .modal-close-btn,body[data-button-style="glass"] .text-result-modal,body[data-button-style="glass"] .fav-add-btn,body[data-button-style="glass"] #dockScrollArea,body[data-button-style="glass"] div[data-kg-nm],body[data-button-style="glass"] button[data-kg-nm],body[data-button-style="glass"] input[data-kg-nm]{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:linear-gradient( 135deg,rgba(255,255,255,0.92) 0%,rgba(255,255,255,0.85) 50%,rgba(255,255,255,0.9) 100% ) !important;}body[data-theme="dark"][data-button-style="glass"] button,body[data-theme="dark"][data-button-style="glass"] input,body[data-theme="dark"][data-button-style="glass"] select,body[data-theme="dark"][data-button-style="glass"] .tab-btn,body[data-theme="dark"][data-button-style="glass"] .modal-content,body[data-theme="dark"][data-button-style="glass"] .settings-section h3,body[data-theme="dark"][data-button-style="glass"] .favorite-item,body[data-theme="dark"][data-button-style="glass"] .hot-news-container,body[data-theme="dark"][data-button-style="glass"] .search-hint,body[data-theme="dark"][data-button-style="glass"] .suggestions,body[data-theme="dark"][data-button-style="glass"] .search-history,body[data-theme="dark"][data-button-style="glass"] .engine-item,body[data-theme="dark"][data-button-style="glass"] #favSearchInput,body[data-theme="dark"][data-button-style="glass"] #addFavBtn,body[data-theme="dark"][data-button-style="glass"] .bottom-btn,body[data-theme="dark"][data-button-style="glass"] #dropdownMenu,body[data-theme="dark"][data-button-style="glass"] .modal-close-btn,body[data-theme="dark"][data-button-style="glass"] .text-result-modal,body[data-theme="dark"][data-button-style="glass"] .fav-add-btn,body[data-theme="dark"][data-button-style="glass"] #dockScrollArea,body[data-theme="dark"][data-button-style="glass"] div[data-kg-nm],body[data-theme="dark"][data-button-style="glass"] button[data-kg-nm],body[data-theme="dark"][data-button-style="glass"] input[data-kg-nm]{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:linear-gradient( 135deg,rgba(60,60,60,0.92) 0%,rgba(45,45,45,0.85) 50%,rgba(55,55,55,0.9) 100% ) !important;}}
 /* Transparent mode - white transparent */
 body[data-button-style="transparent"] button,body[data-button-style="transparent"] input,body[data-button-style="transparent"] select,body[data-button-style="transparent"] .tab-btn,body[data-button-style="transparent"] .modal-content,body[data-button-style="transparent"] .settings-section h3,body[data-button-style="transparent"] .favorite-item,body[data-button-style="transparent"] .hot-news-container,body[data-button-style="transparent"] .search-hint,body[data-button-style="transparent"] .suggestions,body[data-button-style="transparent"] .search-history,body[data-button-style="transparent"] .engine-item,body[data-button-style="transparent"] #favSearchInput,body[data-button-style="transparent"] #addFavBtn,body[data-button-style="transparent"] .bottom-btn,body[data-button-style="transparent"] #dropdownMenu,body[data-button-style="transparent"] .modal-close-btn,body[data-button-style="transparent"] .text-result-modal,body[data-button-style="transparent"] .fav-add-btn,body[data-button-style="transparent"] [class*="btn"],body[data-button-style="transparent"] [id*="Btn"],body[data-button-style="transparent"] div[data-kg-nm],body[data-button-style="transparent"] button[data-kg-nm],body[data-button-style="transparent"] input[data-kg-nm]{box-shadow:none !important;border:none !important;border-radius:var(--global-radius) !important;background:rgba(255,255,255,0.85) !important;}body[data-button-style="transparent"] button:hover,body[data-button-style="transparent"] .tab-btn:hover{background:rgba(255,255,255,0.75) !important;}body[data-button-style="transparent"] .tab-btn.active{background:rgba(255,255,255,0.85) !important;}body[data-button-style="transparent"] #favBtn,body[data-button-style="transparent"] #dropdownMenuBtn,body[data-button-style="transparent"] #searchBtn{background:transparent !important;box-shadow:none !important;border:none !important;}
@@ -163,9 +133,7 @@ body[data-theme="dark"][data-button-style="transparent"] button,body[data-theme=
 :root{--border-radius:var(--global-radius);}
 /* Wallpaper background mode - simplified, no overlay used */
 #wallpaperOverlay{display:none;}body[data-bg-mode="wallpaper"]{padding:0 !important;}body[data-bg-mode="wallpaper"] #mainContent{margin-top:-25vh;}body[data-bg-mode="wallpaper"] #timeDisplay{color:#ffffff !important;text-shadow:0 1px 3px rgba(0,0,0,0.5);}body:not([data-bg-mode="wallpaper"]) #mainContent{
-/* Nudge the whole stack up so the search box (below the clock /
-               weather) sits at the viewport's vertical center instead of
-               appearing slightly low. */
+/* 整体上移，使搜索框位于视口垂直居中。 */
 margin-top:-30px;}body[data-bg-mode="wallpaper"] .poem-content,body[data-bg-mode="wallpaper"] .poem-title,body[data-bg-mode="wallpaper"] .poem-author{
 /* Keep original colors in wallpaper mode */
 }body[data-bg-mode="wallpaper"] #favBtn{
@@ -232,7 +200,7 @@ button[onclick="addToCurrentFolder()"]{transition:transform 0.25s ease,box-shado
 /* ========== iOS / 澎湃OS Style App Launch Animation ========== */
 #appLaunchOverlay{position:fixed;z-index:99999;border-radius:var(--global-radius);pointer-events:none;opacity:0;overflow:hidden;display:flex;align-items:center;justify-content:center;}#appLaunchOverlay .launch-bg{position:absolute;inset:0;background:#ffffff;opacity:0;transition:opacity 0.35s ease;}body[data-theme="dark"] #appLaunchOverlay .launch-bg{background:#000000;}
 /* Wallpaper mode: use semi-transparent overlay instead of solid color */
-body[data-bg-mode="wallpaper"] #appLaunchOverlay .launch-bg{background:rgba(255,255,255,0.85);}body[data-theme="dark"][data-bg-mode="wallpaper"] #appLaunchOverlay .launch-bg{background:rgba(0,0,0,0.7);}
+body[data-bg-mode="wallpaper"] #appLaunchOverlay .launch-bg{background:#ffffff;}body[data-theme="dark"][data-bg-mode="wallpaper"] #appLaunchOverlay .launch-bg{background:#000000;}
 /* Ensure launch animation is always opaque in glass/transparent modes */
 body[data-button-style="glass"] #appLaunchOverlay .launch-bg,body[data-button-style="transparent"] #appLaunchOverlay .launch-bg,body[data-button-style="outline"] #appLaunchOverlay .launch-bg,body[data-button-style="rounded"] #appLaunchOverlay .launch-bg{background:#ffffff !important;opacity:1 !important;}body[data-theme="dark"][data-button-style="glass"] #appLaunchOverlay .launch-bg,body[data-theme="dark"][data-button-style="transparent"] #appLaunchOverlay .launch-bg,body[data-theme="dark"][data-button-style="outline"] #appLaunchOverlay .launch-bg,body[data-theme="dark"][data-button-style="rounded"] #appLaunchOverlay .launch-bg{background:#000000 !important;opacity:1 !important;}#appLaunchOverlay .launch-icon-wrap{position:relative;z-index:2;transform:scale(1);transition:transform 0.5s cubic-bezier(0.32,0.72,0,1),opacity 0.3s ease;}#appLaunchOverlay.active{opacity:1;pointer-events:auto;}#appLaunchOverlay.active .launch-bg{opacity:1;}#appLaunchOverlay.active .launch-icon-wrap{transform:scale(0.6);opacity:0;}
 /* ========== 禁止所有动画 ========== */
@@ -263,14 +231,14 @@ button > svg,button > img,button > i,.engine-item > svg,.engine-item > img{flex-
 body[data-button-style="blur"] button,body[data-button-style="blur"] .settings-btn,body[data-button-style="blur"] .tab-btn,body[data-button-style="blur"] .bottom-btn,body[data-button-style="blur"] .dock-item,body[data-button-style="blur"] .engine-item,body[data-button-style="blur"] .modal-close-btn,body[data-button-style="blur"] .fav-add-btn,body[data-button-style="blur"] .fav-dock-btn,body[data-button-style="blur"] .search-button,body[data-button-style="blur"] .fav-item,body[data-button-style="blur"] .folder-item,body[data-button-style="blur"] .settings-section h3,body[data-button-style="blur"] .modal-content,body[data-button-style="blur"] #dropdownMenu,body[data-button-style="blur"] .suggestions,body[data-button-style="blur"] .search-history{background:rgba(255,255,255,.28)!important;backdrop-filter:blur(18px) saturate(140%)!important;-webkit-backdrop-filter:blur(18px) saturate(140%)!important;border:1px solid rgba(255,255,255,.45)!important;box-shadow:0 4px 20px rgba(0,0,0,.08)!important;color:#222!important;}
 body[data-button-style="blur"] #favoritesModal,body[data-button-style="blur"] #wallpaperSourceModal,body[data-button-style="blur"] #scannerModal{background:rgba(255,255,255,.35)!important;backdrop-filter:blur(20px)!important;-webkit-backdrop-filter:blur(20px)!important;}
 body[data-theme="dark"][data-button-style="blur"] button,body[data-theme="dark"][data-button-style="blur"] .settings-btn,body[data-theme="dark"][data-button-style="blur"] .tab-btn,body[data-theme="dark"][data-button-style="blur"] .bottom-btn,body[data-theme="dark"][data-button-style="blur"] .dock-item,body[data-theme="dark"][data-button-style="blur"] .engine-item,body[data-theme="dark"][data-button-style="blur"] .modal-close-btn,body[data-theme="dark"][data-button-style="blur"] .fav-add-btn,body[data-theme="dark"][data-button-style="blur"] .fav-dock-btn,body[data-theme="dark"][data-button-style="blur"] .search-button,body[data-theme="dark"][data-button-style="blur"] .fav-item,body[data-theme="dark"][data-button-style="blur"] .folder-item,body[data-theme="dark"][data-button-style="blur"] .settings-section h3,body[data-theme="dark"][data-button-style="blur"] .modal-content,body[data-theme="dark"][data-button-style="blur"] #dropdownMenu,body[data-theme="dark"][data-button-style="blur"] .suggestions,body[data-theme="dark"][data-button-style="blur"] .search-history{background:rgba(30,30,30,.38)!important;border-color:rgba(255,255,255,.18)!important;color:#e0e0e0!important;}
-body[data-button-style="blur"] #appLaunchOverlay .launch-bg{background:rgba(255,255,255,.75)!important;opacity:1!important;}
+body[data-button-style="blur"] #appLaunchOverlay .launch-bg{background:#ffffff!important;opacity:1!important;}body[data-theme="dark"][data-button-style="blur"] #appLaunchOverlay .launch-bg{background:#000000!important;}
 /* 新主题：下划线，悬停时蓝线由中间向两边扩散 */
 body[data-button-style="underline"] button,body[data-button-style="underline"] .settings-btn,body[data-button-style="underline"] .tab-btn,body[data-button-style="underline"] .bottom-btn,body[data-button-style="underline"] .dock-item,body[data-button-style="underline"] .engine-item,body[data-button-style="underline"] .modal-close-btn,body[data-button-style="underline"] .fav-add-btn,body[data-button-style="underline"] .fav-dock-btn,body[data-button-style="underline"] .search-button,body[data-button-style="underline"] .fav-item,body[data-button-style="underline"] .folder-item,body[data-button-style="underline"] .settings-section h3,body[data-button-style="underline"] .modal-content,body[data-button-style="underline"] #dropdownMenu,body[data-button-style="underline"] .suggestions,body[data-button-style="underline"] .search-history{background:transparent!important;border:none!important;box-shadow:none!important;border-radius:0!important;}
 body[data-button-style="underline"] button:not(.search-button):not(#clearInputBtn):not(.modal-close-btn),body[data-button-style="underline"] .tab-btn,body[data-button-style="underline"] .bottom-btn,body[data-button-style="underline"] .dock-item,body[data-button-style="underline"] .engine-item,body[data-button-style="underline"] .fav-item{position:relative!important;overflow:visible!important;}
 body[data-button-style="underline"] .tab-btn.active::after{transform:scaleX(1);}
 body[data-button-style="underline"] button::after,body[data-button-style="underline"] .tab-btn::after,body[data-button-style="underline"] .bottom-btn::after,body[data-button-style="underline"] .dock-item::after,body[data-button-style="underline"] .engine-item::after,body[data-button-style="underline"] .fav-item::after{content:'';position:absolute;left:8%;right:8%;bottom:0;height:2px;background:#2196F3;transform:scaleX(0);transform-origin:center;transition:transform .28s ease;pointer-events:none;}
 body[data-button-style="underline"] button:hover::after,body[data-button-style="underline"] .tab-btn:hover::after,body[data-button-style="underline"] .bottom-btn:hover::after,body[data-button-style="underline"] .dock-item:hover::after,body[data-button-style="underline"] .engine-item:hover::after,body[data-button-style="underline"] .fav-item:hover::after{transform:scaleX(1);}
-body[data-button-style="underline"] #appLaunchOverlay .launch-bg{background:rgba(255,255,255,.85)!important;opacity:1!important;}
+body[data-button-style="underline"] #appLaunchOverlay .launch-bg{background:#ffffff!important;opacity:1!important;}body[data-theme="dark"][data-button-style="underline"] #appLaunchOverlay .launch-bg{background:#000000!important;}
 /* 收藏界面 tab 选中态：保持主题浅色底，图标固定深色，避免变成吞掉图标的纯黑圆 */
 html body .tab-btn.active.tab-btn.active{color:#222222!important;}
 html body .tab-btn.active.tab-btn.active svg{stroke:#222222!important;}
@@ -322,6 +290,8 @@ body[data-elder-mode="true"]{--kg-surf:#ffffff;--kg-shadow:none;}
 /* 拟态下拉层表面：半透明拟态色，模糊开启时也能保留拟态质感 */
 body[data-button-style="neumorphism"]{--kg-drop-surface:rgba(240,240,240,.72);}
 body[data-theme="dark"][data-button-style="neumorphism"]{--kg-drop-surface:rgba(58,58,58,.72);}
+/* 模糊=0：拟物下拉层回到实色主题表面（--kg-surf 天然兼容浅/深色） */
+html:not([data-kg-blur="on"]) body[data-button-style="neumorphism"]{--kg-drop-surface:var(--kg-surf);}
 body[data-button-style="neumorphism"] #searchInput,body[data-button-style="neumorphism"] .search-box{--kg-shadow:var(--nm-glow-search);}
 html body[data-button-style] .fav-actions button,html body[data-button-style] .fav-dock-btn{border-radius:var(--radius-small)!important;}
 html body[data-button-style] .settings-btn,html body[data-button-style] .fav-add-btn,html body[data-button-style] .tab-btn,html body[data-button-style] .bottom-btn,html body[data-button-style] .engine-item,html body[data-button-style] #customConfirm button,html body[data-button-style] #customPrompt button,html body[data-button-style] #changelogExportBtn,html body[data-button-style] #changelogCloseBtn{border-radius:var(--radius-large)!important;}
@@ -483,12 +453,9 @@ html body[data-kg-scroll-blur="on"][data-kg-scrolling="1"] .folder-item,
 html body[data-kg-scroll-blur="on"][data-kg-scrolling="1"] .favorite-item,
 html body[data-kg-scroll-blur="on"][data-kg-scrolling="1"] .dock-item{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
 
-/* ===== 模糊性能：为保留模糊的容器预建合成层，背后内容不变时复用缓存结果 ===== */
-/* 只给叶子模糊元素预建合成层：容器一旦 will-change:backdrop-filter 就会成为 backdrop root，
-   子元素只能采样到容器内部（空的），毛玻璃就等于没开 */
-#searchInput,.suggestions,.search-history,#dockScrollArea,.poem-content{will-change:backdrop-filter;}
+/* ===== 模糊性能：模糊只保留在弹窗外壳的固定层，内部元素不再预建 backdrop-filter 合成层 ===== */
 
-/* ===== 权威模糊层：模糊只落在叶子元素上，容器不模糊（否则子元素采不到背后的壁纸） ===== */
+/* ===== 旧的按部件模糊规则（变量驱动 / 开关属性驱动）：已由文末“方案 A”统一关闭，算式不再生效 ===== */
 html[data-kg-blur="on"] body[data-button-style]:not([data-elder-mode="true"]):not([data-wallpaper-live="1"]) #searchInput#searchInput{backdrop-filter:var(--blur-search)!important;-webkit-backdrop-filter:var(--blur-search)!important;}
 html[data-kg-blur="on"] body[data-kg-scroll-blur="on"][data-kg-scrolling="1"][data-button-style]:not([data-elder-mode="true"]) #searchInput#searchInput{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
 html[data-kg-blur="on"] body[data-button-style]:not([data-elder-mode="true"]):not([data-wallpaper-live="1"]):not([data-dropdown-mode="expanded"]) #suggestions#suggestions,html[data-kg-blur="on"] body[data-button-style]:not([data-elder-mode="true"]):not([data-wallpaper-live="1"]):not([data-dropdown-mode="expanded"]) #searchHistory#searchHistory{backdrop-filter:var(--blur-dropdown,var(--blur-search))!important;-webkit-backdrop-filter:var(--blur-dropdown,var(--blur-search))!important;}
@@ -500,6 +467,8 @@ html[data-kg-blur="on"] body[data-kg-scroll-blur="on"][data-kg-scrolling="1"][da
 html[data-kg-blur="on"] body[data-button-style]:not([data-elder-mode="true"]):not([data-wallpaper-live="1"]) .poem-content.poem-content{backdrop-filter:var(--blur-poem)!important;-webkit-backdrop-filter:var(--blur-poem)!important;}
 html[data-kg-blur="on"] body[data-kg-scroll-blur="on"][data-kg-scrolling="1"][data-button-style]:not([data-elder-mode="true"]) .poem-content.poem-content{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
 html[data-kg-blur="on"] body[data-button-style]:not([data-elder-mode="true"]):not([data-wallpaper-live="1"]) #dockScrollArea#dockScrollArea{backdrop-filter:var(--blur-dock)!important;-webkit-backdrop-filter:var(--blur-dock)!important;}
+/* Dock 圆角修复：滚动容器上的毛玻璃会被裁成矩形，用 clip-path 强制按圆角裁切（拟物主题保留阴影不裁） */
+html[data-kg-blur="on"] body[data-button-style]:not([data-elder-mode="true"]):not([data-button-style="neumorphism"]) #dockScrollArea#dockScrollArea{clip-path:inset(0 round var(--radius-dock, var(--global-radius)));}
 html[data-kg-blur="on"] body[data-kg-scroll-blur="on"][data-kg-scrolling="1"][data-button-style]:not([data-elder-mode="true"]) #dockScrollArea#dockScrollArea{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
 html[data-kg-blur="on"] body[data-button-style]:not([data-elder-mode="true"]):not([data-wallpaper-live="1"]) #favoritesModal#favoritesModal,html[data-kg-blur="on"] body[data-button-style]:not([data-elder-mode="true"]):not([data-wallpaper-live="1"]) #favoritesList#favoritesList,html[data-kg-blur="on"] body[data-button-style]:not([data-elder-mode="true"]):not([data-wallpaper-live="1"]) #folderItemsList#folderItemsList{backdrop-filter:var(--blur-fav)!important;-webkit-backdrop-filter:var(--blur-fav)!important;}
 html[data-kg-blur="on"] body[data-kg-scroll-blur="on"][data-kg-scrolling="1"][data-button-style]:not([data-elder-mode="true"]) #favoritesModal#favoritesModal,html[data-kg-blur="on"] body[data-kg-scroll-blur="on"][data-kg-scrolling="1"][data-button-style]:not([data-elder-mode="true"]) #favoritesList#favoritesList,html[data-kg-blur="on"] body[data-kg-scroll-blur="on"][data-kg-scrolling="1"][data-button-style]:not([data-elder-mode="true"]) #folderItemsList#folderItemsList{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
@@ -508,6 +477,125 @@ html[data-kg-blur="on"] body[data-kg-scroll-blur="on"][data-kg-scrolling="1"][da
 /* 外壳容器：明确不模糊，压过旧的启用规则，避免形成 backdrop root */
 html[data-kg-blur="on"] body[data-button-style]:not([data-elder-mode="true"]):not([data-wallpaper-live="1"]) #searchContainer#searchContainer,html[data-kg-blur="on"] body[data-button-style]:not([data-elder-mode="true"]):not([data-wallpaper-live="1"]) #dropdownMenu#dropdownMenu,html[data-kg-blur="on"] body[data-button-style]:not([data-elder-mode="true"]):not([data-wallpaper-live="1"]) .poem-container.poem-container,html[data-kg-blur="on"] body[data-button-style]:not([data-elder-mode="true"]):not([data-wallpaper-live="1"]) #dockContainer#dockContainer,html[data-kg-blur="on"] body[data-button-style]:not([data-elder-mode="true"]):not([data-wallpaper-live="1"]) #dockContainer .dock-item.dock-item,html[data-kg-blur="on"] body[data-button-style]:not([data-elder-mode="true"]):not([data-wallpaper-live="1"]) #dockContainer .dock-icon.dock-icon,html[data-kg-blur="on"] body[data-button-style]:not([data-elder-mode="true"]):not([data-wallpaper-live="1"]) #dockContainer .dock-initial.dock-initial{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
 html[data-kg-blur="on"] body[data-kg-scroll-blur="on"][data-kg-scrolling="1"][data-button-style]:not([data-elder-mode="true"]) #searchContainer#searchContainer,html[data-kg-blur="on"] body[data-kg-scroll-blur="on"][data-kg-scrolling="1"][data-button-style]:not([data-elder-mode="true"]) #dropdownMenu#dropdownMenu,html[data-kg-blur="on"] body[data-kg-scroll-blur="on"][data-kg-scrolling="1"][data-button-style]:not([data-elder-mode="true"]) .poem-container.poem-container,html[data-kg-blur="on"] body[data-kg-scroll-blur="on"][data-kg-scrolling="1"][data-button-style]:not([data-elder-mode="true"]) #dockContainer#dockContainer,html[data-kg-blur="on"] body[data-kg-scroll-blur="on"][data-kg-scrolling="1"][data-button-style]:not([data-elder-mode="true"]) #dockContainer .dock-item.dock-item,html[data-kg-blur="on"] body[data-kg-scroll-blur="on"][data-kg-scrolling="1"][data-button-style]:not([data-elder-mode="true"]) #dockContainer .dock-icon.dock-icon,html[data-kg-blur="on"] body[data-kg-scroll-blur="on"][data-kg-scrolling="1"][data-button-style]:not([data-elder-mode="true"]) #dockContainer .dock-initial.dock-initial{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
+
+/* ===== 方案 A：全站唯一的模糊层 = 滚动容器之外的固定层 #kgShellBlur =====
+   磨砂层不是滚动容器的后代，滚动时它的 backdrop（静止壁纸）不变，无需重采样。
+   五个 Tab 的滚动容器及其内部元素一律不含任何模糊。 */
+/* 外壳：固定尺寸、横向裁剪；外壳与滚动容器内部都不含任何滤镜 */
+html body #favoritesModal#favoritesModal#favoritesModal{
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  overflow-x:hidden!important;
+}
+/* 唯一的磨砂层：独立于滚动容器之外的固定层（弹窗的同级兄弟，位于弹窗之下）。
+   它的 backdrop 是静止的壁纸/主页，滚动发生在它上方的弹窗里，backdrop 不变，
+   浏览器一次模糊后缓存复用，滚动时零重采样——这就是青柠类起始页不卡的做法。 */
+/* 关键：磨砂层不再使用 backdrop-filter（它必须每帧读取下方实时像素，
+   弹窗内一滚动就要重新合成，无可避免掉帧）。
+   改为“壁纸静态副本 + 普通 filter”：图层内容静止，模糊结果被合成器缓存，
+   弹窗里怎么滚都不触发重算——青柠类起始页就是这么做的。 */
+html body #kgShellBlur{
+  position:fixed!important;
+  top:0!important;right:0!important;bottom:0!important;left:0!important;
+  z-index:9999!important;
+  display:none;
+  background-color:transparent!important;
+  background-size:cover!important;
+  background-position:center center!important;
+  background-repeat:no-repeat!important;
+  border:0!important;
+  pointer-events:none!important;
+  /* 放大一点吃掉高斯模糊的透明边缘 */
+  transform:translateZ(0) scale(1.06)!important;
+}
+/* 磨砂 = 静态图层 filter，只在弹窗打开期间生效 */
+html body[data-kg-frost="on"] #kgShellBlur,
+html body[data-kg-frost="on"] #mainContent#mainContent,
+html body[data-kg-frost="on"] #dockContainer#dockContainer,
+html body[data-kg-frost="on"] .poem-container.poem-container{
+  filter:var(--blur-shell,none)!important;
+}
+/* 视频 / iframe 壁纸每帧都在变，磨砂同样关闭 */
+html body[data-kg-frost="on"][data-wallpaper-live="1"] #kgShellBlur,
+html body[data-kg-frost="on"][data-wallpaper-live="1"] #mainContent#mainContent,
+html body[data-kg-frost="on"][data-wallpaper-live="1"] #dockContainer#dockContainer,
+html body[data-kg-frost="on"][data-wallpaper-live="1"] .poem-container.poem-container{
+  filter:none!important;
+}
+/* 设置项“滚动时关闭毛玻璃”：滚动期间临时隐藏磨砂层，静止后恢复。
+   只在滚动开始/结束各触发一次属性变更，不在每帧写入。 */
+html body[data-kg-scroll-blur="on"][data-kg-scrolling="1"] #kgShellBlur{
+  visibility:hidden!important;
+}
+/* 内部：五个 Tab 的滚动容器及其全部子元素一律不模糊（保留原有半透明底色、圆角与阴影） */
+html body #favoritesModal#favoritesModal #favoritesContent,
+html body #favoritesModal#favoritesModal #favoritesContent *,
+html body #favoritesModal#favoritesModal #engineContent,
+html body #favoritesModal#favoritesModal #engineContent *,
+html body #favoritesModal#favoritesModal #hotNewsContent,
+html body #favoritesModal#favoritesModal #hotNewsContent *,
+html body #favoritesModal#favoritesModal #notesContent,
+html body #favoritesModal#favoritesModal #notesContent *,
+html body #favoritesModal#favoritesModal #settingsContent,
+html body #favoritesModal#favoritesModal #settingsContent *,
+html body #favoritesModal#favoritesModal #tabButtonsContainer,
+html body #favoritesModal#favoritesModal #tabButtonsContainer *,
+html body #favoritesModal#favoritesModal .tab-btn,
+html body #favoritesModal#favoritesModal .modal-close-btn,
+html body #favoritesModal#favoritesModal .fav-item,
+html body #favoritesModal#favoritesModal .folder-item,
+html body #favoritesModal#favoritesModal #favoritesList#favoritesList,
+html body #favoritesModal#favoritesModal #folderItemsList#folderItemsList,
+html body #favoritesModal#favoritesModal #folderModal *,
+html body #favoritesModal#favoritesModal .fav-actions button,
+html body #favoritesModal#favoritesModal .fav-dock-btn{
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+/* 滚动子树隔离：内部滚动只在自己的合成分层里重绘，不影响外壳的合成结果 */
+html body #favoritesModal#favoritesModal #favoritesContent,
+html body #favoritesModal#favoritesModal #engineContent,
+html body #favoritesModal#favoritesModal #hotNewsContent,
+html body #favoritesModal#favoritesModal #notesContent,
+html body #favoritesModal#favoritesModal #settingsContent{
+  /* 提升为独立合成层：滚动只重绘本区，不牵动下面的磨砂层与壁纸。
+     用独立的 translate 属性，不占用 transform，Tab 滑动动画照旧。 */
+  translate:0 0;
+}
+/* 滚动容器之外的同屏元素同样关闭模糊：Dock / 诗句 / 搜索框 / 引擎项等
+   （#kg-blur-off 不存在，仅用于提升选择器权重，压过旧的变量驱动与开关属性两套规则） */
+/* 注意：这里只允许关闭“弹窗内”的模糊（见上方 #favoritesModal 后代规则）。
+   绝不能对全站 button/input 关闭 backdrop-filter —— 那会连液态玻璃 /
+   透明玻璃主题自身的模糊一起干掉。主页元素保持主题与滑块的模糊设置。 */
+
+/* ===== 补丁：收藏项 / 文件夹项跟随非拟物主题 =====
+   旧的各主题规则只写了过时的类名 .favorite-item，而实际元素是 .fav-item /
+   .folder-item，于是深色模式 + 非拟物主题时它们仍是浅色拟态块（露馅）。 */
+body[data-theme="dark"][data-button-style="glass"] .fav-item,
+body[data-theme="dark"][data-button-style="glass"] .folder-item{
+  background:linear-gradient(135deg,rgba(255,255,255,0.25) 0%,rgba(255,255,255,0.15) 50%,rgba(255,255,255,0.2) 100%)!important;
+  box-shadow:0 0 0 1px rgba(255,255,255,0.2) inset,0 8px 32px rgba(0,0,0,0.4),0 2px 8px rgba(0,0,0,0.3)!important;
+  border:none!important;color:#e0e0e0!important;
+}
+body[data-theme="dark"][data-button-style="blur"] .fav-item,
+body[data-theme="dark"][data-button-style="blur"] .folder-item{
+  background:rgba(30,30,30,.38)!important;
+  border:1px solid rgba(255,255,255,.18)!important;
+  box-shadow:0 4px 20px rgba(0,0,0,.08)!important;color:#e0e0e0!important;
+}
+body[data-theme="dark"][data-button-style="transparent"] .fav-item,
+body[data-theme="dark"][data-button-style="transparent"] .folder-item{
+  background:rgba(255,255,255,0.5)!important;box-shadow:none!important;border:none!important;color:#e0e0e0!important;
+}
+body[data-theme="dark"][data-button-style="rounded"] .fav-item,
+body[data-theme="dark"][data-button-style="rounded"] .folder-item{
+  background:rgba(80,80,80,0.5)!important;box-shadow:none!important;border:none!important;color:#e0e0e0!important;
+}
+body[data-theme="dark"][data-button-style="underline"] .fav-item,
+body[data-theme="dark"][data-button-style="underline"] .folder-item{
+  background:transparent!important;box-shadow:none!important;border:none!important;color:#e0e0e0!important;
+}
+
 </style>
 </head>
 <body>
@@ -740,6 +828,7 @@ html[data-kg-blur="on"] body[data-kg-scroll-blur="on"][data-kg-scrolling="1"][da
 </div>
 </div>
 <!-- Favorites Modal -->
+<div id="kgShellBlur" aria-hidden="true"></div>
 <div id="favoritesModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #F0F0F0; z-index: 10000; overflow-y: auto; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; opacity: 0; transition: opacity 0.3s ease;">
 <!-- Header with close button and tabs -->
 <div style="display: flex; justify-content: center; align-items: center; position: relative; padding: 20px 20px 0 20px;">
@@ -1106,6 +1195,26 @@ html[data-kg-blur="on"] body[data-kg-scroll-blur="on"][data-kg-scrolling="1"][da
 <input type="range" id="kgRadius_fav" data-kg-range data-kg-type="radius" data-kg-part="fav" min="0" max="60" value="34" oninput="kgSetPart('radius','fav',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
 <span id="kgRadius_favOut" style="min-width: 34px;">34px</span>
 </div>
+<div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px;">
+<span style="min-width: 68px;">历史/建议</span>
+<input type="range" id="kgRadius_dropdownMain" data-kg-range data-kg-type="radius" data-kg-part="dropdown" min="0" max="60" value="34" oninput="kgSetPart('radius','dropdown',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
+<span id="kgRadius_dropdownMainOut" style="min-width: 34px;">34px</span>
+</div>
+<div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px;">
+<span style="min-width: 68px;">小按钮</span>
+<input type="range" id="kgRadius_small" data-kg-range data-kg-type="radius" data-kg-part="small" min="0" max="60" value="34" oninput="kgSetPart('radius','small',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
+<span id="kgRadius_smallOut" style="min-width: 34px;">34px</span>
+</div>
+<div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px;">
+<span style="min-width: 68px;">大按钮</span>
+<input type="range" id="kgRadius_large" data-kg-range data-kg-type="radius" data-kg-part="large" min="0" max="60" value="34" oninput="kgSetPart('radius','large',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
+<span id="kgRadius_largeOut" style="min-width: 34px;">34px</span>
+</div>
+<div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px;">
+<span style="min-width: 68px;">每个收藏</span>
+<input type="range" id="kgRadius_eachFav" data-kg-range data-kg-type="radius" data-kg-part="eachFav" min="0" max="60" value="34" oninput="kgSetPart('radius','eachFav',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
+<span id="kgRadius_eachFavOut" style="min-width: 34px;">34px</span>
+</div>
 
 </div>
 </div>
@@ -1145,6 +1254,21 @@ html[data-kg-blur="on"] body[data-kg-scroll-blur="on"][data-kg-scrolling="1"][da
 <span style="min-width: 68px;">每个收藏</span>
 <input type="range" id="kgBlur_eachFav" data-kg-range data-kg-type="blur" data-kg-part="eachFav" min="0" max="40" value="0" oninput="kgSetPart('blur','eachFav',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
 <span id="kgBlur_eachFavOut" style="min-width: 34px;">0px</span>
+</div>
+<div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px;">
+<span style="min-width: 68px;">历史/建议</span>
+<input type="range" id="kgBlur_dropdownMain" data-kg-range data-kg-type="blur" data-kg-part="dropdown" min="0" max="40" value="0" oninput="kgSetPart('blur','dropdown',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
+<span id="kgBlur_dropdownMainOut" style="min-width: 34px;">0px</span>
+</div>
+<div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px;">
+<span style="min-width: 68px;">小按钮</span>
+<input type="range" id="kgBlur_small" data-kg-range data-kg-type="blur" data-kg-part="small" min="0" max="40" value="0" oninput="kgSetPart('blur','small',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
+<span id="kgBlur_smallOut" style="min-width: 34px;">0px</span>
+</div>
+<div style="display: flex; align-items: center; gap: 6px; font-family: 'YouYuan'; font-size: 12px;">
+<span style="min-width: 68px;">大按钮</span>
+<input type="range" id="kgBlur_large" data-kg-range data-kg-type="blur" data-kg-part="large" min="0" max="40" value="0" oninput="kgSetPart('blur','large',this.value)" style="flex: 1; min-width: 50px; cursor: pointer;">
+<span id="kgBlur_largeOut" style="min-width: 34px;">0px</span>
 </div>
 
 </div>
@@ -1689,7 +1813,7 @@ API 地址配置
 <div style="font-family: 'YouYuan'; font-size: 14px; line-height: 1.8;">
 <p><strong>产品名称：</strong>千克之梦 (HelloKG)</p>
 <p><strong>版本号：</strong>v2.5</p>
-<p><strong>更新日期：</strong>2026-11-15</p>
+<p><strong>更新日期：</strong>2026-11-17</p>
 <!-- 联系信息已按需求移除 -->
 </div>
 </div>
@@ -2769,7 +2893,7 @@ if (selectedIndex >= 0 && selectedIndex < activeList.length) {
 e.preventDefault();
 const selectedItem = activeList[selectedIndex];
 // Remove favicon icon text if exists
-const text = selectedItem.textContent.replace(/^\s+/, '').trim();
+var text = selectedItem.textContent.replace(/^\s+/, '').replace(/\s*✕\s*$/, '').trim();
 if (suggestions.length > 0) {
 selectSuggestion(text);
 } else {
@@ -2785,26 +2909,19 @@ selectedIndex = -1;
 function updateSelection(items) {
 items.forEach((item, index) => {
 if (index === selectedIndex) {
-item.style.background = '#E0E0E0';
+item.style.setProperty('background-color', '#E0E0E0', 'important');
+item.style.setProperty('background', '#E0E0E0', 'important');
+item.style.setProperty('color', '#000000', 'important');
 item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 } else {
-item.style.background = '';
+item.style.removeProperty('background-color');
+item.style.removeProperty('background');
+item.style.removeProperty('color');
 }
 });
 }
 // Show search history when clicking on input - disabled, now handled by rotation animation
-        /*
-        input.addEventListener('click', function(e) {
-            const keyword = input.value.trim();
-            console.log('Input clicked, keyword:', keyword);
-            if (!keyword) {
-                console.log('Showing search history...');
-                // Hide engine selector when showing search history
-                engineSelector.style.display = 'none';
-                showSearchHistory();
-            }
-        });
-        */
+        
 // Disable right-click context menu (lifted when debug mode is on)
 document.addEventListener('contextmenu', function(e) {
 if (document.body.getAttribute('data-debug') === 'true') return;
@@ -3815,19 +3932,20 @@ URL.revokeObjectURL(url);
 }
 // ===================== Changelog (更新日志) =====================
 // 每次发布更新时，请修改此处的发布日期（格式 YYYY-MM-DD）
-const RELEASE_DATE = "2026-11-15";
+const RELEASE_DATE = "2026-11-17";
 const CHANGELOG_FALLBACK = [
-"千克之梦 (HelloKG) v2.5 更新日志（2026-11-14）",
+"千克之梦 (HelloKG) v2.5 更新日志（2026-11-17）",
 "",
 "完整更新日志请查看同目录下的 txt.html。",
 "",
 "本次重点：",
-"1. 搜索历史 / 搜索建议完整跟随主题，圆角与模糊分级对其生效。",
-"2. Dock 栏按图标数量收缩，不再占满浏览器宽度。",
-"3. 主页全部控件由 CSS 变量统一驱动，切换主题不再残留拟物样式。",
-"4. 新增透明模糊、下划线主题；下划线灰线常驻，hover 蓝线由中间向两边扩散。",
-"5. 圆角/模糊支持总调节与各部位单独调节；背景设置主页与其他界面分家。",
-"6. 修复自定义背景偶发白屏、搜索历史占位、收藏 tab 变白、时间秒开关等。"
+"1. 圆角/模糊分项补齐全部 9 项：小按钮、大按钮、按钮、搜索框、古诗栏、Dock栏、收藏界面、每个收藏、历史/建议，均可独立调节。",
+"2. 模糊性能优化：滑块值做半径压缩并回归轻量毛玻璃公式，降低 GPU 重采样开销，消除卡顿。",
+"3. 修复键盘选中历史记录变成「青柠 ✕」且不高亮的问题。",
+"4. 修复关闭收藏/设置回主页后 Dock、搜索框毛玻璃消失。",
+"5. 修复拟物模式模糊调为 0 时下拉层配色错误（兼容深色）。",
+"6. 修复低性能设备启动动画切回时全屏残留、部分主题半透明。",
+"7. 精简冗余注释，功能不变。"
 ].join("\n");
 const CHANGELOG_STORAGE_KEY = "lastChangelogDate";
 const NEVER_SHOW_CHANGELOG_KEY = "neverShowChangelog";
@@ -5551,19 +5669,15 @@ modal.style.display = 'none';
 const searchContainer = document.querySelector('.search-container');
 const bottomButtons = document.querySelectorAll('.bottom-btn');
 if (searchContainer) {
-searchContainer.style.transition = 'none';
-searchContainer.style.animation = 'none';
-searchContainer.style.opacity = '1';
-searchContainer.style.transform = 'scale(1)';
+['transition','animation','opacity','transform'].forEach(function(p){ searchContainer.style.removeProperty(p); });
 }
 if (bottomButtons && bottomButtons.length > 0) {
 bottomButtons.forEach(btn => {
-btn.style.transition = 'none';
-btn.style.animation = 'none';
-btn.style.opacity = '1';
-btn.style.transform = 'scale(1)';
+['transition','animation','opacity','transform'].forEach(function(p){ btn.style.removeProperty(p); });
 });
 }
+// 回主页后清除滚动期临时标记，避免毛玻璃一直处于关闭态
+if (document.body.hasAttribute('data-kg-scrolling')) document.body.removeAttribute('data-kg-scrolling');
 // Apply weather settings entered in the settings panel:
 // persist city input + reload weather immediately so it "takes effect" on close.
 try {
@@ -5822,12 +5936,9 @@ overlay.style.borderRadius = '0px';
 // When animation fills full screen (1000ms), open URL immediately, then fade out
 openTimer = setTimeout(function() {
 if (animationCancelled) return;
-if (callback) callback();
-// Then fade out
+// 先同步复位全屏几何，再打开新标签页：后台标签页的定时器会被节流，
+// 若把复位留在延时回调里，切回时会看到全屏动画残留。
 overlay.classList.remove('active');
-overlay.style.transition = 'opacity 0.3s ease';
-overlay.style.opacity = '0';
-setTimeout(function() {
 overlay.style.transition = 'none';
 overlay.style.opacity = '';
 overlay.style.top = '0px';
@@ -5835,9 +5946,27 @@ overlay.style.left = '0px';
 overlay.style.width = '0px';
 overlay.style.height = '0px';
 iconWrap.innerHTML = '';
-}, 300);
+overlay.removeEventListener('click', cancelAnimation);
+overlay.removeEventListener('touchend', cancelAnimation);
+animationCancelled = true;
+if (callback) callback();
 }, 1000);
 }
+
+/* 低性能/移动设备兜底：切回后台标签页时，强制复位可能残留的全屏启动动画几何。
+   只在非 active（动画已结束/被打断）时复位，避免打断正在播放的动画。 */
+document.addEventListener('visibilitychange', function() {
+if (document.visibilityState !== 'visible') return;
+var ov = document.getElementById('appLaunchOverlay');
+if (ov && !ov.classList.contains('active') && (ov.style.width === '100vw' || parseFloat(ov.style.width) >= 90)) {
+ov.style.transition = 'none';
+ov.style.opacity = '';
+ov.style.top = '0px'; ov.style.left = '0px';
+ov.style.width = '0px'; ov.style.height = '0px';
+var iw = ov.querySelector('.launch-icon-wrap');
+if (iw) iw.innerHTML = '';
+}
+});
 function launchAppUrl(url) {
 // Check animation settings
 const enableLaunchAnim = localStorage.getItem('enableLaunchAnim');
@@ -7763,9 +7892,11 @@ if (root.style.getPropertyValue(name)) root.style.removeProperty(name);
 };
 KG_UI_PARTS.forEach(function(k) {
 if (radiusTouched) setVar('--radius-' + k, kgVal('radius', k, p) + 'px'); else clearVar('--radius-' + k);
-if (blurTouched) { const b = kgVal('blur', k, p); setVar('--blur-' + k, b > 0 ? 'blur(' + b + 'px)' : 'none'); } else clearVar('--blur-' + k);
+if (blurTouched) { const b = kgVal('blur', k, p); setVar('--blur-' + k, b > 0 ? ('blur(' + b + 'px) saturate(160%) brightness(1.04)') : 'none'); } else clearVar('--blur-' + k);
 });
 setVar('--global-radius', p.radius.global + 'px');
+/* 方案 A：模糊强度只作用于弹窗外壳那一层固定伪元素，不再下发给任何内部元素 */
+if (blurTouched) { const sb = kgVal('blur', 'fav', p); setVar('--blur-shell', sb > 0 ? ('blur(' + sb + 'px) saturate(160%) brightness(1.04)') : 'none'); } else clearVar('--blur-shell');
 if (blurTouched) root.setAttribute('data-kg-blur', 'on'); else root.removeAttribute('data-kg-blur');
 kgScheduleDropdownSync();
 }
@@ -7777,7 +7908,6 @@ if (typeof requestAnimationFrame === 'function') kgSyncRaf = requestAnimationFra
 else kgSyncRaf = setTimeout(run, 16);
 }
 function kgVal(type, part, pIn) {
-if (part === 'small' || part === 'large') part = 'button';
 const p = pIn || kgGetProfile();
 if (part === 'dropdown') {
 const d = p[type].parts.dropdown;
@@ -8358,12 +8488,9 @@ kg
     var cs = getComputedStyle(body);
     var bg = (cs.getPropertyValue('--kg-surf') || '').trim() || 'transparent';
     var sh = (cs.getPropertyValue('--kg-shadow') || '').trim() || 'none';
-    var useBlur = document.documentElement.getAttribute('data-kg-blur') === 'on';
-    // 下拉层背景：模糊大于 0 时透明（真毛玻璃）；模糊为 0 时回退主题表面（拟态 / 玻璃等主题照常生效）
-    var blurNow = 0;
-    try { blurNow = kgVal('blur', 'dropdown'); } catch (e) {}
     var isNm = body.getAttribute('data-button-style') === 'neumorphism';
-    var dropBg = isNm ? 'var(--kg-drop-surface, var(--kg-surf))' : (blurNow > 0 ? 'transparent' : (bg || 'var(--kg-surf)'));
+    // 下拉层背景：内部元素已不承载模糊，统一回退到半透明主题表面（不再用全透明）
+    var dropBg = isNm ? 'var(--kg-drop-surface, var(--kg-surf))' : (bg || 'var(--kg-surf)');
     body.style.setProperty('--dropdown-bg', dropBg);
     [['#searchHistory', 'dropdown'], ['#suggestions', 'dropdown']].forEach(function (pair) {
       var el = document.querySelector(pair[0]);
@@ -8543,21 +8670,25 @@ function kgMarkStyleDeps(root) {
 }
 window.kgMarkStyleDeps = kgMarkStyleDeps;
 
-/* ===== 模糊性能：滚动期间临时关闭大面积毛玻璃 ===== */
+/* ===== “滚动时关闭毛玻璃”开关 =====
+   旧实现在每个 scroll 事件里无条件 setAttribute，导致全文档样式重算每帧发生。
+   现在只在滚动开始与停止时各改一次属性，且仅作用于磨砂层（visibility），
+   不再切换大批元素的 backdrop-filter。 */
 (function () {
-  var timer = null;
-  var onScroll = function () {
-    if (document.body.getAttribute('data-kg-scroll-blur') === 'off') return;
-    document.body.setAttribute('data-kg-scrolling', '1');
+  var body = document.body, timer = 0;
+  function endScroll() {
+    timer = 0;
+    if (body.hasAttribute('data-kg-scrolling')) body.removeAttribute('data-kg-scrolling');
+  }
+  document.addEventListener('scroll', function (e) {
+    var t = e.target;
+    if (!t || t === document || t === document.documentElement) return;
+    if (body.getAttribute('data-kg-scroll-blur') === 'off') return;
+    if (body.getAttribute('data-kg-frost') !== 'on') return;
+    if (!body.hasAttribute('data-kg-scrolling')) body.setAttribute('data-kg-scrolling', '1');
     if (timer) clearTimeout(timer);
-    timer = setTimeout(function () {
-      timer = null;
-      document.body.removeAttribute('data-kg-scrolling');
-    }, 160);
-  };
-  try {
-    document.addEventListener('scroll', onScroll, { passive: true, capture: true });
-  } catch (e) {}
+    timer = setTimeout(endScroll, 160);
+  }, true);
 })();
 
 /* ===== 毛玻璃滚动优化开关 ===== */
@@ -8578,6 +8709,47 @@ if (cb) cb.checked = on;
 try { kgInitMods(); } catch (e) {}
 try { applyKgScrollBlur(); } catch (e) {}
 try { applyWallpaperWidth(); } catch (e) {}
+</script>
+<script>
+/* 方案 A：磨砂层显隐与弹窗同步（监听弹窗 style，覆盖所有打开/关闭路径）。
+   仅“背景 = 主页”时需要磨砂层，其余背景模式下弹窗不透明，无需渲染该层。 */
+(function () {
+  var layer = document.getElementById('kgShellBlur');
+  var modal = document.getElementById('favoritesModal');
+  if (!layer || !modal) return;
+  var body = document.body;
+  /* 磨砂层的背景 = 壁纸的静态副本（同一张图，不做任何采样）。 */
+  function kgSyncFrostBg() {
+    var fo = document.getElementById('wallpaperFilterOverlay');
+    var img = '';
+    if (body.getAttribute('data-bg-mode') === 'wallpaper' && fo && getComputedStyle(fo).display !== 'none') {
+      var bi = getComputedStyle(fo).backgroundImage;
+      if (bi && bi !== 'none') img = bi;
+    }
+    if (layer.style.backgroundImage !== img) layer.style.backgroundImage = img;
+  }
+  function kgSyncShellBlur() {
+    var open = modal.style.display !== 'none' && getComputedStyle(modal).display !== 'none';
+    var need = open && body.getAttribute('data-panel-bg') === 'home';
+    var want = need ? 'block' : 'none';
+    if (layer.style.display !== want) layer.style.display = want;
+    if (need) {
+      kgSyncFrostBg();
+      if (body.getAttribute('data-kg-frost') !== 'on') body.setAttribute('data-kg-frost', 'on');
+    } else if (body.hasAttribute('data-kg-frost')) {
+      body.removeAttribute('data-kg-frost');
+    }
+  }
+  if (window.MutationObserver) {
+    var mo = new MutationObserver(kgSyncShellBlur);
+    mo.observe(modal, { attributes: true, attributeFilter: ['style', 'class'] });
+    mo.observe(body, { attributes: true, attributeFilter: ['data-panel-bg', 'data-bg-mode', 'data-wallpaper-live'] });
+    var fo0 = document.getElementById('wallpaperFilterOverlay');
+    if (fo0) mo.observe(fo0, { attributes: true, attributeFilter: ['style'] });
+  }
+  window.kgSyncShellBlur = kgSyncShellBlur;
+  kgSyncShellBlur();
+})();
 </script>
 </body>
 </html>
