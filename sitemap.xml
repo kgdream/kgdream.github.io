@@ -1,27 +1,39 @@
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!--  Created By http://www.zhetao.com/sitemapcreator,  URLs: 6 Generated at: 2026-11-15 15:18:18  -->
-<url>
-<loc>https://kgdream.github.io/</loc>
-<priority>1.00</priority>
-</url>
-<url>
-<loc>https://kgdream.github.io/x.html</loc>
-<priority>1.00</priority>
-</url>
-<url>
-<loc>https://kgdream.github.io/lite.html</loc>
-<priority>1.00</priority>
-</url>
-<url>
-<loc>https://kgdream.github.io/search.html</loc>
-<priority>1.00</priority>
-</url>
-<url>
-<loc>https://kgdream.github.io/notes.html</loc>
-<priority>1.00</priority>
-</url>
-<url>
-<loc>https://kgdream.github.io/license.html</loc>
-<priority>1.00</priority>
-</url>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://qkzm.cc.cd/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1</priority>
+  </url>
+  <url>
+    <loc>https://qkzm.cc.cd/license.html</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://qkzm.cc.cd/lite.html</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://qkzm.cc.cd/notes.html</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://qkzm.cc.cd/search.html</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://qkzm.cc.cd/x.html</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>
